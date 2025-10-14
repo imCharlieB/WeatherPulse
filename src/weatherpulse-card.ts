@@ -22,9 +22,9 @@ export class WeatherPulseCard extends LitElement {
 
   private timeInterval?: number;
 
-  public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    // TODO: Implement visual editor
-    return document.createElement('div') as LovelaceCardEditor;
+  public static getConfigElement() {
+    // TODO: Implement visual editor in future version
+    return undefined;
   }
 
   public static getStubConfig(): WeatherPulseCardConfig {
