@@ -1,0 +1,49 @@
+{
+  "name": "weatherpulse-card",
+  "version": "0.1.0",
+  "description": "A modern, highly configurable weather card for Home Assistant",
+  "main": "dist/weatherpulse-card.js",
+  "scripts": {
+    "start": "rollup -c --watch",
+    "build": "npm run lint && rollup -c",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
+  },
+  "keywords": [
+    "home-assistant",
+    "homeassistant",
+    "hacs",
+    "weather",
+    "weather-card",
+    "lovelace",
+    "custom-card"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imCharlieB/WeatherPulse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/imCharlieB/WeatherPulse/issues"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
+    "rollup": "^4.9.6",
+    "rollup-plugin-serve": "^2.0.3",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "custom-card-helpers": "^1.9.0",
+    "home-assistant-js-websocket": "^9.1.0",
+    "lit": "^3.1.2"
+  }
+}

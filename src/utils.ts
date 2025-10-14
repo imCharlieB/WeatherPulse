@@ -1,0 +1,161 @@
+import { TemperatureGradient } from './types';
+
+/**
+ * Get temperature-based gradient colors
+ */
+export function getTemperatureGradient(temp: number, unit: string = '°F'): TemperatureGradient {
+  // Convert to Fahrenheit if needed
+  const fahrenheit = unit === '°C' ? (temp * 9/5) + 32 : temp;
+
+  if (fahrenheit < 32) {
+    // Freezing - Icy blues/purples
+    return {
+      color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      backgroundColor: '#667eea',
+      textColor: '#ffffff'
+    };
+  } else if (fahrenheit < 50) {
+    // Cold - Cool blues/teals
+    return {
+      color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      backgroundColor: '#4facfe',
+      textColor: '#ffffff'
+    };
+  } else if (fahrenheit < 70) {
+    // Moderate - Pleasant greens/yellows
+    return {
+      color: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+      backgroundColor: '#43e97b',
+      textColor: '#1a1a1a'
+    };
+  } else if (fahrenheit < 85) {
+    // Warm - Warm oranges
+    return {
+      color: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+      backgroundColor: '#fa709a',
+      textColor: '#1a1a1a'
+    };
+  } else {
+    // Hot - Hot reds/deep oranges
+    return {
+      color: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)',
+      backgroundColor: '#ff6b6b',
+      textColor: '#ffffff'
+    };
+  }
+}
+
+/**
+ * Get greeting message based on time and weather
+ */
+export function getGreeting(name?: string, condition?: string, temp?: number): string {
+  const hour = new Date().getHours();
+  const userName = name ? `, ${name}` : '';
+
+  let timeGreeting = 'Hello';
+  if (hour < 12) {
+    timeGreeting = 'Good Morning';
+  } else if (hour < 17) {
+    timeGreeting = 'Good Afternoon';
+  } else if (hour < 22) {
+    timeGreeting = 'Good Evening';
+  } else {
+    timeGreeting = 'Good Night';
+  }
+
+  return `${timeGreeting}${userName}!`;
+}
+
+/**
+ * Get contextual weather suggestion
+ */
+export function getWeatherSuggestion(condition?: string, temp?: number): string {
+  if (!condition) return '';
+
+  const conditionLower = condition.toLowerCase();
+
+  if (conditionLower.includes('rain')) {
+    return "Don't forget your umbrella!";
+  } else if (conditionLower.includes('snow')) {
+    return 'Bundle up, winter is here!';
+  } else if (conditionLower.includes('clear') || conditionLower.includes('sunny')) {
+    if (temp && temp > 75) {
+      return 'Perfect day for outdoor activities!';
+    }
+    return 'Beautiful day ahead!';
+  } else if (conditionLower.includes('cloud')) {
+    return 'Overcast but pleasant.';
+  } else if (conditionLower.includes('storm')) {
+    return 'Stay safe indoors!';
+  }
+
+  return '';
+}
+
+/**
+ * Format time
+ */
+export function formatTime(date: Date = new Date()): string {
+  return date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+}
+
+/**
+ * Format date
+ */
+export function formatDate(date: Date = new Date()): string {
+  return date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: '2-digit',
+    day: '2-digit',
+    year: '2-digit'
+  });
+}
+
+/**
+ * Get current season
+ */
+export function getCurrentSeason(): 'spring' | 'summer' | 'fall' | 'winter' {
+  const month = new Date().getMonth();
+
+  if (month >= 2 && month <= 4) return 'spring';
+  if (month >= 5 && month <= 7) return 'summer';
+  if (month >= 8 && month <= 10) return 'fall';
+  return 'winter';
+}
+
+/**
+ * Get day name from datetime string
+ */
+export function getDayName(datetime: string): string {
+  const date = new Date(datetime);
+  return date.toLocaleDateString('en-US', { weekday: 'short' });
+}
+
+/**
+ * Get weather icon class based on condition
+ */
+export function getWeatherIcon(condition: string): string {
+  const conditionLower = condition.toLowerCase();
+
+  if (conditionLower.includes('clear') || conditionLower.includes('sunny')) {
+    return 'clear-day';
+  } else if (conditionLower.includes('cloud')) {
+    return 'cloudy';
+  } else if (conditionLower.includes('rain')) {
+    return 'rainy';
+  } else if (conditionLower.includes('snow')) {
+    return 'snowy';
+  } else if (conditionLower.includes('storm') || conditionLower.includes('thunder')) {
+    return 'lightning';
+  } else if (conditionLower.includes('fog') || conditionLower.includes('mist')) {
+    return 'fog';
+  } else if (conditionLower.includes('wind')) {
+    return 'windy';
+  }
+
+  return 'clear-day';
+}
