@@ -16,6 +16,10 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   alerts?: AlertType[];
   custom_colors?: CustomColors;
   seasonal_images?: SeasonalImages;
+  show_forecast?: boolean;
+  show_current_temp?: boolean;
+  show_actual_temp?: boolean;
+  temp_display_mode?: 'forecast' | 'actual' | 'both';
 }
 
 export type DataRow =

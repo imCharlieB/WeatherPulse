@@ -162,6 +162,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
         <div class="section">
           <h4>Forecast Settings</h4>
 
+          <ha-formfield label="Show Forecast">
+            <ha-switch
+              .configValue=${'show_forecast'}
+              .checked=${this._config.show_forecast !== false}
+              @change=${this._toggleChanged}
+            ></ha-switch>
+          </ha-formfield>
+          <p class="helper-text">
+            Toggle to show or hide the forecast section. Will hide automatically if no forecast data is available.
+          </p>
+
           <ha-select
             label="Forecast Days"
             .configValue=${'forecast_days'}

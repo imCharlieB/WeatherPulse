@@ -57,6 +57,7 @@ export class WeatherPulseCard extends LitElement {
       view_mode: 'standard',
       animate_icons: true,
       data_rows: ['temperature', 'precipitation'],
+      show_forecast: true,
       ...config
     };
   }
@@ -109,6 +110,15 @@ export class WeatherPulseCard extends LitElement {
       return {};
     }
 
+    // Try to get forecast from the entity
+    // Some weather integrations use 'forecast', others might use different attributes
+    let forecast = entity.attributes.forecast || [];
+
+    // Log for debugging
+    console.log('Weather entity:', entity.entity_id);
+    console.log('Weather attributes:', entity.attributes);
+    console.log('Forecast data:', forecast);
+
     return {
       temperature: entity.attributes.temperature,
       temperature_unit: entity.attributes.temperature_unit || '°F',
@@ -117,7 +127,7 @@ export class WeatherPulseCard extends LitElement {
       wind_speed: entity.attributes.wind_speed,
       wind_bearing: entity.attributes.wind_bearing,
       condition: entity.state,
-      forecast: entity.attributes.forecast || []
+      forecast: forecast
     };
   }
 
@@ -156,6 +166,8 @@ export class WeatherPulseCard extends LitElement {
               <div class="suggestion-text">
                 ${getWeatherSuggestion(weatherData.condition, currentTemp)}
               </div>
+              ${this.config.show_time ? html`<div class="time-small">${this.currentTime}</div>` : ''}
+              ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
               <div class="temp-display">${Math.round(currentTemp)}${weatherData.temperature_unit}</div>
             </div>
           </div>
@@ -302,12 +314,18 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
+    const weatherData = this.getWeatherData();
+    const hasForecast = weatherData.forecast && weatherData.forecast.length > 0;
+    const showForecast = this.config.show_forecast !== false && hasForecast;
+
     return html`
       <ha-card>
         ${this.renderHeader()}
-        <div class="card-content">
-          ${this.renderForecast()}
-        </div>
+        ${showForecast ? html`
+          <div class="card-content">
+            ${this.renderForecast()}
+          </div>
+        ` : ''}
       </ha-card>
     `;
   }
