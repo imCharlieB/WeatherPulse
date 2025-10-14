@@ -110,7 +110,22 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             )}
           </ha-select>
           <p class="helper-text">
-            If set, the card will use this sensor for the actual outdoor temperature instead of the forecast.
+            This sensor will be used for the header gradient and can be displayed in the forecast.
+          </p>
+
+          <ha-select
+            label="Temperature Display Mode"
+            .configValue=${'temp_display_mode'}
+            .value=${this._config.temp_display_mode || 'forecast'}
+            @selected=${this._valueChanged}
+            @closed=${(ev: Event) => ev.stopPropagation()}
+          >
+            <mwc-list-item value="forecast">Forecast Only (High/Low)</mwc-list-item>
+            <mwc-list-item value="actual">Actual Only (From Sensor)</mwc-list-item>
+            <mwc-list-item value="both">Both (Forecast + Actual)</mwc-list-item>
+          </ha-select>
+          <p class="helper-text">
+            Choose what temperature to display in forecast rows. "Actual" requires an outdoor temperature sensor.
           </p>
         </div>
 

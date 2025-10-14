@@ -59,6 +59,7 @@ export class WeatherPulseCard extends LitElement {
       animate_icons: true,
       data_rows: ['temperature', 'precipitation'],
       show_forecast: true,
+      temp_display_mode: 'forecast',
       ...config
     };
   }
@@ -266,7 +267,12 @@ export class WeatherPulseCard extends LitElement {
     const forecast = weatherData.forecast?.slice(0, this.config.forecast_days || 5) || [];
 
     if (forecast.length === 0) {
-      return html`<div class="no-forecast">No forecast data available</div>`;
+      return html`
+        <div class="no-forecast">
+          <p>No forecast data available</p>
+          <p class="helper">Your weather integration may not provide forecast data, or you may need to use a weather service call to fetch it.</p>
+        </div>
+      `;
     }
 
     return html`
@@ -287,6 +293,18 @@ export class WeatherPulseCard extends LitElement {
     const highPercent = 70; // Max 70% for visual balance
     const lowPercent = tempRange > 0 ? (lowTemp / highTemp) * highPercent : 30;
 
+    // Get actual temperature if sensor is configured
+    const showActual = this.config.temp_display_mode === 'actual' || this.config.temp_display_mode === 'both';
+    const showForecast = this.config.temp_display_mode !== 'actual';
+
+    let actualTemp: number | undefined;
+    if (showActual && this.config.outdoor_temp_sensor) {
+      const sensorEntity = this.hass.states[this.config.outdoor_temp_sensor];
+      if (sensorEntity) {
+        actualTemp = Math.round(parseFloat(sensorEntity.state));
+      }
+    }
+
     return html`
       <div class="forecast-day">
         <div class="day-name">${dayName}</div>
@@ -294,12 +312,19 @@ export class WeatherPulseCard extends LitElement {
           ${this.renderWeatherIcon(day.condition || 'clear')}
         </div>
         <div class="day-temp-range">
-          <span class="temp-low">${lowTemp}°</span>
-          <div class="temp-bar">
-            <div class="temp-bar-low" style="width: ${lowPercent}%"></div>
-            <div class="temp-bar-high" style="width: ${highPercent - lowPercent}%"></div>
-          </div>
-          <span class="temp-high">${highTemp}°</span>
+          ${showForecast ? html`
+            <span class="temp-low">${lowTemp}°</span>
+            <div class="temp-bar">
+              <div class="temp-bar-low" style="width: ${lowPercent}%"></div>
+              <div class="temp-bar-high" style="width: ${highPercent - lowPercent}%"></div>
+            </div>
+            <span class="temp-high">${highTemp}°</span>
+          ` : ''}
+          ${showActual && actualTemp !== undefined ? html`
+            <span class="temp-actual" title="Actual outdoor temperature">
+              ${actualTemp}° <span class="actual-label">Actual</span>
+            </span>
+          ` : ''}
         </div>
         ${precipProb > 0 ? html`
           <div class="precip-prob">${precipProb}%</div>
@@ -550,6 +575,31 @@ export class WeatherPulseCard extends LitElement {
         text-align: center;
         padding: 20px;
         opacity: 0.7;
+      }
+
+      .no-forecast p {
+        margin: 8px 0;
+      }
+
+      .no-forecast .helper {
+        font-size: 0.85em;
+        color: var(--secondary-text-color);
+      }
+
+      .temp-actual {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--primary-color);
+        margin-left: 8px;
+      }
+
+      .actual-label {
+        font-size: 12px;
+        font-weight: 400;
+        opacity: 0.8;
       }
     `;
   }
