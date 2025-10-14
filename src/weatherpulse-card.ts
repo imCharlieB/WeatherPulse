@@ -23,8 +23,10 @@ export class WeatherPulseCard extends LitElement {
   @state() private config!: WeatherPulseCardConfig;
   @state() private currentTime: string = formatTime();
   @state() private currentDate: string = formatDate();
+  @state() private forecastData: any[] = [];
 
   private timeInterval?: number;
+  private forecastUpdateInterval?: number;
 
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
     await import('./editor');
@@ -67,11 +69,17 @@ export class WeatherPulseCard extends LitElement {
   public connectedCallback(): void {
     super.connectedCallback();
     this.startClock();
+    this.fetchForecast();
+    // Update forecast every 30 minutes
+    this.forecastUpdateInterval = window.setInterval(() => this.fetchForecast(), 30 * 60 * 1000);
   }
 
   public disconnectedCallback(): void {
     super.disconnectedCallback();
     this.stopClock();
+    if (this.forecastUpdateInterval) {
+      clearInterval(this.forecastUpdateInterval);
+    }
   }
 
   private startClock(): void {
@@ -106,15 +114,42 @@ export class WeatherPulseCard extends LitElement {
     return true;
   }
 
+  private async fetchForecast(): Promise<void> {
+    if (!this.hass || !this.config?.entity) {
+      return;
+    }
+
+    try {
+      // Try to get forecast using the weather.get_forecasts service (HA 2023.9+)
+      const response = await this.hass.callWS({
+        type: 'weather/subscribe_forecast',
+        forecast_type: 'daily',
+        entity_id: this.config.entity,
+      });
+
+      if (response && response.forecast) {
+        this.forecastData = response.forecast;
+        console.log('Forecast fetched via service:', this.forecastData);
+      }
+    } catch (error) {
+      console.log('Weather service call failed, trying legacy method:', error);
+      // Fallback to legacy forecast from attributes
+      const entity = this.hass.states[this.config.entity];
+      if (entity && entity.attributes.forecast) {
+        this.forecastData = entity.attributes.forecast;
+        console.log('Forecast from attributes (legacy):', this.forecastData);
+      }
+    }
+  }
+
   private getWeatherData(): WeatherData {
     const entity = this.hass.states[this.config.entity];
     if (!entity) {
       return {};
     }
 
-    // Try to get forecast from the entity
-    // Some weather integrations use 'forecast', others might use different attributes
-    let forecast = entity.attributes.forecast || [];
+    // Use fetched forecast data or fall back to entity attributes
+    let forecast = this.forecastData.length > 0 ? this.forecastData : (entity.attributes.forecast || []);
 
     // Log for debugging
     console.log('Weather entity:', entity.entity_id);

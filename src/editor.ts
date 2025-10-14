@@ -18,7 +18,12 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
     }
     const target = ev.target as any;
     const configValue = target.configValue;
-    const value = target.value;
+    let value = target.value;
+
+    // Convert numeric strings to numbers for certain fields
+    if (configValue === 'forecast_days' && value) {
+      value = parseInt(value, 10);
+    }
 
     if (this._config[configValue] === value) {
       return;
@@ -29,6 +34,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
       [configValue]: value === '' ? undefined : value
     };
 
+    console.log('Config changed:', configValue, '=', value);
     fireEvent(this, 'config-changed', { config: newConfig });
   }
 
