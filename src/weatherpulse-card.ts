@@ -191,9 +191,23 @@ export class WeatherPulseCard extends LitElement {
   private renderHeader(): unknown {
     const weatherData = this.getWeatherData();
     const currentTemp = this.getCurrentTemp();
+    const forecastTemp = weatherData.temperature;
+    const hasOutdoorSensor = !!this.config.outdoor_temp_sensor;
     const gradient = getTemperatureGradient(currentTemp, weatherData.temperature_unit);
 
     const headerMode = this.config.header_mode || 'time-focused';
+
+    // Determine what temp to show based on mode
+    const tempDisplayMode = this.config.temp_display_mode || 'forecast';
+    let tempDisplay = '';
+
+    if (tempDisplayMode === 'both' && hasOutdoorSensor && forecastTemp) {
+      tempDisplay = `${Math.round(currentTemp)}° (Actual) / ${Math.round(forecastTemp)}° (Forecast)`;
+    } else if (tempDisplayMode === 'actual' && hasOutdoorSensor) {
+      tempDisplay = `${Math.round(currentTemp)}° Actual`;
+    } else {
+      tempDisplay = `${Math.round(currentTemp)}${weatherData.temperature_unit}`;
+    }
 
     let headerContent;
 
@@ -213,7 +227,7 @@ export class WeatherPulseCard extends LitElement {
               </div>
               ${this.config.show_time ? html`<div class="time-small">${this.currentTime}</div>` : ''}
               ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
-              <div class="temp-display">${Math.round(currentTemp)}${weatherData.temperature_unit}</div>
+              <div class="temp-display">${tempDisplay}</div>
             </div>
           </div>
         `;
@@ -225,7 +239,7 @@ export class WeatherPulseCard extends LitElement {
             <div class="weather-icon ${getWeatherIcon(weatherData.condition || 'clear')}">
               ${this.renderWeatherIcon(weatherData.condition || 'clear')}
             </div>
-            <div class="temp-display">${Math.round(currentTemp)}${weatherData.temperature_unit}</div>
+            <div class="temp-display">${tempDisplay}</div>
           </div>
         `;
         break;
@@ -239,7 +253,7 @@ export class WeatherPulseCard extends LitElement {
             <div class="datetime-content">
               <div class="date-large">${this.currentDate}</div>
               ${this.config.show_time ? html`<div class="time-small">${this.currentTime}</div>` : ''}
-              <div class="temp-display">${Math.round(currentTemp)}${weatherData.temperature_unit}</div>
+              <div class="temp-display">${tempDisplay}</div>
             </div>
           </div>
         `;
@@ -254,7 +268,7 @@ export class WeatherPulseCard extends LitElement {
             <div class="datetime-content">
               ${this.config.show_time ? html`<div class="time-medium">${this.currentTime}</div>` : ''}
               ${this.config.show_date ? html`<div class="date-medium">${this.currentDate}</div>` : ''}
-              <div class="temp-display">${Math.round(currentTemp)}${weatherData.temperature_unit}</div>
+              <div class="temp-display">${tempDisplay}</div>
             </div>
           </div>
         `;
@@ -269,7 +283,7 @@ export class WeatherPulseCard extends LitElement {
             <div class="datetime-content">
               <div class="time-large">${this.currentTime}</div>
               ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
-              <div class="temp-display">${Math.round(currentTemp)}${weatherData.temperature_unit}</div>
+              <div class="temp-display">${tempDisplay}</div>
             </div>
           </div>
         `;
@@ -336,18 +350,6 @@ export class WeatherPulseCard extends LitElement {
     const highPercent = 70; // Max 70% for visual balance
     const lowPercent = tempRange > 0 ? (lowTemp / highTemp) * highPercent : 30;
 
-    // Get actual temperature if sensor is configured
-    const showActual = this.config.temp_display_mode === 'actual' || this.config.temp_display_mode === 'both';
-    const showForecast = this.config.temp_display_mode !== 'actual';
-
-    let actualTemp: number | undefined;
-    if (showActual && this.config.outdoor_temp_sensor) {
-      const sensorEntity = this.hass.states[this.config.outdoor_temp_sensor];
-      if (sensorEntity) {
-        actualTemp = Math.round(parseFloat(sensorEntity.state));
-      }
-    }
-
     return html`
       <div class="forecast-day">
         <div class="day-name">${dayName}</div>
@@ -355,19 +357,12 @@ export class WeatherPulseCard extends LitElement {
           ${this.renderWeatherIcon(day.condition || 'clear')}
         </div>
         <div class="day-temp-range">
-          ${showForecast ? html`
-            <span class="temp-low">${lowTemp}°</span>
-            <div class="temp-bar">
-              <div class="temp-bar-low" style="width: ${lowPercent}%"></div>
-              <div class="temp-bar-high" style="width: ${highPercent - lowPercent}%"></div>
-            </div>
-            <span class="temp-high">${highTemp}°</span>
-          ` : ''}
-          ${showActual && actualTemp !== undefined ? html`
-            <span class="temp-actual" title="Actual outdoor temperature">
-              ${actualTemp}° <span class="actual-label">Actual</span>
-            </span>
-          ` : ''}
+          <span class="temp-low">${lowTemp}°</span>
+          <div class="temp-bar">
+            <div class="temp-bar-low" style="width: ${lowPercent}%"></div>
+            <div class="temp-bar-high" style="width: ${highPercent - lowPercent}%"></div>
+          </div>
+          <span class="temp-high">${highTemp}°</span>
         </div>
         ${precipProb > 0 ? html`
           <div class="precip-prob">${precipProb}%</div>
