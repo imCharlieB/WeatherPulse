@@ -137,14 +137,16 @@ export class WeatherPulseCard extends LitElement {
 
       console.log('Forecast service response:', response);
 
-      if (response && response[this.config.entity] && response[this.config.entity].forecast) {
-        this.forecastData = response[this.config.entity].forecast;
+      // Type the response properly
+      const forecastResponse = response as any;
+      if (forecastResponse && forecastResponse[this.config.entity]?.forecast) {
+        this.forecastData = forecastResponse[this.config.entity].forecast;
         console.log('✅ Forecast fetched via service:', this.forecastData.length, 'days');
       } else {
         console.log('⚠️ No forecast in service response, trying legacy method');
         // Fallback to legacy forecast from attributes
         const entity = this.hass.states[this.config.entity];
-        if (entity && entity.attributes.forecast) {
+        if (entity?.attributes?.forecast) {
           this.forecastData = entity.attributes.forecast;
           console.log('✅ Forecast from attributes (legacy):', this.forecastData.length, 'days');
         } else {
@@ -155,7 +157,7 @@ export class WeatherPulseCard extends LitElement {
       console.log('❌ Weather service call failed:', error);
       // Fallback to legacy forecast from attributes
       const entity = this.hass.states[this.config.entity];
-      if (entity && entity.attributes.forecast) {
+      if (entity?.attributes?.forecast) {
         this.forecastData = entity.attributes.forecast;
         console.log('✅ Forecast from attributes (legacy fallback):', this.forecastData.length, 'days');
       } else {
