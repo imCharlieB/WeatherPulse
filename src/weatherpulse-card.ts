@@ -120,42 +120,25 @@ export class WeatherPulseCard extends LitElement {
     }
 
     try {
-      // Try to get forecast using the weather.get_forecasts service (HA 2023.9+)
-      console.log('Attempting to fetch forecast for:', this.config.entity);
+      // Use the official HA method: subscribe to weather forecast updates
+      console.log('Subscribing to forecast for:', this.config.entity);
 
-      // Call service with return_response in the service data
-      const serviceData = {
-        entity_id: this.config.entity,
-        type: 'daily',
-      };
-
-      const response = await this.hass.callService(
-        'weather',
-        'get_forecasts',
-        serviceData,
-        true // returnResponse parameter
-      );
-
-      console.log('Forecast service response:', response);
-
-      // Type the response properly
-      const forecastResponse = response as any;
-      if (forecastResponse && forecastResponse[this.config.entity]?.forecast) {
-        this.forecastData = forecastResponse[this.config.entity].forecast;
-        console.log('✅ Forecast fetched via service:', this.forecastData.length, 'days');
-      } else {
-        console.log('⚠️ No forecast in service response, trying legacy method');
-        // Fallback to legacy forecast from attributes
-        const entity = this.hass.states[this.config.entity];
-        if (entity?.attributes?.forecast) {
-          this.forecastData = entity.attributes.forecast;
-          console.log('✅ Forecast from attributes (legacy):', this.forecastData.length, 'days');
-        } else {
-          console.log('❌ No forecast data available from entity');
+      this.hass.connection.subscribeMessage(
+        (event: any) => {
+          console.log('Forecast event received:', event);
+          if (event?.forecast) {
+            this.forecastData = event.forecast;
+            console.log('✅ Forecast updated via subscription:', this.forecastData.length, 'days');
+          }
+        },
+        {
+          type: 'weather/subscribe_forecast',
+          forecast_type: 'daily',
+          entity_id: this.config.entity,
         }
-      }
+      );
     } catch (error) {
-      console.log('❌ Weather service call failed:', error);
+      console.log('❌ Forecast subscription failed:', error);
       // Fallback to legacy forecast from attributes
       const entity = this.hass.states[this.config.entity];
       if (entity?.attributes?.forecast) {
