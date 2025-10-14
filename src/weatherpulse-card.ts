@@ -132,7 +132,7 @@ export class WeatherPulseCard extends LitElement {
         },
         {
           return_response: true,
-        }
+        } as any
       );
 
       console.log('Forecast service response:', response);
