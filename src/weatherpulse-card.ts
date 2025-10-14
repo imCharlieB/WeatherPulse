@@ -11,6 +11,7 @@ import {
   getDayName,
   getWeatherIcon
 } from './utils';
+import { getAnimatedWeatherIcon } from './icons';
 
 // Import the editor
 import './editor';
@@ -238,8 +239,15 @@ export class WeatherPulseCard extends LitElement {
   }
 
   private renderWeatherIcon(condition: string): unknown {
-    // Simple icon rendering for now - will be replaced with animated SVGs
     const iconClass = getWeatherIcon(condition);
+    const animate = this.config.animate_icons !== false;
+
+    // Use animated SVG icons if animation is enabled
+    if (animate) {
+      return getAnimatedWeatherIcon(iconClass, true);
+    }
+
+    // Fallback to emoji icons
     const iconMap: Record<string, string> = {
       'clear-day': '☀️',
       'cloudy': '☁️',
@@ -383,6 +391,17 @@ export class WeatherPulseCard extends LitElement {
       .icon-emoji {
         display: block;
         filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+      }
+
+      .weather-icon-svg {
+        width: 80px;
+        height: 80px;
+        filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+      }
+
+      .day-icon .weather-icon-svg {
+        width: 32px;
+        height: 32px;
       }
 
       .datetime-content {
