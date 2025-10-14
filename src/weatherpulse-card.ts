@@ -123,16 +123,17 @@ export class WeatherPulseCard extends LitElement {
       // Try to get forecast using the weather.get_forecasts service (HA 2023.9+)
       console.log('Attempting to fetch forecast for:', this.config.entity);
 
+      // Call service with return_response in the service data
+      const serviceData = {
+        entity_id: this.config.entity,
+        type: 'daily',
+      };
+
       const response = await this.hass.callService(
         'weather',
         'get_forecasts',
-        {
-          entity_id: this.config.entity,
-          type: 'daily',
-        },
-        {
-          return_response: true,
-        } as any
+        serviceData,
+        true // returnResponse parameter
       );
 
       console.log('Forecast service response:', response);
