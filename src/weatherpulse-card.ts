@@ -12,6 +12,9 @@ import {
   getWeatherIcon
 } from './utils';
 
+// Import the editor
+import './editor';
+
 // Define the card in the customElements registry
 @customElement('weatherpulse-card')
 export class WeatherPulseCard extends LitElement {
@@ -22,9 +25,9 @@ export class WeatherPulseCard extends LitElement {
 
   private timeInterval?: number;
 
-  public static getConfigElement() {
-    // TODO: Implement visual editor in future version
-    return undefined;
+  public static async getConfigElement(): Promise<LovelaceCardEditor> {
+    await import('./editor');
+    return document.createElement('weatherpulse-card-editor') as LovelaceCardEditor;
   }
 
   public static getStubConfig(): WeatherPulseCardConfig {

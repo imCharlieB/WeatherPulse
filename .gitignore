@@ -2,7 +2,7 @@
 node_modules/
 
 # Build output
-dist/
+# dist/ - COMMENTED OUT: HACS needs dist files in repo
 *.js.map
 
 # IDE
