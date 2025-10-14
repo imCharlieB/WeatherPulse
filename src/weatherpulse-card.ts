@@ -121,23 +121,38 @@ export class WeatherPulseCard extends LitElement {
 
     try {
       // Try to get forecast using the weather.get_forecasts service (HA 2023.9+)
-      const response = await this.hass.callWS({
-        type: 'weather/subscribe_forecast',
-        forecast_type: 'daily',
+      console.log('Attempting to fetch forecast for:', this.config.entity);
+
+      const response = await this.hass.callService('weather', 'get_forecasts', {
         entity_id: this.config.entity,
+        type: 'daily',
       });
 
-      if (response && response.forecast) {
-        this.forecastData = response.forecast;
-        console.log('Forecast fetched via service:', this.forecastData);
+      console.log('Forecast service response:', response);
+
+      if (response && response[this.config.entity] && response[this.config.entity].forecast) {
+        this.forecastData = response[this.config.entity].forecast;
+        console.log('✅ Forecast fetched via service:', this.forecastData.length, 'days');
+      } else {
+        console.log('⚠️ No forecast in service response, trying legacy method');
+        // Fallback to legacy forecast from attributes
+        const entity = this.hass.states[this.config.entity];
+        if (entity && entity.attributes.forecast) {
+          this.forecastData = entity.attributes.forecast;
+          console.log('✅ Forecast from attributes (legacy):', this.forecastData.length, 'days');
+        } else {
+          console.log('❌ No forecast data available from entity');
+        }
       }
     } catch (error) {
-      console.log('Weather service call failed, trying legacy method:', error);
+      console.log('❌ Weather service call failed:', error);
       // Fallback to legacy forecast from attributes
       const entity = this.hass.states[this.config.entity];
       if (entity && entity.attributes.forecast) {
         this.forecastData = entity.attributes.forecast;
-        console.log('Forecast from attributes (legacy):', this.forecastData);
+        console.log('✅ Forecast from attributes (legacy fallback):', this.forecastData.length, 'days');
+      } else {
+        console.log('❌ No forecast data available');
       }
     }
   }
