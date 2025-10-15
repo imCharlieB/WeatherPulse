@@ -143,6 +143,8 @@ export function getWeatherIcon(condition: string): string {
 
   if (conditionLower.includes('clear') || conditionLower.includes('sunny')) {
     return 'clear-day';
+  } else if (conditionLower.includes('partlycloudy') || conditionLower.includes('partly') || conditionLower.includes('partial')) {
+    return 'partlycloudy';
   } else if (conditionLower.includes('cloud')) {
     return 'cloudy';
   } else if (conditionLower.includes('rain')) {

@@ -309,7 +309,9 @@ export class WeatherPulseCard extends LitElement {
             </div>
             <div class="datetime-content">
               <div class="condition-temp">${conditionText}, ${Math.round(forecastTemp || currentTemp)}°${unit.replace('°', '')}</div>
-              <div class="time-large">${this.currentTime}</div>
+              <div class="time-large">
+                ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
+              </div>
               ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
               ${tempDisplayMode === 'both' && hasOutdoorSensor ? html`
                 <div class="actual-temp-below">
@@ -575,6 +577,16 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 300;
         line-height: 1;
         margin-bottom: 2px;
+        position: relative;
+      }
+
+      .time-period {
+        font-size: 16px;
+        font-weight: 400;
+        position: absolute;
+        top: 4px;
+        margin-left: 4px;
+        opacity: 0.9;
       }
 
       .time-medium {
@@ -706,7 +718,7 @@ export class WeatherPulseCard extends LitElement {
       .forecast-container.forecast-compact {
         flex-direction: row;
         gap: 8px;
-        overflow-x: auto;
+        justify-content: space-between;
       }
 
       .forecast-day {
@@ -797,11 +809,11 @@ export class WeatherPulseCard extends LitElement {
         flex-direction: column;
         align-items: center;
         gap: 8px;
-        padding: 12px;
+        padding: 12px 8px;
         background: var(--card-background-color, #1c1c1c);
         border-radius: 8px;
-        min-width: 80px;
-        flex-shrink: 0;
+        flex: 1;
+        min-width: 0;
       }
 
       .forecast-compact .day-name {
