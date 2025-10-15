@@ -311,18 +311,18 @@ export class WeatherPulseCard extends LitElement {
               <div class="condition-temp">${conditionText}, ${Math.round(forecastTemp || currentTemp)}°${unit.replace('°', '')}</div>
               <div class="time-large">${this.currentTime}</div>
               ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
+              ${tempDisplayMode === 'both' && hasOutdoorSensor ? html`
+                <div class="actual-temp-below">
+                  <span class="actual-temp-value">${Math.round(currentTemp)}°${unit.replace('°', '')}</span>
+                  <span class="actual-temp-label">Actual</span>
+                </div>
+              ` : tempDisplayMode === 'actual' && hasOutdoorSensor ? html`
+                <div class="actual-temp-below">
+                  <span class="actual-temp-value">${Math.round(currentTemp)}°${unit.replace('°', '')}</span>
+                  <span class="actual-temp-label">Actual</span>
+                </div>
+              ` : ''}
             </div>
-            ${tempDisplayMode === 'both' && hasOutdoorSensor ? html`
-              <div class="actual-temp-right">
-                <div class="actual-temp-value">${Math.round(currentTemp)}°${unit.replace('°', '')}</div>
-                <div class="actual-temp-label">Actual</div>
-              </div>
-            ` : tempDisplayMode === 'actual' && hasOutdoorSensor ? html`
-              <div class="actual-temp-right">
-                <div class="actual-temp-value">${Math.round(currentTemp)}°${unit.replace('°', '')}</div>
-                <div class="actual-temp-label">Actual</div>
-              </div>
-            ` : ''}
           </div>
         `;
     }
@@ -628,26 +628,23 @@ export class WeatherPulseCard extends LitElement {
         gap: 8px;
       }
 
-      .actual-temp-right {
+      .actual-temp-below {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2px;
-        margin-left: auto;
+        align-items: baseline;
+        gap: 8px;
+        margin-top: 4px;
+        justify-content: center;
       }
 
       .actual-temp-value {
-        font-size: 28px;
+        font-size: 24px;
         font-weight: 500;
-        line-height: 1;
       }
 
       .actual-temp-label {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 400;
         opacity: 0.8;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
       }
 
       .temp-display {
@@ -788,56 +785,63 @@ export class WeatherPulseCard extends LitElement {
 
       /* Compact view mode */
       .forecast-compact {
-        display: grid;
-        grid-template-columns: 50px 40px 100px 50px;
+        display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 8px 0;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
+      .day-name {
+        min-width: 50px;
+        font-weight: 500;
+        font-size: 16px;
+      }
+
       .day-icon-small {
-        font-size: 24px;
-        text-align: center;
+        min-width: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
       .day-icon-small .weather-icon-svg {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
       }
 
       .day-icon-small .icon-emoji {
-        font-size: 28px;
+        font-size: 32px;
       }
 
       .compact-temps {
         display: flex;
-        gap: 6px;
+        gap: 8px;
         align-items: baseline;
+        min-width: 100px;
       }
 
       .temp-high-compact {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 600;
       }
 
       .temp-separator {
-        font-size: 14px;
+        font-size: 16px;
         opacity: 0.5;
       }
 
       .temp-low-compact {
-        font-size: 14px;
+        font-size: 16px;
         opacity: 0.7;
       }
 
       .precip-compact {
-        font-size: 12px;
+        font-size: 14px;
         opacity: 0.7;
         text-align: right;
+        min-width: 50px;
       }
 
       /* Detailed view mode */

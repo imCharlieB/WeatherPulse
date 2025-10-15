@@ -48,9 +48,6 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
       `;
 
     case 'cloudy':
-    case 'partlycloudy':
-    case 'partly-cloudy-day':
-    case 'partly-cloudy-night':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
@@ -62,11 +59,63 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               50% { transform: translateY(-5px); }
             }
           </style>
-          <g class="cloud" fill="#E8E8E8">
-            <ellipse cx="35" cy="50" rx="15" ry="12" fill="#C8C8C8"/>
-            <ellipse cx="50" cy="45" rx="18" ry="15" fill="#D8D8D8"/>
-            <ellipse cx="65" cy="50" rx="15" ry="12" fill="#C8C8C8"/>
-            <rect x="20" y="50" width="60" height="15" rx="2" fill="#D0D0D0"/>
+          <g class="cloud">
+            <ellipse cx="35" cy="50" rx="18" ry="14" fill="#C8C8C8"/>
+            <ellipse cx="50" cy="45" rx="22" ry="18" fill="#D8D8D8"/>
+            <ellipse cx="65" cy="50" rx="18" ry="14" fill="#C8C8C8"/>
+            <rect x="17" y="50" width="66" height="18" rx="3" fill="#D0D0D0"/>
+          </g>
+        </svg>
+      `;
+
+    case 'partlycloudy':
+    case 'partly-cloudy-day':
+    case 'partly-cloudy-night':
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .sun-rays {
+              animation: ${animate ? 'rotate 20s linear infinite' : 'none'};
+              transform-origin: 30px 30px;
+            }
+            .sun-core {
+              animation: ${animate ? 'pulse 4s ease-in-out infinite' : 'none'};
+              transform-origin: 30px 30px;
+            }
+            .cloud {
+              animation: ${animate ? 'float 6s ease-in-out infinite' : 'none'};
+            }
+            @keyframes rotate {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+            @keyframes pulse {
+              0%, 100% { transform: scale(1); opacity: 1; }
+              50% { transform: scale(1.05); opacity: 0.9; }
+            }
+            @keyframes float {
+              0%, 100% { transform: translateY(0px); }
+              50% { transform: translateY(-3px); }
+            }
+          </style>
+          <!-- Sun in background -->
+          <g class="sun-rays">
+            <line x1="30" y1="12" x2="30" y2="18" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
+            <line x1="30" y1="42" x2="30" y2="48" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
+            <line x1="12" y1="30" x2="18" y2="30" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
+            <line x1="42" y1="30" x2="48" y2="30" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
+            <line x1="17" y1="17" x2="21" y2="21" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
+            <line x1="39" y1="39" x2="43" y2="43" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
+            <line x1="43" y1="17" x2="39" y2="21" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
+            <line x1="21" y1="39" x2="17" y2="43" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <circle class="sun-core" cx="30" cy="30" r="12" fill="#FDB813"/>
+          <!-- Cloud in foreground -->
+          <g class="cloud">
+            <ellipse cx="50" cy="60" rx="18" ry="14" fill="#E8E8E8"/>
+            <ellipse cx="65" cy="55" rx="22" ry="18" fill="#F0F0F0"/>
+            <ellipse cx="80" cy="60" rx="18" ry="14" fill="#E8E8E8"/>
+            <rect x="32" y="60" width="66" height="18" rx="3" fill="#ECECEC"/>
           </g>
         </svg>
       `;
