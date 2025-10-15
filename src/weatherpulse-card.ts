@@ -779,9 +779,9 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .forecast-container.forecast-compact {
-        flex-direction: row;
+        flex-direction: row !important;
         gap: 8px;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
       }
 

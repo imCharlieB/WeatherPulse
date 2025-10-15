@@ -914,9 +914,9 @@ function e(e,t,i,s){var a,o=arguments.length,r=o<3?t:null===s?s=Object.getOwnPro
       }
 
       .forecast-container.forecast-compact {
-        flex-direction: row;
+        flex-direction: row !important;
         gap: 8px;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
       }
 
