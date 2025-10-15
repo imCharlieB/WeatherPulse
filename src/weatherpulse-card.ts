@@ -40,7 +40,9 @@ export class WeatherPulseCard extends LitElement {
       header_mode: 'time-focused',
       show_date: true,
       show_time: true,
+      forecast_type: 'daily',
       forecast_days: 5,
+      hourly_count: 12,
       view_mode: 'standard',
       animate_icons: true,
       data_rows: ['temperature', 'precipitation', 'wind']
@@ -56,7 +58,9 @@ export class WeatherPulseCard extends LitElement {
       header_mode: 'time-focused',
       show_date: true,
       show_time: true,
+      forecast_type: 'daily',
       forecast_days: 5,
+      hourly_count: 12,
       view_mode: 'standard',
       animate_icons: true,
       data_rows: ['temperature', 'precipitation'],
@@ -120,32 +124,26 @@ export class WeatherPulseCard extends LitElement {
     }
 
     try {
-      // Use the official HA method: subscribe to weather forecast updates
-      console.log('Subscribing to forecast for:', this.config.entity);
+      // Determine forecast type from config
+      const forecastType = this.config.forecast_type || 'daily';
 
       this.hass.connection.subscribeMessage(
         (event: any) => {
-          console.log('Forecast event received:', event);
           if (event?.forecast) {
             this.forecastData = event.forecast;
-            console.log('✅ Forecast updated via subscription:', this.forecastData.length, 'days');
           }
         },
         {
           type: 'weather/subscribe_forecast',
-          forecast_type: 'daily',
+          forecast_type: forecastType,
           entity_id: this.config.entity,
         }
       );
     } catch (error) {
-      console.log('❌ Forecast subscription failed:', error);
       // Fallback to legacy forecast from attributes
       const entity = this.hass.states[this.config.entity];
       if (entity?.attributes?.forecast) {
         this.forecastData = entity.attributes.forecast;
-        console.log('✅ Forecast from attributes (legacy fallback):', this.forecastData.length, 'days');
-      } else {
-        console.log('❌ No forecast data available');
       }
     }
   }
@@ -158,11 +156,6 @@ export class WeatherPulseCard extends LitElement {
 
     // Use fetched forecast data or fall back to entity attributes
     let forecast = this.forecastData.length > 0 ? this.forecastData : (entity.attributes.forecast || []);
-
-    // Log for debugging
-    console.log('Weather entity:', entity.entity_id);
-    console.log('Weather attributes:', entity.attributes);
-    console.log('Forecast data:', forecast);
 
     return {
       temperature: entity.attributes.temperature,
@@ -361,9 +354,14 @@ export class WeatherPulseCard extends LitElement {
 
   private renderForecast(): unknown {
     const weatherData = this.getWeatherData();
-    const forecastDays = this.config.forecast_days || 5;
-    console.log('Rendering forecast with days:', forecastDays, 'Total available:', weatherData.forecast?.length);
-    const forecast = weatherData.forecast?.slice(0, forecastDays) || [];
+    const forecastType = this.config.forecast_type || 'daily';
+
+    // Determine how many items to show based on forecast type
+    const itemCount = forecastType === 'hourly'
+      ? (this.config.hourly_count || 12)
+      : (this.config.forecast_days || 5);
+
+    const forecast = weatherData.forecast?.slice(0, itemCount) || [];
     const viewMode = this.config.view_mode || 'standard';
 
     if (forecast.length === 0) {
@@ -379,7 +377,45 @@ export class WeatherPulseCard extends LitElement {
 
     return html`
       <div class="${containerClass}">
-        ${forecast.map(day => this.renderForecastDay(day, weatherData.temperature_unit || '°F', viewMode))}
+        ${forecast.map(item => forecastType === 'hourly'
+          ? this.renderForecastHour(item, weatherData.temperature_unit || '°F', viewMode)
+          : this.renderForecastDay(item, weatherData.temperature_unit || '°F', viewMode)
+        )}
+      </div>
+    `;
+  }
+
+  private renderForecastHour(hour: any, unit: string, viewMode: string = 'standard'): unknown {
+    // Parse the datetime to get hour
+    const date = new Date(hour.datetime);
+    const hourString = date.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
+    const temp = Math.round(hour.temperature || 0);
+    const precipProb = hour.precipitation_probability || 0;
+    const condition = hour.condition || 'clear';
+
+    // Compact mode - vertical card in horizontal row
+    if (viewMode === 'compact') {
+      return html`
+        <div class="forecast-hour forecast-compact">
+          <div class="hour-name">${hourString}</div>
+          <div class="day-icon-small">
+            ${this.renderWeatherIcon(condition)}
+          </div>
+          <div class="hour-temp">${temp}°</div>
+          ${precipProb > 0 ? html`<div class="precip-compact">💧${precipProb}%</div>` : ''}
+        </div>
+      `;
+    }
+
+    // Standard/Detailed mode
+    return html`
+      <div class="forecast-hour">
+        <div class="hour-name">${hourString}</div>
+        <div class="day-icon">
+          ${this.renderWeatherIcon(condition)}
+        </div>
+        <div class="hour-temp">${temp}°</div>
+        ${precipProb > 0 ? html`<div class="precip-prob">${precipProb}%</div>` : ''}
       </div>
     `;
   }
@@ -915,6 +951,42 @@ export class WeatherPulseCard extends LitElement {
         font-size: 14px;
         font-weight: 400;
         opacity: 0.75;
+      }
+
+      /* Hourly forecast styles */
+      .forecast-hour {
+        display: grid;
+        grid-template-columns: 55px 45px auto auto;
+        align-items: center;
+        gap: 10px;
+        padding: 5px 0;
+        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+      }
+
+      .forecast-hour:last-child {
+        border-bottom: none;
+      }
+
+      .hour-name {
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .hour-temp {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .forecast-compact .hour-name {
+        font-weight: 500;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .forecast-compact .hour-temp {
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
       }
     `;
   }

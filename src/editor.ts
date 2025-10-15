@@ -21,7 +21,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
     let value = target.value;
 
     // Convert numeric strings to numbers for certain fields
-    if (configValue === 'forecast_days' && value) {
+    if ((configValue === 'forecast_days' || configValue === 'hourly_count') && value) {
       value = parseInt(value, 10);
     }
 
@@ -34,7 +34,6 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
       [configValue]: value === '' ? undefined : value
     };
 
-    console.log('Config changed:', configValue, '=', value);
     fireEvent(this, 'config-changed', { config: newConfig });
   }
 
@@ -195,16 +194,41 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           </p>
 
           <ha-select
-            label="Forecast Days"
-            .configValue=${'forecast_days'}
-            .value=${String(this._config.forecast_days || 5)}
+            label="Forecast Type"
+            .configValue=${'forecast_type'}
+            .value=${this._config.forecast_type || 'daily'}
             @selected=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
-            <mwc-list-item value="5">5 Days</mwc-list-item>
-            <mwc-list-item value="7">7 Days</mwc-list-item>
-            <mwc-list-item value="10">10 Days</mwc-list-item>
+            <mwc-list-item value="daily">Daily</mwc-list-item>
+            <mwc-list-item value="hourly">Hourly</mwc-list-item>
           </ha-select>
+
+          ${this._config.forecast_type === 'hourly' ? html`
+            <ha-textfield
+              label="Number of Hours"
+              type="number"
+              .configValue=${'hourly_count'}
+              .value=${String(this._config.hourly_count || 12)}
+              @input=${this._valueChanged}
+              min="1"
+              max="48"
+            ></ha-textfield>
+            <p class="helper-text">
+              Show 1-48 hours of forecast data
+            </p>
+          ` : html`
+            <ha-select
+              label="Forecast Days"
+              .configValue=${'forecast_days'}
+              .value=${String(this._config.forecast_days || 5)}
+              @selected=${this._valueChanged}
+              @closed=${(ev: Event) => ev.stopPropagation()}
+            >
+              <mwc-list-item value="5">5 Days</mwc-list-item>
+              <mwc-list-item value="7">7 Days</mwc-list-item>
+            </ha-select>
+          `}
 
           <ha-select
             label="View Mode"

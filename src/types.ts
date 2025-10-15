@@ -8,7 +8,9 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   greeting_name?: string;
   show_date?: boolean;
   show_time?: boolean;
-  forecast_days?: 5 | 7 | 10;
+  forecast_type?: 'daily' | 'hourly';
+  forecast_days?: 5 | 7;
+  hourly_count?: number;
   view_mode?: 'compact' | 'standard' | 'detailed' | 'hourly' | 'weekly';
   theme?: 'retro' | 'glass' | 'minimal' | 'vibrant' | 'dark' | 'auto' | 'custom';
   animate_icons?: boolean;
