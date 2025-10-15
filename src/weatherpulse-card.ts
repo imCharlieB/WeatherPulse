@@ -876,9 +876,8 @@ export class WeatherPulseCard extends LitElement {
         padding: 12px 8px;
         background: var(--card-background-color, #1c1c1c);
         border-radius: 8px;
-        flex: 1 1 auto;
-        min-width: 70px;
-        max-width: 120px;
+        flex: 0 0 auto;
+        width: 80px;
       }
 
       .forecast-compact .day-name {
