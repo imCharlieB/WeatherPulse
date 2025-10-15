@@ -778,11 +778,13 @@ export class WeatherPulseCard extends LitElement {
         gap: 4px;
       }
 
+      .forecast-compact.forecast-container,
       .forecast-container.forecast-compact {
+        display: flex !important;
         flex-direction: row !important;
-        gap: 8px;
-        justify-content: flex-start;
-        flex-wrap: wrap;
+        gap: 8px !important;
+        justify-content: flex-start !important;
+        flex-wrap: wrap !important;
       }
 
       .forecast-day {
