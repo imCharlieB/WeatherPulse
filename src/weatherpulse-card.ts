@@ -219,13 +219,13 @@ export class WeatherPulseCard extends LitElement {
               ${this.renderWeatherIcon(weatherData.condition || 'clear')}
             </div>
             <div class="greeting-content">
+              <div class="time-large">${this.currentTime}</div>
               <div class="greeting-text">
                 ${getGreeting(this.config.greeting_name, weatherData.condition, currentTemp)}
               </div>
               <div class="suggestion-text">
                 ${getWeatherSuggestion(weatherData.condition, currentTemp)}
               </div>
-              ${this.config.show_time ? html`<div class="time-small">${this.currentTime}</div>` : ''}
               ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
               <div class="temp-display">${tempDisplay}</div>
             </div>
@@ -322,6 +322,7 @@ export class WeatherPulseCard extends LitElement {
   private renderForecast(): unknown {
     const weatherData = this.getWeatherData();
     const forecast = weatherData.forecast?.slice(0, this.config.forecast_days || 5) || [];
+    const viewMode = this.config.view_mode || 'standard';
 
     if (forecast.length === 0) {
       return html`
@@ -332,24 +333,70 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
+    const containerClass = `forecast-container forecast-${viewMode}`;
+
     return html`
-      <div class="forecast-container">
-        ${forecast.map(day => this.renderForecastDay(day, weatherData.temperature_unit || '°F'))}
+      <div class="${containerClass}">
+        ${forecast.map(day => this.renderForecastDay(day, weatherData.temperature_unit || '°F', viewMode))}
       </div>
     `;
   }
 
-  private renderForecastDay(day: any, unit: string): unknown {
+  private renderForecastDay(day: any, unit: string, viewMode: string = 'standard'): unknown {
     const dayName = getDayName(day.datetime);
     const highTemp = Math.round(day.temperature || 0);
     const lowTemp = Math.round(day.templow || 0);
     const precipProb = day.precipitation_probability || 0;
+    const humidity = day.humidity;
+    const windSpeed = day.wind_speed;
 
     // Calculate bar width percentages
     const tempRange = highTemp - lowTemp;
     const highPercent = 70; // Max 70% for visual balance
     const lowPercent = tempRange > 0 ? (lowTemp / highTemp) * highPercent : 30;
 
+    // Compact mode - minimal info
+    if (viewMode === 'compact') {
+      return html`
+        <div class="forecast-day forecast-compact">
+          <div class="day-name">${dayName}</div>
+          <div class="day-icon-small">
+            ${this.renderWeatherIcon(day.condition || 'clear')}
+          </div>
+          <span class="temp-high-compact">${highTemp}°</span>
+          <span class="temp-low-compact">${lowTemp}°</span>
+        </div>
+      `;
+    }
+
+    // Detailed mode - all info
+    if (viewMode === 'detailed') {
+      return html`
+        <div class="forecast-day forecast-detailed">
+          <div class="day-info">
+            <div class="day-name">${dayName}</div>
+            <div class="day-icon">
+              ${this.renderWeatherIcon(day.condition || 'clear')}
+            </div>
+          </div>
+          <div class="day-temp-range">
+            <span class="temp-low">${lowTemp}°</span>
+            <div class="temp-bar">
+              <div class="temp-bar-low" style="width: ${lowPercent}%"></div>
+              <div class="temp-bar-high" style="width: ${highPercent - lowPercent}%"></div>
+            </div>
+            <span class="temp-high">${highTemp}°</span>
+          </div>
+          <div class="day-details">
+            ${precipProb > 0 ? html`<div class="detail-item">💧 ${precipProb}%</div>` : ''}
+            ${humidity ? html`<div class="detail-item">💨 ${humidity}%</div>` : ''}
+            ${windSpeed ? html`<div class="detail-item">🌬️ ${windSpeed} mph</div>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // Standard mode (default)
     return html`
       <div class="forecast-day">
         <div class="day-name">${dayName}</div>
@@ -521,15 +568,17 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .greeting-text {
-        font-size: 32px;
+        font-size: 24px;
         font-weight: 500;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
+        line-height: 1.2;
       }
 
       .suggestion-text {
-        font-size: 18px;
+        font-size: 16px;
         opacity: 0.9;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
+        line-height: 1.2;
       }
 
       .card-content {
@@ -539,7 +588,7 @@ export class WeatherPulseCard extends LitElement {
       .forecast-container {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 8px;
       }
 
       .forecast-day {
@@ -547,7 +596,7 @@ export class WeatherPulseCard extends LitElement {
         grid-template-columns: 50px 50px 1fr auto;
         align-items: center;
         gap: 12px;
-        padding: 8px 0;
+        padding: 6px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
@@ -622,6 +671,65 @@ export class WeatherPulseCard extends LitElement {
       .no-forecast .helper {
         font-size: 0.85em;
         color: var(--secondary-text-color);
+      }
+
+      /* Compact view mode */
+      .forecast-compact {
+        display: grid;
+        grid-template-columns: 60px 40px 50px 50px;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 0;
+        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+      }
+
+      .day-icon-small {
+        font-size: 24px;
+        text-align: center;
+      }
+
+      .day-icon-small .weather-icon-svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .temp-high-compact {
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .temp-low-compact {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      /* Detailed view mode */
+      .forecast-detailed {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+      }
+
+      .day-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .day-details {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        font-size: 14px;
+        opacity: 0.8;
+      }
+
+      .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
       }
 
       .temp-actual {
