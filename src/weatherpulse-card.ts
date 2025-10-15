@@ -200,7 +200,7 @@ export class WeatherPulseCard extends LitElement {
     // Determine what temp to show based on mode
     const tempDisplayMode = this.config.temp_display_mode || 'forecast';
     const unit = weatherData.temperature_unit || '°F';
-    let tempDisplay = '';
+    let tempDisplay: unknown = '';
     let tempLabel = '';
 
     if (tempDisplayMode === 'both' && hasOutdoorSensor && forecastTemp) {
