@@ -361,7 +361,9 @@ export class WeatherPulseCard extends LitElement {
 
   private renderForecast(): unknown {
     const weatherData = this.getWeatherData();
-    const forecast = weatherData.forecast?.slice(0, this.config.forecast_days || 5) || [];
+    const forecastDays = this.config.forecast_days || 5;
+    console.log('Rendering forecast with days:', forecastDays, 'Total available:', weatherData.forecast?.length);
+    const forecast = weatherData.forecast?.slice(0, forecastDays) || [];
     const viewMode = this.config.view_mode || 'standard';
 
     if (forecast.length === 0) {

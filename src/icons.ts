@@ -74,12 +74,8 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
-            .sun-rays {
+            .sun-group {
               animation: ${animate ? 'rotate 20s linear infinite' : 'none'};
-              transform-origin: 30px 30px;
-            }
-            .sun-core {
-              animation: ${animate ? 'pulse 4s ease-in-out infinite' : 'none'};
               transform-origin: 30px 30px;
             }
             .cloud {
@@ -89,17 +85,13 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               from { transform: rotate(0deg); }
               to { transform: rotate(360deg); }
             }
-            @keyframes pulse {
-              0%, 100% { transform: scale(1); opacity: 1; }
-              50% { transform: scale(1.05); opacity: 0.9; }
-            }
             @keyframes float {
               0%, 100% { transform: translateY(0px); }
               50% { transform: translateY(-3px); }
             }
           </style>
-          <!-- Sun in background -->
-          <g class="sun-rays">
+          <!-- Sun in background (entire sun group rotates together) -->
+          <g class="sun-group">
             <line x1="30" y1="12" x2="30" y2="18" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
             <line x1="30" y1="42" x2="30" y2="48" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
             <line x1="12" y1="30" x2="18" y2="30" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
@@ -108,8 +100,8 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
             <line x1="39" y1="39" x2="43" y2="43" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
             <line x1="43" y1="17" x2="39" y2="21" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
             <line x1="21" y1="39" x2="17" y2="43" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="30" cy="30" r="12" fill="#FDB813"/>
           </g>
-          <circle class="sun-core" cx="30" cy="30" r="12" fill="#FDB813"/>
           <!-- Cloud in foreground -->
           <g class="cloud">
             <ellipse cx="50" cy="60" rx="18" ry="14" fill="#E8E8E8"/>
