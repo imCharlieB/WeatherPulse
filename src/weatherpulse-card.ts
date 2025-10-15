@@ -388,34 +388,39 @@ export class WeatherPulseCard extends LitElement {
           </div>
           <div class="compact-temps">
             <span class="temp-high-compact">${highTemp}°</span>
+            <span class="temp-separator">/</span>
             <span class="temp-low-compact">${lowTemp}°</span>
           </div>
-          ${precipProb > 0 ? html`<div class="precip-compact">${precipProb}%</div>` : ''}
+          ${precipProb > 0 ? html`<div class="precip-compact">💧${precipProb}%</div>` : html`<div></div>`}
         </div>
       `;
     }
 
-    // Detailed mode - compact but with extra info
+    // Detailed mode - standard layout with extra details below
     if (viewMode === 'detailed') {
       return html`
         <div class="forecast-day forecast-detailed">
-          <div class="day-name">${dayName}</div>
-          <div class="day-icon">
-            ${this.renderWeatherIcon(day.condition || 'clear')}
-          </div>
-          <div class="day-temp-range">
-            <span class="temp-low">${lowTemp}°</span>
-            <div class="temp-bar">
-              <div class="temp-bar-low" style="width: ${lowPercent}%"></div>
-              <div class="temp-bar-high" style="width: ${highPercent - lowPercent}%"></div>
+          <div class="day-info-row">
+            <div class="day-name">${dayName}</div>
+            <div class="day-icon">
+              ${this.renderWeatherIcon(day.condition || 'clear')}
             </div>
-            <span class="temp-high">${highTemp}°</span>
+            <div class="day-temp-range">
+              <span class="temp-low">${lowTemp}°</span>
+              <div class="temp-bar">
+                <div class="temp-bar-low" style="width: ${lowPercent}%"></div>
+                <div class="temp-bar-high" style="width: ${highPercent - lowPercent}%"></div>
+              </div>
+              <span class="temp-high">${highTemp}°</span>
+            </div>
           </div>
-          <div class="day-details-inline">
-            ${precipProb > 0 ? html`<span>💧${precipProb}%</span>` : ''}
-            ${humidity ? html`<span>💨${humidity}%</span>` : ''}
-            ${windSpeed ? html`<span>🌬️${Math.round(windSpeed)}</span>` : ''}
-          </div>
+          ${precipProb > 0 || humidity || windSpeed ? html`
+            <div class="day-details">
+              ${precipProb > 0 ? html`<div class="detail-item"><span>💧</span> ${precipProb}%</div>` : ''}
+              ${humidity ? html`<div class="detail-item"><span>💨</span> ${humidity}%</div>` : ''}
+              ${windSpeed ? html`<div class="detail-item"><span>🌬️</span> ${Math.round(windSpeed)} mph</div>` : ''}
+            </div>
+          ` : ''}
         </div>
       `;
     }
@@ -594,13 +599,13 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .temp-main {
-        font-size: 48px;
+        font-size: 32px;
         font-weight: 500;
         line-height: 1;
       }
 
       .temp-label {
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 400;
         opacity: 0.8;
         text-transform: uppercase;
@@ -724,10 +729,10 @@ export class WeatherPulseCard extends LitElement {
       /* Compact view mode */
       .forecast-compact {
         display: grid;
-        grid-template-columns: 65px 40px 1fr 50px;
+        grid-template-columns: 60px 35px 1fr 60px;
         align-items: center;
-        gap: 10px;
-        padding: 6px 0;
+        gap: 8px;
+        padding: 4px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
@@ -743,8 +748,8 @@ export class WeatherPulseCard extends LitElement {
 
       .compact-temps {
         display: flex;
-        gap: 8px;
-        align-items: center;
+        gap: 6px;
+        align-items: baseline;
       }
 
       .temp-high-compact {
@@ -752,50 +757,54 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 600;
       }
 
+      .temp-separator {
+        font-size: 14px;
+        opacity: 0.5;
+      }
+
       .temp-low-compact {
         font-size: 14px;
         opacity: 0.7;
-        margin-left: 4px;
       }
 
       .precip-compact {
-        font-size: 13px;
+        font-size: 12px;
         opacity: 0.7;
         text-align: right;
       }
 
       /* Detailed view mode */
       .forecast-detailed {
-        display: grid;
-        grid-template-columns: 60px 45px 1fr auto;
-        align-items: center;
-        gap: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
         padding: 8px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
-      .day-info {
-        display: flex;
+      .day-info-row {
+        display: grid;
+        grid-template-columns: 55px 45px 1fr auto;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
       }
 
-      .day-details-inline {
+      .day-details {
         display: flex;
-        gap: 12px;
+        gap: 16px;
         font-size: 13px;
         opacity: 0.8;
-        justify-content: flex-end;
-      }
-
-      .day-details-inline span {
-        white-space: nowrap;
+        padding-left: 8px;
       }
 
       .detail-item {
         display: flex;
         align-items: center;
         gap: 4px;
+      }
+
+      .detail-item span {
+        font-size: 14px;
       }
 
       .temp-actual {
