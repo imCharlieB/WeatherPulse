@@ -298,15 +298,30 @@ export class WeatherPulseCard extends LitElement {
         break;
 
       default: // time-focused
+        // Format condition text (capitalize first letter of each word)
+        const conditionText = (weatherData.condition || 'clear')
+          .split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
         headerContent = html`
           <div class="datetime-header">
             <div class="weather-icon ${getWeatherIcon(weatherData.condition || 'clear')}">
               ${this.renderWeatherIcon(weatherData.condition || 'clear')}
             </div>
             <div class="datetime-content">
+              <div class="condition-temp">${conditionText}, ${Math.round(forecastTemp || currentTemp)}°${unit.replace('°', '')}</div>
               <div class="time-large">${this.currentTime}</div>
               ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
-              ${tempDisplay}
+              ${tempDisplayMode === 'both' && hasOutdoorSensor ? html`
+                <div class="actual-temp-display">
+                  ${Math.round(currentTemp)}°${unit.replace('°', '')}
+                  <span class="actual-label">Actual</span>
+                </div>
+              ` : tempDisplayMode === 'actual' && hasOutdoorSensor ? html`
+                <div class="actual-temp-display">
+                  ${Math.round(currentTemp)}°${unit.replace('°', '')}
+                  <span class="actual-label">Actual</span>
+                </div>
+              ` : ''}
             </div>
           </div>
         `;
@@ -590,6 +605,22 @@ export class WeatherPulseCard extends LitElement {
         opacity: 0.9;
       }
 
+      .condition-temp {
+        font-size: 20px;
+        font-weight: 400;
+        opacity: 0.95;
+        margin-bottom: 6px;
+      }
+
+      .actual-temp-display {
+        font-size: 22px;
+        font-weight: 500;
+        margin-top: 8px;
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+      }
+
       .temp-display {
         display: flex;
         flex-direction: column;
@@ -818,9 +849,9 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .actual-label {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 400;
-        opacity: 0.8;
+        opacity: 0.75;
       }
     `;
   }

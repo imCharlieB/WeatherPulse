@@ -32,23 +32,25 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
             }
           </style>
           <!-- Sun rays -->
-          <g class="sun-rays" fill="currentColor">
-            <line x1="50" y1="10" x2="50" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="50" y1="80" x2="50" y2="90" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="10" y1="50" x2="20" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="80" y1="50" x2="90" y2="50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="21" y1="21" x2="28" y2="28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="72" y1="72" x2="79" y2="79" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="79" y1="21" x2="72" y2="28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="28" y1="72" x2="21" y2="79" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <g class="sun-rays">
+            <line x1="50" y1="10" x2="50" y2="20" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
+            <line x1="50" y1="80" x2="50" y2="90" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
+            <line x1="10" y1="50" x2="20" y2="50" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
+            <line x1="80" y1="50" x2="90" y2="50" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
+            <line x1="21" y1="21" x2="28" y2="28" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
+            <line x1="72" y1="72" x2="79" y2="79" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
+            <line x1="79" y1="21" x2="72" y2="28" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
+            <line x1="28" y1="72" x2="21" y2="79" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
           </g>
           <!-- Sun core -->
-          <circle class="sun-core" cx="50" cy="50" r="20" fill="currentColor"/>
+          <circle class="sun-core" cx="50" cy="50" r="20" fill="#FDB813"/>
         </svg>
       `;
 
     case 'cloudy':
     case 'partlycloudy':
+    case 'partly-cloudy-day':
+    case 'partly-cloudy-night':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
@@ -60,17 +62,18 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               50% { transform: translateY(-5px); }
             }
           </style>
-          <g class="cloud" fill="currentColor">
-            <ellipse cx="35" cy="50" rx="15" ry="12"/>
-            <ellipse cx="50" cy="45" rx="18" ry="15"/>
-            <ellipse cx="65" cy="50" rx="15" ry="12"/>
-            <rect x="20" y="50" width="60" height="15" rx="2"/>
+          <g class="cloud" fill="#E8E8E8">
+            <ellipse cx="35" cy="50" rx="15" ry="12" fill="#C8C8C8"/>
+            <ellipse cx="50" cy="45" rx="18" ry="15" fill="#D8D8D8"/>
+            <ellipse cx="65" cy="50" rx="15" ry="12" fill="#C8C8C8"/>
+            <rect x="20" y="50" width="60" height="15" rx="2" fill="#D0D0D0"/>
           </g>
         </svg>
       `;
 
     case 'rainy':
     case 'pouring':
+    case 'rain':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
@@ -92,24 +95,25 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               100% { transform: translateY(20px); opacity: 0; }
             }
           </style>
-          <g class="cloud" fill="currentColor">
-            <ellipse cx="35" cy="35" rx="12" ry="10"/>
-            <ellipse cx="50" cy="30" rx="15" ry="12"/>
-            <ellipse cx="65" cy="35" rx="12" ry="10"/>
-            <rect x="23" y="35" width="54" height="12" rx="2"/>
+          <g class="cloud">
+            <ellipse cx="35" cy="35" rx="12" ry="10" fill="#B0B0B0"/>
+            <ellipse cx="50" cy="30" rx="15" ry="12" fill="#C0C0C0"/>
+            <ellipse cx="65" cy="35" rx="12" ry="10" fill="#B0B0B0"/>
+            <rect x="23" y="35" width="54" height="12" rx="2" fill="#B8B8B8"/>
           </g>
-          <g fill="currentColor" opacity="0.7">
-            <line class="rain-drop" x1="30" y1="55" x2="30" y2="70" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <line class="rain-drop" x1="45" y1="55" x2="45" y2="70" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <line class="rain-drop" x1="60" y1="55" x2="60" y2="70" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <line class="rain-drop" x1="37" y1="60" x2="37" y2="75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <line class="rain-drop" x1="52" y1="60" x2="52" y2="75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <g opacity="0.8">
+            <line class="rain-drop" x1="30" y1="55" x2="30" y2="70" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
+            <line class="rain-drop" x1="45" y1="55" x2="45" y2="70" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
+            <line class="rain-drop" x1="60" y1="55" x2="60" y2="70" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
+            <line class="rain-drop" x1="37" y1="60" x2="37" y2="75" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
+            <line class="rain-drop" x1="52" y1="60" x2="52" y2="75" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
           </g>
         </svg>
       `;
 
     case 'snowy':
     case 'snow':
+    case 'snowy-rainy':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
@@ -132,13 +136,13 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               100% { transform: translateY(25px) translateX(3px); opacity: 0; }
             }
           </style>
-          <g class="cloud" fill="currentColor">
-            <ellipse cx="35" cy="35" rx="12" ry="10"/>
-            <ellipse cx="50" cy="30" rx="15" ry="12"/>
-            <ellipse cx="65" cy="35" rx="12" ry="10"/>
-            <rect x="23" y="35" width="54" height="12" rx="2"/>
+          <g class="cloud">
+            <ellipse cx="35" cy="35" rx="12" ry="10" fill="#B8B8B8"/>
+            <ellipse cx="50" cy="30" rx="15" ry="12" fill="#C8C8C8"/>
+            <ellipse cx="65" cy="35" rx="12" ry="10" fill="#B8B8B8"/>
+            <rect x="23" y="35" width="54" height="12" rx="2" fill="#C0C0C0"/>
           </g>
-          <g fill="currentColor" opacity="0.8">
+          <g fill="#E3F2FD" opacity="0.9">
             <circle class="snowflake" cx="30" cy="55" r="3"/>
             <circle class="snowflake" cx="45" cy="60" r="3"/>
             <circle class="snowflake" cx="60" cy="55" r="3"/>
@@ -150,6 +154,7 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
 
     case 'lightning':
     case 'thunderstorm':
+    case 'lightning-rainy':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
@@ -169,11 +174,11 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               55%, 65% { opacity: 1; }
             }
           </style>
-          <g class="storm-cloud" fill="currentColor">
-            <ellipse cx="35" cy="35" rx="14" ry="11"/>
-            <ellipse cx="50" cy="28" rx="17" ry="14"/>
-            <ellipse cx="65" cy="35" rx="14" ry="11"/>
-            <rect x="21" y="35" width="58" height="14" rx="2"/>
+          <g class="storm-cloud">
+            <ellipse cx="35" cy="35" rx="14" ry="11" fill="#606060"/>
+            <ellipse cx="50" cy="28" rx="17" ry="14" fill="#707070"/>
+            <ellipse cx="65" cy="35" rx="14" ry="11" fill="#606060"/>
+            <rect x="21" y="35" width="58" height="14" rx="2" fill="#686868"/>
           </g>
           <path class="lightning" d="M 50 50 L 42 65 L 48 65 L 43 80 L 55 62 L 50 62 Z"
                 fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
@@ -182,6 +187,7 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
 
     case 'fog':
     case 'mist':
+    case 'foggy':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
@@ -196,7 +202,7 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               50% { transform: translateX(5px); opacity: 0.3; }
             }
           </style>
-          <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" opacity="0.6">
+          <g fill="none" stroke="#A0A0A0" stroke-width="4" stroke-linecap="round" opacity="0.7">
             <line class="fog-line" x1="20" y1="35" x2="80" y2="35"/>
             <line class="fog-line" x1="15" y1="50" x2="75" y2="50"/>
             <line class="fog-line" x1="25" y1="65" x2="85" y2="65"/>
@@ -206,6 +212,8 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
       `;
 
     case 'windy':
+    case 'wind':
+    case 'exceptional':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
@@ -220,7 +228,7 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               100% { transform: translateX(10px); opacity: 0; }
             }
           </style>
-          <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+          <g fill="none" stroke="#90CAF9" stroke-width="3" stroke-linecap="round">
             <path class="wind-line" d="M 15 30 Q 40 25 65 30 T 95 30"/>
             <path class="wind-line" d="M 10 50 Q 35 45 60 50 T 90 50"/>
             <path class="wind-line" d="M 15 70 Q 40 65 65 70 T 95 70"/>
@@ -232,7 +240,7 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
       // Default to sunny icon
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="20" fill="currentColor"/>
+          <circle cx="50" cy="50" r="20" fill="#FDB813"/>
         </svg>
       `;
   }
