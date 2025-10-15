@@ -199,14 +199,37 @@ export class WeatherPulseCard extends LitElement {
 
     // Determine what temp to show based on mode
     const tempDisplayMode = this.config.temp_display_mode || 'forecast';
+    const unit = weatherData.temperature_unit || '°F';
     let tempDisplay = '';
+    let tempLabel = '';
 
     if (tempDisplayMode === 'both' && hasOutdoorSensor && forecastTemp) {
-      tempDisplay = `${Math.round(currentTemp)}° (Actual) / ${Math.round(forecastTemp)}° (Forecast)`;
+      tempDisplay = html`
+        <div class="temp-display-wrapper">
+          <div class="temp-display">
+            <div class="temp-main">${Math.round(currentTemp)}°${unit.replace('°', '')}</div>
+            <div class="temp-label">Actual</div>
+          </div>
+          <div class="temp-display">
+            <div class="temp-main">${Math.round(forecastTemp)}°${unit.replace('°', '')}</div>
+            <div class="temp-label">Forecast</div>
+          </div>
+        </div>
+      `;
     } else if (tempDisplayMode === 'actual' && hasOutdoorSensor) {
-      tempDisplay = `${Math.round(currentTemp)}° Actual`;
+      tempDisplay = html`
+        <div class="temp-display">
+          <div class="temp-main">${Math.round(currentTemp)}°${unit.replace('°', '')}</div>
+          <div class="temp-label">Actual</div>
+        </div>
+      `;
     } else {
-      tempDisplay = `${Math.round(currentTemp)}${weatherData.temperature_unit}`;
+      tempDisplay = html`
+        <div class="temp-display">
+          <div class="temp-main">${Math.round(currentTemp)}°${unit.replace('°', '')}</div>
+          <div class="temp-label">Forecast</div>
+        </div>
+      `;
     }
 
     let headerContent;
@@ -227,7 +250,7 @@ export class WeatherPulseCard extends LitElement {
                 ${getWeatherSuggestion(weatherData.condition, currentTemp)}
               </div>
               ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
-              <div class="temp-display">${tempDisplay}</div>
+              ${tempDisplay}
             </div>
           </div>
         `;
@@ -239,7 +262,7 @@ export class WeatherPulseCard extends LitElement {
             <div class="weather-icon ${getWeatherIcon(weatherData.condition || 'clear')}">
               ${this.renderWeatherIcon(weatherData.condition || 'clear')}
             </div>
-            <div class="temp-display">${tempDisplay}</div>
+            ${tempDisplay}
           </div>
         `;
         break;
@@ -253,7 +276,7 @@ export class WeatherPulseCard extends LitElement {
             <div class="datetime-content">
               <div class="date-large">${this.currentDate}</div>
               ${this.config.show_time ? html`<div class="time-small">${this.currentTime}</div>` : ''}
-              <div class="temp-display">${tempDisplay}</div>
+              ${tempDisplay}
             </div>
           </div>
         `;
@@ -268,7 +291,7 @@ export class WeatherPulseCard extends LitElement {
             <div class="datetime-content">
               ${this.config.show_time ? html`<div class="time-medium">${this.currentTime}</div>` : ''}
               ${this.config.show_date ? html`<div class="date-medium">${this.currentDate}</div>` : ''}
-              <div class="temp-display">${tempDisplay}</div>
+              ${tempDisplay}
             </div>
           </div>
         `;
@@ -283,7 +306,7 @@ export class WeatherPulseCard extends LitElement {
             <div class="datetime-content">
               <div class="time-large">${this.currentTime}</div>
               ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
-              <div class="temp-display">${tempDisplay}</div>
+              ${tempDisplay}
             </div>
           </div>
         `;
@@ -355,7 +378,7 @@ export class WeatherPulseCard extends LitElement {
     const highPercent = 70; // Max 70% for visual balance
     const lowPercent = tempRange > 0 ? (lowTemp / highTemp) * highPercent : 30;
 
-    // Compact mode - minimal info
+    // Compact mode - minimal info (like your reference image)
     if (viewMode === 'compact') {
       return html`
         <div class="forecast-day forecast-compact">
@@ -363,21 +386,22 @@ export class WeatherPulseCard extends LitElement {
           <div class="day-icon-small">
             ${this.renderWeatherIcon(day.condition || 'clear')}
           </div>
-          <span class="temp-high-compact">${highTemp}°</span>
-          <span class="temp-low-compact">${lowTemp}°</span>
+          <div class="compact-temps">
+            <span class="temp-high-compact">${highTemp}°</span>
+            <span class="temp-low-compact">${lowTemp}°</span>
+          </div>
+          ${precipProb > 0 ? html`<div class="precip-compact">${precipProb}%</div>` : ''}
         </div>
       `;
     }
 
-    // Detailed mode - all info
+    // Detailed mode - compact but with extra info
     if (viewMode === 'detailed') {
       return html`
         <div class="forecast-day forecast-detailed">
-          <div class="day-info">
-            <div class="day-name">${dayName}</div>
-            <div class="day-icon">
-              ${this.renderWeatherIcon(day.condition || 'clear')}
-            </div>
+          <div class="day-name">${dayName}</div>
+          <div class="day-icon">
+            ${this.renderWeatherIcon(day.condition || 'clear')}
           </div>
           <div class="day-temp-range">
             <span class="temp-low">${lowTemp}°</span>
@@ -387,10 +411,10 @@ export class WeatherPulseCard extends LitElement {
             </div>
             <span class="temp-high">${highTemp}°</span>
           </div>
-          <div class="day-details">
-            ${precipProb > 0 ? html`<div class="detail-item">💧 ${precipProb}%</div>` : ''}
-            ${humidity ? html`<div class="detail-item">💨 ${humidity}%</div>` : ''}
-            ${windSpeed ? html`<div class="detail-item">🌬️ ${windSpeed} mph</div>` : ''}
+          <div class="day-details-inline">
+            ${precipProb > 0 ? html`<span>💧${precipProb}%</span>` : ''}
+            ${humidity ? html`<span>💨${humidity}%</span>` : ''}
+            ${windSpeed ? html`<span>🌬️${Math.round(windSpeed)}</span>` : ''}
           </div>
         </div>
       `;
@@ -562,9 +586,33 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .temp-display {
-        font-size: 28px;
-        font-weight: 500;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
         margin-top: 8px;
+      }
+
+      .temp-main {
+        font-size: 48px;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      .temp-label {
+        font-size: 12px;
+        font-weight: 400;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .temp-display-wrapper {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 12px;
       }
 
       .greeting-text {
@@ -588,15 +636,15 @@ export class WeatherPulseCard extends LitElement {
       .forecast-container {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 4px;
       }
 
       .forecast-day {
         display: grid;
-        grid-template-columns: 50px 50px 1fr auto;
+        grid-template-columns: 55px 45px 1fr auto;
         align-items: center;
-        gap: 12px;
-        padding: 6px 0;
+        gap: 10px;
+        padding: 5px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
@@ -676,10 +724,10 @@ export class WeatherPulseCard extends LitElement {
       /* Compact view mode */
       .forecast-compact {
         display: grid;
-        grid-template-columns: 60px 40px 50px 50px;
+        grid-template-columns: 65px 40px 1fr 50px;
         align-items: center;
-        gap: 8px;
-        padding: 4px 0;
+        gap: 10px;
+        padding: 6px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
@@ -693,6 +741,12 @@ export class WeatherPulseCard extends LitElement {
         height: 24px;
       }
 
+      .compact-temps {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
       .temp-high-compact {
         font-size: 16px;
         font-weight: 600;
@@ -701,14 +755,22 @@ export class WeatherPulseCard extends LitElement {
       .temp-low-compact {
         font-size: 14px;
         opacity: 0.7;
+        margin-left: 4px;
+      }
+
+      .precip-compact {
+        font-size: 13px;
+        opacity: 0.7;
+        text-align: right;
       }
 
       /* Detailed view mode */
       .forecast-detailed {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding: 12px 0;
+        display: grid;
+        grid-template-columns: 60px 45px 1fr auto;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
@@ -718,12 +780,16 @@ export class WeatherPulseCard extends LitElement {
         gap: 12px;
       }
 
-      .day-details {
+      .day-details-inline {
         display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        font-size: 14px;
+        gap: 12px;
+        font-size: 13px;
         opacity: 0.8;
+        justify-content: flex-end;
+      }
+
+      .day-details-inline span {
+        white-space: nowrap;
       }
 
       .detail-item {

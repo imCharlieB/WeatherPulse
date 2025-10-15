@@ -197,7 +197,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           <ha-select
             label="Forecast Days"
             .configValue=${'forecast_days'}
-            .value=${this._config.forecast_days || 5}
+            .value=${String(this._config.forecast_days || 5)}
             @selected=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
