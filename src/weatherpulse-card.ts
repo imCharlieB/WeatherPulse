@@ -399,7 +399,7 @@ export class WeatherPulseCard extends LitElement {
     // Compact mode - vertical card in horizontal row (same as daily)
     if (viewMode === 'compact') {
       return html`
-        <div class="forecast-compact">
+        <div class="forecast-hour forecast-compact">
           <div class="hour-name">${hourString}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(condition)}
@@ -461,7 +461,7 @@ export class WeatherPulseCard extends LitElement {
     // Compact mode - vertical card in horizontal row
     if (viewMode === 'compact') {
       return html`
-        <div class="forecast-compact">
+        <div class="forecast-day forecast-compact">
           <div class="day-name">${dayName}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(day.condition || 'clear')}
@@ -878,8 +878,8 @@ export class WeatherPulseCard extends LitElement {
         padding: 12px 8px;
         background: var(--card-background-color, #1c1c1c);
         border-radius: 8px;
-        flex: 0 0 auto;
-        width: 80px;
+        flex: 1;
+        min-width: 0;
       }
 
       .forecast-compact .day-name {

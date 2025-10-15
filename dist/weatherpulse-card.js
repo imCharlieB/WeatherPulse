@@ -591,7 +591,7 @@ function t(t,e,i,s){var a,o=arguments.length,r=o<3?e:null===s?s=Object.getOwnPro
         ${s.map(i=>"hourly"===e?this.renderForecastHour(i,t.temperature_unit||"°F",a):this.renderForecastDay(i,t.temperature_unit||"°F",a))}
       </div>
     `}renderForecastHour(t,e,i="standard"){const s=new Date(t.datetime).toLocaleTimeString("en-US",{hour:"numeric",hour12:!0}),a=Math.round(t.temperature||0),o=t.precipitation_probability||0,r=t.condition||"clear",n=t.humidity,l=t.wind_speed;return"compact"===i?j`
-        <div class="forecast-compact">
+        <div class="forecast-hour forecast-compact">
           <div class="hour-name">${s}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(r)}
@@ -626,7 +626,7 @@ function t(t,e,i,s){var a,o=arguments.length,r=o<3?e:null===s?s=Object.getOwnPro
         ${o>0?j`<div class="precip-prob">${o}%</div>`:""}
       </div>
     `}renderForecastDay(t,e,i="standard"){const s=(a=t.datetime,new Date(a).toLocaleDateString("en-US",{weekday:"short"}));var a;const o=Math.round(t.temperature||0),r=Math.round(t.templow||0),n=t.precipitation_probability||0,l=t.humidity,c=t.wind_speed,d=o-r>0?r/o*70:30;return"compact"===i?j`
-        <div class="forecast-compact">
+        <div class="forecast-day forecast-compact">
           <div class="day-name">${s}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(t.condition||"clear")}
@@ -1013,8 +1013,8 @@ function t(t,e,i,s){var a,o=arguments.length,r=o<3?e:null===s?s=Object.getOwnPro
         padding: 12px 8px;
         background: var(--card-background-color, #1c1c1c);
         border-radius: 8px;
-        flex: 0 0 auto;
-        width: 80px;
+        flex: 1;
+        min-width: 0;
       }
 
       .forecast-compact .day-name {
