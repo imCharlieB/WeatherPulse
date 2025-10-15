@@ -373,7 +373,8 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
-    const containerClass = `forecast-container forecast-${viewMode}`;
+    // Add forecast-type class for hourly vs daily styling
+    const containerClass = `forecast-container forecast-${viewMode} forecast-type-${forecastType}`;
 
     return html`
       <div class="${containerClass}">
@@ -392,11 +393,13 @@ export class WeatherPulseCard extends LitElement {
     const temp = Math.round(hour.temperature || 0);
     const precipProb = hour.precipitation_probability || 0;
     const condition = hour.condition || 'clear';
+    const humidity = hour.humidity;
+    const windSpeed = hour.wind_speed;
 
-    // Compact mode - vertical card in horizontal row
+    // Compact mode - vertical card in horizontal row (same as daily)
     if (viewMode === 'compact') {
       return html`
-        <div class="forecast-hour forecast-compact">
+        <div class="forecast-compact">
           <div class="hour-name">${hourString}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(condition)}
@@ -407,7 +410,29 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
-    // Standard/Detailed mode
+    // Detailed mode - with extra weather details
+    if (viewMode === 'detailed') {
+      return html`
+        <div class="forecast-hour forecast-detailed">
+          <div class="hour-info-row">
+            <div class="hour-name">${hourString}</div>
+            <div class="day-icon">
+              ${this.renderWeatherIcon(condition)}
+            </div>
+            <div class="hour-temp-display">${temp}°</div>
+          </div>
+          ${precipProb > 0 || humidity || windSpeed ? html`
+            <div class="hour-details">
+              ${precipProb > 0 ? html`<div class="detail-item"><span>💧</span> ${precipProb}%</div>` : ''}
+              ${humidity ? html`<div class="detail-item"><span>💨</span> ${humidity}%</div>` : ''}
+              ${windSpeed ? html`<div class="detail-item"><span>🌬️</span> ${Math.round(windSpeed)} mph</div>` : ''}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // Standard mode - simple grid layout
     return html`
       <div class="forecast-hour">
         <div class="hour-name">${hourString}</div>
@@ -574,22 +599,22 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .weather-icon {
-        font-size: 120px;
+        font-size: 160px;
         display: flex;
         align-items: center;
         justify-content: center;
-        min-width: 140px;
+        min-width: 180px;
       }
 
       .icon-emoji {
         display: block;
-        font-size: 120px;
+        font-size: 160px;
         filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
       }
 
       .weather-icon-svg {
-        width: 120px;
-        height: 120px;
+        width: 160px;
+        height: 160px;
         filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
       }
 
@@ -969,6 +994,20 @@ export class WeatherPulseCard extends LitElement {
         border-bottom: none;
       }
 
+      /* 2-column layout for hourly standard mode */
+      .forecast-type-hourly.forecast-standard {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 16px;
+      }
+
+      .forecast-type-hourly.forecast-standard .forecast-hour {
+        border-bottom: none;
+        padding: 8px;
+        background: var(--card-background-color, rgba(0,0,0,0.05));
+        border-radius: 8px;
+      }
+
       .hour-name {
         font-weight: 500;
         font-size: 14px;
@@ -979,6 +1018,36 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 500;
       }
 
+      /* Hourly detailed mode */
+      .forecast-hour.forecast-detailed {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+      }
+
+      .hour-info-row {
+        display: grid;
+        grid-template-columns: 55px 45px auto;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .hour-temp-display {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .hour-details {
+        display: flex;
+        gap: 16px;
+        font-size: 13px;
+        opacity: 0.8;
+        padding-left: 8px;
+      }
+
+      /* Compact mode hour name */
       .forecast-compact .hour-name {
         font-weight: 500;
         font-size: 12px;
