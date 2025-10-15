@@ -393,7 +393,7 @@ export class WeatherPulseCard extends LitElement {
     const highPercent = 70; // Max 70% for visual balance
     const lowPercent = tempRange > 0 ? (lowTemp / highTemp) * highPercent : 30;
 
-    // Compact mode - minimal info (like your reference image)
+    // Compact mode - vertical card in horizontal row
     if (viewMode === 'compact') {
       return html`
         <div class="forecast-day forecast-compact">
@@ -403,10 +403,9 @@ export class WeatherPulseCard extends LitElement {
           </div>
           <div class="compact-temps">
             <span class="temp-high-compact">${highTemp}°</span>
-            <span class="temp-separator">/</span>
             <span class="temp-low-compact">${lowTemp}°</span>
           </div>
-          ${precipProb > 0 ? html`<div class="precip-compact">💧${precipProb}%</div>` : html`<div></div>`}
+          ${precipProb > 0 ? html`<div class="precip-compact">💧${precipProb}%</div>` : ''}
         </div>
       `;
     }
@@ -704,6 +703,12 @@ export class WeatherPulseCard extends LitElement {
         gap: 4px;
       }
 
+      .forecast-container.forecast-compact {
+        flex-direction: row;
+        gap: 8px;
+        overflow-x: auto;
+      }
+
       .forecast-day {
         display: grid;
         grid-template-columns: 55px 45px 1fr auto;
@@ -786,43 +791,46 @@ export class WeatherPulseCard extends LitElement {
         color: var(--secondary-text-color);
       }
 
-      /* Compact view mode */
+      /* Compact view mode - vertical cards in horizontal row */
       .forecast-compact {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 10px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        gap: 8px;
+        padding: 12px;
+        background: var(--card-background-color, #1c1c1c);
+        border-radius: 8px;
+        min-width: 80px;
+        flex-shrink: 0;
       }
 
-      .day-name {
-        min-width: 50px;
+      .forecast-compact .day-name {
         font-weight: 500;
-        font-size: 16px;
+        font-size: 14px;
+        text-align: center;
       }
 
       .day-icon-small {
-        min-width: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
       .day-icon-small .weather-icon-svg {
-        width: 36px;
-        height: 36px;
+        width: 40px;
+        height: 40px;
       }
 
       .day-icon-small .icon-emoji {
-        font-size: 32px;
+        font-size: 36px;
       }
 
       .compact-temps {
         display: flex;
-        gap: 8px;
-        align-items: baseline;
-        min-width: 100px;
+        flex-direction: column;
+        gap: 4px;
+        align-items: center;
+        text-align: center;
       }
 
       .temp-high-compact {
@@ -831,20 +839,18 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .temp-separator {
-        font-size: 16px;
-        opacity: 0.5;
+        display: none;
       }
 
       .temp-low-compact {
-        font-size: 16px;
+        font-size: 14px;
         opacity: 0.7;
       }
 
       .precip-compact {
-        font-size: 14px;
+        font-size: 12px;
         opacity: 0.7;
-        text-align: right;
-        min-width: 50px;
+        text-align: center;
       }
 
       /* Detailed view mode */
