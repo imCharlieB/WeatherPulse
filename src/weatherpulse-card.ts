@@ -544,6 +544,7 @@ export class WeatherPulseCard extends LitElement {
 
       .icon-emoji {
         display: block;
+        font-size: 80px;
         filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
       }
 
@@ -558,6 +559,10 @@ export class WeatherPulseCard extends LitElement {
         height: 32px;
       }
 
+      .day-icon .icon-emoji {
+        font-size: 32px;
+      }
+
       .datetime-content {
         flex: 1;
       }
@@ -570,7 +575,7 @@ export class WeatherPulseCard extends LitElement {
         font-size: 64px;
         font-weight: 300;
         line-height: 1;
-        margin-bottom: 8px;
+        margin-bottom: 2px;
       }
 
       .time-medium {
@@ -603,19 +608,21 @@ export class WeatherPulseCard extends LitElement {
         font-size: 18px;
         font-weight: 400;
         opacity: 0.9;
+        text-align: center;
       }
 
       .condition-temp {
         font-size: 20px;
         font-weight: 400;
         opacity: 0.95;
-        margin-bottom: 6px;
+        margin-bottom: 2px;
+        text-align: center;
       }
 
       .actual-temp-display {
         font-size: 22px;
         font-weight: 500;
-        margin-top: 8px;
+        margin-top: 2px;
         display: flex;
         align-items: baseline;
         gap: 8px;
@@ -770,11 +777,18 @@ export class WeatherPulseCard extends LitElement {
       .day-icon-small {
         font-size: 24px;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .day-icon-small .weather-icon-svg {
-        width: 24px;
-        height: 24px;
+        width: 32px;
+        height: 32px;
+      }
+
+      .day-icon-small .icon-emoji {
+        font-size: 28px;
       }
 
       .compact-temps {
