@@ -717,22 +717,22 @@ function e(e,t,i,s){var a,o=arguments.length,r=o<3?t:null===s?s=Object.getOwnPro
       }
 
       .weather-icon {
-        font-size: 80px;
+        font-size: 120px;
         display: flex;
         align-items: center;
         justify-content: center;
-        min-width: 100px;
+        min-width: 140px;
       }
 
       .icon-emoji {
         display: block;
-        font-size: 80px;
+        font-size: 120px;
         filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
       }
 
       .weather-icon-svg {
-        width: 80px;
-        height: 80px;
+        width: 120px;
+        height: 120px;
         filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
       }
 
@@ -900,6 +900,7 @@ function e(e,t,i,s){var a,o=arguments.length,r=o<3?t:null===s?s=Object.getOwnPro
         flex-direction: row;
         gap: 8px;
         justify-content: space-between;
+        flex-wrap: wrap;
       }
 
       .forecast-day {
@@ -993,8 +994,9 @@ function e(e,t,i,s){var a,o=arguments.length,r=o<3?t:null===s?s=Object.getOwnPro
         padding: 12px 8px;
         background: var(--card-background-color, #1c1c1c);
         border-radius: 8px;
-        flex: 1;
-        min-width: 0;
+        flex: 1 1 auto;
+        min-width: 70px;
+        max-width: 120px;
       }
 
       .forecast-compact .day-name {
