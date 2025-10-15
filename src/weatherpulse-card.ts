@@ -303,7 +303,7 @@ export class WeatherPulseCard extends LitElement {
           .split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
         headerContent = html`
-          <div class="datetime-header">
+          <div class="datetime-header time-focused-header">
             <div class="weather-icon ${getWeatherIcon(weatherData.condition || 'clear')}">
               ${this.renderWeatherIcon(weatherData.condition || 'clear')}
             </div>
@@ -311,18 +311,18 @@ export class WeatherPulseCard extends LitElement {
               <div class="condition-temp">${conditionText}, ${Math.round(forecastTemp || currentTemp)}°${unit.replace('°', '')}</div>
               <div class="time-large">${this.currentTime}</div>
               ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
-              ${tempDisplayMode === 'both' && hasOutdoorSensor ? html`
-                <div class="actual-temp-display">
-                  ${Math.round(currentTemp)}°${unit.replace('°', '')}
-                  <span class="actual-label">Actual</span>
-                </div>
-              ` : tempDisplayMode === 'actual' && hasOutdoorSensor ? html`
-                <div class="actual-temp-display">
-                  ${Math.round(currentTemp)}°${unit.replace('°', '')}
-                  <span class="actual-label">Actual</span>
-                </div>
-              ` : ''}
             </div>
+            ${tempDisplayMode === 'both' && hasOutdoorSensor ? html`
+              <div class="actual-temp-right">
+                <div class="actual-temp-value">${Math.round(currentTemp)}°${unit.replace('°', '')}</div>
+                <div class="actual-temp-label">Actual</div>
+              </div>
+            ` : tempDisplayMode === 'actual' && hasOutdoorSensor ? html`
+              <div class="actual-temp-right">
+                <div class="actual-temp-value">${Math.round(currentTemp)}°${unit.replace('°', '')}</div>
+                <div class="actual-temp-label">Actual</div>
+              </div>
+            ` : ''}
           </div>
         `;
     }
@@ -628,6 +628,28 @@ export class WeatherPulseCard extends LitElement {
         gap: 8px;
       }
 
+      .actual-temp-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        margin-left: auto;
+      }
+
+      .actual-temp-value {
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      .actual-temp-label {
+        font-size: 12px;
+        font-weight: 400;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
       .temp-display {
         display: flex;
         flex-direction: column;
@@ -767,10 +789,10 @@ export class WeatherPulseCard extends LitElement {
       /* Compact view mode */
       .forecast-compact {
         display: grid;
-        grid-template-columns: 60px 35px 1fr 60px;
+        grid-template-columns: 50px 40px 100px 50px;
         align-items: center;
-        gap: 8px;
-        padding: 4px 0;
+        gap: 12px;
+        padding: 8px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
