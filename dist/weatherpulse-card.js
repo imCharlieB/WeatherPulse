@@ -776,21 +776,24 @@ function e(e,t,i,s){var a,o=arguments.length,n=o<3?t:null===s?s=Object.getOwnPro
 
       .actual-temp-below {
         display: flex;
-        align-items: baseline;
-        gap: 8px;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2px;
         margin-top: 4px;
-        justify-content: center;
       }
 
       .actual-temp-value {
         font-size: 24px;
         font-weight: 500;
+        line-height: 1;
       }
 
       .actual-temp-label {
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 400;
         opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
 
       .temp-display {
