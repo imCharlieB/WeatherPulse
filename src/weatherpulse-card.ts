@@ -461,7 +461,7 @@ export class WeatherPulseCard extends LitElement {
     // Compact mode - vertical card in horizontal row
     if (viewMode === 'compact') {
       return html`
-        <div class="forecast-day forecast-compact">
+        <div class="forecast-compact">
           <div class="day-name">${dayName}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(day.condition || 'clear')}
