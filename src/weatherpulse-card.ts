@@ -588,13 +588,13 @@ export class WeatherPulseCard extends LitElement {
       .datetime-header {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 12px;
       }
 
       .greeting-header {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 12px;
       }
 
       .minimal-header {

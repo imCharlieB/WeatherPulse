@@ -49,7 +49,9 @@ export function getTemperatureGradient(temp: number, unit: string = '°F'): Temp
  * Get greeting message based on time and weather
  */
 export function getGreeting(name?: string, condition?: string, temp?: number): string {
-  const hour = new Date().getHours();
+  const now = new Date();
+  const hour = now.getHours();
+  const dayName = now.toLocaleDateString('en-US', { weekday: 'short' });
   const userName = name ? `, ${name}` : '';
 
   let timeGreeting = 'Hello';
@@ -63,7 +65,7 @@ export function getGreeting(name?: string, condition?: string, temp?: number): s
     timeGreeting = 'Good Night';
   }
 
-  return `${timeGreeting}${userName}!`;
+  return `${timeGreeting}${userName}, it's ${dayName}!`;
 }
 
 /**
@@ -136,15 +138,24 @@ export function getDayName(datetime: string): string {
 }
 
 /**
+ * Check if it's currently night time
+ */
+export function isNightTime(): boolean {
+  const hour = new Date().getHours();
+  return hour < 6 || hour >= 20; // Night is 8PM to 6AM
+}
+
+/**
  * Get weather icon class based on condition
  */
 export function getWeatherIcon(condition: string): string {
   const conditionLower = condition.toLowerCase();
+  const isNight = isNightTime();
 
   if (conditionLower.includes('clear') || conditionLower.includes('sunny')) {
-    return 'clear-day';
+    return isNight ? 'clear-night' : 'clear-day';
   } else if (conditionLower.includes('partlycloudy') || conditionLower.includes('partly') || conditionLower.includes('partial')) {
-    return 'partlycloudy';
+    return isNight ? 'partlycloudy-night' : 'partlycloudy';
   } else if (conditionLower.includes('cloud')) {
     return 'cloudy';
   } else if (conditionLower.includes('rain')) {
@@ -159,5 +170,5 @@ export function getWeatherIcon(condition: string): string {
     return 'windy';
   }
 
-  return 'clear-day';
+  return isNight ? 'clear-night' : 'clear-day';
 }

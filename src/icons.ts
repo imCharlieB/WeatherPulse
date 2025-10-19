@@ -47,6 +47,63 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
         </svg>
       `;
 
+    case 'clear-night':
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .moon {
+              animation: ${animate ? 'glow 4s ease-in-out infinite' : 'none'};
+              transform-origin: 50px 50px;
+            }
+            @keyframes glow {
+              0%, 100% { opacity: 1; filter: drop-shadow(0 0 8px #FFF9C4); }
+              50% { opacity: 0.8; filter: drop-shadow(0 0 12px #FFF59D); }
+            }
+          </style>
+          <circle class="moon" cx="50" cy="50" r="20" fill="#FFF9C4"/>
+          <!-- Moon crater details -->
+          <circle cx="45" cy="45" r="3" fill="#F0E68C" opacity="0.3"/>
+          <circle cx="58" cy="48" r="4" fill="#F0E68C" opacity="0.2"/>
+          <circle cx="48" cy="56" r="2.5" fill="#F0E68C" opacity="0.25"/>
+        </svg>
+      `;
+
+    case 'partlycloudy-night':
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .moon {
+              animation: ${animate ? 'glow 4s ease-in-out infinite' : 'none'};
+              transform-origin: 30px 30px;
+            }
+            .cloud {
+              animation: ${animate ? 'float 6s ease-in-out infinite' : 'none'};
+            }
+            @keyframes glow {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0.8; }
+            }
+            @keyframes float {
+              0%, 100% { transform: translateY(0px); }
+              50% { transform: translateY(-3px); }
+            }
+          </style>
+          <!-- Moon in background -->
+          <g class="moon">
+            <circle cx="30" cy="30" r="12" fill="#FFF9C4"/>
+            <circle cx="28" cy="28" r="2" fill="#F0E68C" opacity="0.3"/>
+            <circle cx="34" cy="32" r="1.5" fill="#F0E68C" opacity="0.2"/>
+          </g>
+          <!-- Cloud in foreground -->
+          <g class="cloud">
+            <ellipse cx="50" cy="60" rx="18" ry="14" fill="#E8E8E8"/>
+            <ellipse cx="65" cy="55" rx="22" ry="18" fill="#F0F0F0"/>
+            <ellipse cx="80" cy="60" rx="18" ry="14" fill="#E8E8E8"/>
+            <rect x="32" y="60" width="66" height="18" rx="3" fill="#ECECEC"/>
+          </g>
+        </svg>
+      `;
+
     case 'cloudy':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
