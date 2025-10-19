@@ -50,57 +50,56 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
     case 'clear-night':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="moonGradient" cx="40%" cy="40%">
+              <stop offset="0%" style="stop-color:#FFFEF0;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#F4E5C2;stop-opacity:1" />
+            </radialGradient>
+          </defs>
           <style>
-            .moon-glow {
-              animation: ${animate ? 'moonPulse 4s ease-in-out infinite' : 'none'};
+            .crescent-moon {
+              animation: ${animate ? 'moonFloat 6s ease-in-out infinite' : 'none'};
               transform-origin: 50px 50px;
             }
-            @keyframes moonPulse {
+            @keyframes moonFloat {
               0%, 100% {
-                opacity: 0.1;
+                transform: translateY(0px) rotate(0deg);
               }
               50% {
-                opacity: 0.2;
-              }
-            }
-            .moon-body {
-              animation: ${animate ? 'moonGlowBody 4s ease-in-out infinite' : 'none'};
-              transform-origin: 50px 50px;
-            }
-            @keyframes moonGlowBody {
-              0%, 100% {
-                opacity: 1;
-              }
-              50% {
-                opacity: 0.95;
+                transform: translateY(-4px) rotate(-2deg);
               }
             }
           </style>
-          <!-- Very subtle glow effect -->
-          <circle class="moon-glow" cx="50" cy="50" r="26" fill="#FFF9C4" opacity="0.15"/>
-          <!-- Main moon body -->
-          <circle class="moon-body" cx="50" cy="50" r="20" fill="#FFF9C4"/>
-          <!-- Moon crater details -->
-          <circle cx="45" cy="45" r="3" fill="#F0E68C" opacity="0.3"/>
-          <circle cx="58" cy="48" r="4" fill="#F0E68C" opacity="0.2"/>
-          <circle cx="48" cy="56" r="2.5" fill="#F0E68C" opacity="0.25"/>
+          <!-- Crescent moon shape -->
+          <g class="crescent-moon">
+            <!-- Full moon circle -->
+            <circle cx="50" cy="50" r="22" fill="url(#moonGradient)"/>
+            <!-- Dark circle to create crescent -->
+            <circle cx="58" cy="48" r="20" fill="#1a1a2e"/>
+          </g>
         </svg>
       `;
 
     case 'partlycloudy-night':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="moonGradientSmall" cx="35%" cy="35%">
+              <stop offset="0%" style="stop-color:#FFFEF0;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#F4E5C2;stop-opacity:1" />
+            </radialGradient>
+          </defs>
           <style>
-            .moon-glow-small {
-              animation: ${animate ? 'moonPulseSmall 4s ease-in-out infinite' : 'none'};
-              transform-origin: 30px 30px;
+            .crescent-moon-small {
+              animation: ${animate ? 'moonFloat 6s ease-in-out infinite' : 'none'};
+              transform-origin: 28px 28px;
             }
-            @keyframes moonPulseSmall {
+            @keyframes moonFloat {
               0%, 100% {
-                opacity: 0.1;
+                transform: translateY(0px);
               }
               50% {
-                opacity: 0.2;
+                transform: translateY(-3px);
               }
             }
             .cloud {
@@ -111,12 +110,11 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               50% { transform: translateY(-3px); }
             }
           </style>
-          <!-- Very subtle moon glow -->
-          <circle class="moon-glow-small" cx="30" cy="30" r="15" fill="#FFF9C4" opacity="0.15"/>
-          <!-- Moon body -->
-          <circle cx="30" cy="30" r="12" fill="#FFF9C4"/>
-          <circle cx="28" cy="28" r="2" fill="#F0E68C" opacity="0.3"/>
-          <circle cx="34" cy="32" r="1.5" fill="#F0E68C" opacity="0.2"/>
+          <!-- Crescent moon -->
+          <g class="crescent-moon-small">
+            <circle cx="28" cy="28" r="13" fill="url(#moonGradientSmall)"/>
+            <circle cx="34" cy="26" r="12" fill="#1a1a2e"/>
+          </g>
           <!-- Cloud in foreground -->
           <g class="cloud">
             <ellipse cx="50" cy="60" rx="18" ry="14" fill="#E8E8E8"/>

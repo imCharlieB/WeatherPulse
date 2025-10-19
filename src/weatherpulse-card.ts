@@ -260,15 +260,15 @@ export class WeatherPulseCard extends LitElement {
             <div class="graphical-overlay">
               <div class="graphical-content">
                 <div class="graphical-main">
-                  <div class="graphical-left">
+                  <div class="weather-icon-graphical ${getWeatherIcon(weatherData.condition || 'clear')}">
+                    ${this.renderWeatherIcon(weatherData.condition || 'clear')}
+                  </div>
+                  <div class="graphical-right">
                     <div class="graphical-time">
                       ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
                     </div>
                     <div class="graphical-date">${this.currentDate}</div>
                     ${tempDisplay}
-                  </div>
-                  <div class="weather-icon-graphical ${getWeatherIcon(weatherData.condition || 'clear')}">
-                    ${this.renderWeatherIcon(weatherData.condition || 'clear')}
                   </div>
                 </div>
               </div>
@@ -661,11 +661,10 @@ export class WeatherPulseCard extends LitElement {
       .graphical-main {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 24px;
+        gap: 16px;
       }
 
-      .graphical-left {
+      .graphical-right {
         flex: 1;
       }
 
