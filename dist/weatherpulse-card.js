@@ -651,28 +651,26 @@ function e(e,t,i,a){var s,r=arguments.length,o=r<3?t:null===a?a=Object.getOwnPro
             Optional: Override default sun and moon entities. Leave empty to use defaults.
           </p>
 
-          <ha-entity-picker
-            label="Sun Entity"
+          <ha-selector
             .hass=${this.hass}
-            .configValue=${"sun_entity"}
+            .selector=${{entity:{domain:"sun"}}}
             .value=${this._config.sun_entity||"sun.sun"}
+            .label=${"Sun Entity"}
+            .configValue=${"sun_entity"}
             @value-changed=${this._valueChanged}
-            .includeDomains=${["sun"]}
-            allow-custom-entity
-          ></ha-entity-picker>
+          ></ha-selector>
           <p class="helper-text">
             Used for sunrise/sunset times and day/night detection. Defaults to sun.sun.
           </p>
 
-          <ha-entity-picker
-            label="Moon Entity"
+          <ha-selector
             .hass=${this.hass}
-            .configValue=${"moon_entity"}
+            .selector=${{entity:{domain:"sensor"}}}
             .value=${this._config.moon_entity||"sensor.moon_phase"}
+            .label=${"Moon Entity"}
+            .configValue=${"moon_entity"}
             @value-changed=${this._valueChanged}
-            .includeDomains=${["sensor"]}
-            allow-custom-entity
-          ></ha-entity-picker>
+          ></ha-selector>
           <p class="helper-text">
             Used for displaying accurate moon phase icons on clear nights. Defaults to sensor.moon_phase.
           </p>

@@ -197,6 +197,47 @@ seasonal_images:
 - **Large display**: 280px tall header with prominent time, date, weather icon, and temperature
 - **No setup required**: Works immediately with bundled images, customize only if desired
 
+#### National Weather Service (NWS) Alerts
+
+WeatherPulse integrates directly with the National Weather Service API to display real-time severe weather alerts for your location. **No custom components or plugins required!**
+
+**How It Works:**
+- Automatically uses your Home Assistant location coordinates (Settings → System → General → Location)
+- Fetches alerts directly from `api.weather.gov` every 5 minutes
+- Only displays alerts that are active for your specific location
+- Alert section auto-hides when no active alerts exist
+
+**Supported Alert Types:**
+- 🌀 Hurricanes & Tropical Storms
+- 🌪️ Tornado Warnings & Watches
+- ⛈️ Severe Thunderstorm Warnings
+- 🌨️ Winter Storm Warnings & Advisories
+- 🔥 Heat Advisories & Excessive Heat Warnings
+- 🌊 Flood Warnings & Flash Flood Warnings
+- 🌬️ High Wind Warnings
+- And many more NWS alert types
+
+**Severity Color Coding:**
+- 🔴 **Extreme** (Red) - Life-threatening situations (hurricanes, major tornadoes)
+- 🟠 **Severe** (Orange) - Severe weather threats (thunderstorms, winter storms)
+- 🟡 **Moderate** (Yellow) - Moderate warnings (winter weather advisories)
+- 🔵 **Minor** (Blue) - Minor advisories (frost, wind, heat)
+
+**Alert Information Displayed:**
+- Event name (e.g., "Tornado Warning", "Heat Advisory")
+- Affected area/counties
+- Headline summary
+- Expiration time
+
+**To Enable:**
+```yaml
+show_nws_alerts: true
+```
+
+Or toggle "Show NWS Weather Alerts" in the visual editor's Display Options section.
+
+**Note:** NWS alerts are only available for locations within the United States and its territories. The feature will gracefully fail for international locations without showing errors.
+
 ### Configuration Options
 
 | Option | Type | Default | Description |
