@@ -100,12 +100,12 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Floating animation effect
   - Semi-transparent (30-50% opacity)
   - Toggle on/off in Display Options
-- [ ] **Pre-built Themes** (PLANNED):
-  - Retro/Neubrutalism: Bold colors, thick borders
-  - Glassmorphism: Frosted glass, blur effects
-  - Minimal: Clean, simple, monochrome
-  - Vibrant: Bright, saturated colors
-  - Custom theme builder (user-defined colors)
+- [x] **Pre-built Themes**: 5 professional visual themes + custom ✅
+  - Retro/Neubrutalism: Bold colors, thick 4px borders, sharp corners, hard shadows
+  - Glassmorphism: Frosted glass blur effect, semi-transparent, soft shadows
+  - Minimal: Clean white, simple monochrome, thin borders, subtle grayscale
+  - Vibrant: Bright gradient backgrounds, saturated colors, high energy
+  - Custom: User-defined colors (primary, secondary, background, text, border, accent)
 
 ### 9. Smart Alerts & Contextual Badges
 - [x] **NWS Alerts Integration**: Real-time weather warnings from National Weather Service ✅

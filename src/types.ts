@@ -12,11 +12,11 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   forecast_days?: 5 | 7;
   hourly_count?: number;
   view_mode?: 'compact' | 'standard' | 'detailed' | 'hourly' | 'weekly';
-  theme?: 'retro' | 'glass' | 'minimal' | 'vibrant' | 'dark' | 'auto' | 'custom';
+  theme?: 'default' | 'retro' | 'glass' | 'minimal' | 'vibrant' | 'custom';
   animate_icons?: boolean;
   data_rows?: DataRow[];
   alerts?: AlertType[];
-  custom_colors?: CustomColors;
+  custom_theme_colors?: CustomThemeColors;
   seasonal_images?: SeasonalImages;
   show_forecast?: boolean;
   show_current_temp?: boolean;
@@ -62,12 +62,13 @@ export type AlertType =
   | 'pollen'
   | 'contextual';
 
-export interface CustomColors {
-  cold?: string;
-  cool?: string;
-  moderate?: string;
-  warm?: string;
-  hot?: string;
+export interface CustomThemeColors {
+  primary?: string;
+  secondary?: string;
+  background?: string;
+  text?: string;
+  border?: string;
+  accent?: string;
 }
 
 export interface SeasonalImages {

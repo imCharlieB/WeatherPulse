@@ -1084,8 +1084,12 @@ export class WeatherPulseCard extends LitElement {
       tempGlowClass = 'temp-glow-freezing';
     }
 
+    // Add theme class
+    const theme = this.config?.theme || 'default';
+    const themeClass = theme !== 'default' ? `theme-${theme}` : '';
+
     return html`
-      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass}">
+      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}">
         ${this.renderHolidayDecorations()}
         ${this.renderHeader()}
         ${this.renderNWSAlerts()}
@@ -1950,6 +1954,187 @@ export class WeatherPulseCard extends LitElement {
           transform: translateY(-10px) rotate(5deg);
           opacity: 0.5;
         }
+      }
+
+      /* ========================================
+         PRE-BUILT THEMES
+         ======================================== */
+
+      /* RETRO/NEUBRUTALISM THEME */
+      ha-card.theme-retro {
+        border: 4px solid #000 !important;
+        border-radius: 0 !important;
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3) !important;
+      }
+
+      ha-card.theme-retro .card-header {
+        border-radius: 0 !important;
+        border-bottom: 4px solid #000;
+      }
+
+      ha-card.theme-retro .graphical-header {
+        border-radius: 0 !important;
+        border-bottom: 4px solid #000;
+      }
+
+      ha-card.theme-retro .forecast-day,
+      ha-card.theme-retro .forecast-hour,
+      ha-card.theme-retro .weather-info-item,
+      ha-card.theme-retro .nws-alert {
+        border: 3px solid #000 !important;
+        border-radius: 0 !important;
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2) !important;
+      }
+
+      ha-card.theme-retro .forecast-compact {
+        border: 2px solid #000 !important;
+      }
+
+      /* GLASSMORPHISM THEME */
+      ha-card.theme-glass {
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15) !important;
+      }
+
+      ha-card.theme-glass .card-header {
+        background: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(10px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      ha-card.theme-glass .graphical-header::after {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5)) !important;
+        backdrop-filter: blur(5px) !important;
+      }
+
+      ha-card.theme-glass .forecast-day,
+      ha-card.theme-glass .forecast-hour,
+      ha-card.theme-glass .weather-info-item {
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      }
+
+      ha-card.theme-glass .nws-alert {
+        backdrop-filter: blur(15px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      }
+
+      /* MINIMAL THEME */
+      ha-card.theme-minimal {
+        background: #ffffff !important;
+        border: 1px solid #e0e0e0 !important;
+        box-shadow: none !important;
+      }
+
+      ha-card.theme-minimal .card-header {
+        background: #f5f5f5 !important;
+        color: #333 !important;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      ha-card.theme-minimal .graphical-header::after {
+        background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.7)) !important;
+      }
+
+      ha-card.theme-minimal .forecast-day,
+      ha-card.theme-minimal .forecast-hour,
+      ha-card.theme-minimal .weather-info-item {
+        background: #fafafa !important;
+        border: 1px solid #e0e0e0 !important;
+        box-shadow: none !important;
+      }
+
+      ha-card.theme-minimal .nws-alert {
+        background: #fff !important;
+        border: 1px solid #e0e0e0 !important;
+      }
+
+      ha-card.theme-minimal .weather-icon-svg,
+      ha-card.theme-minimal .temp-current,
+      ha-card.theme-minimal .day-name,
+      ha-card.theme-minimal .weather-info-value {
+        filter: grayscale(30%) !important;
+      }
+
+      /* VIBRANT THEME */
+      ha-card.theme-vibrant {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none !important;
+        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4) !important;
+        color: white !important;
+      }
+
+      ha-card.theme-vibrant .card-header {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+        color: white !important;
+        border-bottom: none;
+      }
+
+      ha-card.theme-vibrant .graphical-header::after {
+        background: linear-gradient(to bottom, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.6)) !important;
+      }
+
+      ha-card.theme-vibrant .forecast-day,
+      ha-card.theme-vibrant .forecast-hour {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        color: white !important;
+      }
+
+      ha-card.theme-vibrant .weather-info-item {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
+        border: none !important;
+        color: white !important;
+      }
+
+      ha-card.theme-vibrant .nws-alert {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15)) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        color: white !important;
+      }
+
+      ha-card.theme-vibrant .day-name,
+      ha-card.theme-vibrant .hour-name,
+      ha-card.theme-vibrant .temp-high,
+      ha-card.theme-vibrant .temp-low,
+      ha-card.theme-vibrant .weather-info-label,
+      ha-card.theme-vibrant .weather-info-value {
+        color: white !important;
+      }
+
+      ha-card.theme-vibrant .weather-icon-svg {
+        filter: brightness(1.2) saturate(1.3) !important;
+      }
+
+      /* CUSTOM THEME - Uses CSS Variables */
+      ha-card.theme-custom {
+        --theme-primary: var(--custom-primary, #667eea);
+        --theme-secondary: var(--custom-secondary, #764ba2);
+        --theme-background: var(--custom-background, #ffffff);
+        --theme-text: var(--custom-text, #333333);
+        --theme-border: var(--custom-border, #e0e0e0);
+        --theme-accent: var(--custom-accent, #f093fb);
+
+        background: var(--theme-background) !important;
+        border: 2px solid var(--theme-border) !important;
+        color: var(--theme-text) !important;
+      }
+
+      ha-card.theme-custom .card-header {
+        background: var(--theme-primary) !important;
+        color: white !important;
+      }
+
+      ha-card.theme-custom .forecast-day,
+      ha-card.theme-custom .forecast-hour,
+      ha-card.theme-custom .weather-info-item {
+        background: var(--theme-secondary) !important;
+        border: 1px solid var(--theme-border) !important;
+        color: white !important;
       }
 
       .card-content {

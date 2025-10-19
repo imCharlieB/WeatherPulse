@@ -318,6 +318,124 @@ Set `holiday_themes: false` or turn off the toggle. The card will display normal
 **Example:**
 During Halloween week (Oct 25-31), you'll see 🎃 pumpkins, 👻 ghosts, 🦇 bats, and 🕷️ spiders gently floating around your weather card as subtle decorations!
 
+#### Pre-built Visual Themes
+
+Transform the look and feel of your weather card with 5 professional pre-built themes, or create your own custom theme!
+
+**Available Themes:**
+
+| Theme | Description | Best For |
+|-------|-------------|----------|
+| **Default** | Clean modern design with temperature gradients | General use, all dashboards |
+| **Retro/Neubrutalism** | Bold 4px black borders, sharp corners, hard shadows, no border-radius | Bold, statement dashboards, retro aesthetics |
+| **Glassmorphism** | Frosted glass blur effect, semi-transparent backgrounds, soft shadows | Modern minimalist dashboards, overlays |
+| **Minimal** | Clean white, monochrome, thin borders, subtle grayscale filter | Professional, clean dashboards |
+| **Vibrant** | Bright gradient backgrounds, saturated colors, white text | Colorful, energetic dashboards |
+| **Custom** | Define your own colors for complete customization | Matching your specific color scheme |
+
+**How Themes Work:**
+- Themes apply visual styling to the entire card
+- Each theme has its own border style, shadows, colors, and effects
+- Temperature gradients still work with all themes (adjusted for visibility)
+- Forecast cards, weather info, alerts all match the theme
+- Easy one-click switching in the visual editor
+
+**Theme Details:**
+
+**Retro/Neubrutalism:**
+- 4px solid black borders on everything
+- Sharp 90-degree corners (no rounding)
+- Hard drop shadows (8px x 8px)
+- High contrast, bold appearance
+- Perfect for brutalist or retro-inspired dashboards
+
+**Glassmorphism:**
+- Backdrop blur effect (20px blur)
+- Semi-transparent backgrounds (10-15% opacity)
+- Subtle borders with transparency
+- Soft shadows
+- Works best with colorful wallpapers behind
+
+**Minimal:**
+- Pure white backgrounds
+- Light gray borders (#e0e0e0)
+- No shadows
+- 30% grayscale filter on icons/temps
+- Clean, professional, simple
+
+**Vibrant:**
+- Purple-to-pink gradient backgrounds
+- Bright saturated colors everywhere
+- White text for contrast
+- Colorful weather info cards (pink-to-yellow gradients)
+- High energy, eye-catching
+
+**Custom Theme:**
+Define your own color palette with 6 customizable colors:
+- **Primary**: Main header background
+- **Secondary**: Forecast cards, weather info background
+- **Background**: Card background
+- **Text**: Text color
+- **Border**: Border color
+- **Accent**: Accent highlights
+
+**To Use:**
+
+**Via Visual Editor:**
+1. Open card configuration
+2. Find "Theme Settings" section
+3. Select your desired theme from dropdown
+4. For custom theme, enter your color values in the fields that appear
+5. Save
+
+**Via YAML:**
+```yaml
+# Use a pre-built theme
+theme: retro  # or: glass, minimal, vibrant
+
+# Or use custom theme
+theme: custom
+custom_theme_colors:
+  primary: "#667eea"
+  secondary: "#764ba2"
+  background: "#ffffff"
+  text: "#333333"
+  border: "#e0e0e0"
+  accent: "#f093fb"
+```
+
+**Examples:**
+
+```yaml
+# Bold Retro Look
+theme: retro
+
+# Modern Glass Effect
+theme: glass
+
+# Clean Professional
+theme: minimal
+
+# Bright & Fun
+theme: vibrant
+
+# Match Your Dashboard
+theme: custom
+custom_theme_colors:
+  primary: "#1e88e5"      # Blue
+  secondary: "#43a047"    # Green
+  background: "#fafafa"   # Light gray
+  text: "#212121"         # Dark gray
+  border: "#bdbdbd"       # Medium gray
+  accent: "#ff6f00"       # Orange
+```
+
+**Tips:**
+- Glassmorphism works best with colorful dashboards/wallpapers
+- Minimal theme is great for professional/work dashboards
+- Vibrant theme stands out and draws attention
+- Custom theme lets you match your Home Assistant theme perfectly
+
 ### Configuration Options
 
 | Option | Type | Default | Description |
@@ -334,6 +452,8 @@ During Halloween week (Oct 25-31), you'll see 🎃 pumpkins, 👻 ghosts, 🦇 b
 | `hourly_count` | number | `12` | Number of hours to show: `1-48` (when forecast_type is hourly) |
 | `view_mode` | string | `standard` | Forecast layout: `compact`, `standard`, `detailed` |
 | `temp_display_mode` | string | `forecast` | Temperature display: `forecast`, `actual`, `both` |
+| `theme` | string | `default` | Visual theme: `default`, `retro`, `glass`, `minimal`, `vibrant`, `custom` |
+| `custom_theme_colors` | object | Optional | Custom theme colors (only used when theme is `custom`) - see Custom Theme section |
 | `animate_icons` | boolean | `true` | Enable animated weather icons |
 | `show_forecast` | boolean | `true` | Show forecast section |
 | `night_mode` | boolean | `false` | Enable automatic day/night theme switching based on sun position |

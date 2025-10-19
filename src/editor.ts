@@ -53,6 +53,24 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
     fireEvent(this, 'config-changed', { config: newConfig });
   }
 
+  private _customColorChanged(ev: Event, colorKey: string): void {
+    if (!this._config || !this.hass) {
+      return;
+    }
+    const target = ev.target as any;
+    const value = target.value;
+
+    const newConfig = {
+      ...this._config,
+      custom_theme_colors: {
+        ...this._config.custom_theme_colors,
+        [colorKey]: value || undefined,
+      },
+    };
+
+    fireEvent(this, 'config-changed', { config: newConfig });
+  }
+
   private _seasonalImageChanged(ev: CustomEvent, season: 'spring' | 'summer' | 'fall' | 'winter'): void {
     if (!this._config || !this.hass) {
       return;
@@ -421,6 +439,70 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'sunrise_sunset')}
             ></ha-switch>
           </ha-formfield>
+        </div>
+
+        <!-- Theme Settings -->
+        <div class="section">
+          <h4>Theme Settings</h4>
+
+          <ha-select
+            label="Visual Theme"
+            .value=${this._config.theme || 'default'}
+            @selected=${(ev: CustomEvent) => this._valueChanged({ target: { configValue: 'theme', value: ev.detail.value } })}
+            @closed=${(ev: Event) => ev.stopPropagation()}
+          >
+            <mwc-list-item value="default">Default</mwc-list-item>
+            <mwc-list-item value="retro">Retro/Neubrutalism (Bold & Boxy)</mwc-list-item>
+            <mwc-list-item value="glass">Glassmorphism (Frosted Glass)</mwc-list-item>
+            <mwc-list-item value="minimal">Minimal (Clean & Simple)</mwc-list-item>
+            <mwc-list-item value="vibrant">Vibrant (Bright & Colorful)</mwc-list-item>
+            <mwc-list-item value="custom">Custom (Use Custom Colors)</mwc-list-item>
+          </ha-select>
+          <p class="helper-text">
+            Choose a pre-built visual theme or create your own custom theme.
+          </p>
+
+          ${this._config.theme === 'custom' ? html`
+            <p class="helper-text" style="margin-top: 16px; font-weight: 600;">
+              Custom Theme Colors (use CSS color values like #667eea or rgb(102, 126, 234)):
+            </p>
+            <ha-textfield
+              label="Primary Color"
+              .value=${this._config.custom_theme_colors?.primary || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'primary')}
+              placeholder="#667eea"
+            ></ha-textfield>
+            <ha-textfield
+              label="Secondary Color"
+              .value=${this._config.custom_theme_colors?.secondary || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'secondary')}
+              placeholder="#764ba2"
+            ></ha-textfield>
+            <ha-textfield
+              label="Background Color"
+              .value=${this._config.custom_theme_colors?.background || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'background')}
+              placeholder="#ffffff"
+            ></ha-textfield>
+            <ha-textfield
+              label="Text Color"
+              .value=${this._config.custom_theme_colors?.text || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'text')}
+              placeholder="#333333"
+            ></ha-textfield>
+            <ha-textfield
+              label="Border Color"
+              .value=${this._config.custom_theme_colors?.border || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'border')}
+              placeholder="#e0e0e0"
+            ></ha-textfield>
+            <ha-textfield
+              label="Accent Color"
+              .value=${this._config.custom_theme_colors?.accent || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'accent')}
+              placeholder="#f093fb"
+            ></ha-textfield>
+          ` : ''}
         </div>
 
         <!-- Display Options -->
