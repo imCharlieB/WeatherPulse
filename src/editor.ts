@@ -354,6 +354,18 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             Select which weather details to display below the header (when available from your weather provider).
           </p>
 
+          <ha-select
+            label="Weather Info Layout"
+            .configValue=${'weather_info_layout'}
+            .value=${this._config.weather_info_layout || 'standard'}
+            @selected=${this._valueChanged}
+            @closed=${(ev: Event) => ev.stopPropagation()}
+          >
+            <mwc-list-item value="compact">Compact (small, icon + value)</mwc-list-item>
+            <mwc-list-item value="standard">Standard</mwc-list-item>
+            <mwc-list-item value="detailed">Detailed (large cards)</mwc-list-item>
+          </ha-select>
+
           <ha-formfield label="UV Index">
             <ha-switch
               .checked=${this._config.show_weather_info?.includes('uv_index')}

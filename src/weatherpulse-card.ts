@@ -216,6 +216,7 @@ export class WeatherPulseCard extends LitElement {
     }
 
     const weatherData = this.getWeatherData();
+    const layout = this.config?.weather_info_layout || 'standard';
     const items = [];
 
     for (const infoType of showInfo) {
@@ -275,17 +276,12 @@ export class WeatherPulseCard extends LitElement {
           break;
 
         case 'precipitation':
-          // Show current precipitation or "None" if no active precipitation
+          // Only show if we have actual precipitation data
           if (weatherData.precipitation !== undefined && weatherData.precipitation > 0) {
             icon = '💧';
             label = 'Precipitation';
             const unit = weatherData.precipitation_unit || 'in';
             value = `${weatherData.precipitation} ${unit}`;
-          } else if (weatherData.precipitation !== undefined || weatherData.precipitation_unit !== undefined) {
-            // Show "None" if we have the attribute but it's 0 or we have the unit
-            icon = '💧';
-            label = 'Precipitation';
-            value = 'None';
           }
           break;
 
@@ -307,30 +303,48 @@ export class WeatherPulseCard extends LitElement {
           break;
 
         case 'visibility':
+          // Only show if we have actual visibility data
           if (weatherData.visibility !== undefined) {
             icon = '👁️';
             label = 'Visibility';
             const unit = weatherData.visibility_unit || 'mi';
             value = `${weatherData.visibility} ${unit}`;
-          } else if (weatherData.visibility_unit !== undefined) {
-            // If we have the unit but no value, show "Unknown"
-            icon = '👁️';
-            label = 'Visibility';
-            value = 'N/A';
           }
           break;
       }
 
       if (value) {
-        items.push(html`
-          <div class="weather-info-item">
-            <span class="weather-info-icon">${icon}</span>
-            <div class="weather-info-content">
-              <div class="weather-info-label">${label}</div>
+        if (layout === 'compact') {
+          // Compact: Icon and value only, no label
+          items.push(html`
+            <div class="weather-info-item weather-info-compact">
+              <span class="weather-info-icon">${icon}</span>
               <div class="weather-info-value">${value}</div>
             </div>
-          </div>
-        `);
+          `);
+        } else if (layout === 'detailed') {
+          // Detailed: Larger, with label above value
+          items.push(html`
+            <div class="weather-info-item weather-info-detailed">
+              <span class="weather-info-icon">${icon}</span>
+              <div class="weather-info-content">
+                <div class="weather-info-label">${label}</div>
+                <div class="weather-info-value">${value}</div>
+              </div>
+            </div>
+          `);
+        } else {
+          // Standard: Icon, label and value side by side
+          items.push(html`
+            <div class="weather-info-item">
+              <span class="weather-info-icon">${icon}</span>
+              <div class="weather-info-content">
+                <div class="weather-info-label">${label}</div>
+                <div class="weather-info-value">${value}</div>
+              </div>
+            </div>
+          `);
+        }
       }
     }
 
@@ -338,8 +352,10 @@ export class WeatherPulseCard extends LitElement {
       return html``;
     }
 
+    const sectionClass = `weather-info-section weather-info-layout-${layout}`;
+
     return html`
-      <div class="weather-info-section">
+      <div class="${sectionClass}">
         ${items}
       </div>
     `;
@@ -1180,11 +1196,28 @@ export class WeatherPulseCard extends LitElement {
       /* Weather Info Section */
       .weather-info-section {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         gap: 12px;
         padding: 16px 20px;
         background: var(--card-background-color, rgba(0,0,0,0.02));
         border-top: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+      }
+
+      /* Standard Layout (default) */
+      .weather-info-layout-standard {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+
+      /* Compact Layout - single line, more items per row */
+      .weather-info-layout-compact {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        padding: 12px 20px;
+        gap: 8px;
+      }
+
+      /* Detailed Layout - larger cards */
+      .weather-info-layout-detailed {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 16px;
       }
 
       .weather-info-item {
@@ -1194,6 +1227,44 @@ export class WeatherPulseCard extends LitElement {
         padding: 8px;
         background: var(--secondary-background-color, rgba(0,0,0,0.05));
         border-radius: 8px;
+      }
+
+      /* Compact item styling */
+      .weather-info-compact {
+        padding: 6px 8px;
+        gap: 6px;
+        justify-content: center;
+      }
+
+      .weather-info-compact .weather-info-icon {
+        font-size: 18px;
+        min-width: 18px;
+      }
+
+      .weather-info-compact .weather-info-value {
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      /* Detailed item styling */
+      .weather-info-detailed {
+        padding: 12px;
+        gap: 12px;
+      }
+
+      .weather-info-detailed .weather-info-icon {
+        font-size: 28px;
+        min-width: 28px;
+      }
+
+      .weather-info-detailed .weather-info-label {
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .weather-info-detailed .weather-info-value {
+        font-size: 16px;
+        font-weight: 600;
       }
 
       .weather-info-icon {

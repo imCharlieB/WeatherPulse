@@ -24,6 +24,7 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   temp_display_mode?: 'forecast' | 'actual' | 'both';
   night_mode?: boolean;
   show_weather_info?: WeatherInfoOption[];
+  weather_info_layout?: 'compact' | 'standard' | 'detailed';
 }
 
 export type DataRow =
