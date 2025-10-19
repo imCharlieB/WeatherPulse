@@ -95,18 +95,33 @@ seasonal_images:
 
 #### Graphical Header Mode
 
-The graphical header mode displays a large, immersive header with seasonal backgrounds:
-- **Auto-switching**: Backgrounds automatically change based on the current season
-- **Default gradients**: Beautiful gradient backgrounds if no custom images are provided
-  - Spring (Mar-May): Soft pastels - blooming flowers theme
-  - Summer (Jun-Aug): Vibrant blues/yellows - beach/sunny theme
-  - Fall (Sep-Nov): Warm oranges/purples - autumn leaves theme
-  - Winter (Dec-Feb): Cool blues/whites - snowy landscape theme
-- **Custom images**: Upload your own seasonal photos to `/config/www/images/` and reference them via `seasonal_images`
-- **Overlay design**: Dark gradient overlay ensures text readability over any background
-- **Large display**: 280px tall header with prominent time, date, weather icon, and temperature
+The graphical header mode displays a large, immersive header with seasonal background images:
 
-**Tip**: For best results with custom images, use high-quality landscape photos (1920x1080 or larger) that represent each season in your location.
+**Requirements**: You must provide custom images for this mode to look good. Without custom images, it will show a solid seasonal color as a placeholder.
+
+**Setup Steps**:
+1. Find or create 4 seasonal landscape images (800x280 pixels recommended for card size)
+2. Upload them to `/config/www/images/` in Home Assistant
+3. Add the `seasonal_images` configuration (see YAML example above)
+4. Set `header_mode: graphical`
+
+**Image Specifications**:
+- **Recommended size**: 800x280 pixels (matches card header perfectly)
+- **Format**: JPG (smaller file size) or PNG
+- **Aspect ratio**: Wide landscape (roughly 3:1)
+- **File size**: Keep under 200KB each for fast loading
+- **Content**: Seasonal landscape scenes work best (spring flowers, summer beach, autumn leaves, winter snow)
+
+**Where to get images**:
+- [Unsplash](https://unsplash.com/) - Free high-quality photos (search "spring landscape", "summer", etc.)
+- [Pexels](https://pexels.com/) - Free stock photos
+- Use your own photos from each season
+- AI image generators (Midjourney, DALL-E, etc.)
+
+**Features**:
+- **Auto-switching**: Backgrounds automatically change based on the current season (Mar-May Spring, Jun-Aug Summer, Sep-Nov Fall, Dec-Feb Winter)
+- **Dark overlay**: Gradient overlay ensures white text is always readable
+- **Large display**: 280px tall header with prominent time, date, weather icon, and temperature
 
 ### Configuration Options
 
