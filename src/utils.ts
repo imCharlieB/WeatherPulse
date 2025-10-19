@@ -238,18 +238,18 @@ export function getSeasonalBackground(season?: 'spring' | 'summer' | 'fall' | 'w
   // Use current season if not specified
   const currentSeason = season || getCurrentSeason();
 
-  // Default placeholder - user should add their own images
-  // Fallback to solid color if no image provided
+  // Use bundled default seasonal images
+  // These are included with the card installation via HACS
   switch (currentSeason) {
     case 'spring':
-      return '#a8edea'; // Soft teal
+      return 'url(/hacsfiles/weatherpulse/images/spring-default.jpg)';
     case 'summer':
-      return '#87CEEB'; // Sky blue
+      return 'url(/hacsfiles/weatherpulse/images/summer-default.jpg)';
     case 'fall':
-      return '#D2691E'; // Autumn orange
+      return 'url(/hacsfiles/weatherpulse/images/fall-default.jpg)';
     case 'winter':
-      return '#B0C4DE'; // Light steel blue
+      return 'url(/hacsfiles/weatherpulse/images/winter-default.jpg)';
     default:
-      return '#a8edea';
+      return 'url(/hacsfiles/weatherpulse/images/spring-default.jpg)';
   }
 }

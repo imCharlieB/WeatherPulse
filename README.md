@@ -95,33 +95,47 @@ seasonal_images:
 
 #### Graphical Header Mode
 
-The graphical header mode displays a large, immersive header with seasonal background images:
+The graphical header mode displays a large, immersive header with seasonal background images.
 
-**Requirements**: You must provide custom images for this mode to look good. Without custom images, it will show a solid seasonal color as a placeholder.
+**✨ Bundled Images Included**: The card comes with beautiful default seasonal images! Just set `header_mode: graphical` and it works out of the box.
 
-**Setup Steps**:
-1. Find or create 4 seasonal landscape images (800x280 pixels recommended for card size)
-2. Upload them to `/config/www/images/` in Home Assistant
-3. Add the `seasonal_images` configuration (see YAML example above)
-4. Set `header_mode: graphical`
+**Default Images**:
+- 🌸 **Spring** - Cherry blossoms and tulips
+- 🏖️ **Summer** - Tropical beach sunset
+- 🍂 **Fall** - Autumn pumpkin and maple leaves
+- ❄️ **Winter** - Snowy winter beach scene
 
-**Image Specifications**:
-- **Recommended size**: 800x280 pixels (matches card header perfectly)
-- **Format**: JPG (smaller file size) or PNG
-- **Aspect ratio**: Wide landscape (roughly 3:1)
-- **File size**: Keep under 200KB each for fast loading
-- **Content**: Seasonal landscape scenes work best (spring flowers, summer beach, autumn leaves, winter snow)
+**🎨 Use Alternate Bundled Images**:
+The card includes multiple images per season. Switch to alternates in the visual editor or via YAML:
+```yaml
+seasonal_images:
+  spring: /hacsfiles/weatherpulse/images/spring-alt1.jpg  # More tulips & flowers
+  summer: /hacsfiles/weatherpulse/images/summer-alt1.jpg  # Sunset beach painting
+  fall: /hacsfiles/weatherpulse/images/fall-alt1.jpg      # Autumn forest scene
+  winter: /hacsfiles/weatherpulse/images/winter-alt1.jpg  # Snowy palm tree beach
+```
 
-**Where to get images**:
-- [Unsplash](https://unsplash.com/) - Free high-quality photos (search "spring landscape", "summer", etc.)
-- [Pexels](https://pexels.com/) - Free stock photos
-- Use your own photos from each season
-- AI image generators (Midjourney, DALL-E, etc.)
+**📁 Using Your Own Custom Images**:
+1. Upload your images to `/config/www/images/` in Home Assistant
+2. Reference them in the visual editor or YAML:
+```yaml
+seasonal_images:
+  spring: /local/images/my-spring.jpg
+  summer: /local/images/my-summer.jpg
+  fall: /local/images/my-fall.jpg
+  winter: /local/images/my-winter.jpg
+```
+
+**Image Specifications** (for custom images):
+- **Recommended size**: 800x280 pixels or larger
+- **Format**: JPG (smaller) or PNG
+- **File size**: Keep under 300KB each for fast loading
 
 **Features**:
-- **Auto-switching**: Backgrounds automatically change based on the current season (Mar-May Spring, Jun-Aug Summer, Sep-Nov Fall, Dec-Feb Winter)
-- **Dark overlay**: Gradient overlay ensures white text is always readable
+- **Auto-switching**: Backgrounds automatically change based on current season (Mar-May Spring, Jun-Aug Summer, Sep-Nov Fall, Dec-Feb Winter)
+- **Dark overlay**: Gradient overlay ensures white text is always readable over any image
 - **Large display**: 280px tall header with prominent time, date, weather icon, and temperature
+- **No setup required**: Works immediately with bundled images, customize only if desired
 
 ### Configuration Options
 
