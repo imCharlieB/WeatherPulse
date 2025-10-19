@@ -239,8 +239,8 @@ export function getSeasonalBackground(season?: 'spring' | 'summer' | 'fall' | 'w
   const currentSeason = season || getCurrentSeason();
 
   // Use bundled default seasonal images
-  // HACS installs to /local/community/weatherpulse/
-  const basePath = '/local/community/weatherpulse/images';
+  // HACS installs to /local/community/WeatherPulse/ (matches GitHub repo name)
+  const basePath = '/local/community/WeatherPulse/images';
 
   switch (currentSeason) {
     case 'spring':
