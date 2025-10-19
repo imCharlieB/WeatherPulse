@@ -50,25 +50,48 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
     case 'clear-night':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="moonGlow">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+            <radialGradient id="moonGradient">
+              <stop offset="0%" style="stop-color:#FFF9C4;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#F0E68C;stop-opacity:1" />
+            </radialGradient>
+          </defs>
           <style>
-            .moon {
+            .moon-glow {
+              animation: ${animate ? 'moonPulse 3s ease-in-out infinite' : 'none'};
+              transform-origin: 50px 50px;
+            }
+            @keyframes moonPulse {
+              0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+              }
+              50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+              }
+            }
+            .moon-body {
               animation: ${animate ? 'moonGlow 3s ease-in-out infinite' : 'none'};
               transform-origin: 50px 50px;
             }
             @keyframes moonGlow {
               0%, 100% {
                 transform: scale(1);
-                opacity: 1;
-                filter: drop-shadow(0 0 12px #FFF9C4) drop-shadow(0 0 20px rgba(255, 249, 196, 0.5));
               }
               50% {
-                transform: scale(1.05);
-                opacity: 0.85;
-                filter: drop-shadow(0 0 20px #FFF59D) drop-shadow(0 0 30px rgba(255, 245, 157, 0.7));
+                transform: scale(1.03);
               }
             }
           </style>
-          <circle class="moon" cx="50" cy="50" r="20" fill="#FFF9C4"/>
+          <!-- Glow effect circle -->
+          <circle class="moon-glow" cx="50" cy="50" r="28" fill="#FFF9C4" opacity="0.4"/>
+          <!-- Main moon body -->
+          <circle class="moon-body" cx="50" cy="50" r="20" fill="url(#moonGradient)" filter="url(#moonGlow)"/>
           <!-- Moon crater details -->
           <circle cx="45" cy="45" r="3" fill="#F0E68C" opacity="0.3"/>
           <circle cx="58" cy="48" r="4" fill="#F0E68C" opacity="0.2"/>
@@ -79,32 +102,52 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
     case 'partlycloudy-night':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="moonGlowSmall">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
           <style>
-            .moon {
-              animation: ${animate ? 'moonGlow 3s ease-in-out infinite' : 'none'};
+            .moon-glow-small {
+              animation: ${animate ? 'moonPulseSmall 3s ease-in-out infinite' : 'none'};
               transform-origin: 30px 30px;
+            }
+            @keyframes moonPulseSmall {
+              0%, 100% {
+                transform: scale(1);
+                opacity: 0.4;
+              }
+              50% {
+                transform: scale(1.15);
+                opacity: 0.7;
+              }
+            }
+            .moon-body-small {
+              animation: ${animate ? 'moonGlowSmall 3s ease-in-out infinite' : 'none'};
+              transform-origin: 30px 30px;
+            }
+            @keyframes moonGlowSmall {
+              0%, 100% {
+                transform: scale(1);
+              }
+              50% {
+                transform: scale(1.03);
+              }
             }
             .cloud {
               animation: ${animate ? 'float 6s ease-in-out infinite' : 'none'};
-            }
-            @keyframes moonGlow {
-              0%, 100% {
-                opacity: 1;
-                filter: drop-shadow(0 0 8px #FFF9C4) drop-shadow(0 0 15px rgba(255, 249, 196, 0.4));
-              }
-              50% {
-                opacity: 0.85;
-                filter: drop-shadow(0 0 15px #FFF59D) drop-shadow(0 0 25px rgba(255, 245, 157, 0.6));
-              }
             }
             @keyframes float {
               0%, 100% { transform: translateY(0px); }
               50% { transform: translateY(-3px); }
             }
           </style>
-          <!-- Moon in background -->
-          <g class="moon">
-            <circle cx="30" cy="30" r="12" fill="#FFF9C4"/>
+          <!-- Moon glow in background -->
+          <circle class="moon-glow-small" cx="30" cy="30" r="16" fill="#FFF9C4" opacity="0.3"/>
+          <!-- Moon body -->
+          <g class="moon-body-small">
+            <circle cx="30" cy="30" r="12" fill="#FFF9C4" filter="url(#moonGlowSmall)"/>
             <circle cx="28" cy="28" r="2" fill="#F0E68C" opacity="0.3"/>
             <circle cx="34" cy="32" r="1.5" fill="#F0E68C" opacity="0.2"/>
           </g>

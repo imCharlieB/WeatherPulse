@@ -352,6 +352,11 @@ export class WeatherPulseCard extends LitElement {
         `;
     }
 
+    // Graphical mode doesn't use card-header wrapper (it has its own background)
+    if (headerMode === 'graphical') {
+      return headerContent;
+    }
+
     return html`
       <div class="card-header" style="background: ${gradient.color}; color: ${gradient.textColor};">
         ${headerContent}
@@ -630,8 +635,6 @@ export class WeatherPulseCard extends LitElement {
         position: relative;
         border-radius: 12px 12px 0 0;
         overflow: hidden;
-        margin: -24px;
-        margin-bottom: 0;
       }
 
       .graphical-overlay {
