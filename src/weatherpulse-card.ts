@@ -1974,34 +1974,86 @@ export class WeatherPulseCard extends LitElement {
          PRE-BUILT THEMES
          ======================================== */
 
-      /* RETRO/NEUBRUTALISM THEME */
+      /* RETRO THEME - 1990s Weather Channel (WeatherStar 4000 inspired) */
       ha-card.theme-retro {
-        border: 4px solid #000 !important;
+        background: linear-gradient(135deg, #001f3f 0%, #0074D9 50%, #FF851B 100%) !important;
+        border: none !important;
         border-radius: 0 !important;
-        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3) !important;
+        box-shadow: none !important;
+        color: white !important;
       }
 
       ha-card.theme-retro .card-header {
+        background: transparent !important;
         border-radius: 0 !important;
-        border-bottom: 4px solid #000;
+        border-bottom: none;
+        color: white !important;
       }
 
       ha-card.theme-retro .graphical-header {
+        background: linear-gradient(135deg, #001f3f 0%, #0074D9 50%, #FF851B 100%) !important;
         border-radius: 0 !important;
-        border-bottom: 4px solid #000;
+        border-bottom: none;
+      }
+
+      ha-card.theme-retro .graphical-header::after,
+      ha-card.theme-retro .graphical-overlay {
+        background: transparent !important;
+        backdrop-filter: none !important;
+      }
+
+      ha-card.theme-retro .card-content {
+        background: rgba(0, 31, 63, 0.3) !important;
       }
 
       ha-card.theme-retro .forecast-day,
-      ha-card.theme-retro .forecast-hour,
-      ha-card.theme-retro .weather-info-item,
-      ha-card.theme-retro .nws-alert {
-        border: 3px solid #000 !important;
+      ha-card.theme-retro .forecast-hour {
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
         border-radius: 0 !important;
-        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2) !important;
+        box-shadow: none !important;
+        color: white !important;
       }
 
       ha-card.theme-retro .forecast-compact {
-        border: 2px solid #000 !important;
+        background: rgba(0, 116, 217, 0.3) !important;
+        border: none !important;
+        border-radius: 0 !important;
+      }
+
+      ha-card.theme-retro .weather-info-item {
+        background: rgba(0, 116, 217, 0.25) !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        color: white !important;
+      }
+
+      ha-card.theme-retro .weather-info-section {
+        background: transparent !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+      }
+
+      ha-card.theme-retro .nws-alert {
+        background: rgba(0, 31, 63, 0.5) !important;
+        border: none !important;
+        border-left: 3px solid !important;
+        border-radius: 0 !important;
+        color: white !important;
+      }
+
+      ha-card.theme-retro .day-name,
+      ha-card.theme-retro .hour-name,
+      ha-card.theme-retro .temp-high,
+      ha-card.theme-retro .temp-low,
+      ha-card.theme-retro .weather-info-label,
+      ha-card.theme-retro .weather-info-value {
+        color: white !important;
+      }
+
+      ha-card.theme-retro .temp-bar {
+        background: rgba(255, 255, 255, 0.2) !important;
       }
 
       /* GLASSMORPHISM THEME */
@@ -2014,25 +2066,43 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-glass .card-header {
-        background: rgba(255, 255, 255, 0.15) !important;
+        background: rgba(255, 255, 255, 0.08) !important;
         backdrop-filter: blur(10px) !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
 
       ha-card.theme-glass .graphical-header::after {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5)) !important;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3)) !important;
         backdrop-filter: blur(5px) !important;
       }
 
       ha-card.theme-glass .forecast-day,
-      ha-card.theme-glass .forecast-hour,
-      ha-card.theme-glass .weather-info-item {
-        background: rgba(255, 255, 255, 0.1) !important;
+      ha-card.theme-glass .forecast-hour {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        border: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+
+      ha-card.theme-glass .forecast-compact {
+        background: rgba(255, 255, 255, 0.08) !important;
         backdrop-filter: blur(10px) !important;
         border: 1px solid rgba(255, 255, 255, 0.15) !important;
       }
 
+      ha-card.theme-glass .weather-info-item {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        border: none !important;
+      }
+
+      ha-card.theme-glass .weather-info-section {
+        background: transparent !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+
       ha-card.theme-glass .nws-alert {
+        background: rgba(255, 255, 255, 0.1) !important;
         backdrop-filter: blur(15px) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
       }
@@ -2042,10 +2112,11 @@ export class WeatherPulseCard extends LitElement {
         background: #ffffff !important;
         border: 1px solid #e0e0e0 !important;
         box-shadow: none !important;
+        color: #333 !important;
       }
 
       ha-card.theme-minimal .card-header {
-        background: #f5f5f5 !important;
+        background: #f8f8f8 !important;
         color: #333 !important;
         border-bottom: 1px solid #e0e0e0;
       }
@@ -2054,24 +2125,57 @@ export class WeatherPulseCard extends LitElement {
         background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.7)) !important;
       }
 
+      ha-card.theme-minimal .card-content {
+        background: #ffffff !important;
+      }
+
       ha-card.theme-minimal .forecast-day,
-      ha-card.theme-minimal .forecast-hour,
-      ha-card.theme-minimal .weather-info-item {
-        background: #fafafa !important;
-        border: 1px solid #e0e0e0 !important;
+      ha-card.theme-minimal .forecast-hour {
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid #f0f0f0 !important;
         box-shadow: none !important;
+        color: #333 !important;
+      }
+
+      ha-card.theme-minimal .forecast-compact {
+        background: #f8f8f8 !important;
+        border: 1px solid #e0e0e0 !important;
+      }
+
+      ha-card.theme-minimal .weather-info-item {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: #333 !important;
+      }
+
+      ha-card.theme-minimal .weather-info-section {
+        background: #ffffff !important;
+        border-top: 1px solid #e0e0e0 !important;
       }
 
       ha-card.theme-minimal .nws-alert {
-        background: #fff !important;
+        background: #f8f8f8 !important;
         border: 1px solid #e0e0e0 !important;
+        color: #333 !important;
       }
 
-      ha-card.theme-minimal .weather-icon-svg,
-      ha-card.theme-minimal .temp-current,
       ha-card.theme-minimal .day-name,
+      ha-card.theme-minimal .hour-name,
+      ha-card.theme-minimal .temp-high,
+      ha-card.theme-minimal .temp-low,
+      ha-card.theme-minimal .weather-info-label,
       ha-card.theme-minimal .weather-info-value {
-        filter: grayscale(30%) !important;
+        color: #333 !important;
+      }
+
+      ha-card.theme-minimal .temp-bar {
+        background: #e0e0e0 !important;
+      }
+
+      ha-card.theme-minimal .weather-icon-svg {
+        filter: grayscale(20%) !important;
       }
 
       /* VIBRANT THEME */
@@ -2092,17 +2196,32 @@ export class WeatherPulseCard extends LitElement {
         background: linear-gradient(to bottom, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.6)) !important;
       }
 
+      ha-card.theme-vibrant .card-content {
+        background: rgba(102, 126, 234, 0.2) !important;
+      }
+
       ha-card.theme-vibrant .forecast-day,
       ha-card.theme-vibrant .forecast-hour {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
         color: white !important;
       }
 
+      ha-card.theme-vibrant .forecast-compact {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      }
+
       ha-card.theme-vibrant .weather-info-item {
-        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
+        background: transparent !important;
         border: none !important;
         color: white !important;
+      }
+
+      ha-card.theme-vibrant .weather-info-section {
+        background: transparent !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
       }
 
       ha-card.theme-vibrant .nws-alert {
@@ -2118,6 +2237,10 @@ export class WeatherPulseCard extends LitElement {
       ha-card.theme-vibrant .weather-info-label,
       ha-card.theme-vibrant .weather-info-value {
         color: white !important;
+      }
+
+      ha-card.theme-vibrant .temp-bar {
+        background: rgba(255, 255, 255, 0.2) !important;
       }
 
       ha-card.theme-vibrant .weather-icon-svg {
