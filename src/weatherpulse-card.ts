@@ -740,7 +740,7 @@ export class WeatherPulseCard extends LitElement {
       .graphical-content {
         position: relative;
         z-index: 1;
-        padding: 32px;
+        padding: 32px 32px 32px 16px;
         width: 100%;
         color: white;
         text-shadow: 0 2px 8px rgba(0,0,0,0.5);
@@ -749,12 +749,12 @@ export class WeatherPulseCard extends LitElement {
       .graphical-main {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 24px;
       }
 
       .graphical-right {
         flex: 1;
-        padding-right: 8px;
+        padding-right: 16px;
       }
 
       .graphical-time {

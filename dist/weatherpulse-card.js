@@ -997,7 +997,7 @@ function e(e,t,i,a){var s,r=arguments.length,o=r<3?t:null===a?a=Object.getOwnPro
       .graphical-content {
         position: relative;
         z-index: 1;
-        padding: 32px;
+        padding: 32px 32px 32px 16px;
         width: 100%;
         color: white;
         text-shadow: 0 2px 8px rgba(0,0,0,0.5);
@@ -1006,12 +1006,12 @@ function e(e,t,i,a){var s,r=arguments.length,o=r<3?t:null===a?a=Object.getOwnPro
       .graphical-main {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 24px;
       }
 
       .graphical-right {
         flex: 1;
-        padding-right: 8px;
+        padding-right: 16px;
       }
 
       .graphical-time {
