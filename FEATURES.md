@@ -52,17 +52,14 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [ ] **Air Quality** integration (if available) (PLANNED)
 
 ### 5. View Modes
-- [x] **Compact**: Current + minimal forecast ✅
-- [x] **Standard**: Current + detailed daily ✅
-- [x] **Detailed**: Current + daily with extra info ✅
-- [ ] **Hourly Focus**: 24-48 hour detailed hourly view (PLANNED)
-- [ ] **Weekly**: 7-10 day overview (PLANNED)
+- [x] **Compact**: Current + minimal forecast (horizontal scroll for hourly) ✅
+- [x] **Standard**: Current + detailed daily (2-column for hourly) ✅
+- [x] **Detailed**: Current + daily with extra info (humidity, wind for hourly) ✅
 
 ### 6. Forecast Periods (User Selectable)
-- [x] 5-day forecast ✅
-- [x] 7-day forecast ✅
-- [x] 10-day forecast ✅
-- [ ] Hourly format (12/24/48 hours) (PLANNED)
+- [x] **Daily forecasts**: 5 or 7 days ✅
+- [x] **Hourly forecasts**: 1-48 hours (configurable) ✅
+- [x] Switchable forecast type (daily/hourly) ✅
 
 ### 7. Animated Weather Icons
 - [x] **Sun**: Rotating rays, pulsing glow ✅
@@ -85,12 +82,15 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [ ] Custom theme builder (user-defined colors)
 
 ### 9. Smart Alerts & Contextual Badges
-- [ ] Weather warnings (configurable)
-- [ ] "Best time to go outside today" suggestions
-- [ ] Rain timing notifications ("Rain starting in 2 hours")
-- [ ] Pollen count alerts
-- [ ] Contextual suggestions ("Perfect beach weather!")
-- [ ] Customizable alert thresholds
+- [ ] **NWS Alerts Integration**: Weather warnings via plugin (PLANNED)
+  - Special card styling for active alerts
+  - Rain/wind animations based on alert type
+  - Visual prominence for severe weather
+- [ ] "Best time to go outside today" suggestions (PLANNED)
+- [ ] Rain timing notifications ("Rain starting in 2 hours") (PLANNED)
+- [ ] Pollen count alerts (PLANNED)
+- [ ] Contextual suggestions ("Perfect beach weather!") (PLANNED)
+- [ ] Customizable alert thresholds (PLANNED)
 
 ### 10. Configurable Data Rows
 Users can choose what to display in forecast:
@@ -152,9 +152,11 @@ Users can choose what to display in forecast:
 - [x] All view modes (compact/standard/detailed) ✅
 - [x] All header modes (including greeting mode) ✅
 - [x] Dual temperature display ✅
-- [x] Configurable forecast periods (5/7/10 days) ✅
+- [x] Daily forecast (5/7 days) ✅
+- [x] Hourly forecast (1-48 hours) ✅
 - [x] Animated weather icons ✅
 - [x] Visual configuration editor ✅
+- [x] Small AM/PM styling on all header modes ✅
 
 ### Phase 3: Advanced Features (IN PROGRESS)
 - [ ] All pre-built themes

@@ -9,8 +9,9 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 👋 **Smart Greeting Mode** - Personalized, context-aware messages based on time and weather
 - 📊 **Dual Temperature Display** - Show both forecast and actual sensor readings side-by-side
 - 🎬 **Animated Weather Icons** - Beautiful SVG animations for sun, clouds, rain, snow, storms, fog, and wind
-- 📅 **Flexible Forecast Views** - Choose between 5, 7, or 10-day forecasts
+- 📅 **Flexible Forecast Views** - Choose between daily (5 or 7 days) or hourly forecasts
 - 🎯 **Three View Modes** - Compact, Standard, and Detailed layouts
+- ⏰ **Hourly Forecasts** - View upcoming weather by hour with customizable count
 - 🎨 **Five Header Modes** - Time-Focused, Date-Focused, Balanced, Minimal, and Greeting
 - ⚙️ **Visual Configuration Editor** - Easy setup through Home Assistant UI
 - 🚀 **Modern Tech Stack** - Built with TypeScript and Lit for performance
@@ -20,8 +21,8 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 🎨 Pre-built themes (Glassmorphism, Minimal, Dark Mode)
 - 📈 Advanced data visualizations (UV Index, Air Quality)
 - 🖼️ Graphical seasonal header with custom images
-- ⏰ Hourly forecast view
-- 🔔 Smart alerts and weather badges
+- 🔔 Smart weather alerts via NWS Alerts integration
+- 🌙 Night-time weather icons (moon phases)
 
 ## 🚧 Development Status
 
@@ -74,7 +75,9 @@ header_mode: time-focused  # time-focused | date-focused | balanced | minimal | 
 greeting_name: Your Name  # For greeting mode
 show_date: true
 show_time: true
-forecast_days: 5  # 5 | 7 | 10
+forecast_type: daily  # daily | hourly
+forecast_days: 5  # 5 | 7 (for daily)
+hourly_count: 12  # 1-48 (for hourly)
 view_mode: standard  # compact | standard | detailed
 temp_display_mode: both  # forecast | actual | both
 animate_icons: true
@@ -91,7 +94,9 @@ show_forecast: true
 | `greeting_name` | string | Optional | Your name for personalized greetings (used in greeting mode) |
 | `show_date` | boolean | `true` | Show date in header |
 | `show_time` | boolean | `true` | Show time in header |
-| `forecast_days` | number | `5` | Number of forecast days: `5`, `7`, or `10` |
+| `forecast_type` | string | `daily` | Forecast type: `daily` or `hourly` |
+| `forecast_days` | number | `5` | Number of forecast days: `5` or `7` (when forecast_type is daily) |
+| `hourly_count` | number | `12` | Number of hours to show: `1-48` (when forecast_type is hourly) |
 | `view_mode` | string | `standard` | Forecast layout: `compact`, `standard`, `detailed` |
 | `temp_display_mode` | string | `forecast` | Temperature display: `forecast`, `actual`, `both` |
 | `animate_icons` | boolean | `true` | Enable animated weather icons |
