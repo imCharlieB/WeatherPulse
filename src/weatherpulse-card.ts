@@ -1084,12 +1084,26 @@ export class WeatherPulseCard extends LitElement {
       tempGlowClass = 'temp-glow-freezing';
     }
 
-    // Add theme class
+    // Add theme class and custom colors
     const theme = this.config?.theme || 'default';
     const themeClass = theme !== 'default' ? `theme-${theme}` : '';
 
+    // Inject custom theme colors as CSS variables
+    let customStyles = '';
+    if (theme === 'custom' && this.config?.custom_theme_colors) {
+      const colors = this.config.custom_theme_colors;
+      customStyles = `
+        --custom-primary: ${colors.primary || '#667eea'};
+        --custom-secondary: ${colors.secondary || '#764ba2'};
+        --custom-background: ${colors.background || '#ffffff'};
+        --custom-text: ${colors.text || '#333333'};
+        --custom-border: ${colors.border || '#e0e0e0'};
+        --custom-accent: ${colors.accent || '#f093fb'};
+      `;
+    }
+
     return html`
-      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}">
+      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
         ${this.renderHeader()}
         ${this.renderNWSAlerts()}

@@ -7,9 +7,20 @@ import { WeatherPulseCardConfig } from './types';
 export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEditor {
   @property({ attribute: false }) public hass!: HomeAssistant;
   @state() private _config!: WeatherPulseCardConfig;
+  @state() private _expandedSections: Set<string> = new Set(['required', 'theme']); // Start with required and theme expanded
 
   public setConfig(config: WeatherPulseCardConfig): void {
     this._config = config;
+  }
+
+  private _toggleSection(section: string): void {
+    const newExpanded = new Set(this._expandedSections);
+    if (newExpanded.has(section)) {
+      newExpanded.delete(section);
+    } else {
+      newExpanded.add(section);
+    }
+    this._expandedSections = newExpanded;
   }
 
   private _valueChanged(ev: CustomEvent): void {
@@ -140,8 +151,12 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
 
         <!-- Required Settings -->
         <div class="section">
-          <h4>Required Settings</h4>
+          <h4 class="section-header" @click=${() => this._toggleSection('required')}>
+            <span class="chevron ${this._expandedSections.has('required') ? 'expanded' : ''}">▶</span>
+            Required Settings
+          </h4>
 
+          ${this._expandedSections.has('required') ? html`
           <ha-select
             label="Weather Entity (Required)"
             .configValue=${'entity'}
@@ -157,12 +172,86 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               `
             )}
           </ha-select>
+          ` : ''}
+        </div>
+
+        <!-- Theme Settings -->
+        <div class="section">
+          <h4 class="section-header" @click=${() => this._toggleSection('theme')}>
+            <span class="chevron ${this._expandedSections.has('theme') ? 'expanded' : ''}">▶</span>
+            Theme Settings
+          </h4>
+
+          ${this._expandedSections.has('theme') ? html`
+          <ha-select
+            label="Visual Theme"
+            .value=${this._config.theme || 'default'}
+            @selected=${(ev: CustomEvent) => this._valueChanged({ target: { configValue: 'theme', value: ev.detail.value } })}
+            @closed=${(ev: Event) => ev.stopPropagation()}
+          >
+            <mwc-list-item value="default">Default</mwc-list-item>
+            <mwc-list-item value="retro">Retro/Neubrutalism (Bold & Boxy)</mwc-list-item>
+            <mwc-list-item value="glass">Glassmorphism (Frosted Glass)</mwc-list-item>
+            <mwc-list-item value="minimal">Minimal (Clean & Simple)</mwc-list-item>
+            <mwc-list-item value="vibrant">Vibrant (Bright & Colorful)</mwc-list-item>
+            <mwc-list-item value="custom">Custom (Use Custom Colors)</mwc-list-item>
+          </ha-select>
+          <p class="helper-text">
+            Choose a pre-built visual theme or create your own custom theme.
+          </p>
+
+          ${this._config.theme === 'custom' ? html`
+            <p class="helper-text" style="margin-top: 16px; font-weight: 600;">
+              Custom Theme Colors (use CSS color values like #667eea or rgb(102, 126, 234)):
+            </p>
+            <ha-textfield
+              label="Primary Color"
+              .value=${this._config.custom_theme_colors?.primary || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'primary')}
+              placeholder="#667eea"
+            ></ha-textfield>
+            <ha-textfield
+              label="Secondary Color"
+              .value=${this._config.custom_theme_colors?.secondary || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'secondary')}
+              placeholder="#764ba2"
+            ></ha-textfield>
+            <ha-textfield
+              label="Background Color"
+              .value=${this._config.custom_theme_colors?.background || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'background')}
+              placeholder="#ffffff"
+            ></ha-textfield>
+            <ha-textfield
+              label="Text Color"
+              .value=${this._config.custom_theme_colors?.text || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'text')}
+              placeholder="#333333"
+            ></ha-textfield>
+            <ha-textfield
+              label="Border Color"
+              .value=${this._config.custom_theme_colors?.border || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'border')}
+              placeholder="#e0e0e0"
+            ></ha-textfield>
+            <ha-textfield
+              label="Accent Color"
+              .value=${this._config.custom_theme_colors?.accent || ''}
+              @input=${(ev: Event) => this._customColorChanged(ev, 'accent')}
+              placeholder="#f093fb"
+            ></ha-textfield>
+          ` : ''}
+          ` : ''}
         </div>
 
         <!-- Temperature Settings -->
         <div class="section">
-          <h4>Temperature Settings</h4>
+          <h4 class="section-header" @click=${() => this._toggleSection('temperature')}>
+            <span class="chevron ${this._expandedSections.has('temperature') ? 'expanded' : ''}">▶</span>
+            Temperature Settings
+          </h4>
 
+          ${this._expandedSections.has('temperature') ? html`
           <ha-select
             label="Outdoor Temperature Sensor (Optional)"
             .configValue=${'outdoor_temp_sensor'}
@@ -197,12 +286,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           <p class="helper-text">
             Choose what temperature to display in forecast rows. "Actual" requires an outdoor temperature sensor.
           </p>
+          ` : ''}
         </div>
 
         <!-- Header Settings -->
         <div class="section">
-          <h4>Header Settings</h4>
+          <h4 class="section-header" @click=${() => this._toggleSection('header')}>
+            <span class="chevron ${this._expandedSections.has('header') ? 'expanded' : ''}">▶</span>
+            Header Settings
+          </h4>
 
+          ${this._expandedSections.has('header') ? html`
           <ha-select
             label="Header Mode"
             .configValue=${'header_mode'}
@@ -298,12 +392,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               @change=${this._toggleChanged}
             ></ha-switch>
           </ha-formfield>
+          ` : ''}
         </div>
 
         <!-- Forecast Settings -->
         <div class="section">
-          <h4>Forecast Settings</h4>
+          <h4 class="section-header" @click=${() => this._toggleSection('forecast')}>
+            <span class="chevron ${this._expandedSections.has('forecast') ? 'expanded' : ''}">▶</span>
+            Forecast Settings
+          </h4>
 
+          ${this._expandedSections.has('forecast') ? html`
           <ha-formfield label="Show Forecast">
             <ha-switch
               .configValue=${'show_forecast'}
@@ -363,11 +462,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             <mwc-list-item value="standard">Standard</mwc-list-item>
             <mwc-list-item value="detailed">Detailed</mwc-list-item>
           </ha-select>
+          ` : ''}
         </div>
 
         <!-- Weather Information -->
         <div class="section">
-          <h4>Weather Information Display</h4>
+          <h4 class="section-header" @click=${() => this._toggleSection('weather_info')}>
+            <span class="chevron ${this._expandedSections.has('weather_info') ? 'expanded' : ''}">▶</span>
+            Weather Information Display
+          </h4>
+
+          ${this._expandedSections.has('weather_info') ? html`
           <p class="helper-text">
             Select which weather details to display below the header (when available from your weather provider).
           </p>
@@ -439,76 +544,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'sunrise_sunset')}
             ></ha-switch>
           </ha-formfield>
-        </div>
-
-        <!-- Theme Settings -->
-        <div class="section">
-          <h4>Theme Settings</h4>
-
-          <ha-select
-            label="Visual Theme"
-            .value=${this._config.theme || 'default'}
-            @selected=${(ev: CustomEvent) => this._valueChanged({ target: { configValue: 'theme', value: ev.detail.value } })}
-            @closed=${(ev: Event) => ev.stopPropagation()}
-          >
-            <mwc-list-item value="default">Default</mwc-list-item>
-            <mwc-list-item value="retro">Retro/Neubrutalism (Bold & Boxy)</mwc-list-item>
-            <mwc-list-item value="glass">Glassmorphism (Frosted Glass)</mwc-list-item>
-            <mwc-list-item value="minimal">Minimal (Clean & Simple)</mwc-list-item>
-            <mwc-list-item value="vibrant">Vibrant (Bright & Colorful)</mwc-list-item>
-            <mwc-list-item value="custom">Custom (Use Custom Colors)</mwc-list-item>
-          </ha-select>
-          <p class="helper-text">
-            Choose a pre-built visual theme or create your own custom theme.
-          </p>
-
-          ${this._config.theme === 'custom' ? html`
-            <p class="helper-text" style="margin-top: 16px; font-weight: 600;">
-              Custom Theme Colors (use CSS color values like #667eea or rgb(102, 126, 234)):
-            </p>
-            <ha-textfield
-              label="Primary Color"
-              .value=${this._config.custom_theme_colors?.primary || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'primary')}
-              placeholder="#667eea"
-            ></ha-textfield>
-            <ha-textfield
-              label="Secondary Color"
-              .value=${this._config.custom_theme_colors?.secondary || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'secondary')}
-              placeholder="#764ba2"
-            ></ha-textfield>
-            <ha-textfield
-              label="Background Color"
-              .value=${this._config.custom_theme_colors?.background || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'background')}
-              placeholder="#ffffff"
-            ></ha-textfield>
-            <ha-textfield
-              label="Text Color"
-              .value=${this._config.custom_theme_colors?.text || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'text')}
-              placeholder="#333333"
-            ></ha-textfield>
-            <ha-textfield
-              label="Border Color"
-              .value=${this._config.custom_theme_colors?.border || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'border')}
-              placeholder="#e0e0e0"
-            ></ha-textfield>
-            <ha-textfield
-              label="Accent Color"
-              .value=${this._config.custom_theme_colors?.accent || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'accent')}
-              placeholder="#f093fb"
-            ></ha-textfield>
           ` : ''}
         </div>
 
         <!-- Display Options -->
         <div class="section">
-          <h4>Display Options</h4>
+          <h4 class="section-header" @click=${() => this._toggleSection('display')}>
+            <span class="chevron ${this._expandedSections.has('display') ? 'expanded' : ''}">▶</span>
+            Display Options
+          </h4>
 
+          ${this._expandedSections.has('display') ? html`
           <ha-formfield label="Animate Icons">
             <ha-switch
               .configValue=${'animate_icons'}
@@ -573,12 +619,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               Enable this to see real NWS alerts from across the US for testing the alert display. Turn off when done testing.
             </p>
           ` : ''}
-
+          ` : ''}
         </div>
 
         <!-- Advanced Options -->
         <div class="section">
-          <h4>Advanced Options</h4>
+          <h4 class="section-header" @click=${() => this._toggleSection('advanced')}>
+            <span class="chevron ${this._expandedSections.has('advanced') ? 'expanded' : ''}">▶</span>
+            Advanced Options
+          </h4>
+
+          ${this._expandedSections.has('advanced') ? html`
           <p class="helper-text">
             Optional: Override default sun and moon entities. Leave empty to use defaults.
           </p>
@@ -606,6 +657,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           <p class="helper-text">
             Used for displaying accurate moon phase icons on clear nights. Defaults to sensor.moon_phase.
           </p>
+          ` : ''}
         </div>
 
         <!-- Help Text -->
@@ -641,6 +693,33 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
         font-size: 1em;
         font-weight: 500;
         color: var(--primary-text-color);
+      }
+
+      .section-header {
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        margin: -8px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+
+      .section-header:hover {
+        background-color: var(--secondary-background-color);
+      }
+
+      .chevron {
+        display: inline-block;
+        font-size: 0.8em;
+        transition: transform 0.2s ease;
+        transform: rotate(0deg);
+      }
+
+      .chevron.expanded {
+        transform: rotate(90deg);
       }
 
       .section {
