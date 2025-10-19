@@ -270,6 +270,7 @@ export class WeatherPulseCard extends LitElement {
               event: props.event || '',
               headline: props.headline || '',
               description: props.description || '',
+              instruction: props.instruction || '',
               severity: props.severity || 'Unknown',
               urgency: props.urgency || 'Unknown',
               certainty: props.certainty || 'Unknown',
@@ -299,6 +300,7 @@ export class WeatherPulseCard extends LitElement {
           // Determine severity class for styling
           let severityClass = 'alert-unknown';
           let severityIcon = '⚠️';
+          let urgencyBadge = '';
 
           switch (alert.severity) {
             case 'Extreme':
@@ -319,16 +321,31 @@ export class WeatherPulseCard extends LitElement {
               break;
           }
 
+          // Add urgency badge
+          if (alert.urgency === 'Immediate') {
+            urgencyBadge = 'IMMEDIATE';
+          } else if (alert.urgency === 'Expected') {
+            urgencyBadge = 'EXPECTED';
+          }
+
           return html`
             <div class="nws-alert ${severityClass}">
               <div class="alert-header">
                 <span class="alert-icon">${severityIcon}</span>
                 <div class="alert-title">
-                  <div class="alert-event">${alert.event}</div>
+                  <div class="alert-event">
+                    ${alert.event}
+                    ${urgencyBadge ? html`<span class="urgency-badge">${urgencyBadge}</span>` : ''}
+                  </div>
                   <div class="alert-area">${alert.areaDesc}</div>
                 </div>
               </div>
               <div class="alert-headline">${alert.headline}</div>
+              ${alert.instruction ? html`
+                <div class="alert-instruction">
+                  <strong>⚠️ What to do:</strong> ${alert.instruction}
+                </div>
+              ` : ''}
               ${alert.expires ? html`
                 <div class="alert-expires">
                   Expires: ${new Date(alert.expires).toLocaleString('en-US', {
@@ -954,8 +971,15 @@ export class WeatherPulseCard extends LitElement {
     const layout = this.config?.weather_info_layout || 'standard';
     const showWeatherInfoInHeader = layout === 'compact';
 
+    // Check for severe alerts to add glowing effect
+    const hasExtremeSevereAlert = this.nwsAlerts.some(
+      alert => alert.severity === 'Extreme' || alert.severity === 'Severe'
+    );
+    const alertGlowClass = hasExtremeSevereAlert ?
+      (this.nwsAlerts.some(a => a.severity === 'Extreme') ? 'alert-glow-extreme' : 'alert-glow-severe') : '';
+
     return html`
-      <ha-card class="${nightModeClass}">
+      <ha-card class="${nightModeClass} ${alertGlowClass}">
         ${this.renderHeader()}
         ${this.renderNWSAlerts()}
         ${!showWeatherInfoInHeader ? this.renderWeatherInfo() : ''}
@@ -1613,6 +1637,22 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 600;
         line-height: 1.2;
         margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .urgency-badge {
+        display: inline-block;
+        font-size: 9px;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.3);
+        color: #fff;
+        letter-spacing: 0.5px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
       }
 
       .alert-area {
@@ -1625,6 +1665,15 @@ export class WeatherPulseCard extends LitElement {
         font-size: 13px;
         line-height: 1.4;
         margin-bottom: 6px;
+      }
+
+      .alert-instruction {
+        font-size: 13px;
+        line-height: 1.4;
+        margin-bottom: 6px;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
       }
 
       .alert-expires {
@@ -1656,6 +1705,47 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.night-mode .nws-alert.alert-minor {
         background: rgba(25, 118, 210, 0.2);
+      }
+
+      /* Alert Glow Effects for Extreme/Severe */
+      ha-card.alert-glow-extreme {
+        box-shadow: 0 0 20px rgba(211, 47, 47, 0.6),
+                    0 0 40px rgba(211, 47, 47, 0.4),
+                    0 0 60px rgba(211, 47, 47, 0.2);
+        animation: pulse-extreme 2s ease-in-out infinite;
+      }
+
+      ha-card.alert-glow-severe {
+        box-shadow: 0 0 15px rgba(245, 124, 0, 0.5),
+                    0 0 30px rgba(245, 124, 0, 0.3),
+                    0 0 45px rgba(245, 124, 0, 0.2);
+        animation: pulse-severe 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse-extreme {
+        0%, 100% {
+          box-shadow: 0 0 20px rgba(211, 47, 47, 0.6),
+                      0 0 40px rgba(211, 47, 47, 0.4),
+                      0 0 60px rgba(211, 47, 47, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 25px rgba(211, 47, 47, 0.8),
+                      0 0 50px rgba(211, 47, 47, 0.6),
+                      0 0 75px rgba(211, 47, 47, 0.4);
+        }
+      }
+
+      @keyframes pulse-severe {
+        0%, 100% {
+          box-shadow: 0 0 15px rgba(245, 124, 0, 0.5),
+                      0 0 30px rgba(245, 124, 0, 0.3),
+                      0 0 45px rgba(245, 124, 0, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(245, 124, 0, 0.7),
+                      0 0 40px rgba(245, 124, 0, 0.5),
+                      0 0 60px rgba(245, 124, 0, 0.3);
+        }
       }
 
       .card-content {

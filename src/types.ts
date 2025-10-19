@@ -113,6 +113,7 @@ export interface NWSAlert {
   event: string;
   headline: string;
   description: string;
+  instruction?: string;
   severity: 'Extreme' | 'Severe' | 'Moderate' | 'Minor' | 'Unknown';
   urgency: 'Immediate' | 'Expected' | 'Future' | 'Past' | 'Unknown';
   certainty: 'Observed' | 'Likely' | 'Possible' | 'Unlikely' | 'Unknown';
