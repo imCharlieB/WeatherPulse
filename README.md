@@ -12,17 +12,19 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 📅 **Flexible Forecast Views** - Choose between daily (5 or 7 days) or hourly forecasts
 - 🎯 **Three View Modes** - Compact, Standard, and Detailed layouts
 - ⏰ **Hourly Forecasts** - View upcoming weather by hour with customizable count
-- 🎨 **Five Header Modes** - Time-Focused, Date-Focused, Balanced, Minimal, and Greeting
+- 🎨 **Six Header Modes** - Time-Focused, Date-Focused, Balanced, Minimal, Greeting, and Graphical
 - ⚙️ **Visual Configuration Editor** - Easy setup through Home Assistant UI
 - 🚀 **Modern Tech Stack** - Built with TypeScript and Lit for performance
 - 📦 **HACS Compatible** - Easy installation and updates
 
+- 🖼️ **Graphical Seasonal Header** - Beautiful seasonal backgrounds that auto-switch with custom image support
+- 🌙 **Night-Time Weather Icons** - Moon icons with animated glow effect (8PM-6AM)
+
 ### 🚧 Coming Soon
 - 🎨 Pre-built themes (Glassmorphism, Minimal, Dark Mode)
 - 📈 Advanced data visualizations (UV Index, Air Quality)
-- 🖼️ Graphical seasonal header with custom images
 - 🔔 Smart weather alerts via NWS Alerts integration
-- 🌙 Night-time weather icons (moon phases)
+- 🌙 Moon phases (actual lunar phase display)
 
 ## 🚧 Development Status
 
@@ -71,7 +73,7 @@ Add the card through the visual editor:
 type: custom:weatherpulse-card
 entity: weather.home
 outdoor_temp_sensor: sensor.outdoor_temperature  # Optional
-header_mode: time-focused  # time-focused | date-focused | balanced | minimal | greeting
+header_mode: time-focused  # time-focused | date-focused | balanced | minimal | greeting | graphical
 greeting_name: Your Name  # For greeting mode
 show_date: true
 show_time: true
@@ -82,7 +84,29 @@ view_mode: standard  # compact | standard | detailed
 temp_display_mode: both  # forecast | actual | both
 animate_icons: true
 show_forecast: true
+
+# Optional: Custom seasonal images for graphical header mode
+seasonal_images:
+  spring: /local/images/spring-garden.jpg
+  summer: /local/images/beach-sunset.jpg
+  fall: /local/images/autumn-leaves.jpg
+  winter: /local/images/snowy-mountains.jpg
 ```
+
+#### Graphical Header Mode
+
+The graphical header mode displays a large, immersive header with seasonal backgrounds:
+- **Auto-switching**: Backgrounds automatically change based on the current season
+- **Default gradients**: Beautiful gradient backgrounds if no custom images are provided
+  - Spring (Mar-May): Soft pastels - blooming flowers theme
+  - Summer (Jun-Aug): Vibrant blues/yellows - beach/sunny theme
+  - Fall (Sep-Nov): Warm oranges/purples - autumn leaves theme
+  - Winter (Dec-Feb): Cool blues/whites - snowy landscape theme
+- **Custom images**: Upload your own seasonal photos to `/config/www/images/` and reference them via `seasonal_images`
+- **Overlay design**: Dark gradient overlay ensures text readability over any background
+- **Large display**: 280px tall header with prominent time, date, weather icon, and temperature
+
+**Tip**: For best results with custom images, use high-quality landscape photos (1920x1080 or larger) that represent each season in your location.
 
 ### Configuration Options
 
@@ -90,8 +114,9 @@ show_forecast: true
 |--------|------|---------|-------------|
 | `entity` | string | **Required** | Your weather entity (e.g., `weather.home`) |
 | `outdoor_temp_sensor` | string | Optional | Actual outdoor temperature sensor for more accurate header colors |
-| `header_mode` | string | `time-focused` | Header layout: `time-focused`, `date-focused`, `balanced`, `minimal`, `greeting` |
+| `header_mode` | string | `time-focused` | Header layout: `time-focused`, `date-focused`, `balanced`, `minimal`, `greeting`, `graphical` |
 | `greeting_name` | string | Optional | Your name for personalized greetings (used in greeting mode) |
+| `seasonal_images` | object | Optional | Custom seasonal background images (spring, summer, fall, winter) - see example above |
 | `show_date` | boolean | `true` | Show date in header |
 | `show_time` | boolean | `true` | Show time in header |
 | `forecast_type` | string | `daily` | Forecast type: `daily` or `hourly` |
