@@ -25,6 +25,8 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   night_mode?: boolean;
   show_weather_info?: WeatherInfoOption[];
   weather_info_layout?: 'compact' | 'standard' | 'detailed';
+  sun_entity?: string;
+  moon_entity?: string;
 }
 
 export type DataRow =
@@ -46,7 +48,8 @@ export type WeatherInfoOption =
   | 'precipitation'
   | 'humidity'
   | 'pressure'
-  | 'visibility';
+  | 'visibility'
+  | 'sunrise_sunset';
 
 export type AlertType =
   | 'weather_warnings'

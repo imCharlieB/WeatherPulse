@@ -364,3 +364,150 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
       `;
   }
 }
+
+/**
+ * Moon phase icons based on Home Assistant moon_phase sensor states
+ */
+export function getMoonPhaseIcon(phase: string, animate: boolean = true): SVGTemplateResult {
+  const animClass = animate ? 'animated' : '';
+
+  // Common moon gradient
+  const moonGradient = svg`
+    <defs>
+      <radialGradient id="moonPhaseGradient" cx="40%" cy="40%">
+        <stop offset="0%" style="stop-color:#FFFEF0;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#F4E5C2;stop-opacity:1" />
+      </radialGradient>
+    </defs>
+  `;
+
+  const moonFloat = svg`
+    <style>
+      .moon-shape {
+        animation: ${animate ? 'moonFloat 6s ease-in-out infinite' : 'none'};
+        transform-origin: 50px 50px;
+      }
+      @keyframes moonFloat {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-4px) rotate(-2deg); }
+      }
+    </style>
+  `;
+
+  switch (phase.toLowerCase()) {
+    case 'new_moon':
+      // Dark circle with subtle glow
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          ${moonFloat}
+          <g class="moon-shape">
+            <circle cx="50" cy="50" r="22" fill="#2a2a3e" stroke="#4a4a5e" stroke-width="2"/>
+          </g>
+        </svg>
+      `;
+
+    case 'waxing_crescent':
+      // Thin crescent on right side
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          ${moonGradient}
+          ${moonFloat}
+          <g class="moon-shape">
+            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
+            <circle cx="46" cy="50" r="20" fill="#1a1a2e"/>
+          </g>
+        </svg>
+      `;
+
+    case 'first_quarter':
+      // Half moon - right half illuminated
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          ${moonGradient}
+          ${moonFloat}
+          <g class="moon-shape">
+            <path d="M 50 28 A 22 22 0 0 1 50 72 L 50 28 Z" fill="url(#moonPhaseGradient)"/>
+            <circle cx="50" cy="50" r="22" fill="none" stroke="#4a4a5e" stroke-width="1"/>
+          </g>
+        </svg>
+      `;
+
+    case 'waxing_gibbous':
+      // More than half, approaching full
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          ${moonGradient}
+          ${moonFloat}
+          <g class="moon-shape">
+            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
+            <ellipse cx="40" cy="50" rx="8" ry="22" fill="#1a1a2e"/>
+          </g>
+        </svg>
+      `;
+
+    case 'full_moon':
+      // Full bright moon
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          ${moonGradient}
+          ${moonFloat}
+          <g class="moon-shape">
+            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
+          </g>
+        </svg>
+      `;
+
+    case 'waning_gibbous':
+      // More than half, but waning (left side lit)
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          ${moonGradient}
+          ${moonFloat}
+          <g class="moon-shape">
+            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
+            <ellipse cx="60" cy="50" rx="8" ry="22" fill="#1a1a2e"/>
+          </g>
+        </svg>
+      `;
+
+    case 'last_quarter':
+    case 'third_quarter':
+      // Half moon - left half illuminated
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          ${moonGradient}
+          ${moonFloat}
+          <g class="moon-shape">
+            <path d="M 50 28 A 22 22 0 0 0 50 72 L 50 28 Z" fill="url(#moonPhaseGradient)"/>
+            <circle cx="50" cy="50" r="22" fill="none" stroke="#4a4a5e" stroke-width="1"/>
+          </g>
+        </svg>
+      `;
+
+    case 'waning_crescent':
+      // Thin crescent on left side
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          ${moonGradient}
+          ${moonFloat}
+          <g class="moon-shape">
+            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
+            <circle cx="54" cy="50" r="20" fill="#1a1a2e"/>
+          </g>
+        </svg>
+      `;
+
+    default:
+      // Default to waxing crescent
+      return svg`
+        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          ${moonGradient}
+          ${moonFloat}
+          <g class="moon-shape">
+            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
+            <circle cx="58" cy="48" r="20" fill="#1a1a2e"/>
+          </g>
+        </svg>
+      `;
+  }
+}

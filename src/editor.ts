@@ -414,6 +414,13 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'visibility')}
             ></ha-switch>
           </ha-formfield>
+
+          <ha-formfield label="Sunrise/Sunset">
+            <ha-switch
+              .checked=${this._config.show_weather_info?.includes('sunrise_sunset')}
+              @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'sunrise_sunset')}
+            ></ha-switch>
+          </ha-formfield>
         </div>
 
         <!-- Display Options -->

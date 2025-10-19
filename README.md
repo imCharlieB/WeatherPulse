@@ -5,6 +5,8 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 ## ✨ Key Features
 
 ### ✅ Currently Available
+
+#### Core Features
 - 🌡️ **Temperature-Based Header Highlighting** - Dynamic gradients that change based on actual outdoor temperature (5 temperature ranges)
 - 👋 **Smart Greeting Mode** - Personalized, context-aware messages based on time and weather
 - 📊 **Dual Temperature Display** - Show both forecast and actual sensor readings side-by-side
@@ -17,14 +19,26 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 🚀 **Modern Tech Stack** - Built with TypeScript and Lit for performance
 - 📦 **HACS Compatible** - Easy installation and updates
 
+#### Display Features
 - 🖼️ **Graphical Seasonal Header** - Beautiful seasonal backgrounds that auto-switch with custom image support
-- 🌙 **Night-Time Weather Icons** - Moon icons with animated glow effect (8PM-6AM)
+- 🌙 **Auto Day/Night Mode** - Automatically switches to darker starry theme at night based on sunrise/sunset
+- 🌕 **Moon Phase Icons** - Shows accurate moon phase (8 phases) on clear nights
+- ☀️ **Sunrise/Sunset Times** - Display next sunrise or sunset with auto-switching
+
+#### Weather Information Display
+- 🌡️ **Feels Like Temperature** - Shows apparent temperature (calculated or from weather provider)
+- ☀️ **UV Index** - Monitor UV levels for sun safety
+- 💨 **Wind Speed & Gusts** - Current wind conditions with gust information
+- 💧 **Humidity** - Relative humidity percentage
+- 🔽 **Atmospheric Pressure** - Barometric pressure reading
+- 👁️ **Visibility** - Current visibility distance
+- 🌅 **Sunrise/Sunset** - Next sunrise or sunset time
+- 📐 **Three Layout Modes** - Compact (in header), Standard (separate cards), Detailed (large cards)
 
 ### 🚧 Coming Soon
 - 🎨 Pre-built themes (Glassmorphism, Minimal, Dark Mode)
-- 📈 Advanced data visualizations (UV Index, Air Quality)
 - 🔔 Smart weather alerts via NWS Alerts integration
-- 🌙 Moon phases (actual lunar phase display)
+- 📈 Additional data rows (Dew Point, Cloud Coverage)
 
 ## 🚧 Development Status
 
@@ -84,6 +98,22 @@ view_mode: standard  # compact | standard | detailed
 temp_display_mode: both  # forecast | actual | both
 animate_icons: true
 show_forecast: true
+night_mode: true  # Auto day/night theme switching
+
+# Weather Information Display
+show_weather_info:
+  - uv_index
+  - wind
+  - feels_like
+  - humidity
+  - pressure
+  - visibility
+  - sunrise_sunset
+weather_info_layout: compact  # compact (in header) | standard | detailed
+
+# Optional: Custom sun/moon entities
+sun_entity: sun.sun  # Default: sun.sun
+moon_entity: sensor.moon_phase  # Default: sensor.moon_phase
 
 # Optional: Custom seasonal images for graphical header mode
 seasonal_images:
@@ -155,6 +185,11 @@ seasonal_images:
 | `temp_display_mode` | string | `forecast` | Temperature display: `forecast`, `actual`, `both` |
 | `animate_icons` | boolean | `true` | Enable animated weather icons |
 | `show_forecast` | boolean | `true` | Show forecast section |
+| `night_mode` | boolean | `false` | Enable automatic day/night theme switching based on sun position |
+| `show_weather_info` | array | `[]` | Weather info to display: `uv_index`, `wind`, `feels_like`, `precipitation`, `humidity`, `pressure`, `visibility`, `sunrise_sunset` |
+| `weather_info_layout` | string | `standard` | Weather info layout: `compact` (in header), `standard` (cards), `detailed` (large cards) |
+| `sun_entity` | string | `sun.sun` | Sun entity for sunrise/sunset and day/night detection |
+| `moon_entity` | string | `sensor.moon_phase` | Moon phase sensor for accurate moon phase icons |
 
 ## 🎯 Roadmap
 

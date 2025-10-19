@@ -14,7 +14,7 @@ import {
   getSeasonalBackground,
   getCurrentSeason
 } from './utils';
-import { getAnimatedWeatherIcon } from './icons';
+import { getAnimatedWeatherIcon, getMoonPhaseIcon } from './icons';
 
 // Import the editor
 import './editor';
@@ -196,9 +196,19 @@ export class WeatherPulseCard extends LitElement {
     return weatherData.temperature || 70;
   }
 
+  private getSunEntity() {
+    const entityId = this.config.sun_entity || 'sun.sun';
+    return this.hass.states[entityId];
+  }
+
+  private getMoonEntity() {
+    const entityId = this.config.moon_entity || 'sensor.moon_phase';
+    return this.hass.states[entityId];
+  }
+
   private isNightTime(): boolean {
     // Check if sun entity exists
-    const sunEntity = this.hass.states['sun.sun'];
+    const sunEntity = this.getSunEntity();
     if (sunEntity) {
       // Sun entity state is 'below_horizon' at night, 'above_horizon' during day
       return sunEntity.state === 'below_horizon';
@@ -207,6 +217,14 @@ export class WeatherPulseCard extends LitElement {
     // Fallback: check time (rough estimate - night is 8 PM to 6 AM)
     const hour = new Date().getHours();
     return hour >= 20 || hour < 6;
+  }
+
+  private getMoonPhase(): string {
+    const moonEntity = this.getMoonEntity();
+    if (moonEntity) {
+      return moonEntity.state;
+    }
+    return 'unknown';
   }
 
   private renderWeatherInfo(forceLayout?: 'compact' | 'standard' | 'detailed'): unknown {
@@ -309,6 +327,22 @@ export class WeatherPulseCard extends LitElement {
             label = 'Visibility';
             const unit = weatherData.visibility_unit || 'mi';
             value = `${weatherData.visibility} ${unit}`;
+          }
+          break;
+
+        case 'sunrise_sunset':
+          const sunEntity = this.getSunEntity();
+          if (sunEntity && sunEntity.attributes) {
+            const isDay = sunEntity.state === 'above_horizon';
+            const nextTime = isDay ? sunEntity.attributes.next_setting : sunEntity.attributes.next_rising;
+
+            if (nextTime) {
+              const time = new Date(nextTime);
+              const timeStr = time.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+              icon = isDay ? '🌅' : '🌄';
+              label = isDay ? 'Sunset' : 'Sunrise';
+              value = timeStr;
+            }
           }
           break;
       }
@@ -567,6 +601,19 @@ export class WeatherPulseCard extends LitElement {
   private renderWeatherIcon(condition: string, useForecastIcon: boolean = false): unknown {
     const iconClass = useForecastIcon ? getForecastIcon(condition) : getWeatherIcon(condition);
     const animate = this.config.animate_icons !== false;
+
+    // For night conditions, use moon phase icons if available
+    if ((iconClass === 'clear-night' || iconClass === 'partlycloudy-night') && animate) {
+      const moonPhase = this.getMoonPhase();
+      if (moonPhase && moonPhase !== 'unknown') {
+        // For clear night, show just the moon phase
+        if (iconClass === 'clear-night') {
+          return getMoonPhaseIcon(moonPhase, true);
+        }
+        // For partly cloudy night, still show regular icon (has clouds + moon)
+        return getAnimatedWeatherIcon(iconClass, true);
+      }
+    }
 
     // Use animated SVG icons if animation is enabled
     if (animate) {
