@@ -754,8 +754,8 @@ export class WeatherPulseCard extends LitElement {
     const iconClass = useForecastIcon ? getForecastIcon(condition) : getWeatherIcon(condition);
     const animate = this.config.animate_icons !== false;
 
-    // For night conditions, use moon phase icons if available
-    if ((iconClass === 'clear-night' || iconClass === 'partlycloudy-night') && animate) {
+    // For night conditions, use moon phase icons if enabled and available
+    if ((iconClass === 'clear-night' || iconClass === 'partlycloudy-night') && animate && this.config.show_moon_phase !== false) {
       const moonPhase = this.getMoonPhase();
       if (moonPhase && moonPhase !== 'unknown') {
         // For clear night, show just the moon phase

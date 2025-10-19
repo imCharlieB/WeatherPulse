@@ -41,7 +41,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 #### Display Features
 - 🖼️ **Graphical Seasonal Header** - Beautiful seasonal backgrounds that auto-switch with custom image support
 - 🌙 **Auto Day/Night Mode** - Automatically switches to darker starry theme at night based on sunrise/sunset
-- 🌕 **Moon Phase Icons** - Shows accurate moon phase (8 phases) on clear nights
+- 🌕 **Moon Phase Icons** - On clear nights, weather icon shows actual current moon phase (new moon, crescent, quarter, gibbous, full moon) instead of generic moon icon
 - ☀️ **Sunrise/Sunset Times** - Display next sunrise or sunset with auto-switching
 
 #### Weather Information Display
@@ -238,6 +238,40 @@ Or toggle "Show NWS Weather Alerts" in the visual editor's Display Options secti
 
 **Note:** NWS alerts are only available for locations within the United States and its territories. The feature will gracefully fail for international locations without showing errors.
 
+#### Moon Phase Display
+
+When enabled (on by default), the weather icon on clear nights will display the **actual current moon phase** instead of a generic moon icon.
+
+**How It Works:**
+- Reads the `sensor.moon_phase` entity from your Home Assistant installation
+- Detects when weather condition is `clear-night`
+- Replaces the generic moon icon with one of 8 accurate moon phase icons
+- Updates automatically as the moon phase changes throughout the month
+
+**Moon Phases Supported:**
+- 🌑 **New Moon** - Moon is not visible
+- 🌒 **Waxing Crescent** - Thin crescent growing
+- 🌓 **First Quarter** - Half moon, right side lit
+- 🌔 **Waxing Gibbous** - More than half lit, growing
+- 🌕 **Full Moon** - Fully illuminated
+- 🌖 **Waning Gibbous** - More than half lit, shrinking
+- 🌗 **Last Quarter** - Half moon, left side lit
+- 🌘 **Waning Crescent** - Thin crescent shrinking
+
+**Requirements:**
+- Home Assistant `sensor.moon_phase` entity (usually auto-created)
+- Weather condition must be `clear-night` (clear skies at nighttime)
+- Animated icons must be enabled (default)
+
+**To Disable:**
+Set `show_moon_phase: false` in your configuration or toggle "Show Moon Phase Icons" off in the visual editor.
+
+**Custom Moon Entity:**
+If your moon phase sensor has a different name, you can specify it:
+```yaml
+moon_entity: sensor.my_custom_moon_phase
+```
+
 ### Configuration Options
 
 | Option | Type | Default | Description |
@@ -257,6 +291,7 @@ Or toggle "Show NWS Weather Alerts" in the visual editor's Display Options secti
 | `animate_icons` | boolean | `true` | Enable animated weather icons |
 | `show_forecast` | boolean | `true` | Show forecast section |
 | `night_mode` | boolean | `false` | Enable automatic day/night theme switching based on sun position |
+| `show_moon_phase` | boolean | `true` | Show accurate moon phase icons on clear nights (requires sensor.moon_phase entity) |
 | `show_weather_info` | array | `[]` | Weather info to display: `uv_index`, `wind`, `feels_like`, `precipitation`, `humidity`, `pressure`, `visibility`, `sunrise_sunset` |
 | `weather_info_layout` | string | `standard` | Weather info layout: `compact` (in header), `standard` (cards), `detailed` (large cards) |
 | `show_nws_alerts` | boolean | `false` | Enable National Weather Service weather alerts for your location |

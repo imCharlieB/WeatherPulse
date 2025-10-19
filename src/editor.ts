@@ -446,6 +446,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             Automatically switch to a darker, starry theme at night based on sunrise/sunset times. Works with all header modes.
           </p>
 
+          <ha-formfield label="Show Moon Phase Icons">
+            <ha-switch
+              .configValue=${'show_moon_phase'}
+              .checked=${this._config.show_moon_phase !== false}
+              @change=${this._toggleChanged}
+            ></ha-switch>
+          </ha-formfield>
+          <p class="helper-text">
+            On clear nights, replace the generic moon icon with the actual current moon phase (new moon, crescent, quarter, gibbous, full moon). Requires sensor.moon_phase entity.
+          </p>
+
           <ha-formfield label="Show NWS Weather Alerts">
             <ha-switch
               .configValue=${'show_nws_alerts'}

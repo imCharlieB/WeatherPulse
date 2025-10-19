@@ -27,6 +27,7 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   weather_info_layout?: 'compact' | 'standard' | 'detailed';
   sun_entity?: string;
   moon_entity?: string;
+  show_moon_phase?: boolean;
   show_nws_alerts?: boolean;
   nws_test_mode?: boolean;
 }
