@@ -245,20 +245,47 @@ export class WeatherPulseCard extends LitElement {
           break;
 
         case 'feels_like':
-          if (weatherData.apparent_temperature !== undefined) {
+          // Use apparent_temperature if available, otherwise calculate it
+          let feelsLike = weatherData.apparent_temperature;
+
+          if (feelsLike === undefined && weatherData.temperature !== undefined) {
+            // Calculate feels like based on temperature and wind
+            const temp = weatherData.temperature;
+            const windSpeed = weatherData.wind_speed || 0;
+
+            if (temp <= 50 && windSpeed > 3) {
+              // Wind chill formula (for temps <= 50°F and wind > 3 mph)
+              feelsLike = 35.74 + (0.6215 * temp) - (35.75 * Math.pow(windSpeed, 0.16)) + (0.4275 * temp * Math.pow(windSpeed, 0.16));
+            } else if (temp >= 80) {
+              // Heat index approximation for temps >= 80°F
+              const rh = weatherData.humidity || 50;
+              feelsLike = -42.379 + (2.04901523 * temp) + (10.14333127 * rh) - (0.22475541 * temp * rh) - (0.00683783 * temp * temp) - (0.05481717 * rh * rh) + (0.00122874 * temp * temp * rh) + (0.00085282 * temp * rh * rh) - (0.00000199 * temp * temp * rh * rh);
+            } else {
+              // Feels like = actual temp if no wind chill or heat index applies
+              feelsLike = temp;
+            }
+          }
+
+          if (feelsLike !== undefined) {
             icon = '🌡️';
             label = 'Feels Like';
             const unit = weatherData.temperature_unit?.replace('°', '') || 'F';
-            value = `${Math.round(weatherData.apparent_temperature)}°${unit}`;
+            value = `${Math.round(feelsLike)}°${unit}`;
           }
           break;
 
         case 'precipitation':
-          if (weatherData.precipitation !== undefined) {
+          // Show current precipitation or "None" if no active precipitation
+          if (weatherData.precipitation !== undefined && weatherData.precipitation > 0) {
             icon = '💧';
             label = 'Precipitation';
-            const unit = weatherData.precipitation_unit || 'mm';
+            const unit = weatherData.precipitation_unit || 'in';
             value = `${weatherData.precipitation} ${unit}`;
+          } else if (weatherData.precipitation !== undefined || weatherData.precipitation_unit !== undefined) {
+            // Show "None" if we have the attribute but it's 0 or we have the unit
+            icon = '💧';
+            label = 'Precipitation';
+            value = 'None';
           }
           break;
 
@@ -283,8 +310,13 @@ export class WeatherPulseCard extends LitElement {
           if (weatherData.visibility !== undefined) {
             icon = '👁️';
             label = 'Visibility';
-            const unit = weatherData.visibility_unit || 'km';
+            const unit = weatherData.visibility_unit || 'mi';
             value = `${weatherData.visibility} ${unit}`;
+          } else if (weatherData.visibility_unit !== undefined) {
+            // If we have the unit but no value, show "Unknown"
+            icon = '👁️';
+            label = 'Visibility';
+            value = 'N/A';
           }
           break;
       }
