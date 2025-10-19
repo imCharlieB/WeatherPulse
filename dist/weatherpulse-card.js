@@ -343,8 +343,9 @@ function e(e,t,a,i){var s,r=arguments.length,o=r<3?t:null===i?i=Object.getOwnPro
           ${this._expandedSections.has("theme")?j`
           <ha-select
             label="Visual Theme"
+            .configValue=${"theme"}
             .value=${this._config.theme||"default"}
-            @selected=${e=>this._valueChanged({target:{configValue:"theme",value:e.detail.value}})}
+            @selected=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
             <mwc-list-item value="default">Default</mwc-list-item>

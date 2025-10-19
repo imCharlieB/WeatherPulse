@@ -185,8 +185,9 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           ${this._expandedSections.has('theme') ? html`
           <ha-select
             label="Visual Theme"
+            .configValue=${'theme'}
             .value=${this._config.theme || 'default'}
-            @selected=${(ev: CustomEvent) => this._valueChanged({ target: { configValue: 'theme', value: ev.detail.value } })}
+            @selected=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
             <mwc-list-item value="default">Default</mwc-list-item>
