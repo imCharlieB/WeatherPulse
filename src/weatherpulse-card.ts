@@ -9,7 +9,8 @@ import {
   formatTime,
   formatDate,
   getDayName,
-  getWeatherIcon
+  getWeatherIcon,
+  getForecastIcon
 } from './utils';
 import { getAnimatedWeatherIcon } from './icons';
 
@@ -241,10 +242,6 @@ export class WeatherPulseCard extends LitElement {
               <div class="greeting-text">
                 ${getGreeting(this.config.greeting_name, weatherData.condition, currentTemp)}
               </div>
-              <div class="suggestion-text">
-                ${getWeatherSuggestion(weatherData.condition, currentTemp)}
-              </div>
-              ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
               ${tempDisplay}
             </div>
           </div>
@@ -335,8 +332,8 @@ export class WeatherPulseCard extends LitElement {
     `;
   }
 
-  private renderWeatherIcon(condition: string): unknown {
-    const iconClass = getWeatherIcon(condition);
+  private renderWeatherIcon(condition: string, useForecastIcon: boolean = false): unknown {
+    const iconClass = useForecastIcon ? getForecastIcon(condition) : getWeatherIcon(condition);
     const animate = this.config.animate_icons !== false;
 
     // Use animated SVG icons if animation is enabled
@@ -347,6 +344,7 @@ export class WeatherPulseCard extends LitElement {
     // Fallback to emoji icons
     const iconMap: Record<string, string> = {
       'clear-day': '☀️',
+      'clear-night': '🌙',
       'cloudy': '☁️',
       'rainy': '🌧️',
       'snowy': '❄️',
@@ -408,7 +406,7 @@ export class WeatherPulseCard extends LitElement {
         <div class="forecast-hour forecast-compact">
           <div class="hour-name">${hourString}</div>
           <div class="day-icon-small">
-            ${this.renderWeatherIcon(condition)}
+            ${this.renderWeatherIcon(condition, true)}
           </div>
           <div class="hour-temp">${temp}°</div>
           ${precipProb > 0 ? html`<div class="precip-compact">💧${precipProb}%</div>` : ''}
@@ -423,7 +421,7 @@ export class WeatherPulseCard extends LitElement {
           <div class="hour-info-row">
             <div class="hour-name">${hourString}</div>
             <div class="day-icon">
-              ${this.renderWeatherIcon(condition)}
+              ${this.renderWeatherIcon(condition, true)}
             </div>
             <div class="hour-temp-display">${temp}°</div>
           </div>
@@ -443,7 +441,7 @@ export class WeatherPulseCard extends LitElement {
       <div class="forecast-hour">
         <div class="hour-name">${hourString}</div>
         <div class="day-icon">
-          ${this.renderWeatherIcon(condition)}
+          ${this.renderWeatherIcon(condition, true)}
         </div>
         <div class="hour-temp">${temp}°</div>
         ${precipProb > 0 ? html`<div class="precip-prob">${precipProb}%</div>` : ''}
@@ -470,7 +468,7 @@ export class WeatherPulseCard extends LitElement {
         <div class="forecast-day forecast-compact">
           <div class="day-name">${dayName}</div>
           <div class="day-icon-small">
-            ${this.renderWeatherIcon(day.condition || 'clear')}
+            ${this.renderWeatherIcon(day.condition || 'clear', true)}
           </div>
           <div class="compact-temps">
             <span class="temp-high-compact">${highTemp}°</span>
@@ -488,7 +486,7 @@ export class WeatherPulseCard extends LitElement {
           <div class="day-info-row">
             <div class="day-name">${dayName}</div>
             <div class="day-icon">
-              ${this.renderWeatherIcon(day.condition || 'clear')}
+              ${this.renderWeatherIcon(day.condition || 'clear', true)}
             </div>
             <div class="day-temp-range">
               <span class="temp-low">${lowTemp}°</span>
@@ -515,7 +513,7 @@ export class WeatherPulseCard extends LitElement {
       <div class="forecast-day">
         <div class="day-name">${dayName}</div>
         <div class="day-icon">
-          ${this.renderWeatherIcon(day.condition || 'clear')}
+          ${this.renderWeatherIcon(day.condition || 'clear', true)}
         </div>
         <div class="day-temp-range">
           <span class="temp-low">${lowTemp}°</span>
@@ -588,13 +586,13 @@ export class WeatherPulseCard extends LitElement {
       .datetime-header {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
       }
 
       .greeting-header {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
       }
 
       .minimal-header {

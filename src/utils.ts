@@ -52,6 +52,7 @@ export function getGreeting(name?: string, condition?: string, temp?: number): s
   const now = new Date();
   const hour = now.getHours();
   const dayName = now.toLocaleDateString('en-US', { weekday: 'short' });
+  const dateStr = now.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' }).replace(/\//g, '-');
   const userName = name ? `, ${name}` : '';
 
   let timeGreeting = 'Hello';
@@ -65,7 +66,32 @@ export function getGreeting(name?: string, condition?: string, temp?: number): s
     timeGreeting = 'Good Night';
   }
 
-  return `${timeGreeting}${userName}, it's ${dayName}!`;
+  // Get weather suggestion inline
+  let weatherPhrase = '';
+  if (condition) {
+    const conditionLower = condition.toLowerCase();
+    if (conditionLower.includes('rain')) {
+      weatherPhrase = "it's rainy, don't forget your umbrella";
+    } else if (conditionLower.includes('snow')) {
+      weatherPhrase = "it's snowy, bundle up";
+    } else if (conditionLower.includes('clear') || conditionLower.includes('sunny')) {
+      if (temp && temp > 75) {
+        weatherPhrase = "it's sunny and warm";
+      } else {
+        weatherPhrase = "it's a beautiful clear day";
+      }
+    } else if (conditionLower.includes('cloud')) {
+      weatherPhrase = "it's overcast but pleasant";
+    } else if (conditionLower.includes('storm')) {
+      weatherPhrase = "it's stormy, stay safe indoors";
+    }
+  }
+
+  if (weatherPhrase) {
+    return `${timeGreeting}${userName}, ${weatherPhrase}. ${dayName} ${dateStr}`;
+  }
+
+  return `${timeGreeting}${userName}! ${dayName} ${dateStr}`;
 }
 
 /**
@@ -146,7 +172,7 @@ export function isNightTime(): boolean {
 }
 
 /**
- * Get weather icon class based on condition
+ * Get weather icon class based on condition (for header - uses night icons)
  */
 export function getWeatherIcon(condition: string): string {
   const conditionLower = condition.toLowerCase();
@@ -171,4 +197,31 @@ export function getWeatherIcon(condition: string): string {
   }
 
   return isNight ? 'clear-night' : 'clear-day';
+}
+
+/**
+ * Get weather icon class for forecast (always uses day icons, no moon)
+ */
+export function getForecastIcon(condition: string): string {
+  const conditionLower = condition.toLowerCase();
+
+  if (conditionLower.includes('clear') || conditionLower.includes('sunny')) {
+    return 'clear-day';
+  } else if (conditionLower.includes('partlycloudy') || conditionLower.includes('partly') || conditionLower.includes('partial')) {
+    return 'partlycloudy';
+  } else if (conditionLower.includes('cloud')) {
+    return 'cloudy';
+  } else if (conditionLower.includes('rain')) {
+    return 'rainy';
+  } else if (conditionLower.includes('snow')) {
+    return 'snowy';
+  } else if (conditionLower.includes('storm') || conditionLower.includes('thunder')) {
+    return 'lightning';
+  } else if (conditionLower.includes('fog') || conditionLower.includes('mist')) {
+    return 'fog';
+  } else if (conditionLower.includes('wind')) {
+    return 'windy';
+  }
+
+  return 'clear-day';
 }
