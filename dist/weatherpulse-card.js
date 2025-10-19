@@ -1498,8 +1498,9 @@ function e(e,t,i,a){var s,r=arguments.length,o=r<3?t:null===a?a=Object.getOwnPro
         background: transparent;
         border-top: none;
         padding: 0;
-        gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(60px, max-content));
+        gap: 0;
+        grid-template-columns: repeat(auto-fit, minmax(50px, max-content));
+        justify-content: space-evenly;
       }
 
       .weather-info-in-header .weather-info-item {
