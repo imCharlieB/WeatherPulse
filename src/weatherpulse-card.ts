@@ -1327,26 +1327,37 @@ export class WeatherPulseCard extends LitElement {
 
       /* Weather Info in Header (compact mode) */
       .weather-info-in-header {
-        margin-top: 16px;
-        padding-top: 12px;
-        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        margin-top: 12px;
       }
 
       .weather-info-in-header .weather-info-section {
         background: transparent;
         border-top: none;
         padding: 0;
+        gap: 16px;
       }
 
       .weather-info-in-header .weather-info-item {
-        background: rgba(255, 255, 255, 0.1);
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+        gap: 4px;
+      }
+
+      .weather-info-in-header .weather-info-icon {
+        font-size: 16px;
+        min-width: 16px;
+      }
+
+      .weather-info-in-header .weather-info-value {
+        font-size: 12px;
+        font-weight: 500;
+        opacity: 0.95;
       }
 
       /* For graphical mode (outside card-header) */
       .graphical-header + .weather-info-in-header {
-        background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
-        padding: 12px 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0 32px 16px 32px;
       }
 
       .graphical-header + .weather-info-in-header .weather-info-section {
@@ -1356,12 +1367,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .graphical-header + .weather-info-in-header .weather-info-item {
-        background: rgba(255, 255, 255, 0.15);
+        background: transparent;
         color: white;
-      }
-
-      ha-card.night-mode .weather-info-in-header .weather-info-item {
-        background: rgba(255, 255, 255, 0.08);
       }
 
       .card-content {
