@@ -60,11 +60,14 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
     const target = ev.target as any;
     const value = target.value;
 
+    // If "default" is selected, remove the custom image (undefined = use default)
+    const imageValue = (value === 'default' || value === '') ? undefined : value;
+
     const newConfig = {
       ...this._config,
       seasonal_images: {
         ...(this._config.seasonal_images || {}),
-        [season]: value === '' ? undefined : value
+        [season]: imageValue
       }
     };
 
@@ -186,39 +189,52 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           ${this._config.header_mode === 'graphical' ? html`
             <div class="seasonal-images-section">
               <p class="helper-text">
-                Upload seasonal background images (800x280px recommended). Leave blank to use solid color placeholders.
+                Select bundled seasonal images or leave as default. Upload custom images to <code>/config/www/</code> to see them here.
               </p>
 
-              <ha-textfield
-                label="Spring Image URL (Mar-May)"
-                placeholder="/local/images/spring.jpg"
-                .value=${this._config.seasonal_images?.spring || ''}
-                @input=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'spring')}
-              ></ha-textfield>
+              <ha-select
+                label="Spring Image (Mar-May)"
+                .value=${this._config.seasonal_images?.spring || 'default'}
+                @selected=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'spring')}
+                @closed=${(ev: Event) => ev.stopPropagation()}
+              >
+                <mwc-list-item value="default">Default - Cherry Blossoms & Tulips</mwc-list-item>
+                <mwc-list-item value="/hacsfiles/weatherpulse/images/spring-alt1.jpg">Alt 1 - More Tulips & Flowers</mwc-list-item>
+                <mwc-list-item value="/hacsfiles/weatherpulse/images/spring-alt2.jpg">Alt 2 - Vibrant Spring Garden</mwc-list-item>
+              </ha-select>
 
-              <ha-textfield
-                label="Summer Image URL (Jun-Aug)"
-                placeholder="/local/images/summer.jpg"
-                .value=${this._config.seasonal_images?.summer || ''}
-                @input=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'summer')}
-              ></ha-textfield>
+              <ha-select
+                label="Summer Image (Jun-Aug)"
+                .value=${this._config.seasonal_images?.summer || 'default'}
+                @selected=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'summer')}
+                @closed=${(ev: Event) => ev.stopPropagation()}
+              >
+                <mwc-list-item value="default">Default - Tropical Beach Sunset</mwc-list-item>
+                <mwc-list-item value="/hacsfiles/weatherpulse/images/summer-alt1.jpg">Alt 1 - Sunset Beach Painting</mwc-list-item>
+              </ha-select>
 
-              <ha-textfield
-                label="Fall Image URL (Sep-Nov)"
-                placeholder="/local/images/fall.jpg"
-                .value=${this._config.seasonal_images?.fall || ''}
-                @input=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'fall')}
-              ></ha-textfield>
+              <ha-select
+                label="Fall Image (Sep-Nov)"
+                .value=${this._config.seasonal_images?.fall || 'default'}
+                @selected=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'fall')}
+                @closed=${(ev: Event) => ev.stopPropagation()}
+              >
+                <mwc-list-item value="default">Default - Pumpkin & Maple Leaves</mwc-list-item>
+                <mwc-list-item value="/hacsfiles/weatherpulse/images/fall-alt1.jpg">Alt 1 - Autumn Forest Scene</mwc-list-item>
+              </ha-select>
 
-              <ha-textfield
-                label="Winter Image URL (Dec-Feb)"
-                placeholder="/local/images/winter.jpg"
-                .value=${this._config.seasonal_images?.winter || ''}
-                @input=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'winter')}
-              ></ha-textfield>
+              <ha-select
+                label="Winter Image (Dec-Feb)"
+                .value=${this._config.seasonal_images?.winter || 'default'}
+                @selected=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'winter')}
+                @closed=${(ev: Event) => ev.stopPropagation()}
+              >
+                <mwc-list-item value="default">Default - Snowy Winter Beach</mwc-list-item>
+                <mwc-list-item value="/hacsfiles/weatherpulse/images/winter-alt1.jpg">Alt 1 - Snowy Palm Tree Beach</mwc-list-item>
+              </ha-select>
 
               <p class="helper-text">
-                Upload images to <code>/config/www/images/</code> folder, then reference as <code>/local/images/filename.jpg</code>
+                Using "Default" will load the bundled images automatically. Select alternates to use different bundled images.
               </p>
             </div>
           ` : ''}
