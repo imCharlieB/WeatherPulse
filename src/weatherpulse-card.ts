@@ -315,11 +315,11 @@ export class WeatherPulseCard extends LitElement {
 
       if (value) {
         if (layout === 'compact') {
-          // Compact: Icon and value only, no label
+          // Compact: Label above value (like ACTUAL temp)
           items.push(html`
             <div class="weather-info-item weather-info-compact">
-              <span class="weather-info-icon">${icon}</span>
               <div class="weather-info-value">${value}</div>
+              <div class="weather-info-label-compact">${label.toUpperCase()}</div>
             </div>
           `);
         } else if (layout === 'detailed') {
@@ -1334,30 +1334,38 @@ export class WeatherPulseCard extends LitElement {
         background: transparent;
         border-top: none;
         padding: 0;
-        gap: 16px;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(60px, max-content));
       }
 
       .weather-info-in-header .weather-info-item {
         background: transparent;
         padding: 0;
         border-radius: 0;
-        gap: 4px;
-      }
-
-      .weather-info-in-header .weather-info-icon {
-        font-size: 16px;
-        min-width: 16px;
+        gap: 2px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
 
       .weather-info-in-header .weather-info-value {
-        font-size: 12px;
+        font-size: 18px;
         font-weight: 500;
-        opacity: 0.95;
+        line-height: 1;
+      }
+
+      .weather-info-in-header .weather-info-label-compact {
+        font-size: 10px;
+        font-weight: 400;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        line-height: 1;
       }
 
       /* For graphical mode (outside card-header) */
       .graphical-header + .weather-info-in-header {
-        padding: 0 32px 16px 32px;
+        padding: 0 32px 20px 32px;
       }
 
       .graphical-header + .weather-info-in-header .weather-info-section {

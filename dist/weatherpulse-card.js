@@ -396,8 +396,8 @@ function e(e,t,i,a){var s,r=arguments.length,o=r<3?t:null===a?a=Object.getOwnPro
       }
     `}};e([me({attribute:!1})],_e.prototype,"hass",void 0),e([ue()],_e.prototype,"_config",void 0),_e=e([de("weatherpulse-card-editor")],_e);var be=Object.freeze({__proto__:null,get WeatherPulseCardEditor(){return _e}});let ke=class extends le{constructor(){super(...arguments),this.currentTime=fe(),this.currentDate=ge(),this.forecastData=[]}static async getConfigElement(){return await Promise.resolve().then(function(){return be}),document.createElement("weatherpulse-card-editor")}static getStubConfig(){return{type:"custom:weatherpulse-card",entity:"weather.home",header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation","wind"]}}setConfig(e){if(!e.entity)throw new Error("You need to define an entity");this.config={header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation"],show_forecast:!0,temp_display_mode:"forecast",...e}}connectedCallback(){super.connectedCallback(),this.startClock(),this.fetchForecast(),this.forecastUpdateInterval=window.setInterval(()=>this.fetchForecast(),18e5)}disconnectedCallback(){super.disconnectedCallback(),this.stopClock(),this.forecastUpdateInterval&&clearInterval(this.forecastUpdateInterval)}startClock(){this.updateTime(),this.timeInterval=window.setInterval(()=>this.updateTime(),1e3)}stopClock(){this.timeInterval&&clearInterval(this.timeInterval)}updateTime(){this.currentTime=fe(),this.currentDate=ge()}shouldUpdate(e){if(e.has("config"))return!0;if(e.has("hass")){const t=e.get("hass");return!t||t.states[this.config.entity]!==this.hass.states[this.config.entity]}return!0}async fetchForecast(){if(this.hass&&this.config?.entity)try{const e=this.config.forecast_type||"daily";this.hass.connection.subscribeMessage(e=>{e?.forecast&&(this.forecastData=e.forecast)},{type:"weather/subscribe_forecast",forecast_type:e,entity_id:this.config.entity})}catch(e){const t=this.hass.states[this.config.entity];t?.attributes?.forecast&&(this.forecastData=t.attributes.forecast)}}getWeatherData(){const e=this.hass.states[this.config.entity];if(!e)return{};let t=this.forecastData.length>0?this.forecastData:e.attributes.forecast||[];return{temperature:e.attributes.temperature,temperature_unit:e.attributes.temperature_unit||"°F",humidity:e.attributes.humidity,pressure:e.attributes.pressure,pressure_unit:e.attributes.pressure_unit,wind_speed:e.attributes.wind_speed,wind_speed_unit:e.attributes.wind_speed_unit,wind_bearing:e.attributes.wind_bearing,wind_gust_speed:e.attributes.wind_gust_speed,condition:e.state,forecast:t,apparent_temperature:e.attributes.apparent_temperature,uv_index:e.attributes.uv_index,visibility:e.attributes.visibility,visibility_unit:e.attributes.visibility_unit,precipitation:e.attributes.precipitation,precipitation_unit:e.attributes.precipitation_unit,cloud_coverage:e.attributes.cloud_coverage,dew_point:e.attributes.dew_point,ozone:e.attributes.ozone}}getCurrentTemp(){if(this.config.outdoor_temp_sensor){const e=this.hass.states[this.config.outdoor_temp_sensor];if(e)return parseFloat(e.state)}return this.getWeatherData().temperature||70}isNightTime(){const e=this.hass.states["sun.sun"];if(e)return"below_horizon"===e.state;const t=(new Date).getHours();return t>=20||t<6}renderWeatherInfo(e){const t=this.config?.show_weather_info;if(!t||0===t.length)return N``;const i=this.getWeatherData(),a=e||this.config?.weather_info_layout||"standard",s=[];for(const e of t){let t="",r="",o="";switch(e){case"uv_index":void 0!==i.uv_index&&(t="☀️",r="UV Index",o=String(Math.round(i.uv_index)));break;case"wind":if(void 0!==i.wind_speed){t="💨",r="Wind";const e=i.wind_speed_unit||"mph";o=`${Math.round(i.wind_speed)} ${e}`,i.wind_gust_speed&&(o+=` (gusts ${Math.round(i.wind_gust_speed)} ${e})`)}break;case"feels_like":let e=i.apparent_temperature;if(void 0===e&&void 0!==i.temperature){const t=i.temperature,a=i.wind_speed||0;if(t<=50&&a>3)e=35.74+.6215*t-35.75*Math.pow(a,.16)+.4275*t*Math.pow(a,.16);else if(t>=80){const a=i.humidity||50;e=2.04901523*t-42.379+10.14333127*a-.22475541*t*a-.00683783*t*t-.05481717*a*a+.00122874*t*t*a+85282e-8*t*a*a-199e-8*t*t*a*a}else e=t}if(void 0!==e){t="🌡️",r="Feels Like";const a=i.temperature_unit?.replace("°","")||"F";o=`${Math.round(e)}°${a}`}break;case"precipitation":if(void 0!==i.precipitation&&i.precipitation>0){t="💧",r="Precipitation";const e=i.precipitation_unit||"in";o=`${i.precipitation} ${e}`}break;case"humidity":void 0!==i.humidity&&(t="💧",r="Humidity",o=`${Math.round(i.humidity)}%`);break;case"pressure":if(void 0!==i.pressure){t="🔽",r="Pressure";const e=i.pressure_unit||"hPa";o=`${Math.round(i.pressure)} ${e}`}break;case"visibility":if(void 0!==i.visibility){t="👁️",r="Visibility";const e=i.visibility_unit||"mi";o=`${i.visibility} ${e}`}}o&&("compact"===a?s.push(N`
             <div class="weather-info-item weather-info-compact">
-              <span class="weather-info-icon">${t}</span>
               <div class="weather-info-value">${o}</div>
+              <div class="weather-info-label-compact">${r.toUpperCase()}</div>
             </div>
           `):"detailed"===a?s.push(N`
             <div class="weather-info-item weather-info-detailed">
@@ -1498,30 +1498,38 @@ function e(e,t,i,a){var s,r=arguments.length,o=r<3?t:null===a?a=Object.getOwnPro
         background: transparent;
         border-top: none;
         padding: 0;
-        gap: 16px;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(60px, max-content));
       }
 
       .weather-info-in-header .weather-info-item {
         background: transparent;
         padding: 0;
         border-radius: 0;
-        gap: 4px;
-      }
-
-      .weather-info-in-header .weather-info-icon {
-        font-size: 16px;
-        min-width: 16px;
+        gap: 2px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
 
       .weather-info-in-header .weather-info-value {
-        font-size: 12px;
+        font-size: 18px;
         font-weight: 500;
-        opacity: 0.95;
+        line-height: 1;
+      }
+
+      .weather-info-in-header .weather-info-label-compact {
+        font-size: 10px;
+        font-weight: 400;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        line-height: 1;
       }
 
       /* For graphical mode (outside card-header) */
       .graphical-header + .weather-info-in-header {
-        padding: 0 32px 16px 32px;
+        padding: 0 32px 20px 32px;
       }
 
       .graphical-header + .weather-info-in-header .weather-info-section {
