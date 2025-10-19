@@ -2058,6 +2058,29 @@ export class WeatherPulseCard extends LitElement {
         background: rgba(255, 255, 255, 0.2) !important;
       }
 
+      /* RETRO THEME - Night Mode */
+      ha-card.theme-retro.night-mode::before {
+        opacity: 1 !important; /* Keep stars visible */
+      }
+
+      ha-card.theme-retro.night-mode .card-header {
+        filter: brightness(0.7) !important; /* Less dimming than default */
+        color: white !important;
+      }
+
+      ha-card.theme-retro.night-mode .card-header::after {
+        display: none !important; /* No default night mode overlay */
+      }
+
+      ha-card.theme-retro.night-mode .card-content {
+        background: rgba(0, 10, 30, 0.5) !important; /* Dim the bottom */
+      }
+
+      ha-card.theme-retro.night-mode .forecast-day,
+      ha-card.theme-retro.night-mode .forecast-hour {
+        border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+      }
+
       /* GLASSMORPHISM THEME */
       ha-card.theme-glass {
         background: rgba(255, 255, 255, 0.15) !important;
@@ -2108,6 +2131,36 @@ export class WeatherPulseCard extends LitElement {
         background: rgba(255, 255, 255, 0.1) !important;
         backdrop-filter: blur(15px) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      }
+
+      /* GLASS THEME - Night Mode */
+      ha-card.theme-glass.night-mode {
+        background: rgba(10, 14, 39, 0.3) !important; /* Darker base */
+        backdrop-filter: blur(25px) !important;
+      }
+
+      ha-card.theme-glass.night-mode::before {
+        opacity: 0.7 !important; /* Dimmer stars */
+      }
+
+      ha-card.theme-glass.night-mode .card-header {
+        background: rgba(10, 14, 39, 0.15) !important; /* Keep glass header style */
+        filter: none !important; /* No brightness filter */
+        backdrop-filter: blur(15px) !important;
+        color: #e8eaf6 !important;
+      }
+
+      ha-card.theme-glass.night-mode .card-header::after {
+        display: none !important; /* No default night overlay */
+      }
+
+      ha-card.theme-glass.night-mode .card-content {
+        background: transparent !important;
+      }
+
+      ha-card.theme-glass.night-mode .forecast-compact {
+        background: rgba(29, 33, 56, 0.5) !important;
+        backdrop-filter: blur(10px) !important;
       }
 
       /* MINIMAL THEME */
@@ -2182,6 +2235,56 @@ export class WeatherPulseCard extends LitElement {
         filter: grayscale(20%) !important;
       }
 
+      /* MINIMAL THEME - Night Mode */
+      ha-card.theme-minimal.night-mode {
+        background: #1a1d2e !important; /* Dark minimal background */
+        border-color: #2a2d3e !important;
+      }
+
+      ha-card.theme-minimal.night-mode::before {
+        opacity: 0.3 !important; /* Faint stars */
+      }
+
+      ha-card.theme-minimal.night-mode .card-header {
+        background: #252838 !important; /* Keep minimal header style */
+        filter: none !important; /* No brightness filter */
+        color: #e8eaf6 !important;
+        border-bottom-color: #2a2d3e !important;
+      }
+
+      ha-card.theme-minimal.night-mode .card-header::after {
+        display: none !important; /* No default night overlay */
+      }
+
+      ha-card.theme-minimal.night-mode .card-content {
+        background: #1a1d2e !important;
+        color: #e8eaf6 !important;
+      }
+
+      ha-card.theme-minimal.night-mode .forecast-compact {
+        background: #252838 !important;
+        border-color: #2a2d3e !important;
+      }
+
+      ha-card.theme-minimal.night-mode .weather-info-section {
+        background: #1a1d2e !important;
+        border-top-color: #2a2d3e !important;
+      }
+
+      ha-card.theme-minimal.night-mode .day-name,
+      ha-card.theme-minimal.night-mode .hour-name,
+      ha-card.theme-minimal.night-mode .temp-high,
+      ha-card.theme-minimal.night-mode .temp-low,
+      ha-card.theme-minimal.night-mode .weather-info-label,
+      ha-card.theme-minimal.night-mode .weather-info-value {
+        color: #e8eaf6 !important;
+      }
+
+      ha-card.theme-minimal.night-mode .forecast-day,
+      ha-card.theme-minimal.night-mode .forecast-hour {
+        border-bottom-color: #2a2d3e !important;
+      }
+
       /* VIBRANT THEME */
       ha-card.theme-vibrant {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
@@ -2253,6 +2356,34 @@ export class WeatherPulseCard extends LitElement {
         filter: brightness(1.2) saturate(1.3) !important;
       }
 
+      /* VIBRANT THEME - Night Mode */
+      ha-card.theme-vibrant.night-mode {
+        background: linear-gradient(135deg, #2a3a6e 0%, #3a255e 100%) !important; /* Darker vibrant gradient */
+        box-shadow: 0 10px 40px rgba(42, 58, 110, 0.6) !important;
+      }
+
+      ha-card.theme-vibrant.night-mode::before {
+        opacity: 0.5 !important; /* Medium stars */
+      }
+
+      ha-card.theme-vibrant.night-mode .card-header {
+        background: linear-gradient(135deg, #7a4ba2 0%, #a53a5c 100%) !important; /* Darker pink/purple */
+        filter: none !important;
+        color: white !important;
+      }
+
+      ha-card.theme-vibrant.night-mode .card-header::after {
+        display: none !important;
+      }
+
+      ha-card.theme-vibrant.night-mode .card-content {
+        background: rgba(42, 58, 110, 0.3) !important;
+      }
+
+      ha-card.theme-vibrant.night-mode .forecast-compact {
+        background: rgba(122, 75, 162, 0.3) !important;
+      }
+
       /* CUSTOM THEME - Uses CSS Variables */
       ha-card.theme-custom {
         --theme-primary: var(--custom-primary, #667eea);
@@ -2320,6 +2451,44 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-custom .temp-bar {
         background: var(--theme-border) !important;
+      }
+
+      /* CUSTOM THEME - Night Mode */
+      ha-card.theme-custom.night-mode {
+        background: #1a1d2e !important; /* Dark background override */
+        border-color: #2a2d3e !important;
+      }
+
+      ha-card.theme-custom.night-mode::before {
+        opacity: 0.4 !important; /* Medium-faint stars */
+      }
+
+      ha-card.theme-custom.night-mode .card-header {
+        filter: brightness(0.6) !important; /* Dim the custom header color */
+        color: #e8eaf6 !important;
+      }
+
+      ha-card.theme-custom.night-mode .card-header::after {
+        display: none !important;
+      }
+
+      ha-card.theme-custom.night-mode .card-content {
+        background: #1a1d2e !important;
+        color: #e8eaf6 !important;
+      }
+
+      ha-card.theme-custom.night-mode .day-name,
+      ha-card.theme-custom.night-mode .hour-name,
+      ha-card.theme-custom.night-mode .temp-high,
+      ha-card.theme-custom.night-mode .temp-low,
+      ha-card.theme-custom.night-mode .weather-info-label,
+      ha-card.theme-custom.night-mode .weather-info-value {
+        color: #e8eaf6 !important;
+      }
+
+      ha-card.theme-custom.night-mode .forecast-day,
+      ha-card.theme-custom.night-mode .forecast-hour {
+        border-bottom-color: #2a2d3e !important;
       }
 
       .card-content {
