@@ -457,6 +457,19 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             Display National Weather Service alerts for your location. Uses your Home Assistant location coordinates.
           </p>
 
+          ${this._config.show_nws_alerts ? html`
+            <ha-formfield label="Alert Test Mode (shows sample alerts from anywhere in US)">
+              <ha-switch
+                .configValue=${'nws_test_mode'}
+                .checked=${this._config.nws_test_mode === true}
+                @change=${this._toggleChanged}
+              ></ha-switch>
+            </ha-formfield>
+            <p class="helper-text">
+              Enable this to see real NWS alerts from across the US for testing the alert display. Turn off when done testing.
+            </p>
+          ` : ''}
+
         </div>
 
         <!-- Advanced Options -->

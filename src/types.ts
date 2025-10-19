@@ -28,6 +28,7 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   sun_entity?: string;
   moon_entity?: string;
   show_nws_alerts?: boolean;
+  nws_test_mode?: boolean;
 }
 
 export type DataRow =

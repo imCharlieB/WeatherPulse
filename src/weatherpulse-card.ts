@@ -248,9 +248,17 @@ export class WeatherPulseCard extends LitElement {
     }
 
     try {
-      const lat = this.hass.config.latitude;
-      const lon = this.hass.config.longitude;
-      const url = `https://api.weather.gov/alerts/active?point=${lat},${lon}`;
+      let url: string;
+
+      // Test mode: Fetch all active US alerts and take first few for display testing
+      if (this.config?.nws_test_mode) {
+        url = 'https://api.weather.gov/alerts/active?status=actual&message_type=alert';
+        console.log('NWS Test Mode: Fetching active US alerts for display testing');
+      } else {
+        const lat = this.hass.config.latitude;
+        const lon = this.hass.config.longitude;
+        url = `https://api.weather.gov/alerts/active?point=${lat},${lon}`;
+      }
 
       const response = await fetch(url);
       if (!response.ok) {
@@ -262,7 +270,10 @@ export class WeatherPulseCard extends LitElement {
       const alerts: NWSAlert[] = [];
 
       if (data.features && Array.isArray(data.features)) {
-        for (const feature of data.features) {
+        // In test mode, limit to first 2 alerts for display
+        const features = this.config?.nws_test_mode ? data.features.slice(0, 2) : data.features;
+
+        for (const feature of features) {
           const props = feature.properties;
           if (props) {
             alerts.push({
@@ -284,6 +295,10 @@ export class WeatherPulseCard extends LitElement {
 
       this.nwsAlerts = alerts;
       this.lastAlertFetch = now;
+
+      if (this.config?.nws_test_mode && alerts.length > 0) {
+        console.log(`NWS Test Mode: Displaying ${alerts.length} sample alert(s)`, alerts);
+      }
     } catch (error) {
       console.error('Failed to fetch NWS alerts:', error);
     }
