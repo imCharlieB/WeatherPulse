@@ -36,9 +36,9 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - `50-70°F`: Pleasant greens/yellows ✅
   - `70-85°F`: Warm oranges ✅
   - `> 85°F`: Hot reds/deep oranges ✅
-- [ ] Seasonal theme variants (PLANNED)
-- [ ] Pulsing glow effect for extreme temperatures (PLANNED)
-- [ ] Heat warnings and freeze alerts visual indicators (PLANNED)
+- [x] Seasonal theme variants (done via Graphical Header seasonal images) ✅
+- [x] Pulsing glow effect for extreme temperatures (>=95°F hot, <=20°F freezing) ✅
+- [x] Heat warnings and freeze alerts visual indicators (glowing card border) ✅
 
 ### 3. Dual Temperature Display
 - [x] Show both **forecast temp** AND **actual outdoor sensor temp** ✅

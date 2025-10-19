@@ -993,8 +993,17 @@ export class WeatherPulseCard extends LitElement {
     const alertGlowClass = hasExtremeSevereAlert ?
       (this.nwsAlerts.some(a => a.severity === 'Extreme') ? 'alert-glow-extreme' : 'alert-glow-severe') : '';
 
+    // Check for extreme temperatures to add glowing effect
+    const currentTemp = this.getCurrentTemp();
+    let tempGlowClass = '';
+    if (currentTemp >= 95) {
+      tempGlowClass = 'temp-glow-hot';
+    } else if (currentTemp <= 20) {
+      tempGlowClass = 'temp-glow-freezing';
+    }
+
     return html`
-      <ha-card class="${nightModeClass} ${alertGlowClass}">
+      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass}">
         ${this.renderHeader()}
         ${this.renderNWSAlerts()}
         ${!showWeatherInfoInHeader ? this.renderWeatherInfo() : ''}
@@ -1760,6 +1769,47 @@ export class WeatherPulseCard extends LitElement {
           box-shadow: 0 0 20px rgba(245, 124, 0, 0.7),
                       0 0 40px rgba(245, 124, 0, 0.5),
                       0 0 60px rgba(245, 124, 0, 0.3);
+        }
+      }
+
+      /* Extreme Temperature Glow Effects */
+      ha-card.temp-glow-hot {
+        box-shadow: 0 0 20px rgba(230, 74, 25, 0.6),
+                    0 0 40px rgba(230, 74, 25, 0.4),
+                    0 0 60px rgba(230, 74, 25, 0.2);
+        animation: pulse-hot 3s ease-in-out infinite;
+      }
+
+      ha-card.temp-glow-freezing {
+        box-shadow: 0 0 20px rgba(79, 195, 247, 0.6),
+                    0 0 40px rgba(79, 195, 247, 0.4),
+                    0 0 60px rgba(79, 195, 247, 0.2);
+        animation: pulse-freezing 3s ease-in-out infinite;
+      }
+
+      @keyframes pulse-hot {
+        0%, 100% {
+          box-shadow: 0 0 20px rgba(230, 74, 25, 0.6),
+                      0 0 40px rgba(230, 74, 25, 0.4),
+                      0 0 60px rgba(230, 74, 25, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 25px rgba(230, 74, 25, 0.8),
+                      0 0 50px rgba(230, 74, 25, 0.6),
+                      0 0 75px rgba(230, 74, 25, 0.4);
+        }
+      }
+
+      @keyframes pulse-freezing {
+        0%, 100% {
+          box-shadow: 0 0 20px rgba(79, 195, 247, 0.6),
+                      0 0 40px rgba(79, 195, 247, 0.4),
+                      0 0 60px rgba(79, 195, 247, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 25px rgba(79, 195, 247, 0.8),
+                      0 0 50px rgba(79, 195, 247, 0.6),
+                      0 0 75px rgba(79, 195, 247, 0.4);
         }
       }
 
