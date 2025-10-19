@@ -199,8 +199,8 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
                 @closed=${(ev: Event) => ev.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Cherry Blossoms & Tulips</mwc-list-item>
-                <mwc-list-item value="/hacsfiles/weatherpulse/images/spring-alt1.jpg">Alt 1 - More Tulips & Flowers</mwc-list-item>
-                <mwc-list-item value="/hacsfiles/weatherpulse/images/spring-alt2.jpg">Alt 2 - Vibrant Spring Garden</mwc-list-item>
+                <mwc-list-item value="/local/community/weatherpulse/images/spring-alt1.jpg">Alt 1 - More Tulips & Flowers</mwc-list-item>
+                <mwc-list-item value="/local/community/weatherpulse/images/spring-alt2.jpg">Alt 2 - Vibrant Spring Garden</mwc-list-item>
               </ha-select>
 
               <ha-select
@@ -210,7 +210,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
                 @closed=${(ev: Event) => ev.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Tropical Beach Sunset</mwc-list-item>
-                <mwc-list-item value="/hacsfiles/weatherpulse/images/summer-alt1.jpg">Alt 1 - Sunset Beach Painting</mwc-list-item>
+                <mwc-list-item value="/local/community/weatherpulse/images/summer-alt1.jpg">Alt 1 - Sunset Beach Painting</mwc-list-item>
               </ha-select>
 
               <ha-select
@@ -220,7 +220,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
                 @closed=${(ev: Event) => ev.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Pumpkin & Maple Leaves</mwc-list-item>
-                <mwc-list-item value="/hacsfiles/weatherpulse/images/fall-alt1.jpg">Alt 1 - Autumn Forest Scene</mwc-list-item>
+                <mwc-list-item value="/local/community/weatherpulse/images/fall-alt1.jpg">Alt 1 - Autumn Forest Scene</mwc-list-item>
               </ha-select>
 
               <ha-select
@@ -230,7 +230,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
                 @closed=${(ev: Event) => ev.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Snowy Winter Beach</mwc-list-item>
-                <mwc-list-item value="/hacsfiles/weatherpulse/images/winter-alt1.jpg">Alt 1 - Snowy Palm Tree Beach</mwc-list-item>
+                <mwc-list-item value="/local/community/weatherpulse/images/winter-alt1.jpg">Alt 1 - Snowy Palm Tree Beach</mwc-list-item>
               </ha-select>
 
               <p class="helper-text">

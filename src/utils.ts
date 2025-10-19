@@ -239,17 +239,19 @@ export function getSeasonalBackground(season?: 'spring' | 'summer' | 'fall' | 'w
   const currentSeason = season || getCurrentSeason();
 
   // Use bundled default seasonal images
-  // These are included with the card installation via HACS
+  // HACS installs to /local/community/weatherpulse/
+  const basePath = '/local/community/weatherpulse/images';
+
   switch (currentSeason) {
     case 'spring':
-      return 'url(/hacsfiles/weatherpulse/images/spring-default.jpg)';
+      return `url(${basePath}/spring-default.jpg)`;
     case 'summer':
-      return 'url(/hacsfiles/weatherpulse/images/summer-default.jpg)';
+      return `url(${basePath}/summer-default.jpg)`;
     case 'fall':
-      return 'url(/hacsfiles/weatherpulse/images/fall-default.jpg)';
+      return `url(${basePath}/fall-default.jpg)`;
     case 'winter':
-      return 'url(/hacsfiles/weatherpulse/images/winter-default.jpg)';
+      return `url(${basePath}/winter-default.jpg)`;
     default:
-      return 'url(/hacsfiles/weatherpulse/images/spring-default.jpg)';
+      return `url(${basePath}/spring-default.jpg)`;
   }
 }
