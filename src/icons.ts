@@ -52,12 +52,20 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
             .moon {
-              animation: ${animate ? 'glow 4s ease-in-out infinite' : 'none'};
+              animation: ${animate ? 'moonGlow 3s ease-in-out infinite' : 'none'};
               transform-origin: 50px 50px;
             }
-            @keyframes glow {
-              0%, 100% { opacity: 1; filter: drop-shadow(0 0 8px #FFF9C4); }
-              50% { opacity: 0.8; filter: drop-shadow(0 0 12px #FFF59D); }
+            @keyframes moonGlow {
+              0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+                filter: drop-shadow(0 0 12px #FFF9C4) drop-shadow(0 0 20px rgba(255, 249, 196, 0.5));
+              }
+              50% {
+                transform: scale(1.05);
+                opacity: 0.85;
+                filter: drop-shadow(0 0 20px #FFF59D) drop-shadow(0 0 30px rgba(255, 245, 157, 0.7));
+              }
             }
           </style>
           <circle class="moon" cx="50" cy="50" r="20" fill="#FFF9C4"/>
@@ -73,15 +81,21 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
             .moon {
-              animation: ${animate ? 'glow 4s ease-in-out infinite' : 'none'};
+              animation: ${animate ? 'moonGlow 3s ease-in-out infinite' : 'none'};
               transform-origin: 30px 30px;
             }
             .cloud {
               animation: ${animate ? 'float 6s ease-in-out infinite' : 'none'};
             }
-            @keyframes glow {
-              0%, 100% { opacity: 1; }
-              50% { opacity: 0.8; }
+            @keyframes moonGlow {
+              0%, 100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 8px #FFF9C4) drop-shadow(0 0 15px rgba(255, 249, 196, 0.4));
+              }
+              50% {
+                opacity: 0.85;
+                filter: drop-shadow(0 0 15px #FFF59D) drop-shadow(0 0 25px rgba(255, 245, 157, 0.6));
+              }
             }
             @keyframes float {
               0%, 100% { transform: translateY(0px); }

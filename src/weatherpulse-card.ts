@@ -779,10 +779,10 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .greeting-text {
-        font-size: 24px;
-        font-weight: 500;
+        font-size: 20px;
+        font-weight: 400;
         margin-bottom: 4px;
-        line-height: 1.2;
+        line-height: 1.3;
       }
 
       .suggestion-text {
