@@ -2231,6 +2231,8 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-retro .weather-info-section {
         background: transparent !important;
         border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+        padding-top: 12px !important;
+        margin-top: 8px !important;
       }
 
       ha-card.theme-retro .nws-alert {
@@ -2297,6 +2299,8 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-glass .weather-info-section {
         background: transparent !important;
         border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        padding-top: 12px !important;
+        margin-top: 8px !important;
       }
 
       ha-card.theme-glass .nws-alert {
@@ -2351,6 +2355,8 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-minimal .weather-info-section {
         background: #ffffff !important;
         border-top: 1px solid #e0e0e0 !important;
+        padding-top: 12px !important;
+        margin-top: 8px !important;
       }
 
       ha-card.theme-minimal .nws-alert {
@@ -2420,6 +2426,8 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-vibrant .weather-info-section {
         background: transparent !important;
         border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+        padding-top: 12px !important;
+        margin-top: 8px !important;
       }
 
       ha-card.theme-vibrant .nws-alert {

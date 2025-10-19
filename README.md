@@ -62,10 +62,15 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 🔄 **Auto-Updates** - Fetches latest alerts every 5 minutes
 - 🙈 **Auto-Hide** - Alert section disappears when no active alerts
 
+#### Visual Themes
+- 🎨 **Pre-built Themes** - 5 professional themes: Default, Retro (1990s Weather Channel), Glassmorphism, Minimal, Vibrant
+- 🎭 **Custom Theme** - Create your own 6-color theme palette
+- 🎉 **Holiday Decorations** - Festive overlays for 8 holidays throughout the year
+
 ### 🚧 Coming Soon
-- 🎨 Pre-built themes (Glassmorphism, Minimal, Dark Mode)
 - 📈 Additional data rows (Dew Point, Cloud Coverage)
 - 📊 Weather trend indicators
+- 🌡️ Temperature range charts
 
 ## 🚧 Development Status
 
