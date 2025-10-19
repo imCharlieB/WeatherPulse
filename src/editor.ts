@@ -332,6 +332,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               @change=${this._toggleChanged}
             ></ha-switch>
           </ha-formfield>
+
+          <ha-formfield label="Night Mode">
+            <ha-switch
+              .configValue=${'night_mode'}
+              .checked=${this._config.night_mode === true}
+              @change=${this._toggleChanged}
+            ></ha-switch>
+          </ha-formfield>
+          <p class="helper-text">
+            Enable a darker, starry night theme for the card. Works with all header modes.
+          </p>
         </div>
 
         <!-- Help Text -->

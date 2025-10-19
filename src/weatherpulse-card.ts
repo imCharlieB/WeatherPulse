@@ -264,10 +264,14 @@ export class WeatherPulseCard extends LitElement {
                     ${this.renderWeatherIcon(weatherData.condition || 'clear')}
                   </div>
                   <div class="graphical-right">
-                    <div class="graphical-time">
-                      ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
-                    </div>
-                    <div class="graphical-date">${this.currentDate}</div>
+                    ${this.config.show_time !== false ? html`
+                      <div class="graphical-time">
+                        ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
+                      </div>
+                    ` : ''}
+                    ${this.config.show_date !== false ? html`
+                      <div class="graphical-date">${this.currentDate}</div>
+                    ` : ''}
                     ${tempDisplay}
                   </div>
                 </div>
@@ -581,9 +585,10 @@ export class WeatherPulseCard extends LitElement {
     const weatherData = this.getWeatherData();
     const hasForecast = weatherData.forecast && weatherData.forecast.length > 0;
     const showForecast = this.config.show_forecast !== false && hasForecast;
+    const nightModeClass = this.config.night_mode ? 'night-mode' : '';
 
     return html`
-      <ha-card>
+      <ha-card class="${nightModeClass}">
         ${this.renderHeader()}
         ${showForecast ? html`
           <div class="card-content">
@@ -603,6 +608,89 @@ export class WeatherPulseCard extends LitElement {
       ha-card {
         overflow: hidden;
         border-radius: 12px;
+        position: relative;
+      }
+
+      /* Night Mode Styling */
+      ha-card.night-mode {
+        background: #0a0e27;
+        position: relative;
+      }
+
+      ha-card.night-mode::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+          radial-gradient(2px 2px at 20px 30px, white, transparent),
+          radial-gradient(2px 2px at 60px 70px, white, transparent),
+          radial-gradient(1px 1px at 50px 50px, white, transparent),
+          radial-gradient(1px 1px at 130px 80px, white, transparent),
+          radial-gradient(2px 2px at 90px 10px, white, transparent),
+          radial-gradient(1px 1px at 200px 60px, white, transparent),
+          radial-gradient(2px 2px at 170px 120px, white, transparent),
+          radial-gradient(1px 1px at 220px 90px, white, transparent),
+          radial-gradient(1px 1px at 30px 100px, white, transparent),
+          radial-gradient(2px 2px at 270px 40px, white, transparent),
+          radial-gradient(1px 1px at 150px 15px, white, transparent),
+          radial-gradient(1px 1px at 100px 130px, white, transparent),
+          radial-gradient(2px 2px at 240px 100px, white, transparent),
+          radial-gradient(1px 1px at 190px 70px, white, transparent),
+          radial-gradient(1px 1px at 80px 95px, white, transparent);
+        background-repeat: repeat;
+        background-size: 300px 150px;
+        opacity: 0.6;
+        pointer-events: none;
+        z-index: 0;
+        animation: starsFloat 120s linear infinite;
+      }
+
+      @keyframes starsFloat {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-150px);
+        }
+      }
+
+      ha-card.night-mode > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      ha-card.night-mode .card-header {
+        background: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%) !important;
+        color: #e8eaf6 !important;
+      }
+
+      ha-card.night-mode .graphical-overlay {
+        background: linear-gradient(180deg, rgba(10,14,39,0.5) 0%, rgba(10,14,39,0.8) 100%);
+      }
+
+      ha-card.night-mode .card-content {
+        background: rgba(10, 14, 39, 0.6);
+        color: #e8eaf6;
+      }
+
+      ha-card.night-mode .forecast-day,
+      ha-card.night-mode .forecast-hour {
+        border-bottom-color: rgba(232, 234, 246, 0.1);
+      }
+
+      ha-card.night-mode .temp-bar {
+        background: rgba(232, 234, 246, 0.15);
+      }
+
+      ha-card.night-mode .forecast-compact {
+        background: rgba(29, 33, 56, 0.7) !important;
+      }
+
+      ha-card.night-mode .forecast-type-hourly.forecast-standard .forecast-hour {
+        background: rgba(29, 33, 56, 0.7) !important;
       }
 
       .error {
@@ -666,6 +754,7 @@ export class WeatherPulseCard extends LitElement {
 
       .graphical-right {
         flex: 1;
+        padding-right: 8px;
       }
 
       .graphical-time {
