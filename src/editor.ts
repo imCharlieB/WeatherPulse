@@ -74,6 +74,32 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
     fireEvent(this, 'config-changed', { config: newConfig });
   }
 
+  private _weatherInfoToggle(ev: CustomEvent, infoType: string): void {
+    if (!this._config || !this.hass) {
+      return;
+    }
+    const target = ev.target as any;
+    const checked = target.checked;
+
+    const currentInfo = this._config.show_weather_info || [];
+    let newInfo;
+
+    if (checked) {
+      // Add the info type if not already present
+      newInfo = currentInfo.includes(infoType) ? currentInfo : [...currentInfo, infoType];
+    } else {
+      // Remove the info type
+      newInfo = currentInfo.filter(item => item !== infoType);
+    }
+
+    const newConfig = {
+      ...this._config,
+      show_weather_info: newInfo.length > 0 ? newInfo : undefined
+    };
+
+    fireEvent(this, 'config-changed', { config: newConfig });
+  }
+
   protected render() {
     if (!this.hass || !this._config) {
       return html``;
@@ -319,6 +345,63 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             <mwc-list-item value="standard">Standard</mwc-list-item>
             <mwc-list-item value="detailed">Detailed</mwc-list-item>
           </ha-select>
+        </div>
+
+        <!-- Weather Information -->
+        <div class="section">
+          <h4>Weather Information Display</h4>
+          <p class="helper-text">
+            Select which weather details to display below the header (when available from your weather provider).
+          </p>
+
+          <ha-formfield label="UV Index">
+            <ha-switch
+              .checked=${this._config.show_weather_info?.includes('uv_index')}
+              @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'uv_index')}
+            ></ha-switch>
+          </ha-formfield>
+
+          <ha-formfield label="Wind Speed">
+            <ha-switch
+              .checked=${this._config.show_weather_info?.includes('wind')}
+              @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'wind')}
+            ></ha-switch>
+          </ha-formfield>
+
+          <ha-formfield label="Feels Like Temperature">
+            <ha-switch
+              .checked=${this._config.show_weather_info?.includes('feels_like')}
+              @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'feels_like')}
+            ></ha-switch>
+          </ha-formfield>
+
+          <ha-formfield label="Precipitation">
+            <ha-switch
+              .checked=${this._config.show_weather_info?.includes('precipitation')}
+              @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'precipitation')}
+            ></ha-switch>
+          </ha-formfield>
+
+          <ha-formfield label="Humidity">
+            <ha-switch
+              .checked=${this._config.show_weather_info?.includes('humidity')}
+              @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'humidity')}
+            ></ha-switch>
+          </ha-formfield>
+
+          <ha-formfield label="Pressure">
+            <ha-switch
+              .checked=${this._config.show_weather_info?.includes('pressure')}
+              @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'pressure')}
+            ></ha-switch>
+          </ha-formfield>
+
+          <ha-formfield label="Visibility">
+            <ha-switch
+              .checked=${this._config.show_weather_info?.includes('visibility')}
+              @change=${(ev: CustomEvent) => this._weatherInfoToggle(ev, 'visibility')}
+            ></ha-switch>
+          </ha-formfield>
         </div>
 
         <!-- Display Options -->

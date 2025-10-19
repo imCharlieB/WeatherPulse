@@ -23,6 +23,7 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   show_actual_temp?: boolean;
   temp_display_mode?: 'forecast' | 'actual' | 'both';
   night_mode?: boolean;
+  show_weather_info?: WeatherInfoOption[];
 }
 
 export type DataRow =
@@ -36,6 +37,15 @@ export type DataRow =
   | 'cloud_cover'
   | 'sunrise_sunset'
   | 'dew_point';
+
+export type WeatherInfoOption =
+  | 'uv_index'
+  | 'wind'
+  | 'feels_like'
+  | 'precipitation'
+  | 'humidity'
+  | 'pressure'
+  | 'visibility';
 
 export type AlertType =
   | 'weather_warnings'
@@ -64,10 +74,22 @@ export interface WeatherData {
   temperature_unit?: string;
   humidity?: number;
   pressure?: number;
+  pressure_unit?: string;
   wind_speed?: number;
+  wind_speed_unit?: string;
   wind_bearing?: number;
+  wind_gust_speed?: number;
   condition?: string;
   forecast?: ForecastDay[];
+  apparent_temperature?: number;
+  uv_index?: number;
+  visibility?: number;
+  visibility_unit?: string;
+  precipitation?: number;
+  precipitation_unit?: string;
+  cloud_coverage?: number;
+  dew_point?: number;
+  ozone?: number;
 }
 
 export interface ForecastDay {

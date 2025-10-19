@@ -165,10 +165,22 @@ export class WeatherPulseCard extends LitElement {
       temperature_unit: entity.attributes.temperature_unit || '°F',
       humidity: entity.attributes.humidity,
       pressure: entity.attributes.pressure,
+      pressure_unit: entity.attributes.pressure_unit,
       wind_speed: entity.attributes.wind_speed,
+      wind_speed_unit: entity.attributes.wind_speed_unit,
       wind_bearing: entity.attributes.wind_bearing,
+      wind_gust_speed: entity.attributes.wind_gust_speed,
       condition: entity.state,
-      forecast: forecast
+      forecast: forecast,
+      apparent_temperature: entity.attributes.apparent_temperature,
+      uv_index: entity.attributes.uv_index,
+      visibility: entity.attributes.visibility,
+      visibility_unit: entity.attributes.visibility_unit,
+      precipitation: entity.attributes.precipitation,
+      precipitation_unit: entity.attributes.precipitation_unit,
+      cloud_coverage: entity.attributes.cloud_coverage,
+      dew_point: entity.attributes.dew_point,
+      ozone: entity.attributes.ozone
     };
   }
 
@@ -195,6 +207,110 @@ export class WeatherPulseCard extends LitElement {
     // Fallback: check time (rough estimate - night is 8 PM to 6 AM)
     const hour = new Date().getHours();
     return hour >= 20 || hour < 6;
+  }
+
+  private renderWeatherInfo(): unknown {
+    const showInfo = this.config?.show_weather_info;
+    if (!showInfo || showInfo.length === 0) {
+      return html``;
+    }
+
+    const weatherData = this.getWeatherData();
+    const items = [];
+
+    for (const infoType of showInfo) {
+      let icon = '';
+      let label = '';
+      let value = '';
+
+      switch (infoType) {
+        case 'uv_index':
+          if (weatherData.uv_index !== undefined) {
+            icon = '☀️';
+            label = 'UV Index';
+            value = String(Math.round(weatherData.uv_index));
+          }
+          break;
+
+        case 'wind':
+          if (weatherData.wind_speed !== undefined) {
+            icon = '💨';
+            label = 'Wind';
+            const unit = weatherData.wind_speed_unit || 'mph';
+            value = `${Math.round(weatherData.wind_speed)} ${unit}`;
+            if (weatherData.wind_gust_speed) {
+              value += ` (gusts ${Math.round(weatherData.wind_gust_speed)} ${unit})`;
+            }
+          }
+          break;
+
+        case 'feels_like':
+          if (weatherData.apparent_temperature !== undefined) {
+            icon = '🌡️';
+            label = 'Feels Like';
+            const unit = weatherData.temperature_unit?.replace('°', '') || 'F';
+            value = `${Math.round(weatherData.apparent_temperature)}°${unit}`;
+          }
+          break;
+
+        case 'precipitation':
+          if (weatherData.precipitation !== undefined) {
+            icon = '💧';
+            label = 'Precipitation';
+            const unit = weatherData.precipitation_unit || 'mm';
+            value = `${weatherData.precipitation} ${unit}`;
+          }
+          break;
+
+        case 'humidity':
+          if (weatherData.humidity !== undefined) {
+            icon = '💧';
+            label = 'Humidity';
+            value = `${Math.round(weatherData.humidity)}%`;
+          }
+          break;
+
+        case 'pressure':
+          if (weatherData.pressure !== undefined) {
+            icon = '🔽';
+            label = 'Pressure';
+            const unit = weatherData.pressure_unit || 'hPa';
+            value = `${Math.round(weatherData.pressure)} ${unit}`;
+          }
+          break;
+
+        case 'visibility':
+          if (weatherData.visibility !== undefined) {
+            icon = '👁️';
+            label = 'Visibility';
+            const unit = weatherData.visibility_unit || 'km';
+            value = `${weatherData.visibility} ${unit}`;
+          }
+          break;
+      }
+
+      if (value) {
+        items.push(html`
+          <div class="weather-info-item">
+            <span class="weather-info-icon">${icon}</span>
+            <div class="weather-info-content">
+              <div class="weather-info-label">${label}</div>
+              <div class="weather-info-value">${value}</div>
+            </div>
+          </div>
+        `);
+      }
+    }
+
+    if (items.length === 0) {
+      return html``;
+    }
+
+    return html`
+      <div class="weather-info-section">
+        ${items}
+      </div>
+    `;
   }
 
   private renderHeader(): unknown {
@@ -605,6 +721,7 @@ export class WeatherPulseCard extends LitElement {
     return html`
       <ha-card class="${nightModeClass}">
         ${this.renderHeader()}
+        ${this.renderWeatherInfo()}
         ${showForecast ? html`
           <div class="card-content">
             ${this.renderForecast()}
@@ -1026,6 +1143,62 @@ export class WeatherPulseCard extends LitElement {
         opacity: 0.9;
         margin-bottom: 4px;
         line-height: 1.2;
+      }
+
+      /* Weather Info Section */
+      .weather-info-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+        padding: 16px 20px;
+        background: var(--card-background-color, rgba(0,0,0,0.02));
+        border-top: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+      }
+
+      .weather-info-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px;
+        background: var(--secondary-background-color, rgba(0,0,0,0.05));
+        border-radius: 8px;
+      }
+
+      .weather-info-icon {
+        font-size: 24px;
+        min-width: 24px;
+        text-align: center;
+      }
+
+      .weather-info-content {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .weather-info-label {
+        font-size: 11px;
+        font-weight: 400;
+        opacity: 0.7;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+      }
+
+      .weather-info-value {
+        font-size: 15px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      ha-card.night-mode .weather-info-section {
+        background: rgba(10, 14, 39, 0.4);
+        border-top-color: rgba(232, 234, 246, 0.1);
+      }
+
+      ha-card.night-mode .weather-info-item {
+        background: rgba(29, 33, 56, 0.6);
       }
 
       .card-content {
