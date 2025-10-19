@@ -17,14 +17,17 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Weather-aware suggestions ("Grab an umbrella!") ✅
   - Temperature-aware ("Bundle up!") ✅
   - Configurable user name ✅
-- [ ] **Graphical Header**: Beautiful seasonal imagery (PLANNED)
-  - Spring: Blooming flowers, fresh greenery
-  - Summer: Beach scenes, bright sunny skies
-  - Fall: Autumn leaves, harvest themes
-  - Winter: Snow scenes, cozy winter landscapes
-  - User-uploadable custom images
-  - Auto-switching based on season/date
-  - Overlay options (text over image with blur/gradient)
+- [x] **Graphical Header**: Beautiful seasonal imagery ✅
+  - Spring: Cherry blossoms & tulips (bundled) ✅
+  - Summer: Tropical beach sunset (bundled) ✅
+  - Fall: Autumn pumpkin & maple leaves (bundled) ✅
+  - Winter: Snowy winter beach (bundled) ✅
+  - Multiple bundled images per season (9 total included) ✅
+  - Custom image support via seasonal_images config ✅
+  - Auto-switching based on season (Mar-May, Jun-Aug, Sep-Nov, Dec-Feb) ✅
+  - Dark gradient overlay for text readability ✅
+  - Weather icon positioned upper right (consistent with other modes) ✅
+  - Dropdown selector in visual editor for easy image selection ✅
 
 ### 2. Temperature-Based Header Highlighting (Signature Feature)
 - [x] Dynamic gradient background based on actual outdoor temp ✅

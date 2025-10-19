@@ -259,15 +259,17 @@ export class WeatherPulseCard extends LitElement {
           <div class="graphical-header" style="background: ${seasonalBg}; background-size: cover; background-position: center;">
             <div class="graphical-overlay">
               <div class="graphical-content">
-                <div class="graphical-time">
-                  ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
-                </div>
-                <div class="graphical-date">${this.currentDate}</div>
-                <div class="graphical-weather">
+                <div class="graphical-main">
+                  <div class="graphical-left">
+                    <div class="graphical-time">
+                      ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
+                    </div>
+                    <div class="graphical-date">${this.currentDate}</div>
+                    ${tempDisplay}
+                  </div>
                   <div class="weather-icon-graphical ${getWeatherIcon(weatherData.condition || 'clear')}">
                     ${this.renderWeatherIcon(weatherData.condition || 'clear')}
                   </div>
-                  ${tempDisplay}
                 </div>
               </div>
             </div>
@@ -631,7 +633,7 @@ export class WeatherPulseCard extends LitElement {
       .graphical-header {
         min-height: 280px;
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         position: relative;
         border-radius: 12px 12px 0 0;
         overflow: hidden;
@@ -656,6 +658,17 @@ export class WeatherPulseCard extends LitElement {
         text-shadow: 0 2px 8px rgba(0,0,0,0.5);
       }
 
+      .graphical-main {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .graphical-left {
+        flex: 1;
+      }
+
       .graphical-time {
         font-size: 72px;
         font-weight: 300;
@@ -675,30 +688,25 @@ export class WeatherPulseCard extends LitElement {
         font-size: 24px;
         font-weight: 400;
         opacity: 0.95;
-        margin-bottom: 16px;
-      }
-
-      .graphical-weather {
-        display: flex;
-        align-items: center;
-        gap: 16px;
+        margin-bottom: 8px;
       }
 
       .weather-icon-graphical {
-        font-size: 100px;
+        font-size: 160px;
         display: flex;
         align-items: center;
         justify-content: center;
+        min-width: 180px;
       }
 
       .weather-icon-graphical .weather-icon-svg {
-        width: 100px;
-        height: 100px;
+        width: 160px;
+        height: 160px;
         filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
       }
 
       .weather-icon-graphical .icon-emoji {
-        font-size: 100px;
+        font-size: 160px;
         filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
       }
 
