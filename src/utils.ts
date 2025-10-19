@@ -225,3 +225,33 @@ export function getForecastIcon(condition: string): string {
 
   return 'clear-day';
 }
+
+/**
+ * Get seasonal background gradient
+ */
+export function getSeasonalBackground(season?: 'spring' | 'summer' | 'fall' | 'winter', customImage?: string): string {
+  // If custom image provided, use it
+  if (customImage) {
+    return `url(${customImage})`;
+  }
+
+  // Use current season if not specified
+  const currentSeason = season || getCurrentSeason();
+
+  switch (currentSeason) {
+    case 'spring':
+      // Blooming flowers, fresh greenery - soft pastels
+      return 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)';
+    case 'summer':
+      // Beach scenes, bright sunny skies - vibrant blues and yellows
+      return 'linear-gradient(135deg, #fddb92 0%, #d1fdff 100%)';
+    case 'fall':
+      // Autumn leaves, harvest themes - warm oranges and browns
+      return 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+    case 'winter':
+      // Snow scenes, cozy winter landscapes - cool blues and whites
+      return 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)';
+    default:
+      return 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)';
+  }
+}

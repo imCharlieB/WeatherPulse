@@ -150,6 +150,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             <mwc-list-item value="balanced">Balanced (Equal Time & Date)</mwc-list-item>
             <mwc-list-item value="minimal">Minimal (Icon & Temp Only)</mwc-list-item>
             <mwc-list-item value="greeting">Greeting (Personalized Message)</mwc-list-item>
+            <mwc-list-item value="graphical">Graphical (Seasonal Background)</mwc-list-item>
           </ha-select>
 
           ${this._config.header_mode === 'greeting' ? html`
@@ -159,6 +160,15 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               .value=${this._config.greeting_name || ''}
               @input=${this._valueChanged}
             ></ha-textfield>
+            <p class="helper-text">
+              Your name will be used in the personalized greeting message.
+            </p>
+          ` : ''}
+
+          ${this._config.header_mode === 'graphical' ? html`
+            <p class="helper-text">
+              The graphical header displays a seasonal background that automatically changes based on the current season (Spring, Summer, Fall, Winter). You can customize these images in YAML config using the <code>seasonal_images</code> option.
+            </p>
           ` : ''}
 
           <ha-formfield label="Show Date">

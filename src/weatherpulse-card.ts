@@ -10,7 +10,9 @@ import {
   formatDate,
   getDayName,
   getWeatherIcon,
-  getForecastIcon
+  getForecastIcon,
+  getSeasonalBackground,
+  getCurrentSeason
 } from './utils';
 import { getAnimatedWeatherIcon } from './icons';
 
@@ -243,6 +245,31 @@ export class WeatherPulseCard extends LitElement {
                 ${getGreeting(this.config.greeting_name, weatherData.condition, currentTemp)}
               </div>
               ${tempDisplay}
+            </div>
+          </div>
+        `;
+        break;
+
+      case 'graphical':
+        const season = getCurrentSeason();
+        const customImage = this.config.seasonal_images?.[season];
+        const seasonalBg = getSeasonalBackground(season, customImage);
+
+        headerContent = html`
+          <div class="graphical-header" style="background: ${seasonalBg}; background-size: cover; background-position: center;">
+            <div class="graphical-overlay">
+              <div class="graphical-content">
+                <div class="graphical-time">
+                  ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
+                </div>
+                <div class="graphical-date">${this.currentDate}</div>
+                <div class="graphical-weather">
+                  <div class="weather-icon-graphical ${getWeatherIcon(weatherData.condition || 'clear')}">
+                    ${this.renderWeatherIcon(weatherData.condition || 'clear')}
+                  </div>
+                  ${tempDisplay}
+                </div>
+              </div>
             </div>
           </div>
         `;
@@ -593,6 +620,83 @@ export class WeatherPulseCard extends LitElement {
         display: flex;
         align-items: center;
         gap: 8px;
+      }
+
+      /* Graphical header with seasonal background */
+      .graphical-header {
+        min-height: 280px;
+        display: flex;
+        align-items: flex-end;
+        position: relative;
+        border-radius: 12px 12px 0 0;
+        overflow: hidden;
+        margin: -24px;
+        margin-bottom: 0;
+      }
+
+      .graphical-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+        backdrop-filter: blur(2px);
+      }
+
+      .graphical-content {
+        position: relative;
+        z-index: 1;
+        padding: 32px;
+        width: 100%;
+        color: white;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      }
+
+      .graphical-time {
+        font-size: 72px;
+        font-weight: 300;
+        line-height: 1;
+        margin-bottom: 8px;
+        position: relative;
+      }
+
+      .graphical-time .time-period {
+        font-size: 20px;
+        position: absolute;
+        top: 6px;
+        margin-left: 6px;
+      }
+
+      .graphical-date {
+        font-size: 24px;
+        font-weight: 400;
+        opacity: 0.95;
+        margin-bottom: 16px;
+      }
+
+      .graphical-weather {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .weather-icon-graphical {
+        font-size: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .weather-icon-graphical .weather-icon-svg {
+        width: 100px;
+        height: 100px;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+      }
+
+      .weather-icon-graphical .icon-emoji {
+        font-size: 100px;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
       }
 
       .minimal-header {
