@@ -546,8 +546,8 @@ function e(e,t,i,a){var s,r=arguments.length,o=r<3?t:null===a?a=Object.getOwnPro
             @selected=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
-            <mwc-list-item value="compact">Compact (small, icon + value)</mwc-list-item>
-            <mwc-list-item value="standard">Standard</mwc-list-item>
+            <mwc-list-item value="compact">Compact (displayed in header)</mwc-list-item>
+            <mwc-list-item value="standard">Standard (separate cards)</mwc-list-item>
             <mwc-list-item value="detailed">Detailed (large cards)</mwc-list-item>
           </ha-select>
 

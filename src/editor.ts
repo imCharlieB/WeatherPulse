@@ -361,8 +361,8 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             @selected=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
-            <mwc-list-item value="compact">Compact (small, icon + value)</mwc-list-item>
-            <mwc-list-item value="standard">Standard</mwc-list-item>
+            <mwc-list-item value="compact">Compact (displayed in header)</mwc-list-item>
+            <mwc-list-item value="standard">Standard (separate cards)</mwc-list-item>
             <mwc-list-item value="detailed">Detailed (large cards)</mwc-list-item>
           </ha-select>
 

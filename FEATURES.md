@@ -26,7 +26,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Custom image support via seasonal_images config ✅
   - Auto-switching based on season (Mar-May, Jun-Aug, Sep-Nov, Dec-Feb) ✅
   - Dark gradient overlay for text readability ✅
-  - Weather icon positioned upper right (consistent with other modes) ✅
+  - Weather icon positioned on left (consistent with all other header modes) ✅
   - Dropdown selector in visual editor for easy image selection ✅
 
 ### 2. Temperature-Based Header Highlighting (Signature Feature)
@@ -43,15 +43,19 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 ### 3. Dual Temperature Display
 - [x] Show both **forecast temp** AND **actual outdoor sensor temp** ✅
 - [ ] Visual indicator when temps differ significantly (PLANNED)
-- [ ] "Feels like" vs "Actual" comparison (PLANNED)
+- [x] "Feels like" temperature display (calculated or from provider) ✅
 - [x] Configurable sensor selection for actual temp ✅
 
-### 4. Smart Data Visualization
-- [x] **Temperature bars** with day/night split ✅
-- [x] **Precipitation probability** display ✅
-- [ ] **UV Index** with color-coded warnings (PLANNED)
-- [ ] **Wind** with animated directional arrows (PLANNED)
-- [x] **Humidity** display ✅
+### 4. Weather Information Display
+- [x] **UV Index** display ✅
+- [x] **Wind** speed and gusts ✅
+- [x] **Feels Like** temperature ✅
+- [x] **Precipitation** (when active) ✅
+- [x] **Humidity** percentage ✅
+- [x] **Atmospheric Pressure** ✅
+- [x] **Visibility** distance ✅
+- [x] **Sunrise/Sunset** times with auto-switching ✅
+- [x] Three layout modes: Compact (in header), Standard (cards), Detailed (large cards) ✅
 - [ ] **Air Quality** integration (if available) (PLANNED)
 
 ### 5. View Modes
@@ -72,17 +76,23 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [x] **Thunderstorm**: Lightning flashes ✅
 - [x] **Wind**: Swirling particles ✅
 - [x] **Fog/Mist**: Floating wisps ✅
-- [ ] **Moon phases**: Actual phase displayed for night (PLANNED)
+- [x] **Moon phases**: 8 accurate phase icons (new_moon, waxing_crescent, first_quarter, waxing_gibbous, full_moon, waning_gibbous, last_quarter, waning_crescent) ✅
+- [x] **Dynamic moon display**: Clear night icons automatically show current moon phase ✅
+- [x] **Moon floating animation**: Gentle float effect matching other icons ✅
 - [ ] Smooth transitions between states (PLANNED)
 
-### 8. Pre-built Themes
-- [ ] **Retro/Neubrutalism**: Bold colors, thick borders
-- [ ] **Glassmorphism**: Frosted glass, blur effects
-- [ ] **Minimal**: Clean, simple, monochrome
-- [ ] **Vibrant**: Bright, saturated colors
-- [ ] **Dark Mode**: OLED-friendly blacks
-- [ ] **Auto**: Follows HA theme or time of day
-- [ ] Custom theme builder (user-defined colors)
+### 8. Day/Night Theme Features
+- [x] **Auto Day/Night Mode**: Automatically switches to darker starry theme at night ✅
+- [x] **Starry background**: Animated floating stars effect ✅
+- [x] **Dimmed colors**: Temperature gradients still visible but darker (40% brightness) ✅
+- [x] **Sunrise/sunset detection**: Uses sun.sun entity for accurate day/night timing ✅
+- [x] **Toggle control**: Enable/disable in editor ✅
+- [ ] **Pre-built Themes** (PLANNED):
+  - Retro/Neubrutalism: Bold colors, thick borders
+  - Glassmorphism: Frosted glass, blur effects
+  - Minimal: Clean, simple, monochrome
+  - Vibrant: Bright, saturated colors
+  - Custom theme builder (user-defined colors)
 
 ### 9. Smart Alerts & Contextual Badges
 - [ ] **NWS Alerts Integration**: Weather warnings via plugin (PLANNED)
@@ -95,18 +105,12 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [ ] Contextual suggestions ("Perfect beach weather!") (PLANNED)
 - [ ] Customizable alert thresholds (PLANNED)
 
-### 10. Configurable Data Rows
-Users can choose what to display in forecast:
-- [ ] Temperature (high/low)
-- [ ] Precipitation (% and amount)
-- [ ] Wind (speed + direction)
-- [ ] Humidity
-- [ ] UV Index
-- [ ] Pressure
-- [ ] Visibility
-- [ ] Cloud cover
-- [ ] Sunrise/Sunset times
-- [ ] Dew point
+### 10. Sun & Moon Entity Integration
+- [x] **Sun entity support**: Uses sun.sun for day/night detection and sunrise/sunset times ✅
+- [x] **Moon phase sensor**: Integrates sensor.moon_phase for accurate lunar phase display ✅
+- [x] **Auto-detection**: Automatically finds standard entities ✅
+- [x] **Custom overrides**: Optional sun_entity and moon_entity config for custom entities ✅
+- [x] **Graceful fallbacks**: Works without entities (falls back to time-based detection) ✅
 
 ### 11. Layout Options
 - [ ] **Horizontal bars** (gradient style like reference image)
@@ -162,12 +166,15 @@ Users can choose what to display in forecast:
 - [x] Small AM/PM styling on all header modes ✅
 
 ### Phase 3: Advanced Features (IN PROGRESS)
-- [ ] All pre-built themes
-- [ ] Advanced animations
-- [ ] Smart alerts & badges
-- [ ] Additional data visualization options (UV, Air Quality)
-- [ ] Layout variants
-- [ ] Graphical seasonal header
+- [x] Weather information display system (UV, Wind, Feels Like, Humidity, Pressure, Visibility, Sunrise/Sunset) ✅
+- [x] Three weather info layout modes (compact, standard, detailed) ✅
+- [x] Moon phase display with 8 accurate phases ✅
+- [x] Auto day/night mode with starry theme ✅
+- [x] Sunrise/sunset times with auto-switching ✅
+- [ ] All pre-built themes (glassmorphism, minimal, etc.)
+- [ ] Smart alerts & badges (NWS integration)
+- [ ] Air Quality integration
+- [ ] Additional layout variants
 
 ### Phase 4: Polish & Release
 - Performance optimization
