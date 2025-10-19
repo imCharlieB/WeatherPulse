@@ -235,7 +235,9 @@ export class WeatherPulseCard extends LitElement {
               ${this.renderWeatherIcon(weatherData.condition || 'clear')}
             </div>
             <div class="greeting-content">
-              <div class="time-large">${this.currentTime}</div>
+              <div class="time-large">
+                ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
+              </div>
               <div class="greeting-text">
                 ${getGreeting(this.config.greeting_name, weatherData.condition, currentTemp)}
               </div>
@@ -268,7 +270,9 @@ export class WeatherPulseCard extends LitElement {
             </div>
             <div class="datetime-content">
               <div class="date-large">${this.currentDate}</div>
-              ${this.config.show_time ? html`<div class="time-small">${this.currentTime}</div>` : ''}
+              ${this.config.show_time ? html`<div class="time-small">
+                ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period-small">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
+              </div>` : ''}
               ${tempDisplay}
             </div>
           </div>
@@ -282,7 +286,9 @@ export class WeatherPulseCard extends LitElement {
               ${this.renderWeatherIcon(weatherData.condition || 'clear')}
             </div>
             <div class="datetime-content">
-              ${this.config.show_time ? html`<div class="time-medium">${this.currentTime}</div>` : ''}
+              ${this.config.show_time ? html`<div class="time-medium">
+                ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period-medium">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
+              </div>` : ''}
               ${this.config.show_date ? html`<div class="date-medium">${this.currentDate}</div>` : ''}
               ${tempDisplay}
             </div>
@@ -657,11 +663,31 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 300;
         line-height: 1;
         margin-bottom: 8px;
+        position: relative;
+      }
+
+      .time-period-medium {
+        font-size: 14px;
+        font-weight: 400;
+        position: absolute;
+        top: 4px;
+        margin-left: 4px;
+        opacity: 0.9;
       }
 
       .time-small {
         font-size: 24px;
         font-weight: 300;
+        opacity: 0.9;
+        position: relative;
+      }
+
+      .time-period-small {
+        font-size: 12px;
+        font-weight: 400;
+        position: absolute;
+        top: 2px;
+        margin-left: 2px;
         opacity: 0.9;
       }
 
