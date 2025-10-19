@@ -14,8 +14,6 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   view_mode?: 'compact' | 'standard' | 'detailed' | 'hourly' | 'weekly' | 'chart';
   theme?: 'default' | 'retro' | 'glass' | 'minimal' | 'vibrant' | 'custom';
   animate_icons?: boolean;
-  enable_gradient_overlay?: boolean;
-  gradient_overlay_opacity?: number;
   data_rows?: DataRow[];
   alerts?: AlertType[];
   custom_theme_colors?: CustomThemeColors;

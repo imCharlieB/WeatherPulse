@@ -1088,14 +1088,7 @@ export class WeatherPulseCard extends LitElement {
     const theme = this.config?.theme || 'default';
     const themeClass = theme !== 'default' ? `theme-${theme}` : '';
 
-    // Gradient overlay configuration (works on all themes with adjustable opacity)
-    const enableGradientOverlay = this.config?.enable_gradient_overlay !== false; // Default true
-    const gradientOverlayOpacity = this.config?.gradient_overlay_opacity !== undefined
-      ? this.config.gradient_overlay_opacity / 100
-      : 0.10; // Default 10%
-    const gradientOverlayClass = enableGradientOverlay ? 'has-gradient-overlay' : '';
-
-    // Inject custom theme colors and gradient overlay as CSS variables
+    // Inject custom theme colors as CSS variables
     let customStyles = '';
     if (theme === 'custom' && this.config?.custom_theme_colors) {
       const colors = this.config.custom_theme_colors;
@@ -1108,12 +1101,9 @@ export class WeatherPulseCard extends LitElement {
         --custom-accent: ${colors.accent || '#f093fb'};
       `;
     }
-    if (enableGradientOverlay) {
-      customStyles += `--gradient-overlay-opacity: ${gradientOverlayOpacity};`;
-    }
 
     return html`
-      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass} ${gradientOverlayClass}" style="${customStyles}">
+      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
         ${this.renderHeader()}
         ${this.renderNWSAlerts()}
@@ -1978,33 +1968,6 @@ export class WeatherPulseCard extends LitElement {
           transform: translateY(-10px) rotate(5deg);
           opacity: 0.5;
         }
-      }
-
-      /* ========================================
-         GRADIENT OVERLAY (Universal)
-         ======================================== */
-
-      /* Apply gradient overlay to all themes when enabled */
-      ha-card.has-gradient-overlay .card-header {
-        position: relative !important;
-      }
-
-      ha-card.has-gradient-overlay .card-header::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        background: inherit !important;
-        opacity: var(--gradient-overlay-opacity, 0.10) !important;
-        z-index: 0 !important;
-        pointer-events: none !important;
-      }
-
-      ha-card.has-gradient-overlay .card-header > * {
-        position: relative !important;
-        z-index: 1 !important;
       }
 
       /* ========================================

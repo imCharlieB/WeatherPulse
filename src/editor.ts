@@ -32,7 +32,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
     let value = target.value;
 
     // Convert numeric strings to numbers for certain fields
-    if ((configValue === 'forecast_days' || configValue === 'hourly_count' || configValue === 'gradient_overlay_opacity') && value) {
+    if ((configValue === 'forecast_days' || configValue === 'hourly_count') && value) {
       value = parseInt(value, 10);
     }
 
@@ -567,32 +567,6 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               @change=${this._toggleChanged}
             ></ha-switch>
           </ha-formfield>
-
-          <ha-formfield label="Enable Temperature Gradient Overlay">
-            <ha-switch
-              .configValue=${'enable_gradient_overlay'}
-              .checked=${this._config.enable_gradient_overlay !== false}
-              @change=${this._toggleChanged}
-            ></ha-switch>
-          </ha-formfield>
-          <p class="helper-text">
-            Show a faint overlay of the temperature gradient color on the card header. Works with all themes including default.
-          </p>
-
-          ${this._config.enable_gradient_overlay !== false ? html`
-            <ha-textfield
-              label="Gradient Overlay Opacity (%)"
-              type="number"
-              .configValue=${'gradient_overlay_opacity'}
-              .value=${String(this._config.gradient_overlay_opacity !== undefined ? this._config.gradient_overlay_opacity : 10)}
-              @input=${this._valueChanged}
-              min="0"
-              max="100"
-            ></ha-textfield>
-            <p class="helper-text">
-              Adjust the opacity of the gradient overlay (0-100%). Default is 10%. Lower values are more subtle.
-            </p>
-          ` : ''}
 
           <ha-formfield label="Auto Day/Night Mode">
             <ha-switch
