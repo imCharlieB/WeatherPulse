@@ -236,6 +236,88 @@ export class WeatherPulseCard extends LitElement {
     return 'unknown';
   }
 
+  private getCurrentHoliday(): string | null {
+    if (!this.config?.holiday_themes) {
+      return null;
+    }
+
+    const now = new Date();
+    const month = now.getMonth() + 1; // 1-12
+    const day = now.getDate();
+
+    // Halloween (Oct 25-31)
+    if (month === 10 && day >= 25) {
+      return 'halloween';
+    }
+
+    // Christmas (Dec 18-25)
+    if (month === 12 && day >= 18 && day <= 25) {
+      return 'christmas';
+    }
+
+    // New Year (Dec 31 - Jan 1)
+    if ((month === 12 && day === 31) || (month === 1 && day === 1)) {
+      return 'newyear';
+    }
+
+    // Valentine's Day (Feb 13-14)
+    if (month === 2 && (day === 13 || day === 14)) {
+      return 'valentine';
+    }
+
+    // St. Patrick's Day (Mar 17)
+    if (month === 3 && day === 17) {
+      return 'stpatrick';
+    }
+
+    // Cinco de Mayo (May 5)
+    if (month === 5 && day === 5) {
+      return 'cincodemayo';
+    }
+
+    // 4th of July (Jul 4)
+    if (month === 7 && day === 4) {
+      return 'july4th';
+    }
+
+    // Easter - week before (approximation - typically late March/April)
+    // Using a simple range for now
+    if ((month === 3 && day >= 25) || (month === 4 && day <= 10)) {
+      return 'easter';
+    }
+
+    return null;
+  }
+
+  private renderHolidayDecorations(): unknown {
+    const holiday = this.getCurrentHoliday();
+    if (!holiday) {
+      return html``;
+    }
+
+    const decorations: { [key: string]: string[] } = {
+      halloween: ['🎃', '👻', '🦇', '🕷️'],
+      christmas: ['🎄', '⛄', '🎅', '❄️'],
+      newyear: ['🎆', '🎊', '🥳', '✨'],
+      valentine: ['❤️', '💕', '💝', '🌹'],
+      stpatrick: ['🍀', '🌈', '☘️', '💚'],
+      july4th: ['🇺🇸', '🎆', '⭐', '🎇'],
+      easter: ['🐰', '🥚', '🌷', '🐣'],
+      cincodemayo: ['🇲🇽', '🌮', '🌵', '🎉']
+    };
+
+    const icons = decorations[holiday] || [];
+
+    return html`
+      <div class="holiday-overlay">
+        <span class="holiday-icon holiday-icon-1">${icons[0] || ''}</span>
+        <span class="holiday-icon holiday-icon-2">${icons[1] || ''}</span>
+        <span class="holiday-icon holiday-icon-3">${icons[2] || ''}</span>
+        <span class="holiday-icon holiday-icon-4">${icons[3] || ''}</span>
+      </div>
+    `;
+  }
+
   private async fetchNWSAlerts(): Promise<void> {
     if (!this.config?.show_nws_alerts || !this.hass) {
       return;
@@ -1004,6 +1086,7 @@ export class WeatherPulseCard extends LitElement {
 
     return html`
       <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass}">
+        ${this.renderHolidayDecorations()}
         ${this.renderHeader()}
         ${this.renderNWSAlerts()}
         ${!showWeatherInfoInHeader ? this.renderWeatherInfo() : ''}
@@ -1810,6 +1893,62 @@ export class WeatherPulseCard extends LitElement {
           box-shadow: 0 0 25px rgba(79, 195, 247, 0.8),
                       0 0 50px rgba(79, 195, 247, 0.6),
                       0 0 75px rgba(79, 195, 247, 0.4);
+        }
+      }
+
+      /* Holiday Decorations Overlay */
+      .holiday-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 10;
+        overflow: hidden;
+      }
+
+      .holiday-icon {
+        position: absolute;
+        font-size: 32px;
+        opacity: 0.3;
+        animation: holiday-float 4s ease-in-out infinite;
+      }
+
+      .holiday-icon-1 {
+        top: 10px;
+        right: 10px;
+        animation-delay: 0s;
+      }
+
+      .holiday-icon-2 {
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        animation-delay: 1s;
+      }
+
+      .holiday-icon-3 {
+        bottom: 10px;
+        right: 50px;
+        animation-delay: 2s;
+      }
+
+      .holiday-icon-4 {
+        top: 100px;
+        right: 50%;
+        transform: translateX(50%);
+        animation-delay: 3s;
+      }
+
+      @keyframes holiday-float {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 0.3;
+        }
+        50% {
+          transform: translateY(-10px) rotate(5deg);
+          opacity: 0.5;
         }
       }
 

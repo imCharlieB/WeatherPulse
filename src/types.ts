@@ -30,6 +30,7 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   show_moon_phase?: boolean;
   show_nws_alerts?: boolean;
   nws_test_mode?: boolean;
+  holiday_themes?: boolean;
 }
 
 export type DataRow =

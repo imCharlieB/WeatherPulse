@@ -457,6 +457,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             On clear nights, replace the generic moon icon with the actual current moon phase (new moon, crescent, quarter, gibbous, full moon). Requires sensor.moon_phase entity.
           </p>
 
+          <ha-formfield label="Enable Holiday Themes">
+            <ha-switch
+              .configValue=${'holiday_themes'}
+              .checked=${this._config.holiday_themes === true}
+              @change=${this._toggleChanged}
+            ></ha-switch>
+          </ha-formfield>
+          <p class="helper-text">
+            Automatically add festive decorative icons during holidays (Halloween, Christmas, New Year, Valentine's Day, St. Patrick's Day, Easter, 4th of July, Cinco de Mayo). Icons appear as subtle animated overlays.
+          </p>
+
           <ha-formfield label="Show NWS Weather Alerts">
             <ha-switch
               .configValue=${'show_nws_alerts'}

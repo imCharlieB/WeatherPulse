@@ -87,6 +87,19 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [x] **Dimmed colors**: Temperature gradients still visible but darker (40% brightness) ✅
 - [x] **Sunrise/sunset detection**: Uses sun.sun entity for accurate day/night timing ✅
 - [x] **Toggle control**: Enable/disable in editor ✅
+- [x] **Holiday Themes**: Automatic festive decorations during holidays ✅
+  - 🎃 Halloween (Oct 25-31): Pumpkins, ghosts, bats, spiders
+  - 🎄 Christmas (Dec 18-25): Trees, snowmen, Santa, snowflakes
+  - 🎆 New Year (Dec 31 - Jan 1): Fireworks, confetti, celebration
+  - ❤️ Valentine's Day (Feb 13-14): Hearts, roses, love
+  - 🍀 St. Patrick's Day (Mar 17): Shamrocks, rainbows, green
+  - 🐰 Easter (Late Mar - Early Apr): Bunnies, eggs, flowers, chicks
+  - 🇺🇸 4th of July (Jul 4): American flag, fireworks, stars
+  - 🇲🇽 Cinco de Mayo (May 5): Mexican flag, tacos, cacti, celebration
+  - Subtle animated icon overlays (4 icons per holiday)
+  - Floating animation effect
+  - Semi-transparent (30-50% opacity)
+  - Toggle on/off in Display Options
 - [ ] **Pre-built Themes** (PLANNED):
   - Retro/Neubrutalism: Bold colors, thick borders
   - Glassmorphism: Frosted glass, blur effects

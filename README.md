@@ -272,6 +272,52 @@ If your moon phase sensor has a different name, you can specify it:
 moon_entity: sensor.my_custom_moon_phase
 ```
 
+#### Holiday Themes
+
+Automatically add festive decorative icons to your weather card during holidays! When enabled, the card displays subtle, animated holiday-themed emojis as overlays during specific holiday periods.
+
+**How It Works:**
+- Automatically detects the current date and displays decorations during holiday periods
+- Shows 4 themed icons per holiday as floating overlays
+- Icons are semi-transparent (30-50% opacity) so they don't interfere with weather data
+- Gentle floating animation for a festive feel
+- Completely optional - toggle on/off in settings
+
+**Supported Holidays:**
+
+| Holiday | Dates | Decorations |
+|---------|-------|-------------|
+| 🎃 **Halloween** | Oct 25-31 | Pumpkins, ghosts, bats, spiders |
+| 🎄 **Christmas** | Dec 18-25 | Trees, snowmen, Santa, snowflakes |
+| 🎆 **New Year** | Dec 31 - Jan 1 | Fireworks, confetti, party poppers, sparkles |
+| ❤️ **Valentine's Day** | Feb 13-14 | Hearts, roses, love symbols |
+| 🍀 **St. Patrick's Day** | Mar 17 | Shamrocks, rainbows, four-leaf clovers |
+| 🐰 **Easter** | Late Mar - Early Apr* | Bunnies, eggs, flowers, chicks |
+| 🇺🇸 **4th of July** | Jul 4 | American flag, fireworks, stars |
+| 🇲🇽 **Cinco de Mayo** | May 5 | Mexican flag, tacos, cacti, celebration |
+
+*Easter dates vary yearly; the card shows Easter decorations from March 25 - April 10 as an approximation.
+
+**Features:**
+- **Automatic Detection** - No configuration needed, just enable the feature
+- **Subtle Design** - Semi-transparent overlays don't block weather information
+- **Animated** - Gentle floating animation adds festive movement
+- **4 Icons Per Holiday** - Positioned in different corners for balanced decoration
+- **Respects Dark Mode** - Icons blend well with both day and night themes
+
+**To Enable:**
+```yaml
+holiday_themes: true
+```
+
+Or toggle "Enable Holiday Themes" in the visual editor's Display Options section.
+
+**To Disable:**
+Set `holiday_themes: false` or turn off the toggle. The card will display normally without any decorative overlays.
+
+**Example:**
+During Halloween week (Oct 25-31), you'll see 🎃 pumpkins, 👻 ghosts, 🦇 bats, and 🕷️ spiders gently floating around your weather card as subtle decorations!
+
 ### Configuration Options
 
 | Option | Type | Default | Description |
@@ -292,6 +338,7 @@ moon_entity: sensor.my_custom_moon_phase
 | `show_forecast` | boolean | `true` | Show forecast section |
 | `night_mode` | boolean | `false` | Enable automatic day/night theme switching based on sun position |
 | `show_moon_phase` | boolean | `true` | Show accurate moon phase icons on clear nights (requires sensor.moon_phase entity) |
+| `holiday_themes` | boolean | `false` | Enable festive decorative icon overlays during holidays (8 holidays supported) |
 | `show_weather_info` | array | `[]` | Weather info to display: `uv_index`, `wind`, `feels_like`, `precipitation`, `humidity`, `pressure`, `visibility`, `sunrise_sunset` |
 | `weather_info_layout` | string | `standard` | Weather info layout: `compact` (in header), `standard` (cards), `detailed` (large cards) |
 | `show_nws_alerts` | boolean | `false` | Enable National Weather Service weather alerts for your location |
