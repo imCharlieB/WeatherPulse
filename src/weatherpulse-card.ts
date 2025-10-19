@@ -1,7 +1,7 @@
 import { LitElement, html, css, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
-import { WeatherPulseCardConfig, WeatherData } from './types';
+import { WeatherPulseCardConfig, WeatherData, NWSAlert } from './types';
 import {
   getTemperatureGradient,
   getGreeting,
@@ -27,9 +27,12 @@ export class WeatherPulseCard extends LitElement {
   @state() private currentTime: string = formatTime();
   @state() private currentDate: string = formatDate();
   @state() private forecastData: any[] = [];
+  @state() private nwsAlerts: NWSAlert[] = [];
 
   private timeInterval?: number;
   private forecastUpdateInterval?: number;
+  private alertUpdateInterval?: number;
+  private lastAlertFetch: number = 0;
 
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
     await import('./editor');
@@ -77,8 +80,11 @@ export class WeatherPulseCard extends LitElement {
     super.connectedCallback();
     this.startClock();
     this.fetchForecast();
+    this.fetchNWSAlerts();
     // Update forecast every 30 minutes
     this.forecastUpdateInterval = window.setInterval(() => this.fetchForecast(), 30 * 60 * 1000);
+    // Update alerts every 5 minutes
+    this.alertUpdateInterval = window.setInterval(() => this.fetchNWSAlerts(), 5 * 60 * 1000);
   }
 
   public disconnectedCallback(): void {
@@ -86,6 +92,9 @@ export class WeatherPulseCard extends LitElement {
     this.stopClock();
     if (this.forecastUpdateInterval) {
       clearInterval(this.forecastUpdateInterval);
+    }
+    if (this.alertUpdateInterval) {
+      clearInterval(this.alertUpdateInterval);
     }
   }
 
@@ -225,6 +234,117 @@ export class WeatherPulseCard extends LitElement {
       return moonEntity.state;
     }
     return 'unknown';
+  }
+
+  private async fetchNWSAlerts(): Promise<void> {
+    if (!this.config?.show_nws_alerts || !this.hass) {
+      return;
+    }
+
+    // Cache for 5 minutes
+    const now = Date.now();
+    if (now - this.lastAlertFetch < 5 * 60 * 1000) {
+      return;
+    }
+
+    try {
+      const lat = this.hass.config.latitude;
+      const lon = this.hass.config.longitude;
+      const url = `https://api.weather.gov/alerts/active?point=${lat},${lon}`;
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        console.warn('Failed to fetch NWS alerts:', response.status);
+        return;
+      }
+
+      const data = await response.json();
+      const alerts: NWSAlert[] = [];
+
+      if (data.features && Array.isArray(data.features)) {
+        for (const feature of data.features) {
+          const props = feature.properties;
+          if (props) {
+            alerts.push({
+              id: props.id || '',
+              event: props.event || '',
+              headline: props.headline || '',
+              description: props.description || '',
+              severity: props.severity || 'Unknown',
+              urgency: props.urgency || 'Unknown',
+              certainty: props.certainty || 'Unknown',
+              onset: props.onset || '',
+              expires: props.expires || '',
+              areaDesc: props.areaDesc || ''
+            });
+          }
+        }
+      }
+
+      this.nwsAlerts = alerts;
+      this.lastAlertFetch = now;
+    } catch (error) {
+      console.error('Failed to fetch NWS alerts:', error);
+    }
+  }
+
+  private renderNWSAlerts(): unknown {
+    if (!this.config?.show_nws_alerts || this.nwsAlerts.length === 0) {
+      return html``;
+    }
+
+    return html`
+      <div class="nws-alerts-section">
+        ${this.nwsAlerts.map(alert => {
+          // Determine severity class for styling
+          let severityClass = 'alert-unknown';
+          let severityIcon = '⚠️';
+
+          switch (alert.severity) {
+            case 'Extreme':
+              severityClass = 'alert-extreme';
+              severityIcon = '🔴';
+              break;
+            case 'Severe':
+              severityClass = 'alert-severe';
+              severityIcon = '🟠';
+              break;
+            case 'Moderate':
+              severityClass = 'alert-moderate';
+              severityIcon = '🟡';
+              break;
+            case 'Minor':
+              severityClass = 'alert-minor';
+              severityIcon = '🔵';
+              break;
+          }
+
+          return html`
+            <div class="nws-alert ${severityClass}">
+              <div class="alert-header">
+                <span class="alert-icon">${severityIcon}</span>
+                <div class="alert-title">
+                  <div class="alert-event">${alert.event}</div>
+                  <div class="alert-area">${alert.areaDesc}</div>
+                </div>
+              </div>
+              <div class="alert-headline">${alert.headline}</div>
+              ${alert.expires ? html`
+                <div class="alert-expires">
+                  Expires: ${new Date(alert.expires).toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                  })}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        })}
+      </div>
+    `;
   }
 
   private renderWeatherInfo(forceLayout?: 'compact' | 'standard' | 'detailed'): unknown {
@@ -837,6 +957,7 @@ export class WeatherPulseCard extends LitElement {
     return html`
       <ha-card class="${nightModeClass}">
         ${this.renderHeader()}
+        ${this.renderNWSAlerts()}
         ${!showWeatherInfoInHeader ? this.renderWeatherInfo() : ''}
         ${showForecast ? html`
           <div class="card-content">
@@ -1425,6 +1546,116 @@ export class WeatherPulseCard extends LitElement {
       .graphical-header + .weather-info-in-header .weather-info-item {
         background: transparent;
         color: white;
+      }
+
+      /* NWS Alerts Section */
+      .nws-alerts-section {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 20px;
+        background: var(--card-background-color, rgba(0,0,0,0.02));
+        border-top: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+      }
+
+      .nws-alert {
+        padding: 12px;
+        border-radius: 8px;
+        border-left: 4px solid;
+        background: var(--secondary-background-color, rgba(0,0,0,0.05));
+      }
+
+      .nws-alert.alert-extreme {
+        border-left-color: #d32f2f;
+        background: rgba(211, 47, 47, 0.1);
+      }
+
+      .nws-alert.alert-severe {
+        border-left-color: #f57c00;
+        background: rgba(245, 124, 0, 0.1);
+      }
+
+      .nws-alert.alert-moderate {
+        border-left-color: #fbc02d;
+        background: rgba(251, 192, 45, 0.1);
+      }
+
+      .nws-alert.alert-minor {
+        border-left-color: #1976d2;
+        background: rgba(25, 118, 210, 0.1);
+      }
+
+      .nws-alert.alert-unknown {
+        border-left-color: #757575;
+        background: rgba(117, 117, 117, 0.1);
+      }
+
+      .alert-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .alert-icon {
+        font-size: 20px;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      .alert-title {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .alert-event {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 2px;
+      }
+
+      .alert-area {
+        font-size: 12px;
+        opacity: 0.7;
+        line-height: 1.2;
+      }
+
+      .alert-headline {
+        font-size: 13px;
+        line-height: 1.4;
+        margin-bottom: 6px;
+      }
+
+      .alert-expires {
+        font-size: 11px;
+        opacity: 0.6;
+        font-style: italic;
+      }
+
+      ha-card.night-mode .nws-alerts-section {
+        background: rgba(10, 14, 39, 0.4);
+        border-top-color: rgba(232, 234, 246, 0.1);
+      }
+
+      ha-card.night-mode .nws-alert {
+        background: rgba(29, 33, 56, 0.6);
+      }
+
+      ha-card.night-mode .nws-alert.alert-extreme {
+        background: rgba(211, 47, 47, 0.2);
+      }
+
+      ha-card.night-mode .nws-alert.alert-severe {
+        background: rgba(245, 124, 0, 0.2);
+      }
+
+      ha-card.night-mode .nws-alert.alert-moderate {
+        background: rgba(251, 192, 45, 0.2);
+      }
+
+      ha-card.night-mode .nws-alert.alert-minor {
+        background: rgba(25, 118, 210, 0.2);
       }
 
       .card-content {

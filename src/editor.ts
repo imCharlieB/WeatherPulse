@@ -446,6 +446,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             Automatically switch to a darker, starry theme at night based on sunrise/sunset times. Works with all header modes.
           </p>
 
+          <ha-formfield label="Show NWS Weather Alerts">
+            <ha-switch
+              .configValue=${'show_nws_alerts'}
+              .checked=${this._config.show_nws_alerts === true}
+              @change=${this._toggleChanged}
+            ></ha-switch>
+          </ha-formfield>
+          <p class="helper-text">
+            Display National Weather Service alerts for your location. Uses your Home Assistant location coordinates.
+          </p>
+
         </div>
 
         <!-- Advanced Options -->
@@ -455,26 +466,30 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             Optional: Override default sun and moon entities. Leave empty to use defaults.
           </p>
 
-          <ha-textfield
-            label="Sun Entity (default: sun.sun)"
+          <ha-entity-picker
+            label="Sun Entity"
+            .hass=${this.hass}
             .configValue=${'sun_entity'}
-            .value=${this._config.sun_entity || ''}
-            @input=${this._valueChanged}
-            placeholder="sun.sun"
-          ></ha-textfield>
+            .value=${this._config.sun_entity || 'sun.sun'}
+            @value-changed=${this._valueChanged}
+            .includeDomains=${['sun']}
+            allow-custom-entity
+          ></ha-entity-picker>
           <p class="helper-text">
-            Used for sunrise/sunset times and day/night detection.
+            Used for sunrise/sunset times and day/night detection. Defaults to sun.sun.
           </p>
 
-          <ha-textfield
-            label="Moon Entity (default: sensor.moon_phase)"
+          <ha-entity-picker
+            label="Moon Entity"
+            .hass=${this.hass}
             .configValue=${'moon_entity'}
-            .value=${this._config.moon_entity || ''}
-            @input=${this._valueChanged}
-            placeholder="sensor.moon_phase"
-          ></ha-textfield>
+            .value=${this._config.moon_entity || 'sensor.moon_phase'}
+            @value-changed=${this._valueChanged}
+            .includeDomains=${['sensor']}
+            allow-custom-entity
+          ></ha-entity-picker>
           <p class="helper-text">
-            Used for displaying accurate moon phase icons on clear nights.
+            Used for displaying accurate moon phase icons on clear nights. Defaults to sensor.moon_phase.
           </p>
         </div>
 

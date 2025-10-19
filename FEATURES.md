@@ -95,10 +95,14 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Custom theme builder (user-defined colors)
 
 ### 9. Smart Alerts & Contextual Badges
-- [ ] **NWS Alerts Integration**: Weather warnings via plugin (PLANNED)
-  - Special card styling for active alerts
-  - Rain/wind animations based on alert type
-  - Visual prominence for severe weather
+- [x] **NWS Alerts Integration**: Real-time weather warnings from National Weather Service ✅
+  - Direct API integration (no plugin required) ✅
+  - All alert types: hurricanes, tornadoes, thunderstorms, heat advisories, flood warnings, etc. ✅
+  - Severity color coding: Red (Extreme), Orange (Severe), Yellow (Moderate), Blue (Minor) ✅
+  - Location-based using Home Assistant coordinates ✅
+  - Auto-updates every 5 minutes with caching ✅
+  - Auto-hide when no active alerts ✅
+  - Shows event name, affected area, headline, and expiration time ✅
 - [ ] "Best time to go outside today" suggestions (PLANNED)
 - [ ] Rain timing notifications ("Rain starting in 2 hours") (PLANNED)
 - [ ] Pollen count alerts (PLANNED)
@@ -165,16 +169,16 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [x] Visual configuration editor ✅
 - [x] Small AM/PM styling on all header modes ✅
 
-### Phase 3: Advanced Features (IN PROGRESS)
+### Phase 3: Advanced Features ✅ COMPLETE
 - [x] Weather information display system (UV, Wind, Feels Like, Humidity, Pressure, Visibility, Sunrise/Sunset) ✅
 - [x] Three weather info layout modes (compact, standard, detailed) ✅
 - [x] Moon phase display with 8 accurate phases ✅
 - [x] Auto day/night mode with starry theme ✅
 - [x] Sunrise/sunset times with auto-switching ✅
-- [ ] All pre-built themes (glassmorphism, minimal, etc.)
-- [ ] Smart alerts & badges (NWS integration)
-- [ ] Air Quality integration
-- [ ] Additional layout variants
+- [x] NWS weather alerts integration ✅
+- [ ] All pre-built themes (glassmorphism, minimal, etc.) (MOVED TO PHASE 4)
+- [ ] Air Quality integration (MOVED TO PHASE 4)
+- [ ] Additional layout variants (MOVED TO PHASE 4)
 
 ### Phase 4: Polish & Release
 - Performance optimization

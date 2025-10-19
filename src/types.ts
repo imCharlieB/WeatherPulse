@@ -27,6 +27,7 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   weather_info_layout?: 'compact' | 'standard' | 'detailed';
   sun_entity?: string;
   moon_entity?: string;
+  show_nws_alerts?: boolean;
 }
 
 export type DataRow =
@@ -105,6 +106,19 @@ export interface ForecastDay {
   precipitation_probability?: number;
   wind_speed?: number;
   wind_bearing?: number;
+}
+
+export interface NWSAlert {
+  id: string;
+  event: string;
+  headline: string;
+  description: string;
+  severity: 'Extreme' | 'Severe' | 'Moderate' | 'Minor' | 'Unknown';
+  urgency: 'Immediate' | 'Expected' | 'Future' | 'Past' | 'Unknown';
+  certainty: 'Observed' | 'Likely' | 'Possible' | 'Unlikely' | 'Unknown';
+  onset: string;
+  expires: string;
+  areaDesc: string;
 }
 
 export interface TemperatureGradient {

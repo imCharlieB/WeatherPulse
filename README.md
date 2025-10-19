@@ -1,6 +1,25 @@
 # WeatherPulse
 
+[![GitHub Release][releases-shield]][releases]
+[![GitHub Activity][commits-shield]][commits]
+[![License][license-shield]](LICENSE)
+[![hacs][hacsbadge]][hacs]
+[![Project Maintenance][maintenance-shield]][user_profile]
+
+![Project Stage][project-stage-shield]
+
 A modern, highly configurable weather card for Home Assistant with dynamic theming, animated icons, and intelligent contextual information.
+
+[releases-shield]: https://img.shields.io/github/release/imCharlieB/WeatherPulse.svg?style=for-the-badge
+[releases]: https://github.com/imCharlieB/WeatherPulse/releases
+[commits-shield]: https://img.shields.io/github/commit-activity/y/imCharlieB/WeatherPulse.svg?style=for-the-badge
+[commits]: https://github.com/imCharlieB/WeatherPulse/commits/main
+[hacs]: https://hacs.xyz
+[hacsbadge]: https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/imCharlieB/WeatherPulse.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-%40imCharlieB-blue.svg?style=for-the-badge
+[user_profile]: https://github.com/imCharlieB
+[project-stage-shield]: https://img.shields.io/badge/Project%20Stage-Beta-yellow?style=for-the-badge
 
 ## ✨ Key Features
 
@@ -35,10 +54,18 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 🌅 **Sunrise/Sunset** - Next sunrise or sunset time
 - 📐 **Three Layout Modes** - Compact (in header), Standard (separate cards), Detailed (large cards)
 
+#### Weather Alerts
+- 🔔 **NWS Weather Alerts** - Real-time severe weather alerts from National Weather Service
+- 🌪️ **All Alert Types** - Hurricanes, tornadoes, thunderstorms, heat advisories, flood warnings, and more
+- 🎨 **Severity Color Coding** - Red (Extreme), Orange (Severe), Yellow (Moderate), Blue (Minor)
+- 📍 **Location-Based** - Uses your Home Assistant location coordinates automatically
+- 🔄 **Auto-Updates** - Fetches latest alerts every 5 minutes
+- 🙈 **Auto-Hide** - Alert section disappears when no active alerts
+
 ### 🚧 Coming Soon
 - 🎨 Pre-built themes (Glassmorphism, Minimal, Dark Mode)
-- 🔔 Smart weather alerts via NWS Alerts integration
 - 📈 Additional data rows (Dew Point, Cloud Coverage)
+- 📊 Weather trend indicators
 
 ## 🚧 Development Status
 
@@ -110,6 +137,9 @@ show_weather_info:
   - visibility
   - sunrise_sunset
 weather_info_layout: compact  # compact (in header) | standard | detailed
+
+# Weather Alerts
+show_nws_alerts: true  # Enable NWS weather alerts (uses your HA location)
 
 # Optional: Custom sun/moon entities
 sun_entity: sun.sun  # Default: sun.sun
@@ -188,6 +218,7 @@ seasonal_images:
 | `night_mode` | boolean | `false` | Enable automatic day/night theme switching based on sun position |
 | `show_weather_info` | array | `[]` | Weather info to display: `uv_index`, `wind`, `feels_like`, `precipitation`, `humidity`, `pressure`, `visibility`, `sunrise_sunset` |
 | `weather_info_layout` | string | `standard` | Weather info layout: `compact` (in header), `standard` (cards), `detailed` (large cards) |
+| `show_nws_alerts` | boolean | `false` | Enable National Weather Service weather alerts for your location |
 | `sun_entity` | string | `sun.sun` | Sun entity for sunrise/sunset and day/night detection |
 | `moon_entity` | string | `sensor.moon_phase` | Moon phase sensor for accurate moon phase icons |
 
