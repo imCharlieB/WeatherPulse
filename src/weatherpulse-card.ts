@@ -209,14 +209,14 @@ export class WeatherPulseCard extends LitElement {
     return hour >= 20 || hour < 6;
   }
 
-  private renderWeatherInfo(): unknown {
+  private renderWeatherInfo(forceLayout?: 'compact' | 'standard' | 'detailed'): unknown {
     const showInfo = this.config?.show_weather_info;
     if (!showInfo || showInfo.length === 0) {
       return html``;
     }
 
     const weatherData = this.getWeatherData();
-    const layout = this.config?.weather_info_layout || 'standard';
+    const layout = forceLayout || this.config?.weather_info_layout || 'standard';
     const items = [];
 
     for (const infoType of showInfo) {
@@ -535,14 +535,31 @@ export class WeatherPulseCard extends LitElement {
         `;
     }
 
+    // Check if we should show weather info in header (compact layout)
+    const layout = this.config?.weather_info_layout || 'standard';
+    const showWeatherInfoInHeader = layout === 'compact';
+    const weatherInfoInHeader = showWeatherInfoInHeader ? this.renderWeatherInfo('compact') : '';
+
     // Graphical mode doesn't use card-header wrapper (it has its own background)
     if (headerMode === 'graphical') {
-      return headerContent;
+      return html`
+        ${headerContent}
+        ${showWeatherInfoInHeader ? html`
+          <div class="weather-info-in-header">
+            ${weatherInfoInHeader}
+          </div>
+        ` : ''}
+      `;
     }
 
     return html`
       <div class="card-header" style="background: ${gradient.color}; color: ${gradient.textColor};">
         ${headerContent}
+        ${showWeatherInfoInHeader ? html`
+          <div class="weather-info-in-header">
+            ${weatherInfoInHeader}
+          </div>
+        ` : ''}
       </div>
     `;
   }
@@ -766,10 +783,14 @@ export class WeatherPulseCard extends LitElement {
     // Apply night mode only if the toggle is ON and it's actually nighttime
     const nightModeClass = (this.config.night_mode && this.isNightTime()) ? 'night-mode' : '';
 
+    // Show weather info in header if compact layout, otherwise as separate section
+    const layout = this.config?.weather_info_layout || 'standard';
+    const showWeatherInfoInHeader = layout === 'compact';
+
     return html`
       <ha-card class="${nightModeClass}">
         ${this.renderHeader()}
-        ${this.renderWeatherInfo()}
+        ${!showWeatherInfoInHeader ? this.renderWeatherInfo() : ''}
         ${showForecast ? html`
           <div class="card-content">
             ${this.renderForecast()}
@@ -1302,6 +1323,45 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.night-mode .weather-info-item {
         background: rgba(29, 33, 56, 0.6);
+      }
+
+      /* Weather Info in Header (compact mode) */
+      .weather-info-in-header {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .weather-info-in-header .weather-info-section {
+        background: transparent;
+        border-top: none;
+        padding: 0;
+      }
+
+      .weather-info-in-header .weather-info-item {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* For graphical mode (outside card-header) */
+      .graphical-header + .weather-info-in-header {
+        background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+        padding: 12px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .graphical-header + .weather-info-in-header .weather-info-section {
+        background: transparent;
+        padding: 0;
+        border: none;
+      }
+
+      .graphical-header + .weather-info-in-header .weather-info-item {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+      }
+
+      ha-card.night-mode .weather-info-in-header .weather-info-item {
+        background: rgba(255, 255, 255, 0.08);
       }
 
       .card-content {
