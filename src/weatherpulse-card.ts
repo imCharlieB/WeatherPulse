@@ -184,6 +184,19 @@ export class WeatherPulseCard extends LitElement {
     return weatherData.temperature || 70;
   }
 
+  private isNightTime(): boolean {
+    // Check if sun entity exists
+    const sunEntity = this.hass.states['sun.sun'];
+    if (sunEntity) {
+      // Sun entity state is 'below_horizon' at night, 'above_horizon' during day
+      return sunEntity.state === 'below_horizon';
+    }
+
+    // Fallback: check time (rough estimate - night is 8 PM to 6 AM)
+    const hour = new Date().getHours();
+    return hour >= 20 || hour < 6;
+  }
+
   private renderHeader(): unknown {
     const weatherData = this.getWeatherData();
     const currentTemp = this.getCurrentTemp();
@@ -585,7 +598,9 @@ export class WeatherPulseCard extends LitElement {
     const weatherData = this.getWeatherData();
     const hasForecast = weatherData.forecast && weatherData.forecast.length > 0;
     const showForecast = this.config.show_forecast !== false && hasForecast;
-    const nightModeClass = this.config.night_mode ? 'night-mode' : '';
+
+    // Apply night mode only if the toggle is ON and it's actually nighttime
+    const nightModeClass = (this.config.night_mode && this.isNightTime()) ? 'night-mode' : '';
 
     return html`
       <ha-card class="${nightModeClass}">
@@ -663,8 +678,26 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.night-mode .card-header {
-        background: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%) !important;
+        position: relative;
         color: #e8eaf6 !important;
+        filter: brightness(0.4) contrast(1.1);
+      }
+
+      ha-card.night-mode .card-header::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(26, 31, 58, 0.7) 0%, rgba(45, 53, 97, 0.7) 100%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      ha-card.night-mode .card-header > * {
+        position: relative;
+        z-index: 1;
       }
 
       ha-card.night-mode .graphical-overlay {
