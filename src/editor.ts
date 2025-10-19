@@ -448,6 +448,36 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
 
         </div>
 
+        <!-- Advanced Options -->
+        <div class="section">
+          <h4>Advanced Options</h4>
+          <p class="helper-text">
+            Optional: Override default sun and moon entities. Leave empty to use defaults.
+          </p>
+
+          <ha-textfield
+            label="Sun Entity (default: sun.sun)"
+            .configValue=${'sun_entity'}
+            .value=${this._config.sun_entity || ''}
+            @input=${this._valueChanged}
+            placeholder="sun.sun"
+          ></ha-textfield>
+          <p class="helper-text">
+            Used for sunrise/sunset times and day/night detection.
+          </p>
+
+          <ha-textfield
+            label="Moon Entity (default: sensor.moon_phase)"
+            .configValue=${'moon_entity'}
+            .value=${this._config.moon_entity || ''}
+            @input=${this._valueChanged}
+            placeholder="sensor.moon_phase"
+          ></ha-textfield>
+          <p class="helper-text">
+            Used for displaying accurate moon phase icons on clear nights.
+          </p>
+        </div>
+
         <!-- Help Text -->
         <div class="section help">
           <p><strong>Tips:</strong></p>
