@@ -11,9 +11,11 @@ export interface WeatherPulseCardConfig extends LovelaceCardConfig {
   forecast_type?: 'daily' | 'hourly';
   forecast_days?: 5 | 7;
   hourly_count?: number;
-  view_mode?: 'compact' | 'standard' | 'detailed' | 'hourly' | 'weekly';
+  view_mode?: 'compact' | 'standard' | 'detailed' | 'hourly' | 'weekly' | 'chart';
   theme?: 'default' | 'retro' | 'glass' | 'minimal' | 'vibrant' | 'custom';
   animate_icons?: boolean;
+  enable_gradient_overlay?: boolean;
+  gradient_overlay_opacity?: number;
   data_rows?: DataRow[];
   alerts?: AlertType[];
   custom_theme_colors?: CustomThemeColors;

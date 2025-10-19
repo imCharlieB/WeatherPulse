@@ -1088,7 +1088,14 @@ export class WeatherPulseCard extends LitElement {
     const theme = this.config?.theme || 'default';
     const themeClass = theme !== 'default' ? `theme-${theme}` : '';
 
-    // Inject custom theme colors as CSS variables
+    // Gradient overlay configuration (works on all themes with adjustable opacity)
+    const enableGradientOverlay = this.config?.enable_gradient_overlay !== false; // Default true
+    const gradientOverlayOpacity = this.config?.gradient_overlay_opacity !== undefined
+      ? this.config.gradient_overlay_opacity / 100
+      : 0.10; // Default 10%
+    const gradientOverlayClass = enableGradientOverlay ? 'has-gradient-overlay' : '';
+
+    // Inject custom theme colors and gradient overlay as CSS variables
     let customStyles = '';
     if (theme === 'custom' && this.config?.custom_theme_colors) {
       const colors = this.config.custom_theme_colors;
@@ -1101,9 +1108,12 @@ export class WeatherPulseCard extends LitElement {
         --custom-accent: ${colors.accent || '#f093fb'};
       `;
     }
+    if (enableGradientOverlay) {
+      customStyles += `--gradient-overlay-opacity: ${gradientOverlayOpacity};`;
+    }
 
     return html`
-      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}" style="${customStyles}">
+      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass} ${gradientOverlayClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
         ${this.renderHeader()}
         ${this.renderNWSAlerts()}
@@ -1971,6 +1981,33 @@ export class WeatherPulseCard extends LitElement {
       }
 
       /* ========================================
+         GRADIENT OVERLAY (Universal)
+         ======================================== */
+
+      /* Apply gradient overlay to all themes when enabled */
+      ha-card.has-gradient-overlay .card-header {
+        position: relative !important;
+      }
+
+      ha-card.has-gradient-overlay .card-header::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: inherit !important;
+        opacity: var(--gradient-overlay-opacity, 0.10) !important;
+        z-index: 0 !important;
+        pointer-events: none !important;
+      }
+
+      ha-card.has-gradient-overlay .card-header > * {
+        position: relative !important;
+        z-index: 1 !important;
+      }
+
+      /* ========================================
          PRE-BUILT THEMES
          ======================================== */
 
@@ -2068,26 +2105,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-glass .card-header {
-        position: relative !important;
         backdrop-filter: blur(10px) !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      ha-card.theme-glass .card-header::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        background: inherit !important;
-        opacity: 0.15 !important;
-        z-index: 0 !important;
-      }
-
-      ha-card.theme-glass .card-header > * {
-        position: relative !important;
-        z-index: 1 !important;
       }
 
       ha-card.theme-glass .graphical-header::after {
@@ -2137,38 +2156,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-minimal .card-header {
-        position: relative !important;
         color: #333 !important;
         border-bottom: 1px solid #e0e0e0;
-      }
-
-      ha-card.theme-minimal .card-header::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        background: inherit !important;
-        opacity: 0.08 !important;
-        z-index: 0 !important;
-      }
-
-      ha-card.theme-minimal .card-header::after {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        background: #f8f8f8 !important;
-        opacity: 0.95 !important;
-        z-index: 0 !important;
-      }
-
-      ha-card.theme-minimal .card-header > * {
-        position: relative !important;
-        z-index: 1 !important;
       }
 
       ha-card.theme-minimal .graphical-header::after {
