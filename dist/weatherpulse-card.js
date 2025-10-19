@@ -2258,7 +2258,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
 
       /* GLASSMORPHISM THEME */
       ha-card.theme-glass {
-        background: rgba(255, 255, 255, 0.1) !important;
+        background: rgba(255, 255, 255, 0.15) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -2266,9 +2266,26 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.theme-glass .card-header {
-        background: rgba(255, 255, 255, 0.08) !important;
+        position: relative !important;
         backdrop-filter: blur(10px) !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      ha-card.theme-glass .card-header::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: inherit !important;
+        opacity: 0.15 !important;
+        z-index: 0 !important;
+      }
+
+      ha-card.theme-glass .card-header > * {
+        position: relative !important;
+        z-index: 1 !important;
       }
 
       ha-card.theme-glass .graphical-header::after {
@@ -2318,9 +2335,38 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.theme-minimal .card-header {
-        background: #f8f8f8 !important;
+        position: relative !important;
         color: #333 !important;
         border-bottom: 1px solid #e0e0e0;
+      }
+
+      ha-card.theme-minimal .card-header::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: inherit !important;
+        opacity: 0.08 !important;
+        z-index: 0 !important;
+      }
+
+      ha-card.theme-minimal .card-header::after {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: #f8f8f8 !important;
+        opacity: 0.95 !important;
+        z-index: 0 !important;
+      }
+
+      ha-card.theme-minimal .card-header > * {
+        position: relative !important;
+        z-index: 1 !important;
       }
 
       ha-card.theme-minimal .graphical-header::after {
@@ -2472,12 +2518,54 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
         color: white !important;
       }
 
+      ha-card.theme-custom .card-content {
+        background: var(--theme-background) !important;
+      }
+
       ha-card.theme-custom .forecast-day,
-      ha-card.theme-custom .forecast-hour,
-      ha-card.theme-custom .weather-info-item {
+      ha-card.theme-custom .forecast-hour {
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid var(--theme-border) !important;
+        color: var(--theme-text) !important;
+      }
+
+      ha-card.theme-custom .forecast-compact {
         background: var(--theme-secondary) !important;
         border: 1px solid var(--theme-border) !important;
         color: white !important;
+      }
+
+      ha-card.theme-custom .weather-info-item {
+        background: transparent !important;
+        border: none !important;
+        color: var(--theme-text) !important;
+      }
+
+      ha-card.theme-custom .weather-info-section {
+        background: transparent !important;
+        border-top: 1px solid var(--theme-border) !important;
+        padding-top: 12px !important;
+        margin-top: 8px !important;
+      }
+
+      ha-card.theme-custom .nws-alert {
+        background: var(--theme-accent) !important;
+        border: 1px solid var(--theme-border) !important;
+        color: var(--theme-text) !important;
+      }
+
+      ha-card.theme-custom .day-name,
+      ha-card.theme-custom .hour-name,
+      ha-card.theme-custom .temp-high,
+      ha-card.theme-custom .temp-low,
+      ha-card.theme-custom .weather-info-label,
+      ha-card.theme-custom .weather-info-value {
+        color: var(--theme-text) !important;
+      }
+
+      ha-card.theme-custom .temp-bar {
+        background: var(--theme-border) !important;
       }
 
       .card-content {
