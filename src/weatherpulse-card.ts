@@ -778,13 +778,24 @@ export class WeatherPulseCard extends LitElement {
         gap: 4px;
       }
 
-      .forecast-compact.forecast-container,
-      .forecast-container.forecast-compact {
+      /* Compact mode container - different for daily vs hourly */
+      .forecast-type-daily.forecast-compact,
+      .forecast-container.forecast-compact.forecast-type-daily {
         display: flex !important;
         flex-direction: row !important;
         gap: 8px !important;
-        justify-content: flex-start !important;
+        justify-content: space-between !important;
         flex-wrap: wrap !important;
+      }
+
+      .forecast-type-hourly.forecast-compact,
+      .forecast-container.forecast-compact.forecast-type-hourly {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 8px !important;
+        overflow-x: auto !important;
+        flex-wrap: nowrap !important;
+        padding-bottom: 8px;
       }
 
       .forecast-day {
@@ -870,7 +881,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       /* Compact view mode - vertical cards in horizontal row */
-      .forecast-compact {
+      .forecast-type-daily .forecast-compact {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -880,6 +891,18 @@ export class WeatherPulseCard extends LitElement {
         border-radius: 8px;
         flex: 1;
         min-width: 0;
+      }
+
+      .forecast-type-hourly .forecast-compact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 8px;
+        background: var(--card-background-color, #1c1c1c);
+        border-radius: 8px;
+        flex: 0 0 auto;
+        width: 70px;
       }
 
       .forecast-compact .day-name {
