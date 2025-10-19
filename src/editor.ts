@@ -53,6 +53,24 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
     fireEvent(this, 'config-changed', { config: newConfig });
   }
 
+  private _seasonalImageChanged(ev: CustomEvent, season: 'spring' | 'summer' | 'fall' | 'winter'): void {
+    if (!this._config || !this.hass) {
+      return;
+    }
+    const target = ev.target as any;
+    const value = target.value;
+
+    const newConfig = {
+      ...this._config,
+      seasonal_images: {
+        ...(this._config.seasonal_images || {}),
+        [season]: value === '' ? undefined : value
+      }
+    };
+
+    fireEvent(this, 'config-changed', { config: newConfig });
+  }
+
   protected render() {
     if (!this.hass || !this._config) {
       return html``;
@@ -166,9 +184,43 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           ` : ''}
 
           ${this._config.header_mode === 'graphical' ? html`
-            <p class="helper-text">
-              The graphical header displays a seasonal background that automatically changes based on the current season (Spring, Summer, Fall, Winter). You can customize these images in YAML config using the <code>seasonal_images</code> option.
-            </p>
+            <div class="seasonal-images-section">
+              <p class="helper-text">
+                Upload seasonal background images (800x280px recommended). Leave blank to use solid color placeholders.
+              </p>
+
+              <ha-textfield
+                label="Spring Image URL (Mar-May)"
+                placeholder="/local/images/spring.jpg"
+                .value=${this._config.seasonal_images?.spring || ''}
+                @input=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'spring')}
+              ></ha-textfield>
+
+              <ha-textfield
+                label="Summer Image URL (Jun-Aug)"
+                placeholder="/local/images/summer.jpg"
+                .value=${this._config.seasonal_images?.summer || ''}
+                @input=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'summer')}
+              ></ha-textfield>
+
+              <ha-textfield
+                label="Fall Image URL (Sep-Nov)"
+                placeholder="/local/images/fall.jpg"
+                .value=${this._config.seasonal_images?.fall || ''}
+                @input=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'fall')}
+              ></ha-textfield>
+
+              <ha-textfield
+                label="Winter Image URL (Dec-Feb)"
+                placeholder="/local/images/winter.jpg"
+                .value=${this._config.seasonal_images?.winter || ''}
+                @input=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'winter')}
+              ></ha-textfield>
+
+              <p class="helper-text">
+                Upload images to <code>/config/www/images/</code> folder, then reference as <code>/local/images/filename.jpg</code>
+              </p>
+            </div>
           ` : ''}
 
           <ha-formfield label="Show Date">
