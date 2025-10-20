@@ -54,27 +54,31 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 🌅 **Sunrise/Sunset** - Next sunrise or sunset time
 - 📐 **Three Layout Modes** - Compact (in header), Standard (separate cards), Detailed (large cards)
 
-#### Weather Alerts
+#### Weather Alerts & Notifications
 - 🔔 **NWS Weather Alerts** - Real-time severe weather alerts from National Weather Service
 - 🌪️ **All Alert Types** - Hurricanes, tornadoes, thunderstorms, heat advisories, flood warnings, and more
 - 🎨 **Severity Color Coding** - Red (Extreme), Orange (Severe), Yellow (Moderate), Blue (Minor)
 - 📍 **Location-Based** - Uses your Home Assistant location coordinates automatically
 - 🔄 **Auto-Updates** - Fetches latest alerts every 5 minutes
 - 🙈 **Auto-Hide** - Alert section disappears when no active alerts
+- ☔ **Rain Timing Notifications** - Broadcast-style banner when rain is coming in next 4 hours
+- ⏰ **Smart Detection** - Monitors hourly forecast for precipitation probability or rainy conditions
+- 📺 **Lower Third Style** - Professional TV weather broadcast appearance with shimmer effect
 
 #### Visual Themes
 - 🎨 **Pre-built Themes** - 5 professional themes: Default, Retro (1990s Weather Channel), Glassmorphism, Minimal, Vibrant
 - 🎭 **Custom Theme** - Create your own 6-color theme palette
 - 🎉 **Holiday Decorations** - Festive overlays for 8 holidays throughout the year
 
-### 🚧 Coming Soon
-- 📈 Additional data rows (Dew Point, Cloud Coverage)
-- 📊 Weather trend indicators
-- 🌡️ Temperature range charts
+### 🚧 Future Enhancements
+- 📊 Air Quality integration (requires AQI sensor)
+- 🌤️ "Best time to go outside today" suggestions
+- 🌾 Pollen count alerts (requires pollen sensor)
+- 📈 Weather trend indicators
 
 ## 🚧 Development Status
 
-**Phase 1 & 2 Complete!** Core functionality is working and ready for testing. The card includes all basic features, animated icons, multiple view modes, and a visual configuration editor.
+**Phase 1, 2, & 3 Complete!** All core features, advanced features, and smart notifications are implemented and working. The card includes professional Meteocons icons, rain timing notifications, NWS weather alerts, holiday themes, and much more.
 
 See [FEATURES.md](FEATURES.md) for complete feature list and roadmap.
 

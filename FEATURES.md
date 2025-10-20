@@ -56,7 +56,6 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [x] **Visibility** distance ✅
 - [x] **Sunrise/Sunset** times with auto-switching ✅
 - [x] Three layout modes: Compact (in header), Standard (cards), Detailed (large cards) ✅
-- [ ] **Air Quality** integration (if available) (PLANNED)
 
 ### 5. View Modes
 - [x] **Compact**: Current + minimal forecast (horizontal scroll for hourly) ✅
@@ -76,18 +75,14 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [x] **Hourly forecasts**: 1-48 hours (configurable) ✅
 - [x] Switchable forecast type (daily/hourly) ✅
 
-### 7. Animated Weather Icons
-- [x] **Sun**: Rotating rays, pulsing glow ✅
-- [x] **Clouds**: Drifting movement ✅
-- [x] **Rain**: Falling droplets ✅
-- [x] **Snow**: Falling flakes ✅
-- [x] **Thunderstorm**: Lightning flashes ✅
-- [x] **Wind**: Swirling particles ✅
-- [x] **Fog/Mist**: Floating wisps ✅
+### 7. Animated Weather Icons (Meteocons by Bas Milius)
+- [x] **Professional Icons**: Using Meteocons library - 236+ hand-crafted SVG weather icons ✅
+- [x] **Built-in Animations**: Smooth, professional animations designed by illustrator ✅
+- [x] **Comprehensive Coverage**: Sun, clouds, rain, snow, storms, fog, wind, and more ✅
+- [x] **Weather Conditions**: Clear day/night, partly cloudy, cloudy, rain, drizzle, snow, sleet, hail, thunderstorms, fog, wind ✅
 - [x] **Moon phases**: 8 accurate phase icons (new_moon, waxing_crescent, first_quarter, waxing_gibbous, full_moon, waning_gibbous, last_quarter, waning_crescent) ✅
 - [x] **Dynamic moon display**: Clear night icons automatically show current moon phase ✅
-- [x] **Moon floating animation**: Gentle float effect matching other icons ✅
-- [ ] Smooth transitions between states (PLANNED)
+- [x] **MIT Licensed**: Free to use, professionally maintained ✅
 
 ### 8. Day/Night Theme Features
 - [x] **Auto Day/Night Mode**: Automatically switches to darker starry theme at night ✅
@@ -115,7 +110,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Vibrant: Bright gradient backgrounds, saturated colors, high energy
   - Custom: User-defined colors (primary, secondary, background, text, border, accent)
 
-### 9. Smart Alerts & Contextual Badges
+### 9. Smart Alerts & Contextual Notifications
 - [x] **NWS Alerts Integration**: Real-time weather warnings from National Weather Service ✅
   - Direct API integration (no plugin required) ✅
   - All alert types: hurricanes, tornadoes, thunderstorms, heat advisories, flood warnings, etc. ✅
@@ -124,11 +119,18 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Auto-updates every 5 minutes with caching ✅
   - Auto-hide when no active alerts ✅
   - Shows event name, affected area, headline, and expiration time ✅
-- [ ] "Best time to go outside today" suggestions (PLANNED)
-- [ ] Rain timing notifications ("Rain starting in 2 hours") (PLANNED)
-- [ ] Pollen count alerts (PLANNED)
-- [ ] Contextual suggestions ("Perfect beach weather!") (PLANNED)
-- [ ] Customizable alert thresholds (PLANNED)
+- [x] **Rain Timing Notifications**: Smart precipitation alerts ✅
+  - Monitors next 4 hours of hourly forecast ✅
+  - Detects rain via precipitation probability (>50%) or rainy conditions ✅
+  - Broadcast-style lower third banner design ✅
+  - Shows time until rain and expected arrival time ✅
+  - Auto-hides when no rain expected ✅
+  - Shimmer animation effect for professional look ✅
+  - Night mode support with darker gradient ✅
+  - Example: "☔ Rain expected in 2 hours (~4:15 PM)" ✅
+- [ ] Air Quality integration (requires AQI sensor - future enhancement)
+- [ ] "Best time to go outside today" suggestions (future enhancement)
+- [ ] Pollen count alerts (future enhancement)
 
 ### 10. Sun & Moon Entity Integration
 - [x] **Sun entity support**: Uses sun.sun for day/night detection and sunrise/sunset times ✅
@@ -137,13 +139,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [x] **Custom overrides**: Optional sun_entity and moon_entity config for custom entities ✅
 - [x] **Graceful fallbacks**: Works without entities (falls back to time-based detection) ✅
 
-### 11. Layout Options
-- [ ] **Horizontal bars** (gradient style like reference image)
-- [ ] **Vertical cards** (traditional card layout)
-- [ ] **Timeline view** (horizontal scrolling)
-- [ ] **Graph mode** (line charts for trends)
-
-### 12. Configuration & Compatibility
+### 11. Configuration & Compatibility
 - [x] Compatible with new Home Assistant dashboards ✅
 - [x] Visual editor for easy configuration ✅
 - [x] YAML configuration support ✅
@@ -197,9 +193,11 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [x] Auto day/night mode with starry theme ✅
 - [x] Sunrise/sunset times with auto-switching ✅
 - [x] NWS weather alerts integration ✅
-- [ ] All pre-built themes (glassmorphism, minimal, etc.) (MOVED TO PHASE 4)
-- [ ] Air Quality integration (MOVED TO PHASE 4)
-- [ ] Additional layout variants (MOVED TO PHASE 4)
+- [x] Professional Meteocons weather icons (236+ icons) ✅
+- [x] Rain timing notifications with broadcast-style banner ✅
+- [x] All 5 pre-built themes + custom theme support ✅
+- [x] Chart view mode (TV-style temperature trend lines) ✅
+- [x] Holiday decorations (8 holidays) ✅
 
 ### Phase 4: Polish & Release
 - Performance optimization
