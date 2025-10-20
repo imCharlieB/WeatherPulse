@@ -27,6 +27,7 @@ export class WeatherPulseCard extends LitElement {
   @state() private currentTime: string = formatTime();
   @state() private currentDate: string = formatDate();
   @state() private forecastData: any[] = [];
+  @state() private hourlyForecastData: any[] = []; // For rain timing detection
   @state() private nwsAlerts: NWSAlert[] = [];
 
   private timeInterval?: number;
@@ -151,12 +152,40 @@ export class WeatherPulseCard extends LitElement {
           entity_id: this.config.entity,
         }
       );
+
+      // Fetch hourly forecast for rain timing detection
+      await this.fetchHourlyForRainTiming();
     } catch (error) {
       // Fallback to legacy forecast from attributes
       const entity = this.hass.states[this.config.entity];
       if (entity?.attributes?.forecast) {
         this.forecastData = entity.attributes.forecast;
       }
+    }
+  }
+
+  /**
+   * Fetch hourly forecast data for rain timing detection
+   * Uses weather.get_forecasts WebSocket call
+   */
+  private async fetchHourlyForRainTiming(): Promise<void> {
+    if (!this.hass || !this.config?.entity) {
+      return;
+    }
+
+    try {
+      const response: any = await this.hass.callWS({
+        type: 'weather/get_forecasts',
+        entity_id: [this.config.entity],
+        forecast_type: 'hourly'
+      });
+
+      if (response && response[this.config.entity]?.forecast) {
+        this.hourlyForecastData = response[this.config.entity].forecast;
+      }
+    } catch (error) {
+      // Silently fail - rain timing is optional feature
+      console.debug('Could not fetch hourly forecast for rain timing:', error);
     }
   }
 
@@ -239,13 +268,13 @@ export class WeatherPulseCard extends LitElement {
   /**
    * Check if rain is coming in the next 4 hours
    * Returns object with isRaining flag and timing message
+   * Uses hourly forecast data regardless of card display mode
    */
   private getRainTiming(): { isRaining: boolean; message: string; time: string } | null {
-    const weatherData = this.getWeatherData();
-    const forecast = weatherData.forecast || [];
+    // Use dedicated hourly forecast data for rain detection
+    const forecast = this.hourlyForecastData;
 
-    // Only check hourly forecast
-    if (!forecast.length || this.config.forecast_type !== 'hourly') {
+    if (!forecast || forecast.length === 0) {
       return null;
     }
 
