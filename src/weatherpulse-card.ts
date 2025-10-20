@@ -1070,23 +1070,36 @@ export class WeatherPulseCard extends LitElement {
     const chartMin = minTemp - padding;
     const chartMax = maxTemp + padding;
 
-    // Calculate line points for SVG
+    // Calculate line points for SVG - use same values as dots for alignment
     const columnWidth = 100 / forecast.length;
     const highLinePoints: string[] = [];
     const lowLinePoints: string[] = [];
 
     forecast.forEach((item, index) => {
-      const highTemp = item.temperature || 0;
-      const lowTemp = forecastType === 'daily' ? (item.templow || 0) : null;
+      const highTemp = Math.round(item.temperature || 0);
+      const lowTemp = forecastType === 'daily' ? Math.round(item.templow || 0) : null;
 
       const x = (index * columnWidth) + (columnWidth / 2);
-      const highY = 100 - ((highTemp - chartMin) / (chartMax - chartMin)) * 100;
+      // Use same calculation as dot positioning (bottom %)
+      const highPercent = ((highTemp - chartMin) / (chartMax - chartMin)) * 100;
+      const highY = 100 - highPercent; // Invert for SVG coordinates
       highLinePoints.push(`${x.toFixed(2)},${highY.toFixed(2)}`);
 
-      if (lowTemp !== null && lowTemp !== 0) {
-        const lowY = 100 - ((lowTemp - chartMin) / (chartMax - chartMin)) * 100;
+      if (lowTemp !== null && lowTemp > 0) {
+        const lowPercent = ((lowTemp - chartMin) / (chartMax - chartMin)) * 100;
+        const lowY = 100 - lowPercent; // Invert for SVG coordinates
         lowLinePoints.push(`${x.toFixed(2)},${lowY.toFixed(2)}`);
       }
+    });
+
+    // Debug logging
+    console.log('WeatherPulse Chart Debug:', {
+      forecastType,
+      forecastCount: forecast.length,
+      lowLinePointsCount: lowLinePoints.length,
+      highLinePointsCount: highLinePoints.length,
+      sampleLowTemp: forecast[0]?.templow,
+      lowLinePoints: lowLinePoints.join(' ')
     });
 
     return html`
