@@ -31,7 +31,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 📊 **Dual Temperature Display** - Show both forecast and actual sensor readings side-by-side
 - 🎬 **Animated Weather Icons** - Beautiful SVG animations for sun, clouds, rain, snow, storms, fog, and wind
 - 📅 **Flexible Forecast Views** - Choose between daily (5 or 7 days) or hourly forecasts
-- 🎯 **Three View Modes** - Compact, Standard, and Detailed layouts
+- 🎯 **Four View Modes** - Compact, Standard, Detailed, and Chart (TV-style temperature trend lines)
 - ⏰ **Hourly Forecasts** - View upcoming weather by hour with customizable count
 - 🎨 **Six Header Modes** - Time-Focused, Date-Focused, Balanced, Minimal, Greeting, and Graphical
 - ⚙️ **Visual Configuration Editor** - Easy setup through Home Assistant UI
@@ -455,7 +455,7 @@ custom_theme_colors:
 | `forecast_type` | string | `daily` | Forecast type: `daily` or `hourly` |
 | `forecast_days` | number | `5` | Number of forecast days: `5` or `7` (when forecast_type is daily) |
 | `hourly_count` | number | `12` | Number of hours to show: `1-48` (when forecast_type is hourly) |
-| `view_mode` | string | `standard` | Forecast layout: `compact`, `standard`, `detailed` |
+| `view_mode` | string | `standard` | Forecast layout: `compact`, `standard`, `detailed`, `chart` |
 | `temp_display_mode` | string | `forecast` | Temperature display: `forecast`, `actual`, `both` |
 | `theme` | string | `default` | Visual theme: `default`, `retro`, `glass`, `minimal`, `vibrant`, `custom` |
 | `custom_theme_colors` | object | Optional | Custom theme colors (only used when theme is `custom`) - see Custom Theme section |

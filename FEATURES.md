@@ -62,6 +62,14 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - [x] **Compact**: Current + minimal forecast (horizontal scroll for hourly) ✅
 - [x] **Standard**: Current + detailed daily (2-column for hourly) ✅
 - [x] **Detailed**: Current + daily with extra info (humidity, wind for hourly) ✅
+- [x] **Chart**: TV-style temperature trend line visualization ✅
+  - Day names displayed at top ✅
+  - Temperature values positioned on trend lines ✅
+  - Orange line for high temperatures ✅
+  - Blue line for low temperatures (daily forecast) ✅
+  - Single line for hourly forecast ✅
+  - Colored dots at each data point ✅
+  - Professional TV weather broadcast appearance ✅
 
 ### 6. Forecast Periods (User Selectable)
 - [x] **Daily forecasts**: 5 or 7 days ✅
