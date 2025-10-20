@@ -1182,8 +1182,8 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.night-mode .card-header {
         position: relative;
-        color: #e8eaf6 !important;
-        filter: brightness(0.6) contrast(1.1); /* Lighter header */
+        color: white !important; /* Bright white text */
+        filter: none !important; /* No filter - don't dim text */
       }
 
       ha-card.night-mode .card-header::after {
@@ -1193,7 +1193,7 @@ export class WeatherPulseCard extends LitElement {
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, rgba(26, 31, 58, 0.7) 0%, rgba(45, 53, 97, 0.7) 100%);
+        background: linear-gradient(135deg, rgba(10, 14, 27, 0.6) 0%, rgba(20, 25, 45, 0.6) 100%); /* Darker overlay */
         pointer-events: none;
         z-index: 0;
       }
