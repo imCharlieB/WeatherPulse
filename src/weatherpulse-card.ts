@@ -1092,6 +1092,19 @@ export class WeatherPulseCard extends LitElement {
       }
     });
 
+    // Debug logging with more details
+    console.log('WeatherPulse Chart Debug:', {
+      forecastType,
+      forecastCount: forecast.length,
+      chartMin,
+      chartMax,
+      lowLinePointsCount: lowLinePoints.length,
+      highLinePointsCount: highLinePoints.length,
+      lowLinePoints: lowLinePoints.join(' '),
+      highLinePoints: highLinePoints.join(' '),
+      sampleForecastItem: forecast[0]
+    });
+
     return html`
       <div class="forecast-chart">
         <!-- Day names at top -->
@@ -1110,6 +1123,9 @@ export class WeatherPulseCard extends LitElement {
         <!-- Temperature chart with SVG lines -->
         <div class="chart-wrapper">
           <svg class="chart-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <!-- Debug: Test line to verify SVG rendering -->
+            <line x1="0" y1="90" x2="100" y2="90" stroke="#4A9EFF" stroke-width="3" />
+
             <polyline
               points="${highLinePoints.join(' ')}"
               fill="none"
