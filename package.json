@@ -38,10 +38,12 @@
     "eslint": "^8.56.0",
     "rollup": "^4.9.6",
     "rollup-plugin-serve": "^2.0.3",
+    "rollup-plugin-string": "^3.0.0",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@bybas/weather-icons": "^2.0.0",
     "custom-card-helpers": "^1.9.0",
     "home-assistant-js-websocket": "^9.1.0",
     "lit": "^3.1.2"

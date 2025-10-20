@@ -4,6 +4,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
 import terser from '@rollup/plugin-terser';
 import serve from 'rollup-plugin-serve';
+import { string } from 'rollup-plugin-string';
 
 const dev = process.env.ROLLUP_WATCH;
 
@@ -18,6 +19,9 @@ const serveopts = {
 };
 
 const plugins = [
+  string({
+    include: '**/*.svg',
+  }),
   resolve(),
   commonjs(),
   typescript({

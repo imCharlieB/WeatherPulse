@@ -1,511 +1,193 @@
 import { html, svg, SVGTemplateResult } from 'lit';
-import { unsafeCSS } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 /**
- * Animated weather icons using SVG and CSS animations
+ * Weather icons using Meteocons by Bas Milius
+ * https://github.com/basmilius/weather-icons
+ * License: MIT
  */
 
-export function getAnimatedWeatherIcon(condition: string, animate: boolean = true): SVGTemplateResult {
-  const animClass = animate ? 'animated' : '';
+// Import SVG files as strings (handled by rollup-plugin-string)
+import clearDaySvg from '../node_modules/@bybas/weather-icons/production/fill/all/clear-day.svg';
+import clearNightSvg from '../node_modules/@bybas/weather-icons/production/fill/all/clear-night.svg';
+import partlyCloudyDaySvg from '../node_modules/@bybas/weather-icons/production/fill/all/partly-cloudy-day.svg';
+import partlyCloudyNightSvg from '../node_modules/@bybas/weather-icons/production/fill/all/partly-cloudy-night.svg';
+import cloudySvg from '../node_modules/@bybas/weather-icons/production/fill/all/cloudy.svg';
+import rainSvg from '../node_modules/@bybas/weather-icons/production/fill/all/rain.svg';
+import drizzleSvg from '../node_modules/@bybas/weather-icons/production/fill/all/drizzle.svg';
+import snowSvg from '../node_modules/@bybas/weather-icons/production/fill/all/snow.svg';
+import sleetSvg from '../node_modules/@bybas/weather-icons/production/fill/all/sleet.svg';
+import thunderstormsRainSvg from '../node_modules/@bybas/weather-icons/production/fill/all/thunderstorms-rain.svg';
+import fogSvg from '../node_modules/@bybas/weather-icons/production/fill/all/fog.svg';
+import windSvg from '../node_modules/@bybas/weather-icons/production/fill/all/wind.svg';
+import hailSvg from '../node_modules/@bybas/weather-icons/production/fill/all/hail.svg';
 
-  switch (condition) {
+// Moon phases
+import moonNewSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-new.svg';
+import moonWaxingCrescentSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-waxing-crescent.svg';
+import moonFirstQuarterSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-first-quarter.svg';
+import moonWaxingGibbousSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-waxing-gibbous.svg';
+import moonFullSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-full.svg';
+import moonWaningGibbousSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-waning-gibbous.svg';
+import moonLastQuarterSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-last-quarter.svg';
+import moonWaningCrescentSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-waning-crescent.svg';
+
+/**
+ * Get animated weather icon from Meteocons library
+ */
+export function getAnimatedWeatherIcon(condition: string, animate: boolean = true): SVGTemplateResult {
+  let svgContent = '';
+
+  switch (condition.toLowerCase()) {
     case 'clear-day':
     case 'sunny':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <style>
-            .sun-rays {
-              animation: ${animate ? 'rotate 20s linear infinite' : 'none'};
-              transform-origin: 50px 50px;
-            }
-            .sun-core {
-              animation: ${animate ? 'pulse 4s ease-in-out infinite' : 'none'};
-              transform-origin: 50px 50px;
-            }
-            @keyframes rotate {
-              from { transform: rotate(0deg); }
-              to { transform: rotate(360deg); }
-            }
-            @keyframes pulse {
-              0%, 100% { transform: scale(1); opacity: 1; }
-              50% { transform: scale(1.05); opacity: 0.9; }
-            }
-          </style>
-          <!-- Sun rays -->
-          <g class="sun-rays">
-            <line x1="50" y1="10" x2="50" y2="20" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
-            <line x1="50" y1="80" x2="50" y2="90" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
-            <line x1="10" y1="50" x2="20" y2="50" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
-            <line x1="80" y1="50" x2="90" y2="50" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
-            <line x1="21" y1="21" x2="28" y2="28" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
-            <line x1="72" y1="72" x2="79" y2="79" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
-            <line x1="79" y1="21" x2="72" y2="28" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
-            <line x1="28" y1="72" x2="21" y2="79" stroke="#FDB813" stroke-width="3" stroke-linecap="round"/>
-          </g>
-          <!-- Sun core -->
-          <circle class="sun-core" cx="50" cy="50" r="20" fill="#FDB813"/>
-        </svg>
-      `;
+      svgContent = clearDaySvg;
+      break;
 
     case 'clear-night':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="moonGradient" cx="40%" cy="40%">
-              <stop offset="0%" style="stop-color:#FFFEF0;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#F4E5C2;stop-opacity:1" />
-            </radialGradient>
-          </defs>
-          <style>
-            .crescent-moon {
-              animation: ${animate ? 'moonFloat 6s ease-in-out infinite' : 'none'};
-              transform-origin: 50px 50px;
-            }
-            @keyframes moonFloat {
-              0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-              }
-              50% {
-                transform: translateY(-4px) rotate(-2deg);
-              }
-            }
-          </style>
-          <!-- Crescent moon shape -->
-          <g class="crescent-moon">
-            <!-- Full moon circle -->
-            <circle cx="50" cy="50" r="22" fill="url(#moonGradient)"/>
-            <!-- Dark circle to create crescent -->
-            <circle cx="58" cy="48" r="20" fill="#1a1a2e"/>
-          </g>
-        </svg>
-      `;
-
-    case 'partlycloudy-night':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="moonGradientSmall" cx="35%" cy="35%">
-              <stop offset="0%" style="stop-color:#FFFEF0;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#F4E5C2;stop-opacity:1" />
-            </radialGradient>
-          </defs>
-          <style>
-            .crescent-moon-small {
-              animation: ${animate ? 'moonFloat 6s ease-in-out infinite' : 'none'};
-              transform-origin: 28px 28px;
-            }
-            @keyframes moonFloat {
-              0%, 100% {
-                transform: translateY(0px);
-              }
-              50% {
-                transform: translateY(-3px);
-              }
-            }
-            .cloud {
-              animation: ${animate ? 'float 6s ease-in-out infinite' : 'none'};
-            }
-            @keyframes float {
-              0%, 100% { transform: translateY(0px); }
-              50% { transform: translateY(-3px); }
-            }
-          </style>
-          <!-- Crescent moon -->
-          <g class="crescent-moon-small">
-            <circle cx="28" cy="28" r="13" fill="url(#moonGradientSmall)"/>
-            <circle cx="34" cy="26" r="12" fill="#1a1a2e"/>
-          </g>
-          <!-- Cloud in foreground -->
-          <g class="cloud">
-            <ellipse cx="50" cy="60" rx="18" ry="14" fill="#E8E8E8"/>
-            <ellipse cx="65" cy="55" rx="22" ry="18" fill="#F0F0F0"/>
-            <ellipse cx="80" cy="60" rx="18" ry="14" fill="#E8E8E8"/>
-            <rect x="32" y="60" width="66" height="18" rx="3" fill="#ECECEC"/>
-          </g>
-        </svg>
-      `;
-
-    case 'cloudy':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <style>
-            .cloud {
-              animation: ${animate ? 'float 6s ease-in-out infinite' : 'none'};
-            }
-            @keyframes float {
-              0%, 100% { transform: translateY(0px); }
-              50% { transform: translateY(-5px); }
-            }
-          </style>
-          <g class="cloud">
-            <ellipse cx="35" cy="50" rx="18" ry="14" fill="#C8C8C8"/>
-            <ellipse cx="50" cy="45" rx="22" ry="18" fill="#D8D8D8"/>
-            <ellipse cx="65" cy="50" rx="18" ry="14" fill="#C8C8C8"/>
-            <rect x="17" y="50" width="66" height="18" rx="3" fill="#D0D0D0"/>
-          </g>
-        </svg>
-      `;
+      svgContent = clearNightSvg;
+      break;
 
     case 'partlycloudy':
     case 'partly-cloudy-day':
+      svgContent = partlyCloudyDaySvg;
+      break;
+
+    case 'partlycloudy-night':
     case 'partly-cloudy-night':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <style>
-            .sun-group {
-              animation: ${animate ? 'rotate 20s linear infinite' : 'none'};
-              transform-origin: 30px 30px;
-            }
-            .cloud {
-              animation: ${animate ? 'float 6s ease-in-out infinite' : 'none'};
-            }
-            @keyframes rotate {
-              from { transform: rotate(0deg); }
-              to { transform: rotate(360deg); }
-            }
-            @keyframes float {
-              0%, 100% { transform: translateY(0px); }
-              50% { transform: translateY(-3px); }
-            }
-          </style>
-          <!-- Sun in background (entire sun group rotates together) -->
-          <g class="sun-group">
-            <line x1="30" y1="12" x2="30" y2="18" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
-            <line x1="30" y1="42" x2="30" y2="48" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
-            <line x1="12" y1="30" x2="18" y2="30" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
-            <line x1="42" y1="30" x2="48" y2="30" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
-            <line x1="17" y1="17" x2="21" y2="21" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
-            <line x1="39" y1="39" x2="43" y2="43" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
-            <line x1="43" y1="17" x2="39" y2="21" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
-            <line x1="21" y1="39" x2="17" y2="43" stroke="#FDB813" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="30" cy="30" r="12" fill="#FDB813"/>
-          </g>
-          <!-- Cloud in foreground -->
-          <g class="cloud">
-            <ellipse cx="50" cy="60" rx="18" ry="14" fill="#E8E8E8"/>
-            <ellipse cx="65" cy="55" rx="22" ry="18" fill="#F0F0F0"/>
-            <ellipse cx="80" cy="60" rx="18" ry="14" fill="#E8E8E8"/>
-            <rect x="32" y="60" width="66" height="18" rx="3" fill="#ECECEC"/>
-          </g>
-        </svg>
-      `;
+      svgContent = partlyCloudyNightSvg;
+      break;
+
+    case 'cloudy':
+    case 'overcast':
+      svgContent = cloudySvg;
+      break;
 
     case 'rainy':
-    case 'pouring':
     case 'rain':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <style>
-            .cloud {
-              animation: ${animate ? 'float 6s ease-in-out infinite' : 'none'};
-            }
-            .rain-drop {
-              animation: ${animate ? 'rain 0.8s linear infinite' : 'none'};
-            }
-            .rain-drop:nth-child(2) { animation-delay: 0.2s; }
-            .rain-drop:nth-child(3) { animation-delay: 0.4s; }
-            .rain-drop:nth-child(4) { animation-delay: 0.6s; }
-            @keyframes float {
-              0%, 100% { transform: translateY(0px); }
-              50% { transform: translateY(-3px); }
-            }
-            @keyframes rain {
-              0% { transform: translateY(0px); opacity: 1; }
-              100% { transform: translateY(20px); opacity: 0; }
-            }
-          </style>
-          <g class="cloud">
-            <ellipse cx="35" cy="35" rx="12" ry="10" fill="#B0B0B0"/>
-            <ellipse cx="50" cy="30" rx="15" ry="12" fill="#C0C0C0"/>
-            <ellipse cx="65" cy="35" rx="12" ry="10" fill="#B0B0B0"/>
-            <rect x="23" y="35" width="54" height="12" rx="2" fill="#B8B8B8"/>
-          </g>
-          <g opacity="0.8">
-            <line class="rain-drop" x1="30" y1="55" x2="30" y2="70" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
-            <line class="rain-drop" x1="45" y1="55" x2="45" y2="70" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
-            <line class="rain-drop" x1="60" y1="55" x2="60" y2="70" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
-            <line class="rain-drop" x1="37" y1="60" x2="37" y2="75" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
-            <line class="rain-drop" x1="52" y1="60" x2="52" y2="75" stroke="#4A90E2" stroke-width="2" stroke-linecap="round"/>
-          </g>
-        </svg>
-      `;
+      svgContent = rainSvg;
+      break;
+
+    case 'pouring':
+    case 'heavy-rain':
+      // Use rain icon for heavy rain (could use extreme-rain if available)
+      svgContent = rainSvg;
+      break;
+
+    case 'drizzle':
+    case 'light-rain':
+      svgContent = drizzleSvg;
+      break;
 
     case 'snowy':
     case 'snow':
+      svgContent = snowSvg;
+      break;
+
     case 'snowy-rainy':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <style>
-            .cloud {
-              animation: ${animate ? 'float 6s ease-in-out infinite' : 'none'};
-            }
-            .snowflake {
-              animation: ${animate ? 'snow 3s linear infinite' : 'none'};
-            }
-            .snowflake:nth-child(2) { animation-delay: 0.5s; }
-            .snowflake:nth-child(3) { animation-delay: 1s; }
-            .snowflake:nth-child(4) { animation-delay: 1.5s; }
-            .snowflake:nth-child(5) { animation-delay: 2s; }
-            @keyframes float {
-              0%, 100% { transform: translateY(0px); }
-              50% { transform: translateY(-3px); }
-            }
-            @keyframes snow {
-              0% { transform: translateY(0px) translateX(0px); opacity: 1; }
-              100% { transform: translateY(25px) translateX(3px); opacity: 0; }
-            }
-          </style>
-          <g class="cloud">
-            <ellipse cx="35" cy="35" rx="12" ry="10" fill="#B8B8B8"/>
-            <ellipse cx="50" cy="30" rx="15" ry="12" fill="#C8C8C8"/>
-            <ellipse cx="65" cy="35" rx="12" ry="10" fill="#B8B8B8"/>
-            <rect x="23" y="35" width="54" height="12" rx="2" fill="#C0C0C0"/>
-          </g>
-          <g fill="#E3F2FD" opacity="0.9">
-            <circle class="snowflake" cx="30" cy="55" r="3"/>
-            <circle class="snowflake" cx="45" cy="60" r="3"/>
-            <circle class="snowflake" cx="60" cy="55" r="3"/>
-            <circle class="snowflake" cx="37" cy="65" r="2.5"/>
-            <circle class="snowflake" cx="52" cy="68" r="2.5"/>
-          </g>
-        </svg>
-      `;
+    case 'sleet':
+    case 'mix':
+      svgContent = sleetSvg;
+      break;
+
+    case 'hail':
+      svgContent = hailSvg;
+      break;
 
     case 'lightning':
     case 'thunderstorm':
     case 'lightning-rainy':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <style>
-            .storm-cloud {
-              animation: ${animate ? 'shake 4s ease-in-out infinite' : 'none'};
-            }
-            .lightning {
-              animation: ${animate ? 'flash 2s ease-in-out infinite' : 'none'};
-            }
-            @keyframes shake {
-              0%, 100% { transform: translateX(0px); }
-              25% { transform: translateX(-2px); }
-              75% { transform: translateX(2px); }
-            }
-            @keyframes flash {
-              0%, 50%, 100% { opacity: 0; }
-              55%, 65% { opacity: 1; }
-            }
-          </style>
-          <g class="storm-cloud">
-            <ellipse cx="35" cy="35" rx="14" ry="11" fill="#606060"/>
-            <ellipse cx="50" cy="28" rx="17" ry="14" fill="#707070"/>
-            <ellipse cx="65" cy="35" rx="14" ry="11" fill="#606060"/>
-            <rect x="21" y="35" width="58" height="14" rx="2" fill="#686868"/>
-          </g>
-          <path class="lightning" d="M 50 50 L 42 65 L 48 65 L 43 80 L 55 62 L 50 62 Z"
-                fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
-        </svg>
-      `;
+    case 'thunderstorms':
+      svgContent = thunderstormsRainSvg;
+      break;
 
     case 'fog':
     case 'mist':
     case 'foggy':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <style>
-            .fog-cloud {
-              animation: ${animate ? 'fogFloat 8s ease-in-out infinite' : 'none'};
-            }
-            @keyframes fogFloat {
-              0%, 100% { transform: translate(0px, 0px); }
-              50% { transform: translate(4px, -2px); }
-            }
-          </style>
-          <!-- Single fog cloud - light and simple -->
-          <g class="fog-cloud" opacity="0.5">
-            <ellipse cx="35" cy="50" rx="18" ry="14" fill="#D8D8D8"/>
-            <ellipse cx="50" cy="45" rx="22" ry="18" fill="#E0E0E0"/>
-            <ellipse cx="65" cy="50" rx="18" ry="14" fill="#D8D8D8"/>
-            <rect x="17" y="50" width="66" height="18" rx="3" fill="#DCDCDC"/>
-          </g>
-        </svg>
-      `;
+    case 'haze':
+      svgContent = fogSvg;
+      break;
 
     case 'windy':
     case 'wind':
     case 'exceptional':
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <style>
-            .wind-line {
-              animation: ${animate ? 'wind 3s ease-in-out infinite' : 'none'};
-            }
-            .wind-line:nth-child(2) { animation-delay: 0.5s; }
-            .wind-line:nth-child(3) { animation-delay: 1s; }
-            @keyframes wind {
-              0% { transform: translateX(-10px); opacity: 0; }
-              50% { opacity: 1; }
-              100% { transform: translateX(10px); opacity: 0; }
-            }
-          </style>
-          <g fill="none" stroke="#90CAF9" stroke-width="3" stroke-linecap="round">
-            <path class="wind-line" d="M 15 30 Q 40 25 65 30 T 95 30"/>
-            <path class="wind-line" d="M 10 50 Q 35 45 60 50 T 90 50"/>
-            <path class="wind-line" d="M 15 70 Q 40 65 65 70 T 95 70"/>
-          </g>
-        </svg>
-      `;
+      svgContent = windSvg;
+      break;
 
     default:
-      // Default to sunny icon
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="20" fill="#FDB813"/>
-        </svg>
-      `;
+      // Default to clear-day
+      svgContent = clearDaySvg;
   }
+
+  // If animations are disabled, remove animate elements from the SVG
+  if (!animate) {
+    svgContent = svgContent.replace(/<animate[^>]*>/g, '').replace(/<\/animate>/g, '');
+    svgContent = svgContent.replace(/<animateTransform[^>]*\/>/g, '');
+  }
+
+  // Wrap the SVG content in a container div with our weather-icon-svg class
+  return svg`${unsafeHTML(svgContent)}`;
 }
 
 /**
- * Moon phase icons based on Home Assistant moon_phase sensor states
+ * Moon phase icons from Meteocons
  */
 export function getMoonPhaseIcon(phase: string, animate: boolean = true): SVGTemplateResult {
-  const animClass = animate ? 'animated' : '';
-
-  // Common moon gradient
-  const moonGradient = svg`
-    <defs>
-      <radialGradient id="moonPhaseGradient" cx="40%" cy="40%">
-        <stop offset="0%" style="stop-color:#FFFEF0;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#F4E5C2;stop-opacity:1" />
-      </radialGradient>
-    </defs>
-  `;
-
-  const moonFloat = svg`
-    <style>
-      .moon-shape {
-        animation: ${animate ? 'moonFloat 6s ease-in-out infinite' : 'none'};
-        transform-origin: 50px 50px;
-      }
-      @keyframes moonFloat {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-4px) rotate(-2deg); }
-      }
-    </style>
-  `;
+  let svgContent = '';
 
   switch (phase.toLowerCase()) {
     case 'new_moon':
-      // Dark circle with subtle glow
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          ${moonFloat}
-          <g class="moon-shape">
-            <circle cx="50" cy="50" r="22" fill="#2a2a3e" stroke="#4a4a5e" stroke-width="2"/>
-          </g>
-        </svg>
-      `;
+    case 'new-moon':
+      svgContent = moonNewSvg;
+      break;
 
     case 'waxing_crescent':
-      // Thin crescent on right side
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          ${moonGradient}
-          ${moonFloat}
-          <g class="moon-shape">
-            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
-            <circle cx="46" cy="50" r="20" fill="#1a1a2e"/>
-          </g>
-        </svg>
-      `;
+    case 'waxing-crescent':
+      svgContent = moonWaxingCrescentSvg;
+      break;
 
     case 'first_quarter':
-      // Half moon - right half illuminated
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          ${moonGradient}
-          ${moonFloat}
-          <g class="moon-shape">
-            <path d="M 50 28 A 22 22 0 0 1 50 72 L 50 28 Z" fill="url(#moonPhaseGradient)"/>
-            <circle cx="50" cy="50" r="22" fill="none" stroke="#4a4a5e" stroke-width="1"/>
-          </g>
-        </svg>
-      `;
+    case 'first-quarter':
+      svgContent = moonFirstQuarterSvg;
+      break;
 
     case 'waxing_gibbous':
-      // More than half, approaching full
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          ${moonGradient}
-          ${moonFloat}
-          <g class="moon-shape">
-            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
-            <ellipse cx="40" cy="50" rx="8" ry="22" fill="#1a1a2e"/>
-          </g>
-        </svg>
-      `;
+    case 'waxing-gibbous':
+      svgContent = moonWaxingGibbousSvg;
+      break;
 
     case 'full_moon':
-      // Full bright moon
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          ${moonGradient}
-          ${moonFloat}
-          <g class="moon-shape">
-            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
-          </g>
-        </svg>
-      `;
+    case 'full-moon':
+      svgContent = moonFullSvg;
+      break;
 
     case 'waning_gibbous':
-      // More than half, but waning (left side lit)
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          ${moonGradient}
-          ${moonFloat}
-          <g class="moon-shape">
-            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
-            <ellipse cx="60" cy="50" rx="8" ry="22" fill="#1a1a2e"/>
-          </g>
-        </svg>
-      `;
+    case 'waning-gibbous':
+      svgContent = moonWaningGibbousSvg;
+      break;
 
     case 'last_quarter':
     case 'third_quarter':
-      // Half moon - left half illuminated
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          ${moonGradient}
-          ${moonFloat}
-          <g class="moon-shape">
-            <path d="M 50 28 A 22 22 0 0 0 50 72 L 50 28 Z" fill="url(#moonPhaseGradient)"/>
-            <circle cx="50" cy="50" r="22" fill="none" stroke="#4a4a5e" stroke-width="1"/>
-          </g>
-        </svg>
-      `;
+    case 'last-quarter':
+    case 'third-quarter':
+      svgContent = moonLastQuarterSvg;
+      break;
 
     case 'waning_crescent':
-      // Thin crescent on left side
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          ${moonGradient}
-          ${moonFloat}
-          <g class="moon-shape">
-            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
-            <circle cx="54" cy="50" r="20" fill="#1a1a2e"/>
-          </g>
-        </svg>
-      `;
+    case 'waning-crescent':
+      svgContent = moonWaningCrescentSvg;
+      break;
 
     default:
       // Default to waxing crescent
-      return svg`
-        <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          ${moonGradient}
-          ${moonFloat}
-          <g class="moon-shape">
-            <circle cx="50" cy="50" r="22" fill="url(#moonPhaseGradient)"/>
-            <circle cx="58" cy="48" r="20" fill="#1a1a2e"/>
-          </g>
-        </svg>
-      `;
+      svgContent = moonWaxingCrescentSvg;
   }
+
+  // If animations are disabled, remove animate elements from the SVG
+  if (!animate) {
+    svgContent = svgContent.replace(/<animate[^>]*>/g, '').replace(/<\/animate>/g, '');
+    svgContent = svgContent.replace(/<animateTransform[^>]*\/>/g, '');
+  }
+
+  return svg`${unsafeHTML(svgContent)}`;
 }

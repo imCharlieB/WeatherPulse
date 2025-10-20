@@ -484,4 +484,5 @@ _To be determined_
 
 ## 🙏 Acknowledgments
 
-Inspired by modern weather UI designs and the Home Assistant community.
+- **Weather Icons**: [Meteocons](https://github.com/basmilius/weather-icons) by [Bas Milius](https://bas.dev) - Beautiful animated SVG weather icons (MIT License)
+- Inspired by modern weather UI designs and the Home Assistant community
