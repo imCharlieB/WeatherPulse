@@ -1134,16 +1134,15 @@ export class WeatherPulseCard extends LitElement {
               stroke-linecap="round"
               stroke-linejoin="round"
             />
-            ${forecastType === 'daily' && lowLinePoints.length > 0 ? html`
-              <polyline
-                points="${lowLinePoints.join(' ')}"
-                fill="none"
-                stroke="#4A9EFF"
-                stroke-width="3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            ` : ''}
+            <!-- Always render low line for debugging -->
+            <polyline
+              points="${lowLinePoints.join(' ')}"
+              fill="none"
+              stroke="#4A9EFF"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
 
           <div class="chart-container">

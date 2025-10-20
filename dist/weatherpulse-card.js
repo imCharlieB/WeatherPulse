@@ -1325,16 +1325,15 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               stroke-linecap="round"
               stroke-linejoin="round"
             />
-            ${"daily"===a&&h.length>0?j`
-              <polyline
-                points="${h.join(" ")}"
-                fill="none"
-                stroke="#4A9EFF"
-                stroke-width="3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            `:""}
+            <!-- Always render low line for debugging -->
+            <polyline
+              points="${h.join(" ")}"
+              fill="none"
+              stroke="#4A9EFF"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
 
           <div class="chart-container">
