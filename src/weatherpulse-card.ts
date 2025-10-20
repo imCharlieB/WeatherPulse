@@ -773,8 +773,13 @@ export class WeatherPulseCard extends LitElement {
 
       default: // time-focused
         // Format condition text (capitalize first letter of each word)
-        const conditionText = (weatherData.condition || 'clear')
-          .split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        // Handle unavailable/unknown states gracefully
+        let conditionText = (weatherData.condition || 'clear');
+        if (conditionText.toLowerCase().includes('unavail') || conditionText.toLowerCase().includes('unknown')) {
+          conditionText = 'Checking Weather';
+        } else {
+          conditionText = conditionText.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        }
 
         headerContent = html`
           <div class="datetime-header time-focused-header">
@@ -1208,7 +1213,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.night-mode .card-content {
-        background: rgba(10, 14, 39, 0.6);
+        background: transparent; /* Transparent to show stars through */
         color: #e8eaf6;
       }
 
