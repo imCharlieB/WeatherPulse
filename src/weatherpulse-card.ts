@@ -236,6 +236,62 @@ export class WeatherPulseCard extends LitElement {
     return 'unknown';
   }
 
+  /**
+   * Check if rain is coming in the next 4 hours
+   * Returns object with isRaining flag and timing message
+   */
+  private getRainTiming(): { isRaining: boolean; message: string; time: string } | null {
+    const weatherData = this.getWeatherData();
+    const forecast = weatherData.forecast || [];
+
+    // Only check hourly forecast
+    if (!forecast.length || this.config.forecast_type !== 'hourly') {
+      return null;
+    }
+
+    const now = new Date();
+    const fourHoursFromNow = new Date(now.getTime() + (4 * 60 * 60 * 1000));
+
+    // Find first instance of rain in next 4 hours
+    for (const item of forecast) {
+      const forecastTime = new Date(item.datetime);
+
+      // Skip if forecast time is in the past or beyond 4 hours
+      if (forecastTime <= now || forecastTime > fourHoursFromNow) {
+        continue;
+      }
+
+      // Check if this hour has rain
+      const hasHighPrecipChance = (item.precipitation_probability || 0) > 50;
+      const isRainyCondition = ['rainy', 'pouring', 'rain', 'drizzle', 'lightning-rainy', 'thunderstorm', 'thunderstorms'].includes(
+        (item.condition || '').toLowerCase()
+      );
+
+      if (hasHighPrecipChance || isRainyCondition) {
+        // Calculate hours until rain
+        const hoursUntilRain = Math.round((forecastTime.getTime() - now.getTime()) / (60 * 60 * 1000));
+        const timeString = forecastTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+        let message = '';
+        if (hoursUntilRain < 1) {
+          message = 'Rain expected within the hour';
+        } else if (hoursUntilRain === 1) {
+          message = 'Rain expected in 1 hour';
+        } else {
+          message = `Rain expected in ${hoursUntilRain} hours`;
+        }
+
+        return {
+          isRaining: true,
+          message: message,
+          time: timeString
+        };
+      }
+    }
+
+    return null;
+  }
+
   private getCurrentHoliday(): string | null {
     if (!this.config?.holiday_themes) {
       return null;
@@ -1157,6 +1213,27 @@ export class WeatherPulseCard extends LitElement {
     `;
   }
 
+  /**
+   * Render rain timing notification banner (lower third style)
+   */
+  private renderRainTiming(): unknown {
+    const rainInfo = this.getRainTiming();
+
+    if (!rainInfo) {
+      return '';
+    }
+
+    return html`
+      <div class="rain-timing-banner">
+        <div class="rain-timing-content">
+          <span class="rain-icon">☔</span>
+          <span class="rain-message">${rainInfo.message}</span>
+          <span class="rain-time">(~${rainInfo.time})</span>
+        </div>
+      </div>
+    `;
+  }
+
   protected render(): unknown {
     if (!this.hass || !this.config) {
       return html``;
@@ -1220,6 +1297,7 @@ export class WeatherPulseCard extends LitElement {
       <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
         ${this.renderHeader()}
+        ${this.renderRainTiming()}
         ${this.renderNWSAlerts()}
         ${!showWeatherInfoInHeader ? this.renderWeatherInfo() : ''}
         ${showForecast ? html`
@@ -1814,6 +1892,71 @@ export class WeatherPulseCard extends LitElement {
       .graphical-header + .weather-info-in-header .weather-info-item {
         background: transparent;
         color: white;
+      }
+
+      /* Rain Timing Banner (Lower Third Style) */
+      .rain-timing-banner {
+        background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+        padding: 12px 20px;
+        border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .rain-timing-banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: shimmer 3s infinite;
+      }
+
+      @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+      }
+
+      .rain-timing-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 600;
+        color: white;
+        font-size: 15px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .rain-icon {
+        font-size: 24px;
+        animation: rainBounce 2s ease-in-out infinite;
+      }
+
+      @keyframes rainBounce {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-4px); }
+      }
+
+      .rain-message {
+        flex: 1;
+        letter-spacing: 0.3px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      .rain-time {
+        opacity: 0.9;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      /* Night mode styling for rain banner */
+      ha-card.night-mode .rain-timing-banner {
+        background: linear-gradient(135deg, #2c5f8d 0%, #1a3a5c 100%);
+        border-bottom-color: rgba(255, 255, 255, 0.2);
       }
 
       /* NWS Alerts Section */
