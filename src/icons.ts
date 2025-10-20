@@ -310,32 +310,20 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
-            .fog-main {
+            .fog-cloud {
               animation: ${animate ? 'fogFloat 8s ease-in-out infinite' : 'none'};
-            }
-            .fog-wisp {
-              animation: ${animate ? 'fogDrift 10s ease-in-out infinite' : 'none'};
             }
             @keyframes fogFloat {
               0%, 100% { transform: translate(0px, 0px); }
-              50% { transform: translate(5px, -2px); }
-            }
-            @keyframes fogDrift {
-              0%, 100% { transform: translateX(0px); opacity: 0.15; }
-              50% { transform: translateX(-3px); opacity: 0.25; }
+              50% { transform: translate(4px, -2px); }
             }
           </style>
-          <!-- Background wisps - very subtle -->
-          <g class="fog-wisp" opacity="0.2">
-            <ellipse cx="40" cy="30" rx="30" ry="8" fill="#E0E0E0"/>
-            <ellipse cx="55" cy="70" rx="35" ry="8" fill="#E8E8E8"/>
-          </g>
-          <!-- Main fog cloud in center -->
-          <g class="fog-main" opacity="0.55">
-            <ellipse cx="35" cy="45" rx="18" ry="14" fill="#D0D0D0"/>
-            <ellipse cx="50" cy="40" rx="22" ry="18" fill="#DCDCDC"/>
-            <ellipse cx="65" cy="45" rx="18" ry="14" fill="#D0D0D0"/>
-            <rect x="17" y="45" width="66" height="18" rx="3" fill="#D8D8D8"/>
+          <!-- Single fog cloud - light and simple -->
+          <g class="fog-cloud" opacity="0.5">
+            <ellipse cx="35" cy="50" rx="18" ry="14" fill="#D8D8D8"/>
+            <ellipse cx="50" cy="45" rx="22" ry="18" fill="#E0E0E0"/>
+            <ellipse cx="65" cy="50" rx="18" ry="14" fill="#D8D8D8"/>
+            <rect x="17" y="50" width="66" height="18" rx="3" fill="#DCDCDC"/>
           </g>
         </svg>
       `;
