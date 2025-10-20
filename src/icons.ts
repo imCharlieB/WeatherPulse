@@ -309,23 +309,67 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
     case 'foggy':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="fogGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#D0D0D0;stop-opacity:0" />
+              <stop offset="50%" style="stop-color:#E0E0E0;stop-opacity:0.8" />
+              <stop offset="100%" style="stop-color:#D0D0D0;stop-opacity:0" />
+            </linearGradient>
+            <linearGradient id="fogGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#C8C8C8;stop-opacity:0" />
+              <stop offset="50%" style="stop-color:#D8D8D8;stop-opacity:0.7" />
+              <stop offset="100%" style="stop-color:#C8C8C8;stop-opacity:0" />
+            </linearGradient>
+            <linearGradient id="fogGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#DCDCDC;stop-opacity:0" />
+              <stop offset="50%" style="stop-color:#ECECEC;stop-opacity:0.6" />
+              <stop offset="100%" style="stop-color:#DCDCDC;stop-opacity:0" />
+            </linearGradient>
+          </defs>
           <style>
-            .fog-line {
-              animation: ${animate ? 'drift 8s ease-in-out infinite' : 'none'};
+            .fog-layer-1 {
+              animation: ${animate ? 'driftRight 12s ease-in-out infinite' : 'none'};
             }
-            .fog-line:nth-child(2) { animation-delay: 1s; }
-            .fog-line:nth-child(3) { animation-delay: 2s; }
-            .fog-line:nth-child(4) { animation-delay: 3s; }
-            @keyframes drift {
+            .fog-layer-2 {
+              animation: ${animate ? 'driftLeft 10s ease-in-out infinite' : 'none'};
+            }
+            .fog-layer-3 {
+              animation: ${animate ? 'driftRight 14s ease-in-out infinite' : 'none'};
+              animation-delay: 0.5s;
+            }
+            .fog-layer-4 {
+              animation: ${animate ? 'driftLeft 11s ease-in-out infinite' : 'none'};
+              animation-delay: 1s;
+            }
+            @keyframes driftRight {
               0%, 100% { transform: translateX(0px); opacity: 0.6; }
-              50% { transform: translateX(5px); opacity: 0.3; }
+              50% { transform: translateX(8px); opacity: 0.8; }
+            }
+            @keyframes driftLeft {
+              0%, 100% { transform: translateX(0px); opacity: 0.7; }
+              50% { transform: translateX(-8px); opacity: 0.9; }
             }
           </style>
-          <g fill="none" stroke="#A0A0A0" stroke-width="4" stroke-linecap="round" opacity="0.7">
-            <line class="fog-line" x1="20" y1="35" x2="80" y2="35"/>
-            <line class="fog-line" x1="15" y1="50" x2="75" y2="50"/>
-            <line class="fog-line" x1="25" y1="65" x2="85" y2="65"/>
-            <line class="fog-line" x1="20" y1="80" x2="80" y2="80"/>
+          <!-- Multiple layered fog clouds for realistic effect -->
+          <g class="fog-layer-1">
+            <ellipse cx="30" cy="25" rx="28" ry="8" fill="url(#fogGradient1)"/>
+            <ellipse cx="60" cy="25" rx="32" ry="8" fill="url(#fogGradient1)"/>
+          </g>
+          <g class="fog-layer-2">
+            <ellipse cx="20" cy="40" rx="25" ry="9" fill="url(#fogGradient2)"/>
+            <ellipse cx="55" cy="40" rx="35" ry="9" fill="url(#fogGradient2)"/>
+          </g>
+          <g class="fog-layer-3">
+            <ellipse cx="35" cy="55" rx="30" ry="8" fill="url(#fogGradient3)"/>
+            <ellipse cx="70" cy="55" rx="28" ry="8" fill="url(#fogGradient3)"/>
+          </g>
+          <g class="fog-layer-4">
+            <ellipse cx="25" cy="70" rx="32" ry="9" fill="url(#fogGradient1)"/>
+            <ellipse cx="60" cy="70" rx="30" ry="9" fill="url(#fogGradient2)"/>
+          </g>
+          <g class="fog-layer-1">
+            <ellipse cx="40" cy="85" rx="35" ry="8" fill="url(#fogGradient3)"/>
+            <ellipse cx="75" cy="85" rx="25" ry="8" fill="url(#fogGradient1)"/>
           </g>
         </svg>
       `;
