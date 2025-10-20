@@ -895,6 +895,11 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
+    // Chart view mode - render temperature trend chart
+    if (viewMode === 'chart') {
+      return this.renderChartView(forecast, weatherData.temperature_unit || '°F', forecastType);
+    }
+
     // Add forecast-type class for hourly vs daily styling
     const containerClass = `forecast-container forecast-${viewMode} forecast-type-${forecastType}`;
 
@@ -1044,6 +1049,118 @@ export class WeatherPulseCard extends LitElement {
         ${precipProb > 0 ? html`
           <div class="precip-prob">${precipProb}%</div>
         ` : ''}
+      </div>
+    `;
+  }
+
+  private renderChartView(forecast: any[], _unit: string, forecastType: string): unknown {
+    // Calculate min and max temps for scaling
+    const temps = forecast.map(item => {
+      if (forecastType === 'hourly') {
+        return item.temperature || 0;
+      } else {
+        return [item.temperature || 0, item.templow || 0];
+      }
+    }).flat();
+
+    const minTemp = Math.min(...temps);
+    const maxTemp = Math.max(...temps);
+    const tempRange = maxTemp - minTemp;
+    const padding = tempRange * 0.2; // 20% padding
+    const chartMin = minTemp - padding;
+    const chartMax = maxTemp + padding;
+
+    // SVG dimensions
+    const chartWidth = 100;
+    const chartHeight = 60;
+    const pointSpacing = chartWidth / (forecast.length - 1);
+
+    // Generate points for the line
+    const highPoints: string[] = [];
+    const lowPoints: string[] = [];
+
+    forecast.forEach((item, index) => {
+      const x = index * pointSpacing;
+
+      if (forecastType === 'hourly') {
+        const temp = item.temperature || 0;
+        const y = chartHeight - ((temp - chartMin) / (chartMax - chartMin)) * chartHeight;
+        highPoints.push(`${x},${y}`);
+      } else {
+        const highTemp = item.temperature || 0;
+        const lowTemp = item.templow || 0;
+        const highY = chartHeight - ((highTemp - chartMin) / (chartMax - chartMin)) * chartHeight;
+        const lowY = chartHeight - ((lowTemp - chartMin) / (chartMax - chartMin)) * chartHeight;
+        highPoints.push(`${x},${highY}`);
+        lowPoints.push(`${x},${lowY}`);
+      }
+    });
+
+    const highLine = highPoints.join(' ');
+    const lowLine = lowPoints.join(' ');
+
+    return html`
+      <div class="forecast-chart">
+        <svg viewBox="0 0 ${chartWidth} ${chartHeight}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <!-- Temperature lines -->
+          ${forecastType === 'daily' ? html`
+            <polyline
+              points="${lowLine}"
+              fill="none"
+              stroke="rgba(100, 150, 255, 0.6)"
+              stroke-width="0.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          ` : ''}
+          <polyline
+            points="${highLine}"
+            fill="none"
+            stroke="rgba(255, 150, 100, 0.8)"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+
+          <!-- Temperature points -->
+          ${highPoints.map(point => {
+            const [x, y] = point.split(',').map(Number);
+            return html`
+              <circle cx="${x}" cy="${y}" r="1" fill="rgba(255, 150, 100, 1)" />
+            `;
+          })}
+          ${forecastType === 'daily' ? lowPoints.map(point => {
+            const [x, y] = point.split(',').map(Number);
+            return html`
+              <circle cx="${x}" cy="${y}" r="0.8" fill="rgba(100, 150, 255, 1)" />
+            `;
+          }) : ''}
+        </svg>
+
+        <!-- Forecast items below chart -->
+        <div class="chart-items">
+          ${forecast.map(item => {
+            const dayName = forecastType === 'hourly'
+              ? new Date(item.datetime).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true })
+              : getDayName(item.datetime);
+            const highTemp = Math.round(item.temperature || 0);
+            const lowTemp = forecastType === 'daily' ? Math.round(item.templow || 0) : null;
+            const condition = item.condition || 'clear';
+
+            return html`
+              <div class="chart-item">
+                <div class="chart-icon">
+                  ${this.renderWeatherIcon(condition, true)}
+                </div>
+                <div class="chart-day">${dayName}</div>
+                <div class="chart-temps">
+                  <span class="chart-temp-high">${highTemp}°</span>
+                  ${lowTemp !== null ? html`<span class="chart-temp-low">${lowTemp}°</span>` : ''}
+                </div>
+              </div>
+            `;
+          })}
+        </div>
       </div>
     `;
   }
@@ -2516,6 +2633,74 @@ export class WeatherPulseCard extends LitElement {
         display: flex;
         flex-direction: column;
         gap: 4px;
+      }
+
+      /* Chart View Mode */
+      .forecast-chart {
+        padding: 16px 0;
+      }
+
+      .forecast-chart svg {
+        width: 100%;
+        height: 120px;
+        margin-bottom: 16px;
+      }
+
+      .chart-items {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .chart-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .chart-icon {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .chart-icon .weather-icon-svg {
+        width: 32px;
+        height: 32px;
+      }
+
+      .chart-day {
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+      }
+
+      .chart-temps {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        font-size: 14px;
+      }
+
+      .chart-temp-high {
+        font-weight: 600;
+        color: rgba(255, 120, 80, 1);
+      }
+
+      .chart-temp-low {
+        font-size: 12px;
+        opacity: 0.7;
+        color: rgba(100, 150, 255, 1);
       }
 
       /* Compact mode container - different for daily vs hourly */
