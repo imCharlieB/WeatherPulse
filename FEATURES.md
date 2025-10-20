@@ -125,6 +125,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Broadcast-style lower third banner design ✅
   - Shows time until rain and expected arrival time ✅
   - Auto-hides when no rain expected ✅
+  - Works regardless of daily/hourly display mode (fetches hourly data separately) ✅
   - Shimmer animation effect for professional look ✅
   - Night mode support with darker gradient ✅
   - Example: "☔ Rain expected in 2 hours (~4:15 PM)" ✅

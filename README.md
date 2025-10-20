@@ -64,6 +64,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - ☔ **Rain Timing Notifications** - Broadcast-style banner when rain is coming in next 4 hours
 - ⏰ **Smart Detection** - Monitors hourly forecast for precipitation probability or rainy conditions
 - 📺 **Lower Third Style** - Professional TV weather broadcast appearance with shimmer effect
+- 🎯 **Works Everywhere** - Fetches hourly data separately, works in daily or hourly forecast mode
 
 #### Visual Themes
 - 🎨 **Pre-built Themes** - 5 professional themes: Default, Retro (1990s Weather Channel), Glassmorphism, Minimal, Vibrant
