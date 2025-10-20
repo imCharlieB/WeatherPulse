@@ -1416,6 +1416,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
 
       ha-card.night-mode .forecast-day,
       ha-card.night-mode .forecast-hour {
+        background: transparent !important; /* Show stars through */
         border-bottom-color: rgba(232, 234, 246, 0.1);
       }
 

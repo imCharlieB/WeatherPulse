@@ -1214,6 +1214,7 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.night-mode .forecast-day,
       ha-card.night-mode .forecast-hour {
+        background: transparent !important; /* Show stars through */
         border-bottom-color: rgba(232, 234, 246, 0.1);
       }
 
