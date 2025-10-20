@@ -1076,16 +1076,16 @@ export class WeatherPulseCard extends LitElement {
     const lowLinePoints: string[] = [];
 
     forecast.forEach((item, index) => {
-      const highTemp = Math.round(item.temperature || 0);
-      const lowTemp = forecastType === 'daily' ? Math.round(item.templow || 0) : null;
+      const highTemp = item.temperature || 0;
+      const lowTemp = forecastType === 'daily' ? (item.templow || 0) : null;
 
       const x = (index * columnWidth) + (columnWidth / 2);
       const highY = 100 - ((highTemp - chartMin) / (chartMax - chartMin)) * 100;
-      highLinePoints.push(`${x},${highY}`);
+      highLinePoints.push(`${x.toFixed(2)},${highY.toFixed(2)}`);
 
-      if (lowTemp !== null) {
+      if (lowTemp !== null && lowTemp !== 0) {
         const lowY = 100 - ((lowTemp - chartMin) / (chartMax - chartMin)) * 100;
-        lowLinePoints.push(`${x},${lowY}`);
+        lowLinePoints.push(`${x.toFixed(2)},${lowY.toFixed(2)}`);
       }
     });
 
@@ -1111,8 +1111,8 @@ export class WeatherPulseCard extends LitElement {
               <polyline
                 points="${lowLinePoints.join(' ')}"
                 fill="none"
-                stroke="rgba(100, 150, 255, 0.8)"
-                stroke-width="0.5"
+                stroke="rgba(100, 150, 255, 1)"
+                stroke-width="1"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
@@ -1121,7 +1121,7 @@ export class WeatherPulseCard extends LitElement {
               points="${highLinePoints.join(' ')}"
               fill="none"
               stroke="rgba(255, 120, 80, 1)"
-              stroke-width="0.6"
+              stroke-width="1"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
