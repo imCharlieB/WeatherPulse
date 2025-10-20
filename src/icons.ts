@@ -309,46 +309,43 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
     case 'foggy':
       return svg`
         <svg class="weather-icon-svg ${animClass}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="fogBlur">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" />
-            </filter>
-          </defs>
           <style>
-            .fog-cloud-1 {
-              animation: ${animate ? 'fogDrift1 10s ease-in-out infinite' : 'none'};
+            .fog-cloud {
+              animation: ${animate ? 'fogFloat 8s ease-in-out infinite' : 'none'};
             }
             .fog-cloud-2 {
-              animation: ${animate ? 'fogDrift2 12s ease-in-out infinite' : 'none'};
+              animation: ${animate ? 'fogFloat 10s ease-in-out infinite' : 'none'};
+              animation-delay: 1s;
             }
             .fog-cloud-3 {
-              animation: ${animate ? 'fogDrift3 11s ease-in-out infinite' : 'none'};
+              animation: ${animate ? 'fogFloat 9s ease-in-out infinite' : 'none'};
+              animation-delay: 2s;
             }
-            @keyframes fogDrift1 {
-              0%, 100% { transform: translateX(0px); opacity: 0.5; }
-              50% { transform: translateX(5px); opacity: 0.7; }
-            }
-            @keyframes fogDrift2 {
-              0%, 100% { transform: translateX(0px); opacity: 0.6; }
-              50% { transform: translateX(-4px); opacity: 0.8; }
-            }
-            @keyframes fogDrift3 {
-              0%, 100% { transform: translateX(0px); opacity: 0.55; }
-              50% { transform: translateX(6px); opacity: 0.75; }
+            @keyframes fogFloat {
+              0%, 100% { transform: translateX(0px); }
+              50% { transform: translateX(5px); }
             }
           </style>
-          <!-- Soft wispy fog clouds with blur filter -->
-          <g class="fog-cloud-1" filter="url(#fogBlur)" opacity="0.7">
-            <ellipse cx="30" cy="30" rx="25" ry="6" fill="#C8C8C8"/>
-            <ellipse cx="60" cy="30" rx="30" ry="6" fill="#D0D0D0"/>
+          <!-- Top fog cloud -->
+          <g class="fog-cloud" opacity="0.5">
+            <ellipse cx="30" cy="25" rx="15" ry="12" fill="#D0D0D0"/>
+            <ellipse cx="45" cy="20" rx="18" ry="14" fill="#DCDCDC"/>
+            <ellipse cx="60" cy="25" rx="15" ry="12" fill="#D0D0D0"/>
+            <rect x="15" y="25" width="60" height="14" rx="3" fill="#D8D8D8"/>
           </g>
-          <g class="fog-cloud-2" filter="url(#fogBlur)" opacity="0.65">
-            <ellipse cx="20" cy="50" rx="28" ry="7" fill="#D8D8D8"/>
-            <ellipse cx="55" cy="50" rx="35" ry="7" fill="#C0C0C0"/>
+          <!-- Middle fog cloud -->
+          <g class="fog-cloud-2" opacity="0.6">
+            <ellipse cx="25" cy="50" rx="16" ry="13" fill="#C8C8C8"/>
+            <ellipse cx="42" cy="45" rx="19" ry="15" fill="#D8D8D8"/>
+            <ellipse cx="60" cy="50" rx="16" ry="13" fill="#C8C8C8"/>
+            <rect x="9" y="50" width="68" height="15" rx="3" fill="#D0D0D0"/>
           </g>
-          <g class="fog-cloud-3" filter="url(#fogBlur)" opacity="0.7">
-            <ellipse cx="35" cy="70" rx="30" ry="6" fill="#D0D0D0"/>
-            <ellipse cx="70" cy="70" rx="28" ry="6" fill="#C8C8C8"/>
+          <!-- Bottom fog cloud -->
+          <g class="fog-cloud-3" opacity="0.55">
+            <ellipse cx="30" cy="75" rx="17" ry="13" fill="#D0D0D0"/>
+            <ellipse cx="48" cy="70" rx="20" ry="16" fill="#DCDCDC"/>
+            <ellipse cx="67" cy="75" rx="17" ry="13" fill="#D0D0D0"/>
+            <rect x="13" y="75" width="71" height="16" rx="3" fill="#D8D8D8"/>
           </g>
         </svg>
       `;
