@@ -1153,19 +1153,15 @@ export class WeatherPulseCard extends LitElement {
           })}
         </svg>
 
-        <!-- Day names and icons below chart -->
+        <!-- Day names below chart -->
         <div class="chart-items">
           ${forecast.map(item => {
             const dayName = forecastType === 'hourly'
               ? new Date(item.datetime).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true })
               : getDayName(item.datetime);
-            const condition = item.condition || 'clear';
 
             return html`
               <div class="chart-item">
-                <div class="chart-icon">
-                  ${this.renderWeatherIcon(condition, true)}
-                </div>
                 <div class="chart-day">${dayName}</div>
               </div>
             `;

@@ -1349,13 +1349,10 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             `})}
         </svg>
 
-        <!-- Day names and icons below chart -->
+        <!-- Day names below chart -->
         <div class="chart-items">
-          ${e.map(e=>{const t="hourly"===a?new Date(e.datetime).toLocaleTimeString("en-US",{hour:"numeric",hour12:!0}):xe(e.datetime),i=e.condition||"clear";return j`
+          ${e.map(e=>{const t="hourly"===a?new Date(e.datetime).toLocaleTimeString("en-US",{hour:"numeric",hour12:!0}):xe(e.datetime);return j`
               <div class="chart-item">
-                <div class="chart-icon">
-                  ${this.renderWeatherIcon(i,!0)}
-                </div>
                 <div class="chart-day">${t}</div>
               </div>
             `})}
