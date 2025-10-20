@@ -1070,6 +1070,25 @@ export class WeatherPulseCard extends LitElement {
     const chartMin = minTemp - padding;
     const chartMax = maxTemp + padding;
 
+    // Calculate line points for SVG
+    const columnWidth = 100 / forecast.length;
+    const highLinePoints: string[] = [];
+    const lowLinePoints: string[] = [];
+
+    forecast.forEach((item, index) => {
+      const highTemp = Math.round(item.temperature || 0);
+      const lowTemp = forecastType === 'daily' ? Math.round(item.templow || 0) : null;
+
+      const x = (index * columnWidth) + (columnWidth / 2);
+      const highY = 100 - ((highTemp - chartMin) / (chartMax - chartMin)) * 100;
+      highLinePoints.push(`${x},${highY}`);
+
+      if (lowTemp !== null) {
+        const lowY = 100 - ((lowTemp - chartMin) / (chartMax - chartMin)) * 100;
+        lowLinePoints.push(`${x},${lowY}`);
+      }
+    });
+
     return html`
       <div class="forecast-chart">
         <!-- Day names at top -->
@@ -1085,30 +1104,53 @@ export class WeatherPulseCard extends LitElement {
           })}
         </div>
 
-        <!-- Temperature chart -->
-        <div class="chart-container">
-          ${forecast.map(item => {
-            const highTemp = Math.round(item.temperature || 0);
-            const lowTemp = forecastType === 'daily' ? Math.round(item.templow || 0) : null;
+        <!-- Temperature chart with SVG lines -->
+        <div class="chart-wrapper">
+          <svg class="chart-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+            ${forecastType === 'daily' && lowLinePoints.length > 0 ? html`
+              <polyline
+                points="${lowLinePoints.join(' ')}"
+                fill="none"
+                stroke="rgba(100, 150, 255, 0.8)"
+                stroke-width="0.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            ` : ''}
+            <polyline
+              points="${highLinePoints.join(' ')}"
+              fill="none"
+              stroke="rgba(255, 120, 80, 1)"
+              stroke-width="0.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
 
-            // Calculate positions (0-100%)
-            const highPercent = ((highTemp - chartMin) / (chartMax - chartMin)) * 100;
-            const lowPercent = lowTemp ? ((lowTemp - chartMin) / (chartMax - chartMin)) * 100 : null;
+          <div class="chart-container">
+            ${forecast.map(item => {
+              const highTemp = Math.round(item.temperature || 0);
+              const lowTemp = forecastType === 'daily' ? Math.round(item.templow || 0) : null;
 
-            return html`
-              <div class="chart-column">
-                ${lowTemp ? html`
-                  <div class="chart-temp chart-temp-high" style="bottom: ${highPercent}%">${highTemp}°</div>
-                  <div class="chart-point chart-point-high" style="bottom: ${highPercent}%"></div>
-                  <div class="chart-temp chart-temp-low" style="bottom: ${lowPercent}%">${lowTemp}°</div>
-                  <div class="chart-point chart-point-low" style="bottom: ${lowPercent}%"></div>
-                ` : html`
-                  <div class="chart-temp chart-temp-single" style="bottom: ${highPercent}%">${highTemp}°</div>
-                  <div class="chart-point chart-point-single" style="bottom: ${highPercent}%"></div>
-                `}
-              </div>
-            `;
-          })}
+              // Calculate positions (0-100%)
+              const highPercent = ((highTemp - chartMin) / (chartMax - chartMin)) * 100;
+              const lowPercent = lowTemp ? ((lowTemp - chartMin) / (chartMax - chartMin)) * 100 : null;
+
+              return html`
+                <div class="chart-column">
+                  ${lowTemp ? html`
+                    <div class="chart-temp chart-temp-high" style="bottom: ${highPercent}%">${highTemp}°</div>
+                    <div class="chart-point chart-point-high" style="bottom: ${highPercent}%"></div>
+                    <div class="chart-temp chart-temp-low" style="bottom: ${lowPercent}%">${lowTemp}°</div>
+                    <div class="chart-point chart-point-low" style="bottom: ${lowPercent}%"></div>
+                  ` : html`
+                    <div class="chart-temp chart-temp-single" style="bottom: ${highPercent}%">${highTemp}°</div>
+                    <div class="chart-point chart-point-single" style="bottom: ${highPercent}%"></div>
+                  `}
+                </div>
+              `;
+            })}
+          </div>
         </div>
       </div>
     `;
@@ -2603,13 +2645,29 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 600;
       }
 
+      .chart-wrapper {
+        position: relative;
+        height: 180px;
+      }
+
+      .chart-lines {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
       .chart-container {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
-        height: 180px;
+        height: 100%;
         position: relative;
         gap: 8px;
+        z-index: 1;
       }
 
       .chart-column {
