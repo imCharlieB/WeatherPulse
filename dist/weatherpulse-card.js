@@ -1314,24 +1314,24 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         <!-- Temperature chart with SVG lines -->
         <div class="chart-wrapper">
           <svg class="chart-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <polyline
+              points="${d.join(" ")}"
+              fill="none"
+              stroke="rgba(255, 120, 80, 1)"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
             ${"daily"===a&&h.length>0?j`
               <polyline
                 points="${h.join(" ")}"
                 fill="none"
                 stroke="rgba(100, 150, 255, 1)"
-                stroke-width="1"
+                stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
             `:""}
-            <polyline
-              points="${d.join(" ")}"
-              fill="none"
-              stroke="rgba(255, 120, 80, 1)"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
           </svg>
 
           <div class="chart-container">

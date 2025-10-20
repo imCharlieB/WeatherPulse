@@ -1120,24 +1120,24 @@ export class WeatherPulseCard extends LitElement {
         <!-- Temperature chart with SVG lines -->
         <div class="chart-wrapper">
           <svg class="chart-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <polyline
+              points="${highLinePoints.join(' ')}"
+              fill="none"
+              stroke="rgba(255, 120, 80, 1)"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
             ${forecastType === 'daily' && lowLinePoints.length > 0 ? html`
               <polyline
                 points="${lowLinePoints.join(' ')}"
                 fill="none"
                 stroke="rgba(100, 150, 255, 1)"
-                stroke-width="1"
+                stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
             ` : ''}
-            <polyline
-              points="${highLinePoints.join(' ')}"
-              fill="none"
-              stroke="rgba(255, 120, 80, 1)"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
           </svg>
 
           <div class="chart-container">
