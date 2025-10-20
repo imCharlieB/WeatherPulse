@@ -2724,12 +2724,12 @@ export class WeatherPulseCard extends LitElement {
 
       .chart-temp-high {
         color: rgba(255, 120, 80, 1);
-        margin-bottom: 18px;
+        transform: translateX(-50%) translateY(-18px);
       }
 
       .chart-temp-low {
         color: rgba(100, 150, 255, 1);
-        margin-top: 18px;
+        transform: translateX(-50%) translateY(18px);
       }
 
       .chart-temp-single {
