@@ -1092,16 +1092,6 @@ export class WeatherPulseCard extends LitElement {
       }
     });
 
-    // Debug logging
-    console.log('WeatherPulse Chart Debug:', {
-      forecastType,
-      forecastCount: forecast.length,
-      lowLinePointsCount: lowLinePoints.length,
-      highLinePointsCount: highLinePoints.length,
-      sampleLowTemp: forecast[0]?.templow,
-      lowLinePoints: lowLinePoints.join(' ')
-    });
-
     return html`
       <div class="forecast-chart">
         <!-- Day names at top -->
@@ -1132,8 +1122,8 @@ export class WeatherPulseCard extends LitElement {
               <polyline
                 points="${lowLinePoints.join(' ')}"
                 fill="none"
-                stroke="rgba(100, 150, 255, 1)"
-                stroke-width="2"
+                stroke="#4A9EFF"
+                stroke-width="3"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
@@ -2704,8 +2694,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .chart-point-low {
-        background: rgba(100, 150, 255, 1);
-        box-shadow: 0 0 4px rgba(100, 150, 255, 0.5);
+        background: #4A9EFF;
+        box-shadow: 0 0 6px rgba(74, 158, 255, 0.6);
       }
 
       .chart-point-single {
@@ -2724,12 +2714,12 @@ export class WeatherPulseCard extends LitElement {
 
       .chart-temp-high {
         color: rgba(255, 120, 80, 1);
-        transform: translateX(-50%) translateY(-18px);
+        transform: translateX(-50%) translateY(-26px);
       }
 
       .chart-temp-low {
-        color: rgba(100, 150, 255, 1);
-        transform: translateX(-50%) translateY(18px);
+        color: #4A9EFF;
+        transform: translateX(-50%) translateY(26px);
       }
 
       .chart-temp-single {
