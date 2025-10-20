@@ -125,7 +125,9 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
     svgContent = svgContent.replace(/<animateTransform[^>]*\/>/g, '');
   }
 
-  // Wrap the SVG content in a container div with our weather-icon-svg class
+  // Add the weather-icon-svg class to the SVG element for our CSS targeting
+  svgContent = svgContent.replace(/<svg/, '<svg class="weather-icon-svg"');
+
   return svg`${unsafeHTML(svgContent)}`;
 }
 
@@ -188,6 +190,9 @@ export function getMoonPhaseIcon(phase: string, animate: boolean = true): SVGTem
     svgContent = svgContent.replace(/<animate[^>]*>/g, '').replace(/<\/animate>/g, '');
     svgContent = svgContent.replace(/<animateTransform[^>]*\/>/g, '');
   }
+
+  // Add the weather-icon-svg class to the SVG element for our CSS targeting
+  svgContent = svgContent.replace(/<svg/, '<svg class="weather-icon-svg"');
 
   return svg`${unsafeHTML(svgContent)}`;
 }
