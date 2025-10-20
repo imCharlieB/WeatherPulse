@@ -1,4 +1,4 @@
-function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,a):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,a,i);else for(var n=e.length-1;n>=0;n--)(r=e[n])&&(s=(o<3?r(s):o>3?r(t,a,s):r(t,a))||s);return o>3&&s&&Object.defineProperty(t,a,s),s}"function"==typeof SuppressedError&&SuppressedError;const t=globalThis,a=t.ShadowRoot&&(void 0===t.ShadyCSS||t.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,i=Symbol(),r=new WeakMap;let o=class{constructor(e,t,a){if(this._$cssResult$=!0,a!==i)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=e,this.t=t}get styleSheet(){let e=this.o;const t=this.t;if(a&&void 0===e){const a=void 0!==t&&1===t.length;a&&(e=r.get(t)),void 0===e&&((this.o=e=new CSSStyleSheet).replaceSync(this.cssText),a&&r.set(t,e))}return e}toString(){return this.cssText}};const s=(e,...t)=>{const a=1===e.length?e[0]:t.reduce((t,a,i)=>t+(e=>{if(!0===e._$cssResult$)return e.cssText;if("number"==typeof e)return e;throw Error("Value passed to 'css' function must be a 'css' function result: "+e+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(a)+e[i+1],e[0]);return new o(a,e,i)},n=a?e=>e:e=>e instanceof CSSStyleSheet?(e=>{let t="";for(const a of e.cssRules)t+=a.cssText;return(e=>new o("string"==typeof e?e:e+"",void 0,i))(t)})(e):e,{is:c,defineProperty:l,getOwnPropertyDescriptor:d,getOwnPropertyNames:h,getOwnPropertySymbols:p,getPrototypeOf:m}=Object,g=globalThis,u=g.trustedTypes,f=u?u.emptyScript:"",x=g.reactiveElementPolyfillSupport,y=(e,t)=>e,w={toAttribute(e,t){switch(t){case Boolean:e=e?f:null;break;case Object:case Array:e=null==e?e:JSON.stringify(e)}return e},fromAttribute(e,t){let a=e;switch(t){case Boolean:a=null!==e;break;case Number:a=null===e?null:Number(e);break;case Object:case Array:try{a=JSON.parse(e)}catch(e){a=null}}return a}},b=(e,t)=>!c(e,t),v={attribute:!0,type:String,converter:w,reflect:!1,useDefault:!1,hasChanged:b};Symbol.metadata??=Symbol("metadata"),g.litPropertyMetadata??=new WeakMap;let $=class extends HTMLElement{static addInitializer(e){this._$Ei(),(this.l??=[]).push(e)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(e,t=v){if(t.state&&(t.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(e)&&((t=Object.create(t)).wrapped=!0),this.elementProperties.set(e,t),!t.noAccessor){const a=Symbol(),i=this.getPropertyDescriptor(e,a,t);void 0!==i&&l(this.prototype,e,i)}}static getPropertyDescriptor(e,t,a){const{get:i,set:r}=d(this.prototype,e)??{get(){return this[t]},set(e){this[t]=e}};return{get:i,set(t){const o=i?.call(this);r?.call(this,t),this.requestUpdate(e,o,a)},configurable:!0,enumerable:!0}}static getPropertyOptions(e){return this.elementProperties.get(e)??v}static _$Ei(){if(this.hasOwnProperty(y("elementProperties")))return;const e=m(this);e.finalize(),void 0!==e.l&&(this.l=[...e.l]),this.elementProperties=new Map(e.elementProperties)}static finalize(){if(this.hasOwnProperty(y("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(y("properties"))){const e=this.properties,t=[...h(e),...p(e)];for(const a of t)this.createProperty(a,e[a])}const e=this[Symbol.metadata];if(null!==e){const t=litPropertyMetadata.get(e);if(void 0!==t)for(const[e,a]of t)this.elementProperties.set(e,a)}this._$Eh=new Map;for(const[e,t]of this.elementProperties){const a=this._$Eu(e,t);void 0!==a&&this._$Eh.set(a,e)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(e){const t=[];if(Array.isArray(e)){const a=new Set(e.flat(1/0).reverse());for(const e of a)t.unshift(n(e))}else void 0!==e&&t.push(n(e));return t}static _$Eu(e,t){const a=t.attribute;return!1===a?void 0:"string"==typeof a?a:"string"==typeof e?e.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(e=>this.enableUpdating=e),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(e=>e(this))}addController(e){(this._$EO??=new Set).add(e),void 0!==this.renderRoot&&this.isConnected&&e.hostConnected?.()}removeController(e){this._$EO?.delete(e)}_$E_(){const e=new Map,t=this.constructor.elementProperties;for(const a of t.keys())this.hasOwnProperty(a)&&(e.set(a,this[a]),delete this[a]);e.size>0&&(this._$Ep=e)}createRenderRoot(){const e=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return((e,i)=>{if(a)e.adoptedStyleSheets=i.map(e=>e instanceof CSSStyleSheet?e:e.styleSheet);else for(const a of i){const i=document.createElement("style"),r=t.litNonce;void 0!==r&&i.setAttribute("nonce",r),i.textContent=a.cssText,e.appendChild(i)}})(e,this.constructor.elementStyles),e}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(e=>e.hostConnected?.())}enableUpdating(e){}disconnectedCallback(){this._$EO?.forEach(e=>e.hostDisconnected?.())}attributeChangedCallback(e,t,a){this._$AK(e,a)}_$ET(e,t){const a=this.constructor.elementProperties.get(e),i=this.constructor._$Eu(e,a);if(void 0!==i&&!0===a.reflect){const r=(void 0!==a.converter?.toAttribute?a.converter:w).toAttribute(t,a.type);this._$Em=e,null==r?this.removeAttribute(i):this.setAttribute(i,r),this._$Em=null}}_$AK(e,t){const a=this.constructor,i=a._$Eh.get(e);if(void 0!==i&&this._$Em!==i){const e=a.getPropertyOptions(i),r="function"==typeof e.converter?{fromAttribute:e.converter}:void 0!==e.converter?.fromAttribute?e.converter:w;this._$Em=i;const o=r.fromAttribute(t,e.type);this[i]=o??this._$Ej?.get(i)??o,this._$Em=null}}requestUpdate(e,t,a){if(void 0!==e){const i=this.constructor,r=this[e];if(a??=i.getPropertyOptions(e),!((a.hasChanged??b)(r,t)||a.useDefault&&a.reflect&&r===this._$Ej?.get(e)&&!this.hasAttribute(i._$Eu(e,a))))return;this.C(e,t,a)}!1===this.isUpdatePending&&(this._$ES=this._$EP())}C(e,t,{useDefault:a,reflect:i,wrapped:r},o){a&&!(this._$Ej??=new Map).has(e)&&(this._$Ej.set(e,o??t??this[e]),!0!==r||void 0!==o)||(this._$AL.has(e)||(this.hasUpdated||a||(t=void 0),this._$AL.set(e,t)),!0===i&&this._$Em!==e&&(this._$Eq??=new Set).add(e))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(e){Promise.reject(e)}const e=this.scheduleUpdate();return null!=e&&await e,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[e,t]of this._$Ep)this[e]=t;this._$Ep=void 0}const e=this.constructor.elementProperties;if(e.size>0)for(const[t,a]of e){const{wrapped:e}=a,i=this[t];!0!==e||this._$AL.has(t)||void 0===i||this.C(t,void 0,a,i)}}let e=!1;const t=this._$AL;try{e=this.shouldUpdate(t),e?(this.willUpdate(t),this._$EO?.forEach(e=>e.hostUpdate?.()),this.update(t)):this._$EM()}catch(t){throw e=!1,this._$EM(),t}e&&this._$AE(t)}willUpdate(e){}_$AE(e){this._$EO?.forEach(e=>e.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(e)),this.updated(e)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(e){return!0}update(e){this._$Eq&&=this._$Eq.forEach(e=>this._$ET(e,this[e])),this._$EM()}updated(e){}firstUpdated(e){}};$.elementStyles=[],$.shadowRootOptions={mode:"open"},$[y("elementProperties")]=new Map,$[y("finalized")]=new Map,x?.({ReactiveElement:$}),(g.reactiveElementVersions??=[]).push("2.1.1");const _=globalThis,k=_.trustedTypes,C=k?k.createPolicy("lit-html",{createHTML:e=>e}):void 0,S="$lit$",A=`lit$${Math.random().toFixed(9).slice(2)}$`,E="?"+A,D=`<${E}>`,M=document,T=()=>M.createComment(""),P=e=>null===e||"object"!=typeof e&&"function"!=typeof e,z=Array.isArray,F="[ \t\n\f\r]",B=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,I=/-->/g,U=/>/g,H=RegExp(`>|${F}(?:([^\\s"'>=/]+)(${F}*=${F}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),N=/'/g,W=/"/g,O=/^(?:script|style|textarea|title)$/i,L=e=>(t,...a)=>({_$litType$:e,strings:t,values:a}),G=L(1),R=L(2),j=Symbol.for("lit-noChange"),V=Symbol.for("lit-nothing"),Y=new WeakMap,q=M.createTreeWalker(M,129);function X(e,t){if(!z(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==C?C.createHTML(t):t}const K=(e,t)=>{const a=e.length-1,i=[];let r,o=2===t?"<svg>":3===t?"<math>":"",s=B;for(let t=0;t<a;t++){const a=e[t];let n,c,l=-1,d=0;for(;d<a.length&&(s.lastIndex=d,c=s.exec(a),null!==c);)d=s.lastIndex,s===B?"!--"===c[1]?s=I:void 0!==c[1]?s=U:void 0!==c[2]?(O.test(c[2])&&(r=RegExp("</"+c[2],"g")),s=H):void 0!==c[3]&&(s=H):s===H?">"===c[0]?(s=r??B,l=-1):void 0===c[1]?l=-2:(l=s.lastIndex-c[2].length,n=c[1],s=void 0===c[3]?H:'"'===c[3]?W:N):s===W||s===N?s=H:s===I||s===U?s=B:(s=H,r=void 0);const h=s===H&&e[t+1].startsWith("/>")?" ":"";o+=s===B?a+D:l>=0?(i.push(n),a.slice(0,l)+S+a.slice(l)+A+h):a+A+(-2===l?t:h)}return[X(e,o+(e[a]||"<?>")+(2===t?"</svg>":3===t?"</math>":"")),i]};class Z{constructor({strings:e,_$litType$:t},a){let i;this.parts=[];let r=0,o=0;const s=e.length-1,n=this.parts,[c,l]=K(e,t);if(this.el=Z.createElement(c,a),q.currentNode=this.el.content,2===t||3===t){const e=this.el.content.firstChild;e.replaceWith(...e.childNodes)}for(;null!==(i=q.nextNode())&&n.length<s;){if(1===i.nodeType){if(i.hasAttributes())for(const e of i.getAttributeNames())if(e.endsWith(S)){const t=l[o++],a=i.getAttribute(e).split(A),s=/([.?@])?(.*)/.exec(t);n.push({type:1,index:r,name:s[2],strings:a,ctor:"."===s[1]?ae:"?"===s[1]?ie:"@"===s[1]?re:te}),i.removeAttribute(e)}else e.startsWith(A)&&(n.push({type:6,index:r}),i.removeAttribute(e));if(O.test(i.tagName)){const e=i.textContent.split(A),t=e.length-1;if(t>0){i.textContent=k?k.emptyScript:"";for(let a=0;a<t;a++)i.append(e[a],T()),q.nextNode(),n.push({type:2,index:++r});i.append(e[t],T())}}}else if(8===i.nodeType)if(i.data===E)n.push({type:2,index:r});else{let e=-1;for(;-1!==(e=i.data.indexOf(A,e+1));)n.push({type:7,index:r}),e+=A.length-1}r++}}static createElement(e,t){const a=M.createElement("template");return a.innerHTML=e,a}}function J(e,t,a=e,i){if(t===j)return t;let r=void 0!==i?a._$Co?.[i]:a._$Cl;const o=P(t)?void 0:t._$litDirective$;return r?.constructor!==o&&(r?._$AO?.(!1),void 0===o?r=void 0:(r=new o(e),r._$AT(e,a,i)),void 0!==i?(a._$Co??=[])[i]=r:a._$Cl=r),void 0!==r&&(t=J(e,r._$AS(e,t.values),r,i)),t}class Q{constructor(e,t){this._$AV=[],this._$AN=void 0,this._$AD=e,this._$AM=t}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(e){const{el:{content:t},parts:a}=this._$AD,i=(e?.creationScope??M).importNode(t,!0);q.currentNode=i;let r=q.nextNode(),o=0,s=0,n=a[0];for(;void 0!==n;){if(o===n.index){let t;2===n.type?t=new ee(r,r.nextSibling,this,e):1===n.type?t=new n.ctor(r,n.name,n.strings,this,e):6===n.type&&(t=new oe(r,this,e)),this._$AV.push(t),n=a[++s]}o!==n?.index&&(r=q.nextNode(),o++)}return q.currentNode=M,i}p(e){let t=0;for(const a of this._$AV)void 0!==a&&(void 0!==a.strings?(a._$AI(e,a,t),t+=a.strings.length-2):a._$AI(e[t])),t++}}class ee{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(e,t,a,i){this.type=2,this._$AH=V,this._$AN=void 0,this._$AA=e,this._$AB=t,this._$AM=a,this.options=i,this._$Cv=i?.isConnected??!0}get parentNode(){let e=this._$AA.parentNode;const t=this._$AM;return void 0!==t&&11===e?.nodeType&&(e=t.parentNode),e}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(e,t=this){e=J(this,e,t),P(e)?e===V||null==e||""===e?(this._$AH!==V&&this._$AR(),this._$AH=V):e!==this._$AH&&e!==j&&this._(e):void 0!==e._$litType$?this.$(e):void 0!==e.nodeType?this.T(e):(e=>z(e)||"function"==typeof e?.[Symbol.iterator])(e)?this.k(e):this._(e)}O(e){return this._$AA.parentNode.insertBefore(e,this._$AB)}T(e){this._$AH!==e&&(this._$AR(),this._$AH=this.O(e))}_(e){this._$AH!==V&&P(this._$AH)?this._$AA.nextSibling.data=e:this.T(M.createTextNode(e)),this._$AH=e}$(e){const{values:t,_$litType$:a}=e,i="number"==typeof a?this._$AC(e):(void 0===a.el&&(a.el=Z.createElement(X(a.h,a.h[0]),this.options)),a);if(this._$AH?._$AD===i)this._$AH.p(t);else{const e=new Q(i,this),a=e.u(this.options);e.p(t),this.T(a),this._$AH=e}}_$AC(e){let t=Y.get(e.strings);return void 0===t&&Y.set(e.strings,t=new Z(e)),t}k(e){z(this._$AH)||(this._$AH=[],this._$AR());const t=this._$AH;let a,i=0;for(const r of e)i===t.length?t.push(a=new ee(this.O(T()),this.O(T()),this,this.options)):a=t[i],a._$AI(r),i++;i<t.length&&(this._$AR(a&&a._$AB.nextSibling,i),t.length=i)}_$AR(e=this._$AA.nextSibling,t){for(this._$AP?.(!1,!0,t);e!==this._$AB;){const t=e.nextSibling;e.remove(),e=t}}setConnected(e){void 0===this._$AM&&(this._$Cv=e,this._$AP?.(e))}}class te{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(e,t,a,i,r){this.type=1,this._$AH=V,this._$AN=void 0,this.element=e,this.name=t,this._$AM=i,this.options=r,a.length>2||""!==a[0]||""!==a[1]?(this._$AH=Array(a.length-1).fill(new String),this.strings=a):this._$AH=V}_$AI(e,t=this,a,i){const r=this.strings;let o=!1;if(void 0===r)e=J(this,e,t,0),o=!P(e)||e!==this._$AH&&e!==j,o&&(this._$AH=e);else{const i=e;let s,n;for(e=r[0],s=0;s<r.length-1;s++)n=J(this,i[a+s],t,s),n===j&&(n=this._$AH[s]),o||=!P(n)||n!==this._$AH[s],n===V?e=V:e!==V&&(e+=(n??"")+r[s+1]),this._$AH[s]=n}o&&!i&&this.j(e)}j(e){e===V?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,e??"")}}class ae extends te{constructor(){super(...arguments),this.type=3}j(e){this.element[this.name]=e===V?void 0:e}}class ie extends te{constructor(){super(...arguments),this.type=4}j(e){this.element.toggleAttribute(this.name,!!e&&e!==V)}}class re extends te{constructor(e,t,a,i,r){super(e,t,a,i,r),this.type=5}_$AI(e,t=this){if((e=J(this,e,t,0)??V)===j)return;const a=this._$AH,i=e===V&&a!==V||e.capture!==a.capture||e.once!==a.once||e.passive!==a.passive,r=e!==V&&(a===V||i);i&&this.element.removeEventListener(this.name,this,a),r&&this.element.addEventListener(this.name,this,e),this._$AH=e}handleEvent(e){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,e):this._$AH.handleEvent(e)}}class oe{constructor(e,t,a){this.element=e,this.type=6,this._$AN=void 0,this._$AM=t,this.options=a}get _$AU(){return this._$AM._$AU}_$AI(e){J(this,e)}}const se=_.litHtmlPolyfillSupport;se?.(Z,ee),(_.litHtmlVersions??=[]).push("3.3.1");const ne=globalThis;class ce extends ${constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const e=super.createRenderRoot();return this.renderOptions.renderBefore??=e.firstChild,e}update(e){const t=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(e),this._$Do=((e,t,a)=>{const i=a?.renderBefore??t;let r=i._$litPart$;if(void 0===r){const e=a?.renderBefore??null;i._$litPart$=r=new ee(t.insertBefore(T(),e),e,void 0,a??{})}return r._$AI(e),r})(t,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return j}}ce._$litElement$=!0,ce.finalized=!0,ne.litElementHydrateSupport?.({LitElement:ce});const le=ne.litElementPolyfillSupport;le?.({LitElement:ce}),(ne.litElementVersions??=[]).push("4.2.1");const de=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}):customElements.define(e,t)},he={attribute:!0,type:String,converter:w,reflect:!1,hasChanged:b},pe=(e=he,t,a)=>{const{kind:i,metadata:r}=a;let o=globalThis.litPropertyMetadata.get(r);if(void 0===o&&globalThis.litPropertyMetadata.set(r,o=new Map),"setter"===i&&((e=Object.create(e)).wrapped=!0),o.set(a.name,e),"accessor"===i){const{name:i}=a;return{set(a){const r=t.get.call(this);t.set.call(this,a),this.requestUpdate(i,r,e)},init(t){return void 0!==t&&this.C(i,void 0,e,t),t}}}if("setter"===i){const{name:i}=a;return function(a){const r=this[i];t.call(this,a),this.requestUpdate(i,r,e)}}throw Error("Unsupported decorator location: "+i)};function me(e){return(t,a)=>"object"==typeof a?pe(e,t,a):((e,t,a)=>{const i=t.hasOwnProperty(a);return t.constructor.createProperty(a,e),i?Object.getOwnPropertyDescriptor(t,a):void 0})(e,t,a)}function ge(e){return me({...e,state:!0,attribute:!1})}function ue(e=new Date){return e.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}function fe(e=new Date){return e.toLocaleDateString("en-US",{weekday:"long",month:"2-digit",day:"2-digit",year:"2-digit"})}function xe(){const e=(new Date).getMonth();return e>=2&&e<=4?"spring":e>=5&&e<=7?"summer":e>=8&&e<=10?"fall":"winter"}function ye(e){const t=e.toLowerCase(),a=function(){const e=(new Date).getHours();return e<6||e>=20}();return t.includes("clear")||t.includes("sunny")?a?"clear-night":"clear-day":t.includes("partlycloudy")||t.includes("partly")||t.includes("partial")?a?"partlycloudy-night":"partlycloudy":t.includes("cloud")?"cloudy":t.includes("rain")?"rainy":t.includes("snow")?"snowy":t.includes("storm")||t.includes("thunder")?"lightning":t.includes("fog")||t.includes("mist")?"fog":t.includes("wind")?"windy":a?"clear-night":"clear-day"}function we(e,t=!0){const a=t?"animated":"";switch(e){case"clear-day":case"sunny":return R`
+function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,a):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)s=Reflect.decorate(e,t,a,i);else for(var n=e.length-1;n>=0;n--)(r=e[n])&&(s=(o<3?r(s):o>3?r(t,a,s):r(t,a))||s);return o>3&&s&&Object.defineProperty(t,a,s),s}"function"==typeof SuppressedError&&SuppressedError;const t=globalThis,a=t.ShadowRoot&&(void 0===t.ShadyCSS||t.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,i=Symbol(),r=new WeakMap;let o=class{constructor(e,t,a){if(this._$cssResult$=!0,a!==i)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=e,this.t=t}get styleSheet(){let e=this.o;const t=this.t;if(a&&void 0===e){const a=void 0!==t&&1===t.length;a&&(e=r.get(t)),void 0===e&&((this.o=e=new CSSStyleSheet).replaceSync(this.cssText),a&&r.set(t,e))}return e}toString(){return this.cssText}};const s=(e,...t)=>{const a=1===e.length?e[0]:t.reduce((t,a,i)=>t+(e=>{if(!0===e._$cssResult$)return e.cssText;if("number"==typeof e)return e;throw Error("Value passed to 'css' function must be a 'css' function result: "+e+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(a)+e[i+1],e[0]);return new o(a,e,i)},n=a?e=>e:e=>e instanceof CSSStyleSheet?(e=>{let t="";for(const a of e.cssRules)t+=a.cssText;return(e=>new o("string"==typeof e?e:e+"",void 0,i))(t)})(e):e,{is:c,defineProperty:l,getOwnPropertyDescriptor:d,getOwnPropertyNames:h,getOwnPropertySymbols:p,getPrototypeOf:m}=Object,g=globalThis,u=g.trustedTypes,f=u?u.emptyScript:"",x=g.reactiveElementPolyfillSupport,w=(e,t)=>e,y={toAttribute(e,t){switch(t){case Boolean:e=e?f:null;break;case Object:case Array:e=null==e?e:JSON.stringify(e)}return e},fromAttribute(e,t){let a=e;switch(t){case Boolean:a=null!==e;break;case Number:a=null===e?null:Number(e);break;case Object:case Array:try{a=JSON.parse(e)}catch(e){a=null}}return a}},b=(e,t)=>!c(e,t),v={attribute:!0,type:String,converter:y,reflect:!1,useDefault:!1,hasChanged:b};Symbol.metadata??=Symbol("metadata"),g.litPropertyMetadata??=new WeakMap;let $=class extends HTMLElement{static addInitializer(e){this._$Ei(),(this.l??=[]).push(e)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(e,t=v){if(t.state&&(t.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(e)&&((t=Object.create(t)).wrapped=!0),this.elementProperties.set(e,t),!t.noAccessor){const a=Symbol(),i=this.getPropertyDescriptor(e,a,t);void 0!==i&&l(this.prototype,e,i)}}static getPropertyDescriptor(e,t,a){const{get:i,set:r}=d(this.prototype,e)??{get(){return this[t]},set(e){this[t]=e}};return{get:i,set(t){const o=i?.call(this);r?.call(this,t),this.requestUpdate(e,o,a)},configurable:!0,enumerable:!0}}static getPropertyOptions(e){return this.elementProperties.get(e)??v}static _$Ei(){if(this.hasOwnProperty(w("elementProperties")))return;const e=m(this);e.finalize(),void 0!==e.l&&(this.l=[...e.l]),this.elementProperties=new Map(e.elementProperties)}static finalize(){if(this.hasOwnProperty(w("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(w("properties"))){const e=this.properties,t=[...h(e),...p(e)];for(const a of t)this.createProperty(a,e[a])}const e=this[Symbol.metadata];if(null!==e){const t=litPropertyMetadata.get(e);if(void 0!==t)for(const[e,a]of t)this.elementProperties.set(e,a)}this._$Eh=new Map;for(const[e,t]of this.elementProperties){const a=this._$Eu(e,t);void 0!==a&&this._$Eh.set(a,e)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(e){const t=[];if(Array.isArray(e)){const a=new Set(e.flat(1/0).reverse());for(const e of a)t.unshift(n(e))}else void 0!==e&&t.push(n(e));return t}static _$Eu(e,t){const a=t.attribute;return!1===a?void 0:"string"==typeof a?a:"string"==typeof e?e.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(e=>this.enableUpdating=e),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(e=>e(this))}addController(e){(this._$EO??=new Set).add(e),void 0!==this.renderRoot&&this.isConnected&&e.hostConnected?.()}removeController(e){this._$EO?.delete(e)}_$E_(){const e=new Map,t=this.constructor.elementProperties;for(const a of t.keys())this.hasOwnProperty(a)&&(e.set(a,this[a]),delete this[a]);e.size>0&&(this._$Ep=e)}createRenderRoot(){const e=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return((e,i)=>{if(a)e.adoptedStyleSheets=i.map(e=>e instanceof CSSStyleSheet?e:e.styleSheet);else for(const a of i){const i=document.createElement("style"),r=t.litNonce;void 0!==r&&i.setAttribute("nonce",r),i.textContent=a.cssText,e.appendChild(i)}})(e,this.constructor.elementStyles),e}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(e=>e.hostConnected?.())}enableUpdating(e){}disconnectedCallback(){this._$EO?.forEach(e=>e.hostDisconnected?.())}attributeChangedCallback(e,t,a){this._$AK(e,a)}_$ET(e,t){const a=this.constructor.elementProperties.get(e),i=this.constructor._$Eu(e,a);if(void 0!==i&&!0===a.reflect){const r=(void 0!==a.converter?.toAttribute?a.converter:y).toAttribute(t,a.type);this._$Em=e,null==r?this.removeAttribute(i):this.setAttribute(i,r),this._$Em=null}}_$AK(e,t){const a=this.constructor,i=a._$Eh.get(e);if(void 0!==i&&this._$Em!==i){const e=a.getPropertyOptions(i),r="function"==typeof e.converter?{fromAttribute:e.converter}:void 0!==e.converter?.fromAttribute?e.converter:y;this._$Em=i;const o=r.fromAttribute(t,e.type);this[i]=o??this._$Ej?.get(i)??o,this._$Em=null}}requestUpdate(e,t,a){if(void 0!==e){const i=this.constructor,r=this[e];if(a??=i.getPropertyOptions(e),!((a.hasChanged??b)(r,t)||a.useDefault&&a.reflect&&r===this._$Ej?.get(e)&&!this.hasAttribute(i._$Eu(e,a))))return;this.C(e,t,a)}!1===this.isUpdatePending&&(this._$ES=this._$EP())}C(e,t,{useDefault:a,reflect:i,wrapped:r},o){a&&!(this._$Ej??=new Map).has(e)&&(this._$Ej.set(e,o??t??this[e]),!0!==r||void 0!==o)||(this._$AL.has(e)||(this.hasUpdated||a||(t=void 0),this._$AL.set(e,t)),!0===i&&this._$Em!==e&&(this._$Eq??=new Set).add(e))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(e){Promise.reject(e)}const e=this.scheduleUpdate();return null!=e&&await e,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[e,t]of this._$Ep)this[e]=t;this._$Ep=void 0}const e=this.constructor.elementProperties;if(e.size>0)for(const[t,a]of e){const{wrapped:e}=a,i=this[t];!0!==e||this._$AL.has(t)||void 0===i||this.C(t,void 0,a,i)}}let e=!1;const t=this._$AL;try{e=this.shouldUpdate(t),e?(this.willUpdate(t),this._$EO?.forEach(e=>e.hostUpdate?.()),this.update(t)):this._$EM()}catch(t){throw e=!1,this._$EM(),t}e&&this._$AE(t)}willUpdate(e){}_$AE(e){this._$EO?.forEach(e=>e.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(e)),this.updated(e)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(e){return!0}update(e){this._$Eq&&=this._$Eq.forEach(e=>this._$ET(e,this[e])),this._$EM()}updated(e){}firstUpdated(e){}};$.elementStyles=[],$.shadowRootOptions={mode:"open"},$[w("elementProperties")]=new Map,$[w("finalized")]=new Map,x?.({ReactiveElement:$}),(g.reactiveElementVersions??=[]).push("2.1.1");const _=globalThis,k=_.trustedTypes,S=k?k.createPolicy("lit-html",{createHTML:e=>e}):void 0,C="$lit$",A=`lit$${Math.random().toFixed(9).slice(2)}$`,E="?"+A,D=`<${E}>`,M=document,T=()=>M.createComment(""),P=e=>null===e||"object"!=typeof e&&"function"!=typeof e,z=Array.isArray,F="[ \t\n\f\r]",B=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,I=/-->/g,U=/>/g,H=RegExp(`>|${F}(?:([^\\s"'>=/]+)(${F}*=${F}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),N=/'/g,W=/"/g,O=/^(?:script|style|textarea|title)$/i,L=e=>(t,...a)=>({_$litType$:e,strings:t,values:a}),j=L(1),R=L(2),V=Symbol.for("lit-noChange"),G=Symbol.for("lit-nothing"),Y=new WeakMap,q=M.createTreeWalker(M,129);function X(e,t){if(!z(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==S?S.createHTML(t):t}const K=(e,t)=>{const a=e.length-1,i=[];let r,o=2===t?"<svg>":3===t?"<math>":"",s=B;for(let t=0;t<a;t++){const a=e[t];let n,c,l=-1,d=0;for(;d<a.length&&(s.lastIndex=d,c=s.exec(a),null!==c);)d=s.lastIndex,s===B?"!--"===c[1]?s=I:void 0!==c[1]?s=U:void 0!==c[2]?(O.test(c[2])&&(r=RegExp("</"+c[2],"g")),s=H):void 0!==c[3]&&(s=H):s===H?">"===c[0]?(s=r??B,l=-1):void 0===c[1]?l=-2:(l=s.lastIndex-c[2].length,n=c[1],s=void 0===c[3]?H:'"'===c[3]?W:N):s===W||s===N?s=H:s===I||s===U?s=B:(s=H,r=void 0);const h=s===H&&e[t+1].startsWith("/>")?" ":"";o+=s===B?a+D:l>=0?(i.push(n),a.slice(0,l)+C+a.slice(l)+A+h):a+A+(-2===l?t:h)}return[X(e,o+(e[a]||"<?>")+(2===t?"</svg>":3===t?"</math>":"")),i]};class Z{constructor({strings:e,_$litType$:t},a){let i;this.parts=[];let r=0,o=0;const s=e.length-1,n=this.parts,[c,l]=K(e,t);if(this.el=Z.createElement(c,a),q.currentNode=this.el.content,2===t||3===t){const e=this.el.content.firstChild;e.replaceWith(...e.childNodes)}for(;null!==(i=q.nextNode())&&n.length<s;){if(1===i.nodeType){if(i.hasAttributes())for(const e of i.getAttributeNames())if(e.endsWith(C)){const t=l[o++],a=i.getAttribute(e).split(A),s=/([.?@])?(.*)/.exec(t);n.push({type:1,index:r,name:s[2],strings:a,ctor:"."===s[1]?ae:"?"===s[1]?ie:"@"===s[1]?re:te}),i.removeAttribute(e)}else e.startsWith(A)&&(n.push({type:6,index:r}),i.removeAttribute(e));if(O.test(i.tagName)){const e=i.textContent.split(A),t=e.length-1;if(t>0){i.textContent=k?k.emptyScript:"";for(let a=0;a<t;a++)i.append(e[a],T()),q.nextNode(),n.push({type:2,index:++r});i.append(e[t],T())}}}else if(8===i.nodeType)if(i.data===E)n.push({type:2,index:r});else{let e=-1;for(;-1!==(e=i.data.indexOf(A,e+1));)n.push({type:7,index:r}),e+=A.length-1}r++}}static createElement(e,t){const a=M.createElement("template");return a.innerHTML=e,a}}function J(e,t,a=e,i){if(t===V)return t;let r=void 0!==i?a._$Co?.[i]:a._$Cl;const o=P(t)?void 0:t._$litDirective$;return r?.constructor!==o&&(r?._$AO?.(!1),void 0===o?r=void 0:(r=new o(e),r._$AT(e,a,i)),void 0!==i?(a._$Co??=[])[i]=r:a._$Cl=r),void 0!==r&&(t=J(e,r._$AS(e,t.values),r,i)),t}class Q{constructor(e,t){this._$AV=[],this._$AN=void 0,this._$AD=e,this._$AM=t}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(e){const{el:{content:t},parts:a}=this._$AD,i=(e?.creationScope??M).importNode(t,!0);q.currentNode=i;let r=q.nextNode(),o=0,s=0,n=a[0];for(;void 0!==n;){if(o===n.index){let t;2===n.type?t=new ee(r,r.nextSibling,this,e):1===n.type?t=new n.ctor(r,n.name,n.strings,this,e):6===n.type&&(t=new oe(r,this,e)),this._$AV.push(t),n=a[++s]}o!==n?.index&&(r=q.nextNode(),o++)}return q.currentNode=M,i}p(e){let t=0;for(const a of this._$AV)void 0!==a&&(void 0!==a.strings?(a._$AI(e,a,t),t+=a.strings.length-2):a._$AI(e[t])),t++}}class ee{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(e,t,a,i){this.type=2,this._$AH=G,this._$AN=void 0,this._$AA=e,this._$AB=t,this._$AM=a,this.options=i,this._$Cv=i?.isConnected??!0}get parentNode(){let e=this._$AA.parentNode;const t=this._$AM;return void 0!==t&&11===e?.nodeType&&(e=t.parentNode),e}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(e,t=this){e=J(this,e,t),P(e)?e===G||null==e||""===e?(this._$AH!==G&&this._$AR(),this._$AH=G):e!==this._$AH&&e!==V&&this._(e):void 0!==e._$litType$?this.$(e):void 0!==e.nodeType?this.T(e):(e=>z(e)||"function"==typeof e?.[Symbol.iterator])(e)?this.k(e):this._(e)}O(e){return this._$AA.parentNode.insertBefore(e,this._$AB)}T(e){this._$AH!==e&&(this._$AR(),this._$AH=this.O(e))}_(e){this._$AH!==G&&P(this._$AH)?this._$AA.nextSibling.data=e:this.T(M.createTextNode(e)),this._$AH=e}$(e){const{values:t,_$litType$:a}=e,i="number"==typeof a?this._$AC(e):(void 0===a.el&&(a.el=Z.createElement(X(a.h,a.h[0]),this.options)),a);if(this._$AH?._$AD===i)this._$AH.p(t);else{const e=new Q(i,this),a=e.u(this.options);e.p(t),this.T(a),this._$AH=e}}_$AC(e){let t=Y.get(e.strings);return void 0===t&&Y.set(e.strings,t=new Z(e)),t}k(e){z(this._$AH)||(this._$AH=[],this._$AR());const t=this._$AH;let a,i=0;for(const r of e)i===t.length?t.push(a=new ee(this.O(T()),this.O(T()),this,this.options)):a=t[i],a._$AI(r),i++;i<t.length&&(this._$AR(a&&a._$AB.nextSibling,i),t.length=i)}_$AR(e=this._$AA.nextSibling,t){for(this._$AP?.(!1,!0,t);e!==this._$AB;){const t=e.nextSibling;e.remove(),e=t}}setConnected(e){void 0===this._$AM&&(this._$Cv=e,this._$AP?.(e))}}class te{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(e,t,a,i,r){this.type=1,this._$AH=G,this._$AN=void 0,this.element=e,this.name=t,this._$AM=i,this.options=r,a.length>2||""!==a[0]||""!==a[1]?(this._$AH=Array(a.length-1).fill(new String),this.strings=a):this._$AH=G}_$AI(e,t=this,a,i){const r=this.strings;let o=!1;if(void 0===r)e=J(this,e,t,0),o=!P(e)||e!==this._$AH&&e!==V,o&&(this._$AH=e);else{const i=e;let s,n;for(e=r[0],s=0;s<r.length-1;s++)n=J(this,i[a+s],t,s),n===V&&(n=this._$AH[s]),o||=!P(n)||n!==this._$AH[s],n===G?e=G:e!==G&&(e+=(n??"")+r[s+1]),this._$AH[s]=n}o&&!i&&this.j(e)}j(e){e===G?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,e??"")}}class ae extends te{constructor(){super(...arguments),this.type=3}j(e){this.element[this.name]=e===G?void 0:e}}class ie extends te{constructor(){super(...arguments),this.type=4}j(e){this.element.toggleAttribute(this.name,!!e&&e!==G)}}class re extends te{constructor(e,t,a,i,r){super(e,t,a,i,r),this.type=5}_$AI(e,t=this){if((e=J(this,e,t,0)??G)===V)return;const a=this._$AH,i=e===G&&a!==G||e.capture!==a.capture||e.once!==a.once||e.passive!==a.passive,r=e!==G&&(a===G||i);i&&this.element.removeEventListener(this.name,this,a),r&&this.element.addEventListener(this.name,this,e),this._$AH=e}handleEvent(e){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,e):this._$AH.handleEvent(e)}}class oe{constructor(e,t,a){this.element=e,this.type=6,this._$AN=void 0,this._$AM=t,this.options=a}get _$AU(){return this._$AM._$AU}_$AI(e){J(this,e)}}const se=_.litHtmlPolyfillSupport;se?.(Z,ee),(_.litHtmlVersions??=[]).push("3.3.1");const ne=globalThis;class ce extends ${constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const e=super.createRenderRoot();return this.renderOptions.renderBefore??=e.firstChild,e}update(e){const t=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(e),this._$Do=((e,t,a)=>{const i=a?.renderBefore??t;let r=i._$litPart$;if(void 0===r){const e=a?.renderBefore??null;i._$litPart$=r=new ee(t.insertBefore(T(),e),e,void 0,a??{})}return r._$AI(e),r})(t,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return V}}ce._$litElement$=!0,ce.finalized=!0,ne.litElementHydrateSupport?.({LitElement:ce});const le=ne.litElementPolyfillSupport;le?.({LitElement:ce}),(ne.litElementVersions??=[]).push("4.2.1");const de=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}):customElements.define(e,t)},he={attribute:!0,type:String,converter:y,reflect:!1,hasChanged:b},pe=(e=he,t,a)=>{const{kind:i,metadata:r}=a;let o=globalThis.litPropertyMetadata.get(r);if(void 0===o&&globalThis.litPropertyMetadata.set(r,o=new Map),"setter"===i&&((e=Object.create(e)).wrapped=!0),o.set(a.name,e),"accessor"===i){const{name:i}=a;return{set(a){const r=t.get.call(this);t.set.call(this,a),this.requestUpdate(i,r,e)},init(t){return void 0!==t&&this.C(i,void 0,e,t),t}}}if("setter"===i){const{name:i}=a;return function(a){const r=this[i];t.call(this,a),this.requestUpdate(i,r,e)}}throw Error("Unsupported decorator location: "+i)};function me(e){return(t,a)=>"object"==typeof a?pe(e,t,a):((e,t,a)=>{const i=t.hasOwnProperty(a);return t.constructor.createProperty(a,e),i?Object.getOwnPropertyDescriptor(t,a):void 0})(e,t,a)}function ge(e){return me({...e,state:!0,attribute:!1})}function ue(e=new Date){return e.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}function fe(e=new Date){return e.toLocaleDateString("en-US",{weekday:"long",month:"2-digit",day:"2-digit",year:"2-digit"})}function xe(){const e=(new Date).getMonth();return e>=2&&e<=4?"spring":e>=5&&e<=7?"summer":e>=8&&e<=10?"fall":"winter"}function we(e){const t=e.toLowerCase(),a=function(){const e=(new Date).getHours();return e<6||e>=20}();return t.includes("clear")||t.includes("sunny")?a?"clear-night":"clear-day":t.includes("partlycloudy")||t.includes("partly")||t.includes("partial")?a?"partlycloudy-night":"partlycloudy":t.includes("cloud")?"cloudy":t.includes("rain")?"rainy":t.includes("snow")?"snowy":t.includes("storm")||t.includes("thunder")?"lightning":t.includes("fog")||t.includes("mist")?"fog":t.includes("wind")?"windy":a?"clear-night":"clear-day"}function ye(e,t=!0){const a=t?"animated":"";switch(e){case"clear-day":case"sunny":return R`
         <svg class="weather-icon-svg ${a}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <style>
             .sun-rays {
@@ -263,66 +263,45 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
       `;case"fog":case"mist":case"foggy":return R`
         <svg class="weather-icon-svg ${a}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="fogGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#D0D0D0;stop-opacity:0" />
-              <stop offset="50%" style="stop-color:#E0E0E0;stop-opacity:0.8" />
-              <stop offset="100%" style="stop-color:#D0D0D0;stop-opacity:0" />
-            </linearGradient>
-            <linearGradient id="fogGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#C8C8C8;stop-opacity:0" />
-              <stop offset="50%" style="stop-color:#D8D8D8;stop-opacity:0.7" />
-              <stop offset="100%" style="stop-color:#C8C8C8;stop-opacity:0" />
-            </linearGradient>
-            <linearGradient id="fogGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#DCDCDC;stop-opacity:0" />
-              <stop offset="50%" style="stop-color:#ECECEC;stop-opacity:0.6" />
-              <stop offset="100%" style="stop-color:#DCDCDC;stop-opacity:0" />
-            </linearGradient>
+            <filter id="fogBlur">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" />
+            </filter>
           </defs>
           <style>
-            .fog-layer-1 {
-              animation: ${t?"driftRight 12s ease-in-out infinite":"none"};
+            .fog-cloud-1 {
+              animation: ${t?"fogDrift1 10s ease-in-out infinite":"none"};
             }
-            .fog-layer-2 {
-              animation: ${t?"driftLeft 10s ease-in-out infinite":"none"};
+            .fog-cloud-2 {
+              animation: ${t?"fogDrift2 12s ease-in-out infinite":"none"};
             }
-            .fog-layer-3 {
-              animation: ${t?"driftRight 14s ease-in-out infinite":"none"};
-              animation-delay: 0.5s;
+            .fog-cloud-3 {
+              animation: ${t?"fogDrift3 11s ease-in-out infinite":"none"};
             }
-            .fog-layer-4 {
-              animation: ${t?"driftLeft 11s ease-in-out infinite":"none"};
-              animation-delay: 1s;
+            @keyframes fogDrift1 {
+              0%, 100% { transform: translateX(0px); opacity: 0.5; }
+              50% { transform: translateX(5px); opacity: 0.7; }
             }
-            @keyframes driftRight {
+            @keyframes fogDrift2 {
               0%, 100% { transform: translateX(0px); opacity: 0.6; }
-              50% { transform: translateX(8px); opacity: 0.8; }
+              50% { transform: translateX(-4px); opacity: 0.8; }
             }
-            @keyframes driftLeft {
-              0%, 100% { transform: translateX(0px); opacity: 0.7; }
-              50% { transform: translateX(-8px); opacity: 0.9; }
+            @keyframes fogDrift3 {
+              0%, 100% { transform: translateX(0px); opacity: 0.55; }
+              50% { transform: translateX(6px); opacity: 0.75; }
             }
           </style>
-          <!-- Multiple layered fog clouds for realistic effect -->
-          <g class="fog-layer-1">
-            <ellipse cx="30" cy="25" rx="28" ry="8" fill="url(#fogGradient1)"/>
-            <ellipse cx="60" cy="25" rx="32" ry="8" fill="url(#fogGradient1)"/>
+          <!-- Soft wispy fog clouds with blur filter -->
+          <g class="fog-cloud-1" filter="url(#fogBlur)" opacity="0.7">
+            <ellipse cx="30" cy="30" rx="25" ry="6" fill="#C8C8C8"/>
+            <ellipse cx="60" cy="30" rx="30" ry="6" fill="#D0D0D0"/>
           </g>
-          <g class="fog-layer-2">
-            <ellipse cx="20" cy="40" rx="25" ry="9" fill="url(#fogGradient2)"/>
-            <ellipse cx="55" cy="40" rx="35" ry="9" fill="url(#fogGradient2)"/>
+          <g class="fog-cloud-2" filter="url(#fogBlur)" opacity="0.65">
+            <ellipse cx="20" cy="50" rx="28" ry="7" fill="#D8D8D8"/>
+            <ellipse cx="55" cy="50" rx="35" ry="7" fill="#C0C0C0"/>
           </g>
-          <g class="fog-layer-3">
-            <ellipse cx="35" cy="55" rx="30" ry="8" fill="url(#fogGradient3)"/>
-            <ellipse cx="70" cy="55" rx="28" ry="8" fill="url(#fogGradient3)"/>
-          </g>
-          <g class="fog-layer-4">
-            <ellipse cx="25" cy="70" rx="32" ry="9" fill="url(#fogGradient1)"/>
-            <ellipse cx="60" cy="70" rx="30" ry="9" fill="url(#fogGradient2)"/>
-          </g>
-          <g class="fog-layer-1">
-            <ellipse cx="40" cy="85" rx="35" ry="8" fill="url(#fogGradient3)"/>
-            <ellipse cx="75" cy="85" rx="25" ry="8" fill="url(#fogGradient1)"/>
+          <g class="fog-cloud-3" filter="url(#fogBlur)" opacity="0.7">
+            <ellipse cx="35" cy="70" rx="30" ry="6" fill="#D0D0D0"/>
+            <ellipse cx="70" cy="70" rx="28" ry="6" fill="#C8C8C8"/>
           </g>
         </svg>
       `;case"windy":case"wind":case"exceptional":return R`
@@ -349,7 +328,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
         <svg class="weather-icon-svg ${a}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <circle cx="50" cy="50" r="20" fill="#FDB813"/>
         </svg>
-      `}}var be,ve;!function(e){e.language="language",e.system="system",e.comma_decimal="comma_decimal",e.decimal_comma="decimal_comma",e.space_comma="space_comma",e.none="none"}(be||(be={})),function(e){e.language="language",e.system="system",e.am_pm="12",e.twenty_four="24"}(ve||(ve={}));var $e=function(e,t,a,i){i=i||{},a=null==a?{}:a;var r=new Event(t,{bubbles:void 0===i.bubbles||i.bubbles,cancelable:Boolean(i.cancelable),composed:void 0===i.composed||i.composed});return r.detail=a,e.dispatchEvent(r),r};let _e=class extends ce{constructor(){super(...arguments),this._expandedSections=new Set(["required","theme"])}setConfig(e){this._config=e}_toggleSection(e){const t=new Set(this._expandedSections);t.has(e)?t.delete(e):t.add(e),this._expandedSections=t}_valueChanged(e){if(!this._config||!this.hass)return;const t=e.target,a=t.configValue;let i=t.value;if("forecast_days"!==a&&"hourly_count"!==a||!i||(i=parseInt(i,10)),this._config[a]===i)return;const r={...this._config,[a]:""===i?void 0:i};$e(this,"config-changed",{config:r})}_toggleChanged(e){if(!this._config||!this.hass)return;const t=e.target,a=t.configValue,i=t.checked,r={...this._config,[a]:i};$e(this,"config-changed",{config:r})}_customColorChanged(e,t){if(!this._config||!this.hass)return;const a=e.target.value,i={...this._config,custom_theme_colors:{...this._config.custom_theme_colors,[t]:a||void 0}};$e(this,"config-changed",{config:i})}_seasonalImageChanged(e,t){if(!this._config||!this.hass)return;const a=e.target.value,i="default"===a||""===a?void 0:a,r={...this._config,seasonal_images:{...this._config.seasonal_images||{},[t]:i}};$e(this,"config-changed",{config:r})}_weatherInfoToggle(e,t){if(!this._config||!this.hass)return;const a=e.target.checked,i=this._config.show_weather_info||[];let r;r=a?i.includes(t)?i:[...i,t]:i.filter(e=>e!==t);const o={...this._config,show_weather_info:r.length>0?r:void 0};$e(this,"config-changed",{config:o})}render(){if(!this.hass||!this._config)return G``;const e=Object.keys(this.hass.states).filter(e=>e.startsWith("weather.")),t=Object.keys(this.hass.states).filter(e=>e.startsWith("sensor.")&&(e.includes("temp")||e.includes("temperature")));return G`
+      `}}var be,ve;!function(e){e.language="language",e.system="system",e.comma_decimal="comma_decimal",e.decimal_comma="decimal_comma",e.space_comma="space_comma",e.none="none"}(be||(be={})),function(e){e.language="language",e.system="system",e.am_pm="12",e.twenty_four="24"}(ve||(ve={}));var $e=function(e,t,a,i){i=i||{},a=null==a?{}:a;var r=new Event(t,{bubbles:void 0===i.bubbles||i.bubbles,cancelable:Boolean(i.cancelable),composed:void 0===i.composed||i.composed});return r.detail=a,e.dispatchEvent(r),r};let _e=class extends ce{constructor(){super(...arguments),this._expandedSections=new Set(["required","theme"])}setConfig(e){this._config=e}_toggleSection(e){const t=new Set(this._expandedSections);t.has(e)?t.delete(e):t.add(e),this._expandedSections=t}_valueChanged(e){if(!this._config||!this.hass)return;const t=e.target,a=t.configValue;let i=t.value;if("forecast_days"!==a&&"hourly_count"!==a||!i||(i=parseInt(i,10)),this._config[a]===i)return;const r={...this._config,[a]:""===i?void 0:i};$e(this,"config-changed",{config:r})}_toggleChanged(e){if(!this._config||!this.hass)return;const t=e.target,a=t.configValue,i=t.checked,r={...this._config,[a]:i};$e(this,"config-changed",{config:r})}_customColorChanged(e,t){if(!this._config||!this.hass)return;const a=e.target.value,i={...this._config,custom_theme_colors:{...this._config.custom_theme_colors,[t]:a||void 0}};$e(this,"config-changed",{config:i})}_seasonalImageChanged(e,t){if(!this._config||!this.hass)return;const a=e.target.value,i="default"===a||""===a?void 0:a,r={...this._config,seasonal_images:{...this._config.seasonal_images||{},[t]:i}};$e(this,"config-changed",{config:r})}_weatherInfoToggle(e,t){if(!this._config||!this.hass)return;const a=e.target.checked,i=this._config.show_weather_info||[];let r;r=a?i.includes(t)?i:[...i,t]:i.filter(e=>e!==t);const o={...this._config,show_weather_info:r.length>0?r:void 0};$e(this,"config-changed",{config:o})}render(){if(!this.hass||!this._config)return j``;const e=Object.keys(this.hass.states).filter(e=>e.startsWith("weather.")),t=Object.keys(this.hass.states).filter(e=>e.startsWith("sensor.")&&(e.includes("temp")||e.includes("temperature")));return j`
       <div class="card-config">
         <h3>WeatherPulse Card Configuration</h3>
 
@@ -360,7 +339,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Required Settings
           </h4>
 
-          ${this._expandedSections.has("required")?G`
+          ${this._expandedSections.has("required")?j`
           <ha-select
             label="Weather Entity (Required)"
             .configValue=${"entity"}
@@ -368,7 +347,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             @selected=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
-            ${e.map(e=>G`
+            ${e.map(e=>j`
                 <mwc-list-item .value=${e}>
                   ${e}
                 </mwc-list-item>
@@ -384,7 +363,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Theme Settings
           </h4>
 
-          ${this._expandedSections.has("theme")?G`
+          ${this._expandedSections.has("theme")?j`
           <ha-select
             label="Visual Theme"
             .configValue=${"theme"}
@@ -403,7 +382,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Choose a pre-built visual theme or create your own custom theme.
           </p>
 
-          ${"custom"===this._config.theme?G`
+          ${"custom"===this._config.theme?j`
             <p class="helper-text" style="margin-top: 16px; font-weight: 600;">
               Custom Theme Colors (use CSS color values like #667eea or rgb(102, 126, 234)):
             </p>
@@ -454,7 +433,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Temperature Settings
           </h4>
 
-          ${this._expandedSections.has("temperature")?G`
+          ${this._expandedSections.has("temperature")?j`
           <ha-select
             label="Outdoor Temperature Sensor (Optional)"
             .configValue=${"outdoor_temp_sensor"}
@@ -463,7 +442,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             @closed=${e=>e.stopPropagation()}
           >
             <mwc-list-item value="">None</mwc-list-item>
-            ${t.map(e=>G`
+            ${t.map(e=>j`
                 <mwc-list-item .value=${e}>
                   ${e}
                 </mwc-list-item>
@@ -497,7 +476,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Header Settings
           </h4>
 
-          ${this._expandedSections.has("header")?G`
+          ${this._expandedSections.has("header")?j`
           <ha-select
             label="Header Mode"
             .configValue=${"header_mode"}
@@ -513,7 +492,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             <mwc-list-item value="graphical">Graphical (Seasonal Background)</mwc-list-item>
           </ha-select>
 
-          ${"greeting"===this._config.header_mode?G`
+          ${"greeting"===this._config.header_mode?j`
             <ha-textfield
               label="Greeting Name"
               .configValue=${"greeting_name"}
@@ -525,7 +504,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             </p>
           `:""}
 
-          ${"graphical"===this._config.header_mode?G`
+          ${"graphical"===this._config.header_mode?j`
             <div class="seasonal-images-section">
               <p class="helper-text">
                 Select bundled seasonal images or leave as default. Upload custom images to <code>/config/www/</code> to see them here.
@@ -603,7 +582,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Forecast Settings
           </h4>
 
-          ${this._expandedSections.has("forecast")?G`
+          ${this._expandedSections.has("forecast")?j`
           <ha-formfield label="Show Forecast">
             <ha-switch
               .configValue=${"show_forecast"}
@@ -626,7 +605,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             <mwc-list-item value="hourly">Hourly</mwc-list-item>
           </ha-select>
 
-          ${"hourly"===this._config.forecast_type?G`
+          ${"hourly"===this._config.forecast_type?j`
             <ha-textfield
               label="Number of Hours"
               type="number"
@@ -639,7 +618,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             <p class="helper-text">
               Show 1-48 hours of forecast data
             </p>
-          `:G`
+          `:j`
             <ha-select
               label="Forecast Days"
               .configValue=${"forecast_days"}
@@ -677,7 +656,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Weather Information Display
           </h4>
 
-          ${this._expandedSections.has("weather_info")?G`
+          ${this._expandedSections.has("weather_info")?j`
           <p class="helper-text">
             Select which weather details to display below the header (when available from your weather provider).
           </p>
@@ -759,7 +738,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Display Options
           </h4>
 
-          ${this._expandedSections.has("display")?G`
+          ${this._expandedSections.has("display")?j`
           <ha-formfield label="Animate Icons">
             <ha-switch
               .configValue=${"animate_icons"}
@@ -812,7 +791,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Display National Weather Service alerts for your location. Uses your Home Assistant location coordinates.
           </p>
 
-          ${this._config.show_nws_alerts?G`
+          ${this._config.show_nws_alerts?j`
             <ha-formfield label="Alert Test Mode (shows sample alerts from anywhere in US)">
               <ha-switch
                 .configValue=${"nws_test_mode"}
@@ -834,7 +813,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             Advanced Options
           </h4>
 
-          ${this._expandedSections.has("advanced")?G`
+          ${this._expandedSections.has("advanced")?j`
           <p class="helper-text">
             Optional: Override default sun and moon entities. Leave empty to use defaults.
           </p>
@@ -967,34 +946,34 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
         font-size: 0.9em;
         color: var(--secondary-text-color);
       }
-    `}};e([me({attribute:!1})],_e.prototype,"hass",void 0),e([ge()],_e.prototype,"_config",void 0),e([ge()],_e.prototype,"_expandedSections",void 0),_e=e([de("weatherpulse-card-editor")],_e);var ke=Object.freeze({__proto__:null,get WeatherPulseCardEditor(){return _e}});let Ce=class extends ce{constructor(){super(...arguments),this.currentTime=ue(),this.currentDate=fe(),this.forecastData=[],this.nwsAlerts=[],this.lastAlertFetch=0}static async getConfigElement(){return await Promise.resolve().then(function(){return ke}),document.createElement("weatherpulse-card-editor")}static getStubConfig(){return{type:"custom:weatherpulse-card",entity:"weather.home",header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation","wind"]}}setConfig(e){if(!e.entity)throw new Error("You need to define an entity");this.config={header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation"],show_forecast:!0,temp_display_mode:"forecast",...e}}connectedCallback(){super.connectedCallback(),this.startClock(),this.fetchForecast(),this.fetchNWSAlerts(),this.forecastUpdateInterval=window.setInterval(()=>this.fetchForecast(),18e5),this.alertUpdateInterval=window.setInterval(()=>this.fetchNWSAlerts(),3e5)}disconnectedCallback(){super.disconnectedCallback(),this.stopClock(),this.forecastUpdateInterval&&clearInterval(this.forecastUpdateInterval),this.alertUpdateInterval&&clearInterval(this.alertUpdateInterval)}startClock(){this.updateTime(),this.timeInterval=window.setInterval(()=>this.updateTime(),1e3)}stopClock(){this.timeInterval&&clearInterval(this.timeInterval)}updateTime(){this.currentTime=ue(),this.currentDate=fe()}shouldUpdate(e){if(e.has("config"))return!0;if(e.has("hass")){const t=e.get("hass");return!t||t.states[this.config.entity]!==this.hass.states[this.config.entity]}return!0}async fetchForecast(){if(this.hass&&this.config?.entity)try{const e=this.config.forecast_type||"daily";this.hass.connection.subscribeMessage(e=>{e?.forecast&&(this.forecastData=e.forecast)},{type:"weather/subscribe_forecast",forecast_type:e,entity_id:this.config.entity})}catch(e){const t=this.hass.states[this.config.entity];t?.attributes?.forecast&&(this.forecastData=t.attributes.forecast)}}getWeatherData(){const e=this.hass.states[this.config.entity];if(!e)return{};let t=this.forecastData.length>0?this.forecastData:e.attributes.forecast||[];return{temperature:e.attributes.temperature,temperature_unit:e.attributes.temperature_unit||"°F",humidity:e.attributes.humidity,pressure:e.attributes.pressure,pressure_unit:e.attributes.pressure_unit,wind_speed:e.attributes.wind_speed,wind_speed_unit:e.attributes.wind_speed_unit,wind_bearing:e.attributes.wind_bearing,wind_gust_speed:e.attributes.wind_gust_speed,condition:e.state,forecast:t,apparent_temperature:e.attributes.apparent_temperature,uv_index:e.attributes.uv_index,visibility:e.attributes.visibility,visibility_unit:e.attributes.visibility_unit,precipitation:e.attributes.precipitation,precipitation_unit:e.attributes.precipitation_unit,cloud_coverage:e.attributes.cloud_coverage,dew_point:e.attributes.dew_point,ozone:e.attributes.ozone}}getCurrentTemp(){if(this.config.outdoor_temp_sensor){const e=this.hass.states[this.config.outdoor_temp_sensor];if(e)return parseFloat(e.state)}return this.getWeatherData().temperature||70}getSunEntity(){const e=this.config.sun_entity||"sun.sun";return this.hass.states[e]}getMoonEntity(){const e=this.config.moon_entity||"sensor.moon_phase";return this.hass.states[e]}isNightTime(){const e=this.getSunEntity();if(e)return"below_horizon"===e.state;const t=(new Date).getHours();return t>=20||t<6}getMoonPhase(){const e=this.getMoonEntity();return e?e.state:"unknown"}getCurrentHoliday(){if(!this.config?.holiday_themes)return null;const e=new Date,t=e.getMonth()+1,a=e.getDate();return 10===t&&a>=25?"halloween":12===t&&a>=18&&a<=25?"christmas":12===t&&31===a||1===t&&1===a?"newyear":2!==t||13!==a&&14!==a?3===t&&17===a?"stpatrick":5===t&&5===a?"cincodemayo":7===t&&4===a?"july4th":3===t&&a>=25||4===t&&a<=10?"easter":null:"valentine"}renderHolidayDecorations(){const e=this.getCurrentHoliday();if(!e)return G``;const t={halloween:["🎃","👻","🦇","🕷️"],christmas:["🎄","⛄","🎅","❄️"],newyear:["🎆","🎊","🥳","✨"],valentine:["❤️","💕","💝","🌹"],stpatrick:["🍀","🌈","☘️","💚"],july4th:["🇺🇸","🎆","⭐","🎇"],easter:["🐰","🥚","🌷","🐣"],cincodemayo:["🇲🇽","🌮","🌵","🎉"]}[e]||[];return G`
+    `}};e([me({attribute:!1})],_e.prototype,"hass",void 0),e([ge()],_e.prototype,"_config",void 0),e([ge()],_e.prototype,"_expandedSections",void 0),_e=e([de("weatherpulse-card-editor")],_e);var ke=Object.freeze({__proto__:null,get WeatherPulseCardEditor(){return _e}});let Se=class extends ce{constructor(){super(...arguments),this.currentTime=ue(),this.currentDate=fe(),this.forecastData=[],this.nwsAlerts=[],this.lastAlertFetch=0}static async getConfigElement(){return await Promise.resolve().then(function(){return ke}),document.createElement("weatherpulse-card-editor")}static getStubConfig(){return{type:"custom:weatherpulse-card",entity:"weather.home",header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation","wind"]}}setConfig(e){if(!e.entity)throw new Error("You need to define an entity");this.config={header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation"],show_forecast:!0,temp_display_mode:"forecast",...e}}connectedCallback(){super.connectedCallback(),this.startClock(),this.fetchForecast(),this.fetchNWSAlerts(),this.forecastUpdateInterval=window.setInterval(()=>this.fetchForecast(),18e5),this.alertUpdateInterval=window.setInterval(()=>this.fetchNWSAlerts(),3e5)}disconnectedCallback(){super.disconnectedCallback(),this.stopClock(),this.forecastUpdateInterval&&clearInterval(this.forecastUpdateInterval),this.alertUpdateInterval&&clearInterval(this.alertUpdateInterval)}startClock(){this.updateTime(),this.timeInterval=window.setInterval(()=>this.updateTime(),1e3)}stopClock(){this.timeInterval&&clearInterval(this.timeInterval)}updateTime(){this.currentTime=ue(),this.currentDate=fe()}shouldUpdate(e){if(e.has("config"))return!0;if(e.has("hass")){const t=e.get("hass");return!t||t.states[this.config.entity]!==this.hass.states[this.config.entity]}return!0}async fetchForecast(){if(this.hass&&this.config?.entity)try{const e=this.config.forecast_type||"daily";this.hass.connection.subscribeMessage(e=>{e?.forecast&&(this.forecastData=e.forecast)},{type:"weather/subscribe_forecast",forecast_type:e,entity_id:this.config.entity})}catch(e){const t=this.hass.states[this.config.entity];t?.attributes?.forecast&&(this.forecastData=t.attributes.forecast)}}getWeatherData(){const e=this.hass.states[this.config.entity];if(!e)return{};let t=this.forecastData.length>0?this.forecastData:e.attributes.forecast||[];return{temperature:e.attributes.temperature,temperature_unit:e.attributes.temperature_unit||"°F",humidity:e.attributes.humidity,pressure:e.attributes.pressure,pressure_unit:e.attributes.pressure_unit,wind_speed:e.attributes.wind_speed,wind_speed_unit:e.attributes.wind_speed_unit,wind_bearing:e.attributes.wind_bearing,wind_gust_speed:e.attributes.wind_gust_speed,condition:e.state,forecast:t,apparent_temperature:e.attributes.apparent_temperature,uv_index:e.attributes.uv_index,visibility:e.attributes.visibility,visibility_unit:e.attributes.visibility_unit,precipitation:e.attributes.precipitation,precipitation_unit:e.attributes.precipitation_unit,cloud_coverage:e.attributes.cloud_coverage,dew_point:e.attributes.dew_point,ozone:e.attributes.ozone}}getCurrentTemp(){if(this.config.outdoor_temp_sensor){const e=this.hass.states[this.config.outdoor_temp_sensor];if(e)return parseFloat(e.state)}return this.getWeatherData().temperature||70}getSunEntity(){const e=this.config.sun_entity||"sun.sun";return this.hass.states[e]}getMoonEntity(){const e=this.config.moon_entity||"sensor.moon_phase";return this.hass.states[e]}isNightTime(){const e=this.getSunEntity();if(e)return"below_horizon"===e.state;const t=(new Date).getHours();return t>=20||t<6}getMoonPhase(){const e=this.getMoonEntity();return e?e.state:"unknown"}getCurrentHoliday(){if(!this.config?.holiday_themes)return null;const e=new Date,t=e.getMonth()+1,a=e.getDate();return 10===t&&a>=25?"halloween":12===t&&a>=18&&a<=25?"christmas":12===t&&31===a||1===t&&1===a?"newyear":2!==t||13!==a&&14!==a?3===t&&17===a?"stpatrick":5===t&&5===a?"cincodemayo":7===t&&4===a?"july4th":3===t&&a>=25||4===t&&a<=10?"easter":null:"valentine"}renderHolidayDecorations(){const e=this.getCurrentHoliday();if(!e)return j``;const t={halloween:["🎃","👻","🦇","🕷️"],christmas:["🎄","⛄","🎅","❄️"],newyear:["🎆","🎊","🥳","✨"],valentine:["❤️","💕","💝","🌹"],stpatrick:["🍀","🌈","☘️","💚"],july4th:["🇺🇸","🎆","⭐","🎇"],easter:["🐰","🥚","🌷","🐣"],cincodemayo:["🇲🇽","🌮","🌵","🎉"]}[e]||[];return j`
       <div class="holiday-overlay">
         <span class="holiday-icon holiday-icon-1">${t[0]||""}</span>
         <span class="holiday-icon holiday-icon-2">${t[1]||""}</span>
         <span class="holiday-icon holiday-icon-3">${t[2]||""}</span>
         <span class="holiday-icon holiday-icon-4">${t[3]||""}</span>
       </div>
-    `}async fetchNWSAlerts(){if(!this.config?.show_nws_alerts||!this.hass)return;const e=Date.now();if(!(e-this.lastAlertFetch<3e5))try{let t;if(this.config?.nws_test_mode)t="https://api.weather.gov/alerts/active?status=actual&message_type=alert",console.log("NWS Test Mode: Fetching active US alerts for display testing");else{const e=this.hass.config.latitude;t=`https://api.weather.gov/alerts/active?point=${e},${this.hass.config.longitude}`}const a=await fetch(t);if(!a.ok)return void console.warn("Failed to fetch NWS alerts:",a.status);const i=await a.json(),r=[];if(i.features&&Array.isArray(i.features)){const e=this.config?.nws_test_mode?i.features.slice(0,2):i.features;for(const t of e){const e=t.properties;e&&r.push({id:e.id||"",event:e.event||"",headline:e.headline||"",description:e.description||"",instruction:e.instruction||"",severity:e.severity||"Unknown",urgency:e.urgency||"Unknown",certainty:e.certainty||"Unknown",onset:e.onset||"",expires:e.expires||"",areaDesc:e.areaDesc||""})}}this.nwsAlerts=r,this.lastAlertFetch=e,this.config?.nws_test_mode&&r.length>0&&console.log(`NWS Test Mode: Displaying ${r.length} sample alert(s)`,r)}catch(e){console.error("Failed to fetch NWS alerts:",e)}}renderNWSAlerts(){return this.config?.show_nws_alerts&&0!==this.nwsAlerts.length?G`
+    `}async fetchNWSAlerts(){if(!this.config?.show_nws_alerts||!this.hass)return;const e=Date.now();if(!(e-this.lastAlertFetch<3e5))try{let t;if(this.config?.nws_test_mode)t="https://api.weather.gov/alerts/active?status=actual&message_type=alert",console.log("NWS Test Mode: Fetching active US alerts for display testing");else{const e=this.hass.config.latitude;t=`https://api.weather.gov/alerts/active?point=${e},${this.hass.config.longitude}`}const a=await fetch(t);if(!a.ok)return void console.warn("Failed to fetch NWS alerts:",a.status);const i=await a.json(),r=[];if(i.features&&Array.isArray(i.features)){const e=this.config?.nws_test_mode?i.features.slice(0,2):i.features;for(const t of e){const e=t.properties;e&&r.push({id:e.id||"",event:e.event||"",headline:e.headline||"",description:e.description||"",instruction:e.instruction||"",severity:e.severity||"Unknown",urgency:e.urgency||"Unknown",certainty:e.certainty||"Unknown",onset:e.onset||"",expires:e.expires||"",areaDesc:e.areaDesc||""})}}this.nwsAlerts=r,this.lastAlertFetch=e,this.config?.nws_test_mode&&r.length>0&&console.log(`NWS Test Mode: Displaying ${r.length} sample alert(s)`,r)}catch(e){console.error("Failed to fetch NWS alerts:",e)}}renderNWSAlerts(){return this.config?.show_nws_alerts&&0!==this.nwsAlerts.length?j`
       <div class="nws-alerts-section">
-        ${this.nwsAlerts.map(e=>{let t="alert-unknown",a="⚠️",i="";switch(e.severity){case"Extreme":t="alert-extreme",a="🔴";break;case"Severe":t="alert-severe",a="🟠";break;case"Moderate":t="alert-moderate",a="🟡";break;case"Minor":t="alert-minor",a="🔵"}return"Immediate"===e.urgency?i="IMMEDIATE":"Expected"===e.urgency&&(i="EXPECTED"),G`
+        ${this.nwsAlerts.map(e=>{let t="alert-unknown",a="⚠️",i="";switch(e.severity){case"Extreme":t="alert-extreme",a="🔴";break;case"Severe":t="alert-severe",a="🟠";break;case"Moderate":t="alert-moderate",a="🟡";break;case"Minor":t="alert-minor",a="🔵"}return"Immediate"===e.urgency?i="IMMEDIATE":"Expected"===e.urgency&&(i="EXPECTED"),j`
             <div class="nws-alert ${t}">
               <div class="alert-header">
                 <span class="alert-icon">${a}</span>
                 <div class="alert-title">
                   <div class="alert-event">
                     ${e.event}
-                    ${i?G`<span class="urgency-badge">${i}</span>`:""}
+                    ${i?j`<span class="urgency-badge">${i}</span>`:""}
                   </div>
                   <div class="alert-area">${e.areaDesc}</div>
                 </div>
               </div>
               <div class="alert-headline">${e.headline}</div>
-              ${e.instruction?G`
+              ${e.instruction?j`
                 <div class="alert-instruction">
                   <strong>⚠️ What to do:</strong> ${e.instruction}
                 </div>
               `:""}
-              ${e.expires?G`
+              ${e.expires?j`
                 <div class="alert-expires">
                   Expires: ${new Date(e.expires).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit",hour12:!0})}
                 </div>
@@ -1002,12 +981,12 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             </div>
           `})}
       </div>
-    `:G``}renderWeatherInfo(e){const t=this.config?.show_weather_info;if(!t||0===t.length)return G``;const a=this.getWeatherData(),i=e||this.config?.weather_info_layout||"standard",r=[];for(const e of t){let t="",o="",s="";switch(e){case"uv_index":void 0!==a.uv_index&&(t="☀️",o="UV Index",s=String(Math.round(a.uv_index)));break;case"wind":if(void 0!==a.wind_speed){t="💨",o="Wind";const e=a.wind_speed_unit||"mph";s=`${Math.round(a.wind_speed)} ${e}`,a.wind_gust_speed&&(s+=` (gusts ${Math.round(a.wind_gust_speed)} ${e})`)}break;case"feels_like":let e=a.apparent_temperature;if(void 0===e&&void 0!==a.temperature){const t=a.temperature,i=a.wind_speed||0;if(t<=50&&i>3)e=35.74+.6215*t-35.75*Math.pow(i,.16)+.4275*t*Math.pow(i,.16);else if(t>=80){const i=a.humidity||50;e=2.04901523*t-42.379+10.14333127*i-.22475541*t*i-.00683783*t*t-.05481717*i*i+.00122874*t*t*i+85282e-8*t*i*i-199e-8*t*t*i*i}else e=t}if(void 0!==e){t="🌡️",o="Feels Like";const i=a.temperature_unit?.replace("°","")||"F";s=`${Math.round(e)}°${i}`}break;case"precipitation":if(void 0!==a.precipitation&&a.precipitation>0){t="💧",o="Precipitation";const e=a.precipitation_unit||"in";s=`${a.precipitation} ${e}`}break;case"humidity":void 0!==a.humidity&&(t="💧",o="Humidity",s=`${Math.round(a.humidity)}%`);break;case"pressure":if(void 0!==a.pressure){t="🔽",o="Pressure";const e=a.pressure_unit||"hPa";s=`${Math.round(a.pressure)} ${e}`}break;case"visibility":if(void 0!==a.visibility){t="👁️",o="Visibility";const e=a.visibility_unit||"mi";s=`${a.visibility} ${e}`}break;case"sunrise_sunset":const i=this.getSunEntity();if(i&&i.attributes){const e="above_horizon"===i.state,a=e?i.attributes.next_setting:i.attributes.next_rising;if(a){t=e?"🌅":"🌄",o=e?"Sunset":"Sunrise",s=new Date(a).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}}}s&&("compact"===i?r.push(G`
+    `:j``}renderWeatherInfo(e){const t=this.config?.show_weather_info;if(!t||0===t.length)return j``;const a=this.getWeatherData(),i=e||this.config?.weather_info_layout||"standard",r=[];for(const e of t){let t="",o="",s="";switch(e){case"uv_index":void 0!==a.uv_index&&(t="☀️",o="UV Index",s=String(Math.round(a.uv_index)));break;case"wind":if(void 0!==a.wind_speed){t="💨",o="Wind";const e=a.wind_speed_unit||"mph";s=`${Math.round(a.wind_speed)} ${e}`,a.wind_gust_speed&&(s+=` (gusts ${Math.round(a.wind_gust_speed)} ${e})`)}break;case"feels_like":let e=a.apparent_temperature;if(void 0===e&&void 0!==a.temperature){const t=a.temperature,i=a.wind_speed||0;if(t<=50&&i>3)e=35.74+.6215*t-35.75*Math.pow(i,.16)+.4275*t*Math.pow(i,.16);else if(t>=80){const i=a.humidity||50;e=2.04901523*t-42.379+10.14333127*i-.22475541*t*i-.00683783*t*t-.05481717*i*i+.00122874*t*t*i+85282e-8*t*i*i-199e-8*t*t*i*i}else e=t}if(void 0!==e){t="🌡️",o="Feels Like";const i=a.temperature_unit?.replace("°","")||"F";s=`${Math.round(e)}°${i}`}break;case"precipitation":if(void 0!==a.precipitation&&a.precipitation>0){t="💧",o="Precipitation";const e=a.precipitation_unit||"in";s=`${a.precipitation} ${e}`}break;case"humidity":void 0!==a.humidity&&(t="💧",o="Humidity",s=`${Math.round(a.humidity)}%`);break;case"pressure":if(void 0!==a.pressure){t="🔽",o="Pressure";const e=a.pressure_unit||"hPa";s=`${Math.round(a.pressure)} ${e}`}break;case"visibility":if(void 0!==a.visibility){t="👁️",o="Visibility";const e=a.visibility_unit||"mi";s=`${a.visibility} ${e}`}break;case"sunrise_sunset":const i=this.getSunEntity();if(i&&i.attributes){const e="above_horizon"===i.state,a=e?i.attributes.next_setting:i.attributes.next_rising;if(a){t=e?"🌅":"🌄",o=e?"Sunset":"Sunrise",s=new Date(a).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}}}s&&("compact"===i?r.push(j`
             <div class="weather-info-item weather-info-compact">
               <div class="weather-info-value">${s}</div>
               <div class="weather-info-label-compact">${o.toUpperCase()}</div>
             </div>
-          `):"detailed"===i?r.push(G`
+          `):"detailed"===i?r.push(j`
             <div class="weather-info-item weather-info-detailed">
               <span class="weather-info-icon">${t}</span>
               <div class="weather-info-content">
@@ -1015,7 +994,7 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
                 <div class="weather-info-value">${s}</div>
               </div>
             </div>
-          `):r.push(G`
+          `):r.push(j`
             <div class="weather-info-item">
               <span class="weather-info-icon">${t}</span>
               <div class="weather-info-content">
@@ -1023,11 +1002,11 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
                 <div class="weather-info-value">${s}</div>
               </div>
             </div>
-          `))}if(0===r.length)return G``;return G`
+          `))}if(0===r.length)return j``;return j`
       <div class="${`weather-info-section weather-info-layout-${i}`}">
         ${r}
       </div>
-    `}renderHeader(){const e=this.getWeatherData(),t=this.getCurrentTemp(),a=e.temperature,i=!!this.config.outdoor_temp_sensor,r=function(e,t="°F"){const a="°C"===t?9*e/5+32:e;return a<32?{color:"linear-gradient(135deg, #667eea 0%, #764ba2 100%)",backgroundColor:"#667eea",textColor:"#ffffff"}:a<50?{color:"linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",backgroundColor:"#4facfe",textColor:"#ffffff"}:a<70?{color:"linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",backgroundColor:"#43e97b",textColor:"#1a1a1a"}:a<85?{color:"linear-gradient(135deg, #fa709a 0%, #fee140 100%)",backgroundColor:"#fa709a",textColor:"#1a1a1a"}:{color:"linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)",backgroundColor:"#ff6b6b",textColor:"#ffffff"}}(t,e.temperature_unit),o=this.config.header_mode||"time-focused",s=this.config.temp_display_mode||"forecast",n=e.temperature_unit||"°F";let c,l="";switch(l="both"===s&&i&&a?G`
+    `}renderHeader(){const e=this.getWeatherData(),t=this.getCurrentTemp(),a=e.temperature,i=!!this.config.outdoor_temp_sensor,r=function(e,t="°F"){const a="°C"===t?9*e/5+32:e;return a<32?{color:"linear-gradient(135deg, #667eea 0%, #764ba2 100%)",backgroundColor:"#667eea",textColor:"#ffffff"}:a<50?{color:"linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",backgroundColor:"#4facfe",textColor:"#ffffff"}:a<70?{color:"linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",backgroundColor:"#43e97b",textColor:"#1a1a1a"}:a<85?{color:"linear-gradient(135deg, #fa709a 0%, #fee140 100%)",backgroundColor:"#fa709a",textColor:"#1a1a1a"}:{color:"linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)",backgroundColor:"#ff6b6b",textColor:"#ffffff"}}(t,e.temperature_unit),o=this.config.header_mode||"time-focused",s=this.config.temp_display_mode||"forecast",n=e.temperature_unit||"°F";let c,l="";switch(l="both"===s&&i&&a?j`
         <div class="temp-display-wrapper">
           <div class="temp-display">
             <div class="temp-main">${Math.round(t)}°${n.replace("°","")}</div>
@@ -1038,19 +1017,19 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             <div class="temp-label">Forecast</div>
           </div>
         </div>
-      `:"actual"===s&&i?G`
+      `:"actual"===s&&i?j`
         <div class="temp-display">
           <div class="temp-main">${Math.round(t)}°${n.replace("°","")}</div>
           <div class="temp-label">Actual</div>
         </div>
-      `:G`
+      `:j`
         <div class="temp-display">
           <div class="temp-main">${Math.round(t)}°${n.replace("°","")}</div>
           <div class="temp-label">Forecast</div>
         </div>
-      `,o){case"greeting":c=G`
+      `,o){case"greeting":c=j`
           <div class="greeting-header">
-            <div class="weather-icon ${ye(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             <div class="greeting-content">
@@ -1063,21 +1042,21 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
               ${l}
             </div>
           </div>
-        `;break;case"graphical":const r=xe(),o=this.config.seasonal_images?.[r],d=function(e,t){if(t)return`url(${t})`;const a="/local/community/WeatherPulse/images";switch(e||xe()){case"spring":default:return`url(${a}/spring-default.jpg)`;case"summer":return`url(${a}/summer-default.jpg)`;case"fall":return`url(${a}/fall-default.jpg)`;case"winter":return`url(${a}/winter-default.jpg)`}}(r,o);c=G`
+        `;break;case"graphical":const r=xe(),o=this.config.seasonal_images?.[r],d=function(e,t){if(t)return`url(${t})`;const a="/local/community/WeatherPulse/images";switch(e||xe()){case"spring":default:return`url(${a}/spring-default.jpg)`;case"summer":return`url(${a}/summer-default.jpg)`;case"fall":return`url(${a}/fall-default.jpg)`;case"winter":return`url(${a}/winter-default.jpg)`}}(r,o);c=j`
           <div class="graphical-header" style="background: ${d}; background-size: cover; background-position: center;">
             <div class="graphical-overlay">
               <div class="graphical-content">
                 <div class="graphical-main">
-                  <div class="weather-icon-graphical ${ye(e.condition||"clear")}">
+                  <div class="weather-icon-graphical ${we(e.condition||"clear")}">
                     ${this.renderWeatherIcon(e.condition||"clear")}
                   </div>
                   <div class="graphical-right">
-                    ${!1!==this.config.show_time?G`
+                    ${!1!==this.config.show_time?j`
                       <div class="graphical-time">
                         ${this.currentTime.replace(/\s?(AM|PM)/i,"")}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0]||""}</span>
                       </div>
                     `:""}
-                    ${!1!==this.config.show_date?G`
+                    ${!1!==this.config.show_date?j`
                       <div class="graphical-date">${this.currentDate}</div>
                     `:""}
                     ${l}
@@ -1086,42 +1065,42 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
               </div>
             </div>
           </div>
-        `;break;case"minimal":c=G`
+        `;break;case"minimal":c=j`
           <div class="minimal-header">
-            <div class="weather-icon ${ye(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             ${l}
           </div>
-        `;break;case"date-focused":c=G`
+        `;break;case"date-focused":c=j`
           <div class="datetime-header">
-            <div class="weather-icon ${ye(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             <div class="datetime-content">
               <div class="date-large">${this.currentDate}</div>
-              ${this.config.show_time?G`<div class="time-small">
+              ${this.config.show_time?j`<div class="time-small">
                 ${this.currentTime.replace(/\s?(AM|PM)/i,"")}<span class="time-period-small">${this.currentTime.match(/(AM|PM)/i)?.[0]||""}</span>
               </div>`:""}
               ${l}
             </div>
           </div>
-        `;break;case"balanced":c=G`
+        `;break;case"balanced":c=j`
           <div class="datetime-header balanced">
-            <div class="weather-icon ${ye(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             <div class="datetime-content">
-              ${this.config.show_time?G`<div class="time-medium">
+              ${this.config.show_time?j`<div class="time-medium">
                 ${this.currentTime.replace(/\s?(AM|PM)/i,"")}<span class="time-period-medium">${this.currentTime.match(/(AM|PM)/i)?.[0]||""}</span>
               </div>`:""}
-              ${this.config.show_date?G`<div class="date-medium">${this.currentDate}</div>`:""}
+              ${this.config.show_date?j`<div class="date-medium">${this.currentDate}</div>`:""}
               ${l}
             </div>
           </div>
-        `;break;default:let h=e.condition||"clear";h=h.toLowerCase().includes("unavail")||h.toLowerCase().includes("unknown")?"Loading":h.split("-").map(e=>e.charAt(0).toUpperCase()+e.slice(1)).join(" "),c=G`
+        `;break;default:let h=e.condition||"clear";h=h.toLowerCase().includes("unavail")||h.toLowerCase().includes("unknown")?"Loading":h.split("-").map(e=>e.charAt(0).toUpperCase()+e.slice(1)).join(" "),c=j`
           <div class="datetime-header time-focused-header">
-            <div class="weather-icon ${ye(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             <div class="datetime-content">
@@ -1129,8 +1108,8 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
               <div class="time-large">
                 ${this.currentTime.replace(/\s?(AM|PM)/i,"")}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0]||""}</span>
               </div>
-              ${this.config.show_date?G`<div class="date-small">${this.currentDate}</div>`:""}
-              ${"both"===s&&i||"actual"===s&&i?G`
+              ${this.config.show_date?j`<div class="date-small">${this.currentDate}</div>`:""}
+              ${"both"===s&&i||"actual"===s&&i?j`
                 <div class="actual-temp-below">
                   <span class="actual-temp-value">${Math.round(t)}°${n.replace("°","")}</span>
                   <span class="actual-temp-label">Actual</span>
@@ -1138,23 +1117,23 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
               `:""}
             </div>
           </div>
-        `}const d="compact"===(this.config?.weather_info_layout||"standard"),h=d?this.renderWeatherInfo("compact"):"";return"graphical"===o?G`
+        `}const d="compact"===(this.config?.weather_info_layout||"standard"),h=d?this.renderWeatherInfo("compact"):"";return"graphical"===o?j`
         ${c}
-        ${d?G`
+        ${d?j`
           <div class="weather-info-in-header">
             ${h}
           </div>
         `:""}
-      `:G`
+      `:j`
       <div class="card-header" style="background: ${r.color}; color: ${r.textColor};">
         ${c}
-        ${d?G`
+        ${d?j`
           <div class="weather-info-in-header">
             ${h}
           </div>
         `:""}
       </div>
-    `}renderWeatherIcon(e,t=!1){const a=t?function(e){const t=e.toLowerCase();return t.includes("clear")||t.includes("sunny")?"clear-day":t.includes("partlycloudy")||t.includes("partly")||t.includes("partial")?"partlycloudy":t.includes("cloud")?"cloudy":t.includes("rain")?"rainy":t.includes("snow")?"snowy":t.includes("storm")||t.includes("thunder")?"lightning":t.includes("fog")||t.includes("mist")?"fog":t.includes("wind")?"windy":"clear-day"}(e):ye(e),i=!1!==this.config.animate_icons;if(("clear-night"===a||"partlycloudy-night"===a)&&i&&!1!==this.config.show_moon_phase){const e=this.getMoonPhase();if(e&&"unknown"!==e)return"clear-night"===a?function(e,t=!0){const a=t?"animated":"",i=R`
+    `}renderWeatherIcon(e,t=!1){const a=t?function(e){const t=e.toLowerCase();return t.includes("clear")||t.includes("sunny")?"clear-day":t.includes("partlycloudy")||t.includes("partly")||t.includes("partial")?"partlycloudy":t.includes("cloud")?"cloudy":t.includes("rain")?"rainy":t.includes("snow")?"snowy":t.includes("storm")||t.includes("thunder")?"lightning":t.includes("fog")||t.includes("mist")?"fog":t.includes("wind")?"windy":"clear-day"}(e):we(e),i=!1!==this.config.animate_icons;if(("clear-night"===a||"partlycloudy-night"===a)&&i&&!1!==this.config.show_moon_phase){const e=this.getMoonPhase();if(e&&"unknown"!==e)return"clear-night"===a?function(e,t=!0){const a=t?"animated":"",i=R`
     <defs>
       <radialGradient id="moonPhaseGradient" cx="40%" cy="40%">
         <stop offset="0%" style="stop-color:#FFFEF0;stop-opacity:1" />
@@ -1250,25 +1229,25 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             <circle cx="58" cy="48" r="20" fill="#1a1a2e"/>
           </g>
         </svg>
-      `}}(e,!0):we(a,!0)}if(i)return we(a,!0);return G`<span class="icon-emoji">${{"clear-day":"☀️","clear-night":"🌙",cloudy:"☁️",rainy:"🌧️",snowy:"❄️",lightning:"⛈️",fog:"🌫️",windy:"💨"}[a]||"☀️"}</span>`}renderForecast(){const e=this.getWeatherData(),t=this.config.forecast_type||"daily",a="hourly"===t?this.config.hourly_count||12:this.config.forecast_days||5,i=e.forecast?.slice(0,a)||[],r=this.config.view_mode||"standard";if(0===i.length)return G`
+      `}}(e,!0):ye(a,!0)}if(i)return ye(a,!0);return j`<span class="icon-emoji">${{"clear-day":"☀️","clear-night":"🌙",cloudy:"☁️",rainy:"🌧️",snowy:"❄️",lightning:"⛈️",fog:"🌫️",windy:"💨"}[a]||"☀️"}</span>`}renderForecast(){const e=this.getWeatherData(),t=this.config.forecast_type||"daily",a="hourly"===t?this.config.hourly_count||12:this.config.forecast_days||5,i=e.forecast?.slice(0,a)||[],r=this.config.view_mode||"standard";if(0===i.length)return j`
         <div class="no-forecast">
           <p>No forecast data available</p>
           <p class="helper">Your weather integration may not provide forecast data, or you may need to use a weather service call to fetch it.</p>
         </div>
-      `;return G`
+      `;return j`
       <div class="${`forecast-container forecast-${r} forecast-type-${t}`}">
         ${i.map(a=>"hourly"===t?this.renderForecastHour(a,e.temperature_unit||"°F",r):this.renderForecastDay(a,e.temperature_unit||"°F",r))}
       </div>
-    `}renderForecastHour(e,t,a="standard"){const i=new Date(e.datetime).toLocaleTimeString("en-US",{hour:"numeric",hour12:!0}),r=Math.round(e.temperature||0),o=e.precipitation_probability||0,s=e.condition||"clear",n=e.humidity,c=e.wind_speed;return"compact"===a?G`
+    `}renderForecastHour(e,t,a="standard"){const i=new Date(e.datetime).toLocaleTimeString("en-US",{hour:"numeric",hour12:!0}),r=Math.round(e.temperature||0),o=e.precipitation_probability||0,s=e.condition||"clear",n=e.humidity,c=e.wind_speed;return"compact"===a?j`
         <div class="forecast-hour forecast-compact">
           <div class="hour-name">${i}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(s,!0)}
           </div>
           <div class="hour-temp">${r}°</div>
-          ${o>0?G`<div class="precip-compact">💧${o}%</div>`:""}
+          ${o>0?j`<div class="precip-compact">💧${o}%</div>`:""}
         </div>
-      `:"detailed"===a?G`
+      `:"detailed"===a?j`
         <div class="forecast-hour forecast-detailed">
           <div class="hour-info-row">
             <div class="hour-name">${i}</div>
@@ -1277,24 +1256,24 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             </div>
             <div class="hour-temp-display">${r}°</div>
           </div>
-          ${o>0||n||c?G`
+          ${o>0||n||c?j`
             <div class="hour-details">
-              ${o>0?G`<div class="detail-item"><span>💧</span> ${o}%</div>`:""}
-              ${n?G`<div class="detail-item"><span>💨</span> ${n}%</div>`:""}
-              ${c?G`<div class="detail-item"><span>🌬️</span> ${Math.round(c)} mph</div>`:""}
+              ${o>0?j`<div class="detail-item"><span>💧</span> ${o}%</div>`:""}
+              ${n?j`<div class="detail-item"><span>💨</span> ${n}%</div>`:""}
+              ${c?j`<div class="detail-item"><span>🌬️</span> ${Math.round(c)} mph</div>`:""}
             </div>
           `:""}
         </div>
-      `:G`
+      `:j`
       <div class="forecast-hour">
         <div class="hour-name">${i}</div>
         <div class="day-icon">
           ${this.renderWeatherIcon(s,!0)}
         </div>
         <div class="hour-temp">${r}°</div>
-        ${o>0?G`<div class="precip-prob">${o}%</div>`:""}
+        ${o>0?j`<div class="precip-prob">${o}%</div>`:""}
       </div>
-    `}renderForecastDay(e,t,a="standard"){const i=(r=e.datetime,new Date(r).toLocaleDateString("en-US",{weekday:"short"}));var r;const o=Math.round(e.temperature||0),s=Math.round(e.templow||0),n=e.precipitation_probability||0,c=e.humidity,l=e.wind_speed,d=o-s>0?s/o*70:30;return"compact"===a?G`
+    `}renderForecastDay(e,t,a="standard"){const i=(r=e.datetime,new Date(r).toLocaleDateString("en-US",{weekday:"short"}));var r;const o=Math.round(e.temperature||0),s=Math.round(e.templow||0),n=e.precipitation_probability||0,c=e.humidity,l=e.wind_speed,d=o-s>0?s/o*70:30;return"compact"===a?j`
         <div class="forecast-day forecast-compact">
           <div class="day-name">${i}</div>
           <div class="day-icon-small">
@@ -1304,9 +1283,9 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
             <span class="temp-high-compact">${o}°</span>
             <span class="temp-low-compact">${s}°</span>
           </div>
-          ${n>0?G`<div class="precip-compact">💧${n}%</div>`:""}
+          ${n>0?j`<div class="precip-compact">💧${n}%</div>`:""}
         </div>
-      `:"detailed"===a?G`
+      `:"detailed"===a?j`
         <div class="forecast-day forecast-detailed">
           <div class="day-info-row">
             <div class="day-name">${i}</div>
@@ -1322,15 +1301,15 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
               <span class="temp-high">${o}°</span>
             </div>
           </div>
-          ${n>0||c||l?G`
+          ${n>0||c||l?j`
             <div class="day-details">
-              ${n>0?G`<div class="detail-item"><span>💧</span> ${n}%</div>`:""}
-              ${c?G`<div class="detail-item"><span>💨</span> ${c}%</div>`:""}
-              ${l?G`<div class="detail-item"><span>🌬️</span> ${Math.round(l)} mph</div>`:""}
+              ${n>0?j`<div class="detail-item"><span>💧</span> ${n}%</div>`:""}
+              ${c?j`<div class="detail-item"><span>💨</span> ${c}%</div>`:""}
+              ${l?j`<div class="detail-item"><span>🌬️</span> ${Math.round(l)} mph</div>`:""}
             </div>
           `:""}
         </div>
-      `:G`
+      `:j`
       <div class="forecast-day">
         <div class="day-name">${i}</div>
         <div class="day-icon">
@@ -1344,21 +1323,21 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
           </div>
           <span class="temp-high">${o}°</span>
         </div>
-        ${n>0?G`
+        ${n>0?j`
           <div class="precip-prob">${n}%</div>
         `:""}
       </div>
-    `}render(){if(!this.hass||!this.config)return G``;if(!this.hass.states[this.config.entity])return G`
+    `}render(){if(!this.hass||!this.config)return j``;if(!this.hass.states[this.config.entity])return j`
         <ha-card>
           <div class="error">Entity ${this.config.entity} not found</div>
         </ha-card>
-      `;const e=this.getWeatherData(),t=e.forecast&&e.forecast.length>0,a=!1!==this.config.show_forecast&&t,i=this.config.night_mode&&this.isNightTime()?"night-mode":"",r="compact"===(this.config?.weather_info_layout||"standard"),o=this.nwsAlerts.some(e=>"Extreme"===e.severity||"Severe"===e.severity)?this.nwsAlerts.some(e=>"Extreme"===e.severity)?"alert-glow-extreme":"alert-glow-severe":"",s=this.getCurrentTemp();let n="";s>=95?n="temp-glow-hot":s<=20&&(n="temp-glow-freezing");const c=this.config?.theme||"default",l="default"!==c?`theme-${c}`:"";let d="";if("custom"===c&&this.config?.custom_theme_colors){const e=this.config.custom_theme_colors;d=`\n        --custom-primary: ${e.primary||"#667eea"};\n        --custom-secondary: ${e.secondary||"#764ba2"};\n        --custom-background: ${e.background||"#ffffff"};\n        --custom-text: ${e.text||"#333333"};\n        --custom-border: ${e.border||"#e0e0e0"};\n        --custom-accent: ${e.accent||"#f093fb"};\n      `}return G`
+      `;const e=this.getWeatherData(),t=e.forecast&&e.forecast.length>0,a=!1!==this.config.show_forecast&&t,i=this.config.night_mode&&this.isNightTime()?"night-mode":"",r="compact"===(this.config?.weather_info_layout||"standard"),o=this.nwsAlerts.some(e=>"Extreme"===e.severity||"Severe"===e.severity)?this.nwsAlerts.some(e=>"Extreme"===e.severity)?"alert-glow-extreme":"alert-glow-severe":"",s=this.getCurrentTemp();let n="";s>=95?n="temp-glow-hot":s<=20&&(n="temp-glow-freezing");const c=this.config?.theme||"default",l="default"!==c?`theme-${c}`:"";let d="";if("custom"===c&&this.config?.custom_theme_colors){const e=this.config.custom_theme_colors;d=`\n        --custom-primary: ${e.primary||"#667eea"};\n        --custom-secondary: ${e.secondary||"#764ba2"};\n        --custom-background: ${e.background||"#ffffff"};\n        --custom-text: ${e.text||"#333333"};\n        --custom-border: ${e.border||"#e0e0e0"};\n        --custom-accent: ${e.accent||"#f093fb"};\n      `}return j`
       <ha-card class="${i} ${o} ${n} ${l}" style="${d}">
         ${this.renderHolidayDecorations()}
         ${this.renderHeader()}
         ${this.renderNWSAlerts()}
         ${r?"":this.renderWeatherInfo()}
-        ${a?G`
+        ${a?j`
           <div class="card-content">
             ${this.renderForecast()}
           </div>
@@ -3064,4 +3043,4 @@ function e(e,t,a,i){var r,o=arguments.length,s=o<3?t:null===i?i=Object.getOwnPro
         font-weight: 600;
         text-align: center;
       }
-    `}};e([me({attribute:!1})],Ce.prototype,"hass",void 0),e([ge()],Ce.prototype,"config",void 0),e([ge()],Ce.prototype,"currentTime",void 0),e([ge()],Ce.prototype,"currentDate",void 0),e([ge()],Ce.prototype,"forecastData",void 0),e([ge()],Ce.prototype,"nwsAlerts",void 0),Ce=e([de("weatherpulse-card")],Ce),window.customCards=window.customCards||[],window.customCards.push({type:"weatherpulse-card",name:"WeatherPulse Card",description:"A modern, highly configurable weather card for Home Assistant",preview:!0,documentationURL:"https://github.com/imCharlieB/WeatherPulse"}),console.info("%c WEATHERPULSE-CARD %c v0.1.0 ","color: white; background: #4facfe; font-weight: 700;","color: #4facfe; background: white; font-weight: 700;");export{Ce as WeatherPulseCard};
+    `}};e([me({attribute:!1})],Se.prototype,"hass",void 0),e([ge()],Se.prototype,"config",void 0),e([ge()],Se.prototype,"currentTime",void 0),e([ge()],Se.prototype,"currentDate",void 0),e([ge()],Se.prototype,"forecastData",void 0),e([ge()],Se.prototype,"nwsAlerts",void 0),Se=e([de("weatherpulse-card")],Se),window.customCards=window.customCards||[],window.customCards.push({type:"weatherpulse-card",name:"WeatherPulse Card",description:"A modern, highly configurable weather card for Home Assistant",preview:!0,documentationURL:"https://github.com/imCharlieB/WeatherPulse"}),console.info("%c WEATHERPULSE-CARD %c v0.1.0 ","color: white; background: #4facfe; font-weight: 700;","color: #4facfe; background: white; font-weight: 700;");export{Se as WeatherPulseCard};
