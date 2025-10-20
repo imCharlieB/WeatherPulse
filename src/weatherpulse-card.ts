@@ -923,7 +923,25 @@ export class WeatherPulseCard extends LitElement {
   }
 
   private renderWeatherIcon(condition: string, useForecastIcon: boolean = false): unknown {
-    const iconClass = useForecastIcon ? getForecastIcon(condition) : getWeatherIcon(condition);
+    // Determine icon class - for main icon, use sun entity for accurate day/night detection
+    let iconClass: string;
+    if (useForecastIcon) {
+      iconClass = getForecastIcon(condition);
+    } else {
+      // Use the card's isNightTime() which checks sun entity, not utils isNightTime()
+      const isNight = this.isNightTime();
+      const conditionLower = condition.toLowerCase();
+
+      if (conditionLower.includes('clear') || conditionLower.includes('sunny')) {
+        iconClass = isNight ? 'clear-night' : 'clear-day';
+      } else if (conditionLower.includes('partlycloudy') || conditionLower.includes('partly') || conditionLower.includes('partial')) {
+        iconClass = isNight ? 'partlycloudy-night' : 'partlycloudy';
+      } else {
+        // For other conditions, use the utility function
+        iconClass = getWeatherIcon(condition);
+      }
+    }
+
     const animate = this.config.animate_icons !== false;
 
     // For night conditions, use moon phase icons if enabled and available
