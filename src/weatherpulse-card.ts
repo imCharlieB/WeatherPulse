@@ -1152,13 +1152,13 @@ export class WeatherPulseCard extends LitElement {
               return html`
                 <div class="chart-column">
                   ${lowTemp ? html`
-                    <div class="chart-temp chart-temp-high" style="bottom: ${highPercent}%">${highTemp}°</div>
-                    <div class="chart-point chart-point-high" style="bottom: ${highPercent}%"></div>
-                    <div class="chart-temp chart-temp-low" style="bottom: ${lowPercent}%">${lowTemp}°</div>
-                    <div class="chart-point chart-point-low" style="bottom: ${lowPercent}%"></div>
+                    <div class="chart-temp chart-temp-high" style="bottom: calc(${highPercent}% - 4px)">${highTemp}°</div>
+                    <div class="chart-point chart-point-high" style="bottom: calc(${highPercent}% - 4px)"></div>
+                    <div class="chart-temp chart-temp-low" style="bottom: calc(${lowPercent}% - 4px)">${lowTemp}°</div>
+                    <div class="chart-point chart-point-low" style="bottom: calc(${lowPercent}% - 4px)"></div>
                   ` : html`
-                    <div class="chart-temp chart-temp-single" style="bottom: ${highPercent}%">${highTemp}°</div>
-                    <div class="chart-point chart-point-single" style="bottom: ${highPercent}%"></div>
+                    <div class="chart-temp chart-temp-single" style="bottom: calc(${highPercent}% - 4px)">${highTemp}°</div>
+                    <div class="chart-point chart-point-single" style="bottom: calc(${highPercent}% - 4px)"></div>
                   `}
                 </div>
               `;
