@@ -326,26 +326,26 @@ export function getAnimatedWeatherIcon(condition: string, animate: boolean = tru
               50% { transform: translateX(5px); }
             }
           </style>
-          <!-- Top fog cloud -->
-          <g class="fog-cloud" opacity="0.5">
-            <ellipse cx="30" cy="25" rx="15" ry="12" fill="#D0D0D0"/>
-            <ellipse cx="45" cy="20" rx="18" ry="14" fill="#DCDCDC"/>
-            <ellipse cx="60" cy="25" rx="15" ry="12" fill="#D0D0D0"/>
-            <rect x="15" y="25" width="60" height="14" rx="3" fill="#D8D8D8"/>
+          <!-- Top fog cloud - smaller and lighter -->
+          <g class="fog-cloud" opacity="0.35">
+            <ellipse cx="30" cy="20" rx="13" ry="9" fill="#E0E0E0"/>
+            <ellipse cx="45" cy="17" rx="15" ry="10" fill="#E8E8E8"/>
+            <ellipse cx="60" cy="20" rx="13" ry="9" fill="#E0E0E0"/>
+            <rect x="17" y="20" width="56" height="10" rx="2" fill="#E4E4E4"/>
           </g>
           <!-- Middle fog cloud -->
-          <g class="fog-cloud-2" opacity="0.6">
-            <ellipse cx="25" cy="50" rx="16" ry="13" fill="#C8C8C8"/>
-            <ellipse cx="42" cy="45" rx="19" ry="15" fill="#D8D8D8"/>
-            <ellipse cx="60" cy="50" rx="16" ry="13" fill="#C8C8C8"/>
-            <rect x="9" y="50" width="68" height="15" rx="3" fill="#D0D0D0"/>
+          <g class="fog-cloud-2" opacity="0.4">
+            <ellipse cx="25" cy="50" rx="14" ry="10" fill="#D8D8D8"/>
+            <ellipse cx="42" cy="47" rx="16" ry="11" fill="#E0E0E0"/>
+            <ellipse cx="60" cy="50" rx="14" ry="10" fill="#D8D8D8"/>
+            <rect x="11" y="50" width="62" height="11" rx="2" fill="#DCDCDC"/>
           </g>
           <!-- Bottom fog cloud -->
-          <g class="fog-cloud-3" opacity="0.55">
-            <ellipse cx="30" cy="75" rx="17" ry="13" fill="#D0D0D0"/>
-            <ellipse cx="48" cy="70" rx="20" ry="16" fill="#DCDCDC"/>
-            <ellipse cx="67" cy="75" rx="17" ry="13" fill="#D0D0D0"/>
-            <rect x="13" y="75" width="71" height="16" rx="3" fill="#D8D8D8"/>
+          <g class="fog-cloud-3" opacity="0.37">
+            <ellipse cx="30" cy="80" rx="15" ry="10" fill="#E0E0E0"/>
+            <ellipse cx="48" cy="77" rx="17" ry="12" fill="#E8E8E8"/>
+            <ellipse cx="67" cy="80" rx="15" ry="10" fill="#E0E0E0"/>
+            <rect x="15" y="80" width="67" height="12" rx="2" fill="#E4E4E4"/>
           </g>
         </svg>
       `;
