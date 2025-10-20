@@ -776,7 +776,7 @@ export class WeatherPulseCard extends LitElement {
         // Handle unavailable/unknown states gracefully
         let conditionText = (weatherData.condition || 'clear');
         if (conditionText.toLowerCase().includes('unavail') || conditionText.toLowerCase().includes('unknown')) {
-          conditionText = 'Checking Weather';
+          conditionText = 'Loading';
         } else {
           conditionText = conditionText.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
         }
