@@ -21,6 +21,7 @@ This folder contains screenshots for the WeatherPulse card documentation.
 - `moon-phases.png` - Moon phase icons on clear nights
 - `nws-alert-severe.png` - Severe weather alert with orange glow
 - `nws-alert-extreme.png` - Extreme weather alert with red glow
+- `nws-alert-moderate-minor.png` - Moderate and Minor weather alert
 - `forecast-daily.png` - Daily forecast view
 - `forecast-hourly.png` - Hourly forecast view
 

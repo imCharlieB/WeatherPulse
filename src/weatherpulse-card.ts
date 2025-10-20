@@ -1183,7 +1183,7 @@ export class WeatherPulseCard extends LitElement {
       ha-card.night-mode .card-header {
         position: relative;
         color: #e8eaf6 !important;
-        filter: brightness(0.4) contrast(1.1);
+        filter: brightness(0.6) contrast(1.1); /* Lighter header */
       }
 
       ha-card.night-mode .card-header::after {
@@ -1222,11 +1222,11 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.night-mode .forecast-compact {
-        background: rgba(29, 33, 56, 0.7) !important;
+        background: rgba(29, 33, 56, 0.3) !important; /* More transparent - show stars */
       }
 
       ha-card.night-mode .forecast-type-hourly.forecast-standard .forecast-hour {
-        background: rgba(29, 33, 56, 0.7) !important;
+        background: rgba(29, 33, 56, 0.3) !important; /* More transparent - show stars */
       }
 
       .error {
@@ -1634,12 +1634,12 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.night-mode .weather-info-section {
-        background: rgba(10, 14, 39, 0.4);
+        background: transparent; /* No background - show stars */
         border-top-color: rgba(232, 234, 246, 0.1);
       }
 
       ha-card.night-mode .weather-info-item {
-        background: rgba(29, 33, 56, 0.6);
+        background: transparent; /* No boxes - show stars */
       }
 
       /* Weather Info in Header (compact mode) */
@@ -2091,6 +2091,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-glass .card-header {
+        background: rgba(255, 255, 255, 0.08) !important; /* Override gradient */
         backdrop-filter: blur(10px) !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
@@ -2172,6 +2173,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-minimal .card-header {
+        background: #f8f8f8 !important; /* Override gradient */
         color: #333 !important;
         border-bottom: 1px solid #e0e0e0;
       }
@@ -2237,38 +2239,42 @@ export class WeatherPulseCard extends LitElement {
 
       /* MINIMAL THEME - Night Mode */
       ha-card.theme-minimal.night-mode {
-        background: #1a1d2e !important; /* Dark minimal background */
-        border-color: #2a2d3e !important;
+        background: #0f1116 !important; /* Very dark minimal background */
+        border-color: #1f2229 !important;
       }
 
       ha-card.theme-minimal.night-mode::before {
-        opacity: 0.3 !important; /* Faint stars */
+        opacity: 0.5 !important; /* More visible stars */
       }
 
       ha-card.theme-minimal.night-mode .card-header {
-        background: #252838 !important; /* Keep minimal header style */
-        filter: none !important; /* No brightness filter */
+        background: #181a21 !important; /* Dark but not too dark */
+        filter: none !important;
         color: #e8eaf6 !important;
-        border-bottom-color: #2a2d3e !important;
+        border-bottom-color: #1f2229 !important;
       }
 
       ha-card.theme-minimal.night-mode .card-header::after {
-        display: none !important; /* No default night overlay */
+        display: none !important;
       }
 
       ha-card.theme-minimal.night-mode .card-content {
-        background: #1a1d2e !important;
+        background: transparent !important; /* Show stars */
         color: #e8eaf6 !important;
       }
 
       ha-card.theme-minimal.night-mode .forecast-compact {
-        background: #252838 !important;
-        border-color: #2a2d3e !important;
+        background: rgba(24, 26, 33, 0.5) !important; /* Semi-transparent */
+        border-color: #1f2229 !important;
       }
 
       ha-card.theme-minimal.night-mode .weather-info-section {
-        background: #1a1d2e !important;
-        border-top-color: #2a2d3e !important;
+        background: transparent !important; /* Show stars */
+        border-top-color: #1f2229 !important;
+      }
+
+      ha-card.theme-minimal.night-mode .weather-info-item {
+        background: transparent !important; /* Show stars */
       }
 
       ha-card.theme-minimal.night-mode .day-name,
@@ -2282,7 +2288,7 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-minimal.night-mode .forecast-day,
       ha-card.theme-minimal.night-mode .forecast-hour {
-        border-bottom-color: #2a2d3e !important;
+        border-bottom-color: rgba(232, 234, 246, 0.1) !important;
       }
 
       /* VIBRANT THEME */
