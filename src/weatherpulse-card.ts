@@ -1101,14 +1101,14 @@ export class WeatherPulseCard extends LitElement {
 
     return html`
       <div class="forecast-chart">
-        <svg viewBox="0 0 ${chartWidth} ${chartHeight}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <svg viewBox="0 0 ${chartWidth} ${chartHeight + 20}" xmlns="http://www.w3.org/2000/svg">
           <!-- Temperature lines -->
           ${forecastType === 'daily' ? html`
             <polyline
               points="${lowLine}"
               fill="none"
-              stroke="rgba(100, 150, 255, 0.6)"
-              stroke-width="0.5"
+              stroke="rgba(100, 150, 255, 0.8)"
+              stroke-width="0.8"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
@@ -1116,35 +1116,49 @@ export class WeatherPulseCard extends LitElement {
           <polyline
             points="${highLine}"
             fill="none"
-            stroke="rgba(255, 150, 100, 0.8)"
-            stroke-width="1"
+            stroke="rgba(255, 150, 100, 1)"
+            stroke-width="1.2"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
 
-          <!-- Temperature points -->
-          ${highPoints.map(point => {
-            const [x, y] = point.split(',').map(Number);
+          <!-- Temperature labels on the line -->
+          ${forecast.map((item, index) => {
+            const highTemp = Math.round(item.temperature || 0);
+            const lowTemp = forecastType === 'daily' ? Math.round(item.templow || 0) : null;
+            const [highX, highY] = highPoints[index].split(',').map(Number);
+            const lowCoords = lowPoints[index] ? lowPoints[index].split(',').map(Number) : null;
+
             return html`
-              <circle cx="${x}" cy="${y}" r="1" fill="rgba(255, 150, 100, 1)" />
+              <!-- High temp label -->
+              <text x="${highX}" y="${highY - 2}"
+                    text-anchor="middle"
+                    font-size="3.5"
+                    font-weight="600"
+                    fill="rgba(255, 120, 80, 1)">
+                ${highTemp}°
+              </text>
+
+              ${lowCoords ? html`
+                <!-- Low temp label -->
+                <text x="${lowCoords[0]}" y="${lowCoords[1] + 5}"
+                      text-anchor="middle"
+                      font-size="3"
+                      font-weight="600"
+                      fill="rgba(100, 150, 255, 1)">
+                  ${lowTemp}°
+                </text>
+              ` : ''}
             `;
           })}
-          ${forecastType === 'daily' ? lowPoints.map(point => {
-            const [x, y] = point.split(',').map(Number);
-            return html`
-              <circle cx="${x}" cy="${y}" r="0.8" fill="rgba(100, 150, 255, 1)" />
-            `;
-          }) : ''}
         </svg>
 
-        <!-- Forecast items below chart -->
+        <!-- Day names and icons below chart -->
         <div class="chart-items">
           ${forecast.map(item => {
             const dayName = forecastType === 'hourly'
               ? new Date(item.datetime).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true })
               : getDayName(item.datetime);
-            const highTemp = Math.round(item.temperature || 0);
-            const lowTemp = forecastType === 'daily' ? Math.round(item.templow || 0) : null;
             const condition = item.condition || 'clear';
 
             return html`
@@ -1153,10 +1167,6 @@ export class WeatherPulseCard extends LitElement {
                   ${this.renderWeatherIcon(condition, true)}
                 </div>
                 <div class="chart-day">${dayName}</div>
-                <div class="chart-temps">
-                  <span class="chart-temp-high">${highTemp}°</span>
-                  ${lowTemp !== null ? html`<span class="chart-temp-low">${lowTemp}°</span>` : ''}
-                </div>
               </div>
             `;
           })}
