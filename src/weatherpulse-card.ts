@@ -3213,18 +3213,19 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .detailed-name-icon .day-icon {
-        font-size: 64px;
+        font-size: 80px;
       }
 
       .detailed-name-icon .day-name {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 600;
         white-space: nowrap;
       }
 
       .detailed-temps {
         display: flex;
-        gap: 16px;
+        flex-direction: column;
+        gap: 8px;
         align-items: center;
         justify-content: center;
       }
@@ -3233,7 +3234,7 @@ export class WeatherPulseCard extends LitElement {
         display: flex;
         align-items: center;
         gap: 6px;
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
         white-space: nowrap;
       }
