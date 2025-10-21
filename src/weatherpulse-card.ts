@@ -1105,31 +1105,29 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
-    // Detailed mode - standard layout with extra details below
+    // Detailed mode - icon below day name with temp icons
     if (viewMode === 'detailed') {
       return html`
         <div class="forecast-day forecast-detailed">
-          <div class="day-info-row">
+          <div class="detailed-left-col">
             <div class="day-name">${dayName}</div>
             <div class="day-icon">
               ${this.renderWeatherIcon(day.condition || 'clear', true)}
             </div>
-            <div class="day-temp-range">
-              <span class="temp-low">${lowTemp}°</span>
-              <div class="temp-bar">
-                <div class="temp-bar-low" style="width: ${lowPercent}%"></div>
-                <div class="temp-bar-high" style="width: ${highPercent - lowPercent}%"></div>
-              </div>
-              <span class="temp-high">${highTemp}°</span>
-            </div>
           </div>
-          ${precipProb > 0 || humidity || windSpeed ? html`
-            <div class="day-details">
-              ${precipProb > 0 ? html`<div class="detail-item"><span>💧</span> ${precipProb}%</div>` : ''}
-              ${humidity ? html`<div class="detail-item"><span>💨</span> ${humidity}%</div>` : ''}
-              ${windSpeed ? html`<div class="detail-item"><span>🌬️</span> ${Math.round(windSpeed)} mph</div>` : ''}
+          <div class="detailed-right-col">
+            <div class="detailed-temps-row">
+              <span class="temp-item"><span class="icon-emoji temp-cooler">🌡️</span>${lowTemp}°</span>
+              <span class="temp-item"><span class="icon-emoji temp-warmer">🌡️</span>${highTemp}°</span>
             </div>
-          ` : ''}
+            ${precipProb > 0 || humidity || windSpeed ? html`
+              <div class="day-details">
+                ${precipProb > 0 ? html`<div class="detail-item"><span>💧</span> ${precipProb}%</div>` : ''}
+                ${humidity ? html`<div class="detail-item"><span>💨</span> ${humidity}%</div>` : ''}
+                ${windSpeed ? html`<div class="detail-item"><span>🌬️</span> ${Math.round(windSpeed)} mph</div>` : ''}
+              </div>
+            ` : ''}
+          </div>
         </div>
       `;
     }
@@ -3177,27 +3175,54 @@ export class WeatherPulseCard extends LitElement {
 
       /* Detailed view mode */
       .forecast-detailed {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 20px;
         padding: 8px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        align-items: center;
       }
 
-      .day-info-row {
-        display: grid;
-        grid-template-columns: 100px 60px 1fr;
+      .detailed-left-col {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+      }
+
+      .detailed-right-col {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .detailed-temps-row {
+        display: flex;
+        gap: 24px;
         align-items: center;
-        gap: 20px;
+      }
+
+      .temp-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .temp-cooler {
+        color: #64B5F6;
+      }
+
+      .temp-warmer {
+        color: #FF8A65;
       }
 
       .day-details {
         display: flex;
-        gap: 32px;
+        gap: 20px;
         font-size: 13px;
         opacity: 0.8;
-        padding-left: 100px;
-        justify-content: flex-start;
       }
 
       .detail-item {
