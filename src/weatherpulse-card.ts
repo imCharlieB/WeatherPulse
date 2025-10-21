@@ -1465,6 +1465,49 @@ export class WeatherPulseCard extends LitElement {
         background: linear-gradient(180deg, #1a3a52 0%, #2c5270 100%) !important;
         position: relative !important;
         z-index: 1 !important; /* Above stars */
+        overflow: hidden !important;
+      }
+
+      /* Add stars to night mode compact forecast boxes */
+      ha-card.night-mode .forecast-compact::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+          radial-gradient(1px 1px at 10px 15px, white, transparent),
+          radial-gradient(1px 1px at 30px 35px, white, transparent),
+          radial-gradient(1px 1px at 25px 25px, white, transparent),
+          radial-gradient(1px 1px at 65px 40px, white, transparent),
+          radial-gradient(1px 1px at 45px 5px, white, transparent),
+          radial-gradient(1px 1px at 15px 50px, white, transparent),
+          radial-gradient(1px 1px at 55px 60px, white, transparent),
+          radial-gradient(1px 1px at 40px 70px, white, transparent),
+          radial-gradient(1px 1px at 70px 20px, white, transparent),
+          radial-gradient(1px 1px at 20px 65px, white, transparent);
+        background-repeat: repeat;
+        background-size: 80px 80px;
+        opacity: 0.4;
+        pointer-events: none;
+        z-index: 0;
+        animation: starsTwinkle 3s ease-in-out infinite;
+      }
+
+      @keyframes starsTwinkle {
+        0%, 100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 0.6;
+        }
+      }
+
+      /* Ensure content is above stars */
+      ha-card.night-mode .forecast-compact > * {
+        position: relative;
+        z-index: 1;
       }
 
       ha-card.night-mode .forecast-type-hourly.forecast-standard .forecast-hour {
@@ -2809,6 +2852,11 @@ export class WeatherPulseCard extends LitElement {
 
       .card-content {
         padding: 20px;
+      }
+
+      /* Make card-content transparent for compact view - show background through */
+      .card-content:has(.forecast-container.forecast-compact) {
+        background: transparent !important;
       }
 
       .forecast-container {
