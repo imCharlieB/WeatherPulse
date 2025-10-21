@@ -1131,24 +1131,18 @@ export class WeatherPulseCard extends LitElement {
             <span class="temp-item">${getTemperatureIcon('warmer', this.config.animate_icons !== false)}${highTemp}°</span>
           </div>
           <div class="detailed-info">
-            ${precipProb > 0 ? html`
-              <div class="detail-item">
-                <span class="detail-icon">💧</span>
-                <span class="detail-text">${precipProb}%${precipAmount ? ` (${precipAmount}")` : ''}</span>
-              </div>
-            ` : ''}
-            ${humidity ? html`
-              <div class="detail-item">
-                <span class="detail-icon">💨</span>
-                <span class="detail-text">${humidity}%</span>
-              </div>
-            ` : ''}
-            ${windSpeed ? html`
-              <div class="detail-item">
-                <span class="detail-icon">🌬️</span>
-                <span class="detail-text">${Math.round(windSpeed)} mph ${windDirection}</span>
-              </div>
-            ` : ''}
+            <div class="detail-item">
+              <span class="detail-icon">💧</span>
+              <span class="detail-text">${precipProb > 0 ? `${precipProb}%${precipAmount ? ` (${precipAmount}")` : ''}` : '0%'}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">💨</span>
+              <span class="detail-text">${humidity ? `${humidity}%` : '--'}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🌬️</span>
+              <span class="detail-text">${windSpeed ? `${Math.round(windSpeed)} mph ${windDirection}` : '--'}</span>
+            </div>
           </div>
         </div>
       `;
@@ -3200,7 +3194,7 @@ export class WeatherPulseCard extends LitElement {
       .forecast-hour.forecast-detailed {
         display: grid;
         grid-template-columns: auto 1fr auto;
-        gap: 12px;
+        gap: 16px;
         padding: 4px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
         align-items: center;
@@ -3209,7 +3203,7 @@ export class WeatherPulseCard extends LitElement {
       .detailed-name-icon {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 16px;
       }
 
       .detailed-name-icon .day-icon {

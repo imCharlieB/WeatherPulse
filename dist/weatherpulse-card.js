@@ -872,24 +872,18 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             <span class="temp-item">${Ee("warmer",!1!==this.config.animate_icons)}${r}°</span>
           </div>
           <div class="detailed-info">
-            ${n>0?B`
-              <div class="detail-item">
-                <span class="detail-icon">💧</span>
-                <span class="detail-text">${n}%${d?` (${d}")`:""}</span>
-              </div>
-            `:""}
-            ${s?B`
-              <div class="detail-item">
-                <span class="detail-icon">💨</span>
-                <span class="detail-text">${s}%</span>
-              </div>
-            `:""}
-            ${l?B`
-              <div class="detail-item">
-                <span class="detail-icon">🌬️</span>
-                <span class="detail-text">${Math.round(l)} mph ${a}</span>
-              </div>
-            `:""}
+            <div class="detail-item">
+              <span class="detail-icon">💧</span>
+              <span class="detail-text">${n>0?`${n}%${d?` (${d}")`:""}`:"0%"}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">💨</span>
+              <span class="detail-text">${s?`${s}%`:"--"}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-icon">🌬️</span>
+              <span class="detail-text">${l?`${Math.round(l)} mph ${a}`:"--"}</span>
+            </div>
           </div>
         </div>
       `}return B`
@@ -2802,7 +2796,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .forecast-hour.forecast-detailed {
         display: grid;
         grid-template-columns: auto 1fr auto;
-        gap: 12px;
+        gap: 16px;
         padding: 4px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
         align-items: center;
@@ -2811,7 +2805,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .detailed-name-icon {
         display: flex;
         align-items: center;
-        gap: 20px;
+        gap: 16px;
       }
 
       .detailed-name-icon .day-icon {
