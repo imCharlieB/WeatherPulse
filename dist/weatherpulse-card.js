@@ -847,8 +847,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         <div class="hour-temp">${r}°</div>
         ${o>0?B`<div class="precip-prob">${o}%</div>`:""}
       </div>
-    `}renderForecastDay(e,t,a="standard"){const i=we(e.datetime),r=Math.round(e.temperature||0),o=Math.round(e.templow||0),n=e.precipitation_probability||0,s=e.humidity,l=e.wind_speed,d=r-o>0?o/r*70:30;if("compact"===a){const a=ue(r,t);let s=a.color.replace("135deg","180deg");return s=s.replace(/\b0%/,"-2%"),s=s.replace(/100%(?!.*100%)/,"102%"),B`
-        <div class="forecast-day forecast-compact" style="background: ${s}; color: ${a.textColor};">
+    `}renderForecastDay(e,t,a="standard"){const i=we(e.datetime),r=Math.round(e.temperature||0),o=Math.round(e.templow||0),n=e.precipitation_probability||0,s=e.humidity,l=e.wind_speed,d=r-o>0?o/r*70:30;if("compact"===a){const a=ue(r,t),s=a.color.replace("135deg","180deg");return B`
+        <div class="forecast-day forecast-compact" style="background: ${s}; color: ${a.textColor}; background-clip: padding-box;">
           <div class="day-name">${i}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(e.condition||"clear",!0)}
@@ -2700,11 +2700,10 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         align-items: center;
         gap: 12px;
         padding: 16px 12px;
-        background: linear-gradient(180deg, #2E5F8A 0%, #4A7FA8 100%);
         border-radius: 4px;
         flex: 1;
         min-width: 0;
-        border: 2px solid transparent;
+        border: none;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
         transition: transform 0.2s ease;
       }

@@ -1091,13 +1091,10 @@ export class WeatherPulseCard extends LitElement {
     // Compact mode - vertical card in horizontal row
     if (viewMode === 'compact') {
       const gradient = getTemperatureGradient(highTemp, unit);
-      // Convert diagonal gradient to vertical and extend color stops to eliminate edge bands
-      let verticalGradient = gradient.color.replace('135deg', '180deg');
-      // Replace first occurrence of 0% with -2% and last occurrence of 100% with 102%
-      verticalGradient = verticalGradient.replace(/\b0%/, '-2%');
-      verticalGradient = verticalGradient.replace(/100%(?!.*100%)/, '102%');
+      // Convert diagonal gradient to vertical for compact boxes
+      const verticalGradient = gradient.color.replace('135deg', '180deg');
       return html`
-        <div class="forecast-day forecast-compact" style="background: ${verticalGradient}; color: ${gradient.textColor};">
+        <div class="forecast-day forecast-compact" style="background: ${verticalGradient}; color: ${gradient.textColor}; background-clip: padding-box;">
           <div class="day-name">${dayName}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(day.condition || 'clear', true)}
@@ -3104,11 +3101,10 @@ export class WeatherPulseCard extends LitElement {
         align-items: center;
         gap: 12px;
         padding: 16px 12px;
-        background: linear-gradient(180deg, #2E5F8A 0%, #4A7FA8 100%);
         border-radius: 4px;
         flex: 1;
         min-width: 0;
-        border: 2px solid transparent;
+        border: none;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
         transition: transform 0.2s ease;
       }
