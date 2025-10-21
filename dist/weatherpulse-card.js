@@ -861,14 +861,16 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         </div>
       `:"detailed"===a?R`
         <div class="forecast-day forecast-detailed">
-          <div class="detailed-day-name">${i}</div>
-          <div class="detailed-content">
+          <div class="detailed-left">
+            <div class="detailed-day-name">${i}</div>
             <div class="detailed-icon">
               ${this.renderWeatherIcon(e.condition||"clear",!0)}
             </div>
+          </div>
+          <div class="detailed-right">
             <div class="detailed-temps">
-              <div class="detailed-high">${r}°</div>
-              <div class="detailed-low">${o}°</div>
+              <span class="temp-high">${r}°</span>
+              <span class="temp-low">${o}°</span>
             </div>
             ${n>0||s||l?R`
               <div class="detailed-info">
@@ -2786,46 +2788,41 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       /* Detailed view mode */
       .forecast-detailed {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 20px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        align-items: center;
+      }
+
+      .detailed-left {
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        padding: 12px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        gap: 6px;
       }
 
       .detailed-day-name {
         font-size: 16px;
-        font-weight: 600;
+        font-weight: 500;
         text-align: left;
       }
 
-      .detailed-content {
-        display: grid;
-        grid-template-columns: 60px 1fr auto;
-        align-items: center;
-        gap: 20px;
+      .detailed-icon {
+        font-size: inherit;
+        text-align: left;
       }
 
-      .detailed-icon {
-        font-size: 40px;
-        text-align: center;
+      .detailed-right {
+        display: flex;
+        align-items: center;
+        gap: 24px;
       }
 
       .detailed-temps {
         display: flex;
-        gap: 16px;
+        gap: 10px;
         align-items: center;
-      }
-
-      .detailed-high {
-        font-size: 24px;
-        font-weight: 700;
-      }
-
-      .detailed-low {
-        font-size: 20px;
-        font-weight: 500;
-        opacity: 0.7;
       }
 
       .detailed-info {
