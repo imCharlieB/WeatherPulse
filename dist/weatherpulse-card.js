@@ -2805,35 +2805,38 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       .detailed-right-col {
         display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        align-items: center;
+        flex-direction: column;
+        gap: 8px;
+        justify-content: flex-start;
       }
 
       .detailed-temps-row {
         display: flex;
-        gap: 16px;
+        gap: 20px;
         align-items: center;
       }
 
       .temp-item {
         display: flex;
         align-items: center;
-        gap: 6px;
-        font-size: 18px;
+        gap: 4px;
+        font-size: 16px;
         font-weight: 500;
+        white-space: nowrap;
       }
 
       .temp-item .temp-icon {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
       }
 
       .day-details {
         display: flex;
-        gap: 20px;
+        gap: 16px;
         font-size: 13px;
         opacity: 0.8;
+        flex-wrap: wrap;
       }
 
       .detail-item {
