@@ -1105,28 +1105,29 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
-    // Detailed mode - card-based layout with full width utilization
+    // Detailed mode - standard layout with extra details below
     if (viewMode === 'detailed') {
       return html`
         <div class="forecast-day forecast-detailed">
           <div class="day-info-row">
-            <div class="day-name-detailed">${dayName}</div>
-            <div class="day-condition-detailed">
-              <div class="day-icon-large">
-                ${this.renderWeatherIcon(day.condition || 'clear', true)}
-              </div>
-              <div class="condition-text">${day.condition || 'Clear'}</div>
+            <div class="day-name">${dayName}</div>
+            <div class="day-icon">
+              ${this.renderWeatherIcon(day.condition || 'clear', true)}
             </div>
-            <div class="day-temp-detailed">
-              <div class="temp-high-large">${highTemp}°</div>
-              <div class="temp-low-large">${lowTemp}°</div>
+            <div class="day-temp-range">
+              <span class="temp-low">${lowTemp}°</span>
+              <div class="temp-bar">
+                <div class="temp-bar-low" style="width: ${lowPercent}%"></div>
+                <div class="temp-bar-high" style="width: ${highPercent - lowPercent}%"></div>
+              </div>
+              <span class="temp-high">${highTemp}°</span>
             </div>
           </div>
           ${precipProb > 0 || humidity || windSpeed ? html`
             <div class="day-details">
-              ${precipProb > 0 ? html`<div class="detail-item"><span>💧</span> <span>${precipProb}% Rain</span></div>` : ''}
-              ${humidity ? html`<div class="detail-item"><span>💨</span> <span>${humidity}% Humidity</span></div>` : ''}
-              ${windSpeed ? html`<div class="detail-item"><span>🌬️</span> <span>${Math.round(windSpeed)} mph Wind</span></div>` : ''}
+              ${precipProb > 0 ? html`<div class="detail-item"><span>💧</span> ${precipProb}%</div>` : ''}
+              ${humidity ? html`<div class="detail-item"><span>💨</span> ${humidity}%</div>` : ''}
+              ${windSpeed ? html`<div class="detail-item"><span>🌬️</span> ${Math.round(windSpeed)} mph</div>` : ''}
             </div>
           ` : ''}
         </div>
@@ -3178,90 +3179,35 @@ export class WeatherPulseCard extends LitElement {
       .forecast-detailed {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        padding: 16px;
-        margin-bottom: 8px;
-        background: var(--card-background-color, rgba(255, 255, 255, 0.05));
-        border-radius: 8px;
-        border: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        gap: 6px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
       .day-info-row {
         display: grid;
-        grid-template-columns: 80px 1fr auto;
+        grid-template-columns: 100px 60px 1fr;
         align-items: center;
         gap: 20px;
       }
 
       .day-details {
         display: flex;
-        gap: 24px;
-        font-size: 14px;
-        opacity: 0.85;
-        padding: 12px 16px;
-        background: rgba(0, 0, 0, 0.03);
-        border-radius: 6px;
-        justify-content: space-around;
+        gap: 32px;
+        font-size: 13px;
+        opacity: 0.8;
+        padding-left: 100px;
+        justify-content: flex-start;
       }
 
       .detail-item {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 6px;
-        flex: 1;
-      }
-
-      .detail-item span:first-child {
-        font-size: 20px;
-      }
-
-      .detail-item span:last-child {
-        font-size: 13px;
-        font-weight: 500;
-      }
-
-      .day-name-detailed {
-        font-size: 20px;
-        font-weight: 600;
-        text-align: left;
-      }
-
-      .day-condition-detailed {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .day-icon-large {
-        font-size: 48px;
-      }
-
-      .condition-text {
-        font-size: 14px;
-        text-transform: capitalize;
-        opacity: 0.8;
-      }
-
-      .day-temp-detailed {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
         gap: 4px;
       }
 
-      .temp-high-large {
-        font-size: 36px;
-        font-weight: 700;
-        line-height: 1;
-      }
-
-      .temp-low-large {
-        font-size: 24px;
-        font-weight: 500;
-        opacity: 0.7;
-        line-height: 1;
+      .detail-item span {
+        font-size: 14px;
       }
 
       .temp-actual {
