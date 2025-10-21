@@ -2825,6 +2825,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         font-size: 18px;
         font-weight: 600;
         white-space: nowrap;
+        min-width: 50px;
       }
 
       .detailed-temps {

@@ -3223,6 +3223,7 @@ export class WeatherPulseCard extends LitElement {
         font-size: 18px;
         font-weight: 600;
         white-space: nowrap;
+        min-width: 50px;
       }
 
       .detailed-temps {
