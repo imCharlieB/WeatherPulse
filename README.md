@@ -67,7 +67,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 🎯 **Works Everywhere** - Fetches hourly data separately, works in daily or hourly forecast mode
 
 #### Visual Themes
-- 🎨 **Pre-built Themes** - 5 professional themes: Default, Retro (1990s Weather Channel), Glassmorphism, Minimal, Vibrant
+- 🎨 **Pre-built Themes** - 5 professional themes: Default, Retro (1990s Weather Channel), Midnight, Minimal, Vibrant
 - 🎭 **Custom Theme** - Create your own 6-color theme palette
 - 🎉 **Holiday Decorations** - Festive overlays for 8 holidays throughout the year
 
@@ -338,7 +338,7 @@ Transform the look and feel of your weather card with 5 professional pre-built t
 |-------|-------------|----------|
 | **Default** | Clean modern design with temperature gradients | General use, all dashboards |
 | **Retro/Neubrutalism** | Bold 4px black borders, sharp corners, hard shadows, no border-radius | Bold, statement dashboards, retro aesthetics |
-| **Glassmorphism** | Frosted glass blur effect, semi-transparent backgrounds, soft shadows | Modern minimalist dashboards, overlays |
+| **Midnight** | Sleek dark theme with dark gray backgrounds and blue accents | Dark mode lovers, nighttime use, professional dark dashboards |
 | **Minimal** | Clean white, monochrome, thin borders, subtle grayscale filter | Professional, clean dashboards |
 | **Vibrant** | Bright gradient backgrounds, saturated colors, white text | Colorful, energetic dashboards |
 | **Custom** | Define your own colors for complete customization | Matching your specific color scheme |
@@ -359,12 +359,14 @@ Transform the look and feel of your weather card with 5 professional pre-built t
 - High contrast, bold appearance
 - Perfect for brutalist or retro-inspired dashboards
 
-**Glassmorphism:**
-- Backdrop blur effect (20px blur)
-- Semi-transparent backgrounds (10-15% opacity)
-- Subtle borders with transparency
-- Soft shadows
-- Works best with colorful wallpapers behind
+**Midnight:**
+- Dark gray backgrounds (#1a1a1a, #212121)
+- Blue gradient header (#1e3a5f to #2d5a8c)
+- Subtle shadows for depth (no harsh contrast)
+- Light gray text (#e0e0e0) for comfortable reading
+- Blue accents on hover interactions
+- Even darker in night mode (#0f0f0f)
+- Perfect for dark mode enthusiasts and nighttime viewing
 
 **Minimal:**
 - Pure white backgrounds
@@ -401,7 +403,7 @@ Define your own color palette with 6 customizable colors:
 **Via YAML:**
 ```yaml
 # Use a pre-built theme
-theme: retro  # or: glass, minimal, vibrant
+theme: retro  # or: midnight, minimal, vibrant
 
 # Or use custom theme
 theme: custom
@@ -420,8 +422,8 @@ custom_theme_colors:
 # Bold Retro Look
 theme: retro
 
-# Modern Glass Effect
-theme: glass
+# Sleek Dark Mode
+theme: midnight
 
 # Clean Professional
 theme: minimal
@@ -441,7 +443,7 @@ custom_theme_colors:
 ```
 
 **Tips:**
-- Glassmorphism works best with colorful dashboards/wallpapers
+- Midnight theme is perfect for dark mode dashboards and reduces eye strain at night
 - Minimal theme is great for professional/work dashboards
 - Vibrant theme stands out and draws attention
 - Custom theme lets you match your Home Assistant theme perfectly
@@ -462,7 +464,7 @@ custom_theme_colors:
 | `hourly_count` | number | `12` | Number of hours to show: `1-48` (when forecast_type is hourly) |
 | `view_mode` | string | `standard` | Forecast layout: `compact`, `standard`, `detailed`, `chart` |
 | `temp_display_mode` | string | `forecast` | Temperature display: `forecast`, `actual`, `both` |
-| `theme` | string | `default` | Visual theme: `default`, `retro`, `glass`, `minimal`, `vibrant`, `custom` |
+| `theme` | string | `default` | Visual theme: `default`, `retro`, `midnight`, `minimal`, `vibrant`, `custom` |
 | `custom_theme_colors` | object | Optional | Custom theme colors (only used when theme is `custom`) - see Custom Theme section |
 | `animate_icons` | boolean | `true` | Enable animated weather icons |
 | `show_forecast` | boolean | `true` | Show forecast section |

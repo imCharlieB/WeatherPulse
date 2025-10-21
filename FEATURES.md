@@ -105,7 +105,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Toggle on/off in Display Options
 - [x] **Pre-built Themes**: 5 professional visual themes + custom ✅
   - Retro/Neubrutalism: Bold colors, thick 4px borders, sharp corners, hard shadows
-  - Glassmorphism: Frosted glass blur effect, semi-transparent, soft shadows
+  - Midnight: Sleek dark theme with dark gray backgrounds, blue accents, perfect for dark mode lovers
   - Minimal: Clean white, simple monochrome, thin borders, subtle grayscale
   - Vibrant: Bright gradient backgrounds, saturated colors, high energy
   - Custom: User-defined colors (primary, secondary, background, text, border, accent)
@@ -222,7 +222,7 @@ show_date: true
 show_time: true
 forecast_days: 7
 view_mode: standard
-theme: glassmorphism
+theme: midnight
 animate_icons: true
 data_rows:
   - temperature

@@ -2456,110 +2456,117 @@ export class WeatherPulseCard extends LitElement {
         border-bottom-color: rgba(255, 255, 255, 0.15) !important;
       }
 
-      /* GLASSMORPHISM THEME */
-      ha-card.theme-glass {
-        background: rgba(255, 255, 255, 0.08) !important;
-        backdrop-filter: blur(50px) saturate(150%) !important;
-        -webkit-backdrop-filter: blur(50px) saturate(150%) !important;
-        border: 1px solid rgba(255, 255, 255, 0.18) !important;
-        border-radius: 20px !important;
+      /* MIDNIGHT THEME - Sleek Modern Dark */
+      ha-card.theme-midnight {
+        background: #1a1a1a !important;
+        border: 1px solid #2a2a2a !important;
+        border-radius: 12px !important;
         box-shadow:
-          0 20px 60px rgba(0, 0, 0, 0.3),
-          0 8px 16px rgba(0, 0, 0, 0.15),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-          inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
+          0 8px 32px rgba(0, 0, 0, 0.6),
+          0 2px 8px rgba(0, 0, 0, 0.4) !important;
+        color: #e0e0e0 !important;
       }
 
-      ha-card.theme-glass .card-header {
-        background: rgba(255, 255, 255, 0.12) !important;
-        backdrop-filter: blur(30px) saturate(140%) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 20px 20px 0 0 !important;
-        box-shadow:
-          0 4px 20px rgba(0, 0, 0, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      ha-card.theme-midnight .card-header {
+        background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8c 100%) !important;
+        color: #e8f4f8 !important;
+        border-bottom: 1px solid #2a2a2a;
+        border-radius: 12px 12px 0 0 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       }
 
-      ha-card.theme-glass .graphical-header::after {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3)) !important;
-        backdrop-filter: blur(5px) !important;
+      ha-card.theme-midnight .graphical-header::after {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7)) !important;
       }
 
-      ha-card.theme-glass .forecast-day,
-      ha-card.theme-glass .forecast-hour {
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
-        backdrop-filter: blur(10px) !important;
+      ha-card.theme-midnight .card-content {
+        background: #1a1a1a !important;
+        color: #e0e0e0 !important;
+      }
+
+      ha-card.theme-midnight .forecast-day,
+      ha-card.theme-midnight .forecast-hour {
+        background: #212121 !important;
         border: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+        border-bottom: 1px solid #2a2a2a !important;
+        box-shadow: none !important;
+        color: #e0e0e0 !important;
       }
 
-      ha-card.theme-glass .forecast-day:hover,
-      ha-card.theme-glass .forecast-hour:hover {
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
-        backdrop-filter: blur(15px) !important;
+      ha-card.theme-midnight .forecast-day:hover,
+      ha-card.theme-midnight .forecast-hour:hover {
+        background: #2a2a2a !important;
+        box-shadow: 0 2px 8px rgba(45, 90, 140, 0.3) !important;
       }
 
-      ha-card.theme-glass .forecast-day.forecast-compact,
-      ha-card.theme-glass .forecast-hour.forecast-compact {
-        background: rgba(255, 255, 255, 0.15) !important;
-        backdrop-filter: blur(35px) saturate(140%) !important;
-        border: 1px solid rgba(255, 255, 255, 0.25) !important;
-        border-radius: 16px !important;
+      ha-card.theme-midnight .forecast-day.forecast-compact,
+      ha-card.theme-midnight .forecast-hour.forecast-compact {
+        background: #212121 !important;
+        border: 1px solid #2a2a2a !important;
+        border-radius: 10px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+        color: #e0e0e0 !important;
+      }
+
+      ha-card.theme-midnight .forecast-day.forecast-compact:hover,
+      ha-card.theme-midnight .forecast-hour.forecast-compact:hover {
+        background: #2a2a2a !important;
+        border-color: #3d6a99 !important;
         box-shadow:
-          0 8px 32px rgba(0, 0, 0, 0.2),
-          0 4px 12px rgba(0, 0, 0, 0.1),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-          inset 0 1px 0 0 rgba(255, 255, 255, 0.3) !important;
+          0 4px 12px rgba(0, 0, 0, 0.5),
+          0 0 0 1px #3d6a99 !important;
       }
 
-      ha-card.theme-glass .weather-info-item {
-        background: transparent !important;
-        backdrop-filter: none !important;
-        border: none !important;
+      ha-card.theme-midnight .weather-info-item {
+        background: #212121 !important;
+        border: 1px solid #2a2a2a !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+        color: #e0e0e0 !important;
       }
 
-      ha-card.theme-glass .weather-info-section {
-        background: transparent !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      ha-card.theme-midnight .weather-info-section {
+        background: #1a1a1a !important;
+        border-top: 1px solid #2a2a2a !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
       }
 
-      ha-card.theme-glass .nws-alert {
-        background: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(15px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      ha-card.theme-midnight .nws-alert {
+        background: #212121 !important;
+        border: 1px solid #2a2a2a !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
       }
 
-      /* GLASS THEME - Night Mode */
-      ha-card.theme-glass.night-mode {
-        background: rgba(10, 14, 39, 0.3) !important; /* Darker base */
-        backdrop-filter: blur(25px) !important;
+      /* MIDNIGHT THEME - Already Dark, Keep Consistent */
+      ha-card.theme-midnight.night-mode {
+        background: #0f0f0f !important;
+        border-color: #1a1a1a !important;
       }
 
-      ha-card.theme-glass.night-mode::before {
-        opacity: 0.7 !important; /* Dimmer stars */
+      ha-card.theme-midnight.night-mode .card-header {
+        background: linear-gradient(135deg, #0f2744 0%, #1a3d5c 100%) !important;
+        color: #d0e8f2 !important;
       }
 
-      ha-card.theme-glass.night-mode .card-header {
-        background: rgba(10, 14, 39, 0.15) !important; /* Keep glass header style */
-        filter: none !important; /* No brightness filter */
-        backdrop-filter: blur(15px) !important;
-        color: #e8eaf6 !important;
+      ha-card.theme-midnight.night-mode .card-content {
+        background: #0f0f0f !important;
       }
 
-      ha-card.theme-glass.night-mode .card-header::after {
-        display: none !important; /* No default night overlay */
+      ha-card.theme-midnight.night-mode .forecast-day,
+      ha-card.theme-midnight.night-mode .forecast-hour {
+        background: #151515 !important;
+        border-bottom-color: #1a1a1a !important;
       }
 
-      ha-card.theme-glass.night-mode .card-content {
-        background: transparent !important;
+      ha-card.theme-midnight.night-mode .forecast-day.forecast-compact,
+      ha-card.theme-midnight.night-mode .forecast-hour.forecast-compact {
+        background: #151515 !important;
+        border-color: #1a1a1a !important;
       }
 
-      ha-card.theme-glass.night-mode .forecast-day.forecast-compact,
-      ha-card.theme-glass.night-mode .forecast-hour.forecast-compact {
-        background: rgba(29, 33, 56, 0.5) !important;
-        backdrop-filter: blur(10px) !important;
+      ha-card.theme-midnight.night-mode .weather-info-item {
+        background: #151515 !important;
+        border-color: #1a1a1a !important;
       }
 
       /* MINIMAL THEME */
