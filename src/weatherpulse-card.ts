@@ -1462,7 +1462,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.night-mode .forecast-compact {
-        background: rgba(29, 33, 56, 0.6) !important; /* Keep some background */
+        background: linear-gradient(180deg, #1a3a52 0%, #2c5270 100%) !important;
         position: relative !important;
         z-index: 1 !important; /* Above stars */
       }
@@ -3022,30 +3022,49 @@ export class WeatherPulseCard extends LitElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
-        padding: 12px 8px;
-        background: var(--card-background-color, #1c1c1c);
-        border-radius: 8px;
+        gap: 12px;
+        padding: 16px 12px;
+        background: linear-gradient(180deg, #2E5F8A 0%, #4A7FA8 100%);
+        border-radius: 4px;
         flex: 1;
         min-width: 0;
+        border: 2px solid transparent;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease;
+      }
+
+      .forecast-type-daily .forecast-compact:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       .forecast-type-hourly .forecast-compact {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
-        padding: 12px 8px;
-        background: var(--card-background-color, #1c1c1c);
-        border-radius: 8px;
+        gap: 10px;
+        padding: 14px 10px;
+        background: linear-gradient(180deg, #2E5F8A 0%, #4A7FA8 100%);
+        border-radius: 4px;
         flex: 0 0 auto;
-        width: 70px;
+        width: 80px;
+        border: 2px solid transparent;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease;
+      }
+
+      .forecast-type-hourly .forecast-compact:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       .forecast-compact .day-name {
-        font-weight: 500;
-        font-size: 14px;
+        font-weight: 700;
+        font-size: 15px;
         text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: white;
       }
 
       .day-icon-small {
@@ -3066,14 +3085,16 @@ export class WeatherPulseCard extends LitElement {
       .compact-temps {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 2px;
         align-items: center;
         text-align: center;
       }
 
       .temp-high-compact {
-        font-size: 18px;
-        font-weight: 600;
+        font-size: 32px;
+        font-weight: 700;
+        color: white;
+        line-height: 1;
       }
 
       .temp-separator {
@@ -3081,14 +3102,17 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .temp-low-compact {
-        font-size: 14px;
-        opacity: 0.7;
+        font-size: 20px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.75);
+        line-height: 1;
       }
 
       .precip-compact {
-        font-size: 12px;
-        opacity: 0.7;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.8);
         text-align: center;
+        font-weight: 500;
       }
 
       /* Detailed view mode */
