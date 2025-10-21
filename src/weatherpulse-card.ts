@@ -2481,10 +2481,16 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-glass .forecast-day,
       ha-card.theme-glass .forecast-hour {
-        background: transparent !important;
-        backdrop-filter: none !important;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+        backdrop-filter: blur(10px) !important;
         border: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
+      }
+
+      ha-card.theme-glass .forecast-day:hover,
+      ha-card.theme-glass .forecast-hour:hover {
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+        backdrop-filter: blur(15px) !important;
       }
 
       ha-card.theme-glass .forecast-day.forecast-compact,
