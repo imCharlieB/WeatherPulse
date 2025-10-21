@@ -2815,7 +2815,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .detailed-name-icon .day-icon {
-        font-size: 48px;
+        font-size: 56px;
       }
 
       .detailed-name-icon .day-name {
@@ -2859,15 +2859,21 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         display: flex;
         align-items: center;
         gap: 6px;
+        justify-content: flex-end;
+        min-width: 100px;
       }
 
       .detail-icon {
         font-size: 16px;
+        width: 18px;
+        text-align: center;
       }
 
       .detail-text {
         font-size: 14px;
         font-weight: 500;
+        text-align: right;
+        min-width: 70px;
       }
 
       .temp-actual {
