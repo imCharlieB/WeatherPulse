@@ -105,7 +105,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Toggle on/off in Display Options
 - [x] **Pre-built Themes**: 5 professional visual themes + custom ✅
   - Retro/Neubrutalism: Bold colors, thick 4px borders, sharp corners, hard shadows
-  - Midnight: Sleek dark theme with dark gray backgrounds, blue accents, perfect for dark mode lovers
+  - Midnight: Pure dark theme with near-black backgrounds (#0d0d0d), grayscale palette, no boxes on weather info, perfect for OLED displays and dark mode
   - Minimal: Clean white, simple monochrome, thin borders, subtle grayscale
   - Vibrant: Bright gradient backgrounds, saturated colors, high energy
   - Custom: User-defined colors (primary, secondary, background, text, border, accent)
