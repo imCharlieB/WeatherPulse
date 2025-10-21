@@ -3203,7 +3203,7 @@ export class WeatherPulseCard extends LitElement {
       .detailed-name-icon {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 24px;
       }
 
       .detailed-name-icon .day-icon {
