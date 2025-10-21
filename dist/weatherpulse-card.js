@@ -2580,16 +2580,15 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       /* Compact mode container - different for daily vs hourly */
-      .forecast-type-daily.forecast-compact,
       .forecast-container.forecast-compact.forecast-type-daily {
         display: flex !important;
         flex-direction: row !important;
         gap: 8px !important;
         justify-content: space-between !important;
         flex-wrap: wrap !important;
+        background: transparent !important;
       }
 
-      .forecast-type-hourly.forecast-compact,
       .forecast-container.forecast-compact.forecast-type-hourly {
         display: flex !important;
         flex-direction: row !important;
@@ -2597,6 +2596,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         overflow-x: auto !important;
         flex-wrap: nowrap !important;
         padding-bottom: 8px;
+        background: transparent !important;
       }
 
       .forecast-day {
