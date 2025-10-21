@@ -32,6 +32,10 @@ import moonWaningGibbousSvg from '../node_modules/@bybas/weather-icons/productio
 import moonLastQuarterSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-last-quarter.svg';
 import moonWaningCrescentSvg from '../node_modules/@bybas/weather-icons/production/fill/all/moon-waning-crescent.svg';
 
+// Temperature icons
+import thermometerColderSvg from '../node_modules/@bybas/weather-icons/production/fill/all/thermometer-colder.svg';
+import thermometerWarmerSvg from '../node_modules/@bybas/weather-icons/production/fill/all/thermometer-warmer.svg';
+
 /**
  * Get animated weather icon from Meteocons library
  */
@@ -193,6 +197,25 @@ export function getMoonPhaseIcon(phase: string, animate: boolean = true): SVGTem
 
   // Add the weather-icon-svg class to the SVG element for our CSS targeting
   svgContent = svgContent.replace(/<svg/, '<svg class="weather-icon-svg"');
+
+  return svg`${unsafeHTML(svgContent)}`;
+}
+
+
+/**
+ * Get temperature icon (colder or warmer)
+ */
+export function getTemperatureIcon(type: "colder" | "warmer", animate: boolean = true): SVGTemplateResult {
+  let svgContent = type === "colder" ? thermometerColderSvg : thermometerWarmerSvg;
+
+  // If animations are disabled, remove animate elements from the SVG
+  if (!animate) {
+    svgContent = svgContent.replace(/<animate[^>]*>/g, '').replace(/<\/animate>/g, '');
+    svgContent = svgContent.replace(/<animateTransform[^>]*\/>/g, '');
+  }
+
+  // Add the weather-icon-svg class to the SVG element for our CSS targeting
+  svgContent = svgContent.replace(/<svg/, '<svg class="weather-icon-svg temp-icon"');
 
   return svg`${unsafeHTML(svgContent)}`;
 }

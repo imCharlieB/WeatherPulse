@@ -14,7 +14,7 @@ import {
   getSeasonalBackground,
   getCurrentSeason
 } from './utils';
-import { getAnimatedWeatherIcon, getMoonPhaseIcon } from './icons';
+import { getAnimatedWeatherIcon, getMoonPhaseIcon, getTemperatureIcon } from './icons';
 
 // Import the editor
 import './editor';
@@ -1117,8 +1117,8 @@ export class WeatherPulseCard extends LitElement {
           </div>
           <div class="detailed-right-col">
             <div class="detailed-temps-row">
-              <span class="temp-item"><span class="icon-emoji temp-cooler">🌡️</span>${lowTemp}°</span>
-              <span class="temp-item"><span class="icon-emoji temp-warmer">🌡️</span>${highTemp}°</span>
+              <span class="temp-item">${getTemperatureIcon('colder', this.config.animate_icons !== false)}${lowTemp}°</span>
+              <span class="temp-item">${getTemperatureIcon('warmer', this.config.animate_icons !== false)}${highTemp}°</span>
             </div>
             ${precipProb > 0 || humidity || windSpeed ? html`
               <div class="day-details">
@@ -3210,12 +3210,9 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 500;
       }
 
-      .temp-cooler {
-        color: #64B5F6;
-      }
-
-      .temp-warmer {
-        color: #FF8A65;
+      .temp-item .temp-icon {
+        width: 20px;
+        height: 20px;
       }
 
       .day-details {
