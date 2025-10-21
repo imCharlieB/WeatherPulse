@@ -3176,29 +3176,30 @@ export class WeatherPulseCard extends LitElement {
       /* Detailed view mode */
       .forecast-detailed {
         display: grid;
-        grid-template-columns: 100px 1fr;
-        gap: 20px;
+        grid-template-columns: 80px 1fr;
+        gap: 16px;
         padding: 8px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
-        align-items: center;
+        align-items: start;
       }
 
       .detailed-left-col {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 4px;
         align-items: flex-start;
       }
 
       .detailed-right-col {
         display: flex;
-        flex-direction: column;
-        gap: 8px;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
       }
 
       .detailed-temps-row {
         display: flex;
-        gap: 24px;
+        gap: 16px;
         align-items: center;
       }
 
