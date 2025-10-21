@@ -1105,28 +1105,24 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
-    // Detailed mode - icon below day name with temp icons
+    // Detailed mode - icon next to day name
     if (viewMode === 'detailed') {
       return html`
         <div class="forecast-day forecast-detailed">
-          <div class="detailed-left-col">
-            <div class="day-name">${dayName}</div>
+          <div class="detailed-name-icon">
             <div class="day-icon">
               ${this.renderWeatherIcon(day.condition || 'clear', true)}
             </div>
+            <div class="day-name">${dayName}</div>
           </div>
-          <div class="detailed-right-col">
-            <div class="detailed-temps-row">
-              <span class="temp-item">${getTemperatureIcon('colder', this.config.animate_icons !== false)}${lowTemp}°</span>
-              <span class="temp-item">${getTemperatureIcon('warmer', this.config.animate_icons !== false)}${highTemp}°</span>
-            </div>
-            ${precipProb > 0 || humidity || windSpeed ? html`
-              <div class="day-details">
-                ${precipProb > 0 ? html`<div class="detail-item"><span>💧</span> ${precipProb}%</div>` : ''}
-                ${humidity ? html`<div class="detail-item"><span>💨</span> ${humidity}%</div>` : ''}
-                ${windSpeed ? html`<div class="detail-item"><span>🌬️</span> ${Math.round(windSpeed)} mph</div>` : ''}
-              </div>
-            ` : ''}
+          <div class="detailed-temps">
+            <span class="temp-item">${getTemperatureIcon('colder', this.config.animate_icons !== false)}${lowTemp}°</span>
+            <span class="temp-item">${getTemperatureIcon('warmer', this.config.animate_icons !== false)}${highTemp}°</span>
+          </div>
+          <div class="detailed-info">
+            ${precipProb > 0 ? html`<div class="detail-item"><span>💧</span> ${precipProb}%</div>` : ''}
+            ${humidity ? html`<div class="detail-item"><span>💨</span> ${humidity}%</div>` : ''}
+            ${windSpeed ? html`<div class="detail-item"><span>🌬️</span> ${Math.round(windSpeed)} mph</div>` : ''}
           </div>
         </div>
       `;
@@ -3177,28 +3173,30 @@ export class WeatherPulseCard extends LitElement {
       .forecast-day.forecast-detailed,
       .forecast-hour.forecast-detailed {
         display: grid;
-        grid-template-columns: 80px 1fr;
-        gap: 16px;
-        padding: 8px 0;
+        grid-template-columns: auto 1fr auto;
+        gap: 20px;
+        padding: 6px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
-        align-items: start;
+        align-items: center;
       }
 
-      .detailed-left-col {
+      .detailed-name-icon {
         display: flex;
-        flex-direction: column;
-        gap: 4px;
-        align-items: flex-start;
+        align-items: center;
+        gap: 10px;
       }
 
-      .detailed-right-col {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        justify-content: flex-start;
+      .detailed-name-icon .day-icon {
+        font-size: 32px;
       }
 
-      .detailed-temps-row {
+      .detailed-name-icon .day-name {
+        font-size: 16px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .detailed-temps {
         display: flex;
         gap: 20px;
         align-items: center;
@@ -3208,23 +3206,23 @@ export class WeatherPulseCard extends LitElement {
         display: flex;
         align-items: center;
         gap: 4px;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 500;
         white-space: nowrap;
       }
 
       .temp-item .temp-icon {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
         flex-shrink: 0;
       }
 
-      .day-details {
+      .detailed-info {
         display: flex;
         gap: 16px;
         font-size: 13px;
         opacity: 0.8;
-        flex-wrap: wrap;
+        justify-content: flex-end;
       }
 
       .detail-item {

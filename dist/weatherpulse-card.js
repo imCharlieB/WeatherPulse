@@ -861,24 +861,20 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         </div>
       `:"detailed"===a?B`
         <div class="forecast-day forecast-detailed">
-          <div class="detailed-left-col">
-            <div class="day-name">${i}</div>
+          <div class="detailed-name-icon">
             <div class="day-icon">
               ${this.renderWeatherIcon(e.condition||"clear",!0)}
             </div>
+            <div class="day-name">${i}</div>
           </div>
-          <div class="detailed-right-col">
-            <div class="detailed-temps-row">
-              <span class="temp-item">${Ee("colder",!1!==this.config.animate_icons)}${o}°</span>
-              <span class="temp-item">${Ee("warmer",!1!==this.config.animate_icons)}${r}°</span>
-            </div>
-            ${n>0||s||l?B`
-              <div class="day-details">
-                ${n>0?B`<div class="detail-item"><span>💧</span> ${n}%</div>`:""}
-                ${s?B`<div class="detail-item"><span>💨</span> ${s}%</div>`:""}
-                ${l?B`<div class="detail-item"><span>🌬️</span> ${Math.round(l)} mph</div>`:""}
-              </div>
-            `:""}
+          <div class="detailed-temps">
+            <span class="temp-item">${Ee("colder",!1!==this.config.animate_icons)}${o}°</span>
+            <span class="temp-item">${Ee("warmer",!1!==this.config.animate_icons)}${r}°</span>
+          </div>
+          <div class="detailed-info">
+            ${n>0?B`<div class="detail-item"><span>💧</span> ${n}%</div>`:""}
+            ${s?B`<div class="detail-item"><span>💨</span> ${s}%</div>`:""}
+            ${l?B`<div class="detail-item"><span>🌬️</span> ${Math.round(l)} mph</div>`:""}
           </div>
         </div>
       `:B`
@@ -2790,28 +2786,30 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .forecast-day.forecast-detailed,
       .forecast-hour.forecast-detailed {
         display: grid;
-        grid-template-columns: 80px 1fr;
-        gap: 16px;
-        padding: 8px 0;
+        grid-template-columns: auto 1fr auto;
+        gap: 20px;
+        padding: 6px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
-        align-items: start;
+        align-items: center;
       }
 
-      .detailed-left-col {
+      .detailed-name-icon {
         display: flex;
-        flex-direction: column;
-        gap: 4px;
-        align-items: flex-start;
+        align-items: center;
+        gap: 10px;
       }
 
-      .detailed-right-col {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        justify-content: flex-start;
+      .detailed-name-icon .day-icon {
+        font-size: 32px;
       }
 
-      .detailed-temps-row {
+      .detailed-name-icon .day-name {
+        font-size: 16px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .detailed-temps {
         display: flex;
         gap: 20px;
         align-items: center;
@@ -2821,23 +2819,23 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         display: flex;
         align-items: center;
         gap: 4px;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 500;
         white-space: nowrap;
       }
 
       .temp-item .temp-icon {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
         flex-shrink: 0;
       }
 
-      .day-details {
+      .detailed-info {
         display: flex;
         gap: 16px;
         font-size: 13px;
         opacity: 0.8;
-        flex-wrap: wrap;
+        justify-content: flex-end;
       }
 
       .detail-item {
