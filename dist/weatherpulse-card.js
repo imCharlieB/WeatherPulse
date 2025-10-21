@@ -848,7 +848,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         ${o>0?B`<div class="precip-prob">${o}%</div>`:""}
       </div>
     `}renderForecastDay(e,t,a="standard"){const i=we(e.datetime),r=Math.round(e.temperature||0),o=Math.round(e.templow||0),n=e.precipitation_probability||0,s=e.humidity,l=e.wind_speed,d=r-o>0?o/r*70:30;if("compact"===a){const a=ue(r,t);return B`
-        <div class="forecast-day forecast-compact" style="background: ${a.backgroundColor};">
+        <div class="forecast-day forecast-compact" style="background: ${a.color};">
           <div class="day-name">${i}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(e.condition||"clear",!0)}
