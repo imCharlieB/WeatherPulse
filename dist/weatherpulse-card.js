@@ -2803,7 +2803,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         display: grid;
         grid-template-columns: auto 1fr auto;
         gap: 16px;
-        padding: 8px 0;
+        padding: 4px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
         align-items: center;
       }
@@ -2815,6 +2815,15 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .detailed-name-icon .day-icon {
+        font-size: 80px;
+      }
+
+      .detailed-name-icon .day-icon .weather-icon-svg {
+        width: 80px;
+        height: 80px;
+      }
+
+      .detailed-name-icon .day-icon .icon-emoji {
         font-size: 80px;
       }
 
