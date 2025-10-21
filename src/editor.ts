@@ -192,7 +192,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           >
             <mwc-list-item value="default">Default</mwc-list-item>
             <mwc-list-item value="retro">Retro/Neubrutalism (Bold & Boxy)</mwc-list-item>
-            <mwc-list-item value="glass">Glassmorphism (Frosted Glass)</mwc-list-item>
+            <mwc-list-item value="midnight">Midnight (Sleek Dark Theme)</mwc-list-item>
             <mwc-list-item value="minimal">Minimal (Clean & Simple)</mwc-list-item>
             <mwc-list-item value="vibrant">Vibrant (Bright & Colorful)</mwc-list-item>
             <mwc-list-item value="custom">Custom (Use Custom Colors)</mwc-list-item>
