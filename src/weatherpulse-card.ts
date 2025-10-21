@@ -3139,7 +3139,6 @@ export class WeatherPulseCard extends LitElement {
         text-align: center;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        color: white;
       }
 
       .day-icon-small {
@@ -3168,7 +3167,6 @@ export class WeatherPulseCard extends LitElement {
       .temp-high-compact {
         font-size: 32px;
         font-weight: 700;
-        color: white;
         line-height: 1;
       }
 
@@ -3179,13 +3177,13 @@ export class WeatherPulseCard extends LitElement {
       .temp-low-compact {
         font-size: 20px;
         font-weight: 500;
-        color: rgba(255, 255, 255, 0.75);
+        opacity: 0.75;
         line-height: 1;
       }
 
       .precip-compact {
         font-size: 11px;
-        color: rgba(255, 255, 255, 0.8);
+        opacity: 0.8;
         text-align: center;
         font-weight: 500;
       }
