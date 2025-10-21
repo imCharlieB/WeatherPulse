@@ -2458,17 +2458,20 @@ export class WeatherPulseCard extends LitElement {
 
       /* GLASSMORPHISM THEME */
       ha-card.theme-glass {
-        background: rgba(255, 255, 255, 0.15) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+        backdrop-filter: blur(30px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        box-shadow:
+          0 8px 32px 0 rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.5) !important;
       }
 
       ha-card.theme-glass .card-header {
-        background: rgba(255, 255, 255, 0.08) !important; /* Override gradient */
-        backdrop-filter: blur(10px) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
+        backdrop-filter: blur(20px) saturate(150%) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
       }
 
       ha-card.theme-glass .graphical-header::after {
@@ -2486,9 +2489,12 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-glass .forecast-day.forecast-compact,
       ha-card.theme-glass .forecast-hour.forecast-compact {
-        background: rgba(255, 255, 255, 0.08) !important;
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.15) 100%) !important;
+        backdrop-filter: blur(20px) saturate(150%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        box-shadow:
+          0 4px 16px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.6) !important;
       }
 
       ha-card.theme-glass .weather-info-item {
