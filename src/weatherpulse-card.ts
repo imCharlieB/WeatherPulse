@@ -3212,8 +3212,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .temp-item .temp-icon {
-        width: 20px;
-        height: 20px;
+        width: 28px;
+        height: 28px;
         flex-shrink: 0;
       }
 

@@ -2825,8 +2825,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .temp-item .temp-icon {
-        width: 20px;
-        height: 20px;
+        width: 28px;
+        height: 28px;
         flex-shrink: 0;
       }
 
