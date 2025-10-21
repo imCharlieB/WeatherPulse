@@ -59,8 +59,16 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 
 ### 5. View Modes
 - [x] **Compact**: Current + minimal forecast (horizontal scroll for hourly) ✅
+  - [x] Temperature gradient backgrounds - Each forecast box gets dynamic gradient based on high temp ✅
+  - [x] Smart text color - Automatically switches between dark/white for readability ✅
+  - [x] 5 temperature ranges with matching gradients (< 32°F, 32-50°F, 50-70°F, 70-85°F, > 85°F) ✅
 - [x] **Standard**: Current + detailed daily (2-column for hourly) ✅
 - [x] **Detailed**: Current + daily with extra info (humidity, wind for hourly) ✅
+  - [x] Large 80px weather icons for better visibility ✅
+  - [x] Thermometer icons (colder/warmer) next to temperatures ✅
+  - [x] Wind direction with compass bearing (N, NE, E, SE, S, SW, W, NW) ✅
+  - [x] 3-column grid layout with perfect alignment ✅
+  - [x] Day name first, then weather icon, temps in center, details right-aligned ✅
 - [x] **Chart**: TV-style temperature trend line visualization ✅
   - Day names displayed at top ✅
   - Temperature values positioned on trend lines ✅
@@ -105,7 +113,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - Toggle on/off in Display Options
 - [x] **Pre-built Themes**: 5 professional visual themes + custom ✅
   - Retro/Neubrutalism: Bold colors, thick 4px borders, sharp corners, hard shadows
-  - Glassmorphism: Frosted glass blur effect, semi-transparent, soft shadows
+  - Material Design: Google Material Design with elevation shadows, purple gradient header, smooth transitions, night mode support
   - Minimal: Clean white, simple monochrome, thin borders, subtle grayscale
   - Vibrant: Bright gradient backgrounds, saturated colors, high energy
   - Custom: User-defined colors (primary, secondary, background, text, border, accent)

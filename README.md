@@ -67,9 +67,11 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 🎯 **Works Everywhere** - Fetches hourly data separately, works in daily or hourly forecast mode
 
 #### Visual Themes
-- 🎨 **Pre-built Themes** - 5 professional themes: Default, Retro (1990s Weather Channel), Glassmorphism, Minimal, Vibrant
+- 🎨 **Pre-built Themes** - 5 professional themes: Default, Retro (1990s Weather Channel), Material Design, Minimal, Vibrant
 - 🎭 **Custom Theme** - Create your own 6-color theme palette
 - 🎉 **Holiday Decorations** - Festive overlays for 8 holidays throughout the year
+- 🌈 **Temperature Gradient Forecast Boxes** - Compact forecast boxes feature automatic temperature-based gradient backgrounds (default theme only)
+- 📋 **Enhanced Detailed View** - Larger weather icons (80px), thermometer icons for temps, wind direction compass, and perfect alignment
 
 ### 🚧 Future Enhancements
 - 📊 Air Quality integration (requires AQI sensor)
@@ -162,6 +164,34 @@ seasonal_images:
   fall: /local/images/autumn-leaves.jpg
   winter: /local/images/snowy-mountains.jpg
 ```
+
+#### Temperature Gradient Forecast Boxes
+
+In **compact view mode** with the **default theme**, daily forecast boxes feature dynamic temperature-based gradient backgrounds that match the header highlighting system.
+
+**How It Works:**
+- Each forecast box automatically gets a vertical gradient background based on its high temperature
+- Uses the same 5 temperature ranges as the header highlighting feature
+- Text color automatically adjusts (dark or white) for optimal readability on each gradient
+- Only applies to daytime forecast boxes in compact mode
+- Only available on default theme (other themes have their own styling)
+
+**Temperature Ranges & Gradients:**
+- **< 32°F**: Icy blues/purples (`#667eea` to `#764ba2`) - White text
+- **32-50°F**: Cool blues/teals (`#4facfe` to `#00f2fe`) - White text
+- **50-70°F**: Pleasant greens/yellows (`#43e97b` to `#38f9d7`) - Dark text
+- **70-85°F**: Warm oranges/yellows (`#fa709a` to `#fee140`) - Dark text
+- **> 85°F**: Hot reds/deep oranges (`#ff6b6b` to `#ee5a6f`) - White text
+
+**Features:**
+- **Automatic Color Adjustment** - No configuration needed, works out of the box in compact mode with default theme
+- **Smart Text Color** - Text automatically switches between dark and white based on gradient brightness
+- **Visual Temperature Awareness** - Instantly see temperature trends across the week with color coding
+- **Default Theme Only** - Only available on default theme; other themes have their own distinct styling
+- **Daytime Only** - Night mode uses appropriate darker gradient variants
+
+**Example:**
+A 5-day forecast in compact mode might show: blue boxes for cool days (50°F), green boxes for pleasant days (65°F), and orange boxes for warm days (78°F) - all at a glance! The forecast boxes match the same gradient system as the header, creating a cohesive temperature-aware design.
 
 #### Graphical Header Mode
 
@@ -338,7 +368,7 @@ Transform the look and feel of your weather card with 5 professional pre-built t
 |-------|-------------|----------|
 | **Default** | Clean modern design with temperature gradients | General use, all dashboards |
 | **Retro/Neubrutalism** | Bold 4px black borders, sharp corners, hard shadows, no border-radius | Bold, statement dashboards, retro aesthetics |
-| **Glassmorphism** | Frosted glass blur effect, semi-transparent backgrounds, soft shadows | Modern minimalist dashboards, overlays |
+| **Material Design** | Google Material Design with elevation shadows, purple gradient header, smooth transitions | Modern, professional dashboards |
 | **Minimal** | Clean white, monochrome, thin borders, subtle grayscale filter | Professional, clean dashboards |
 | **Vibrant** | Bright gradient backgrounds, saturated colors, white text | Colorful, energetic dashboards |
 | **Custom** | Define your own colors for complete customization | Matching your specific color scheme |
@@ -359,12 +389,13 @@ Transform the look and feel of your weather card with 5 professional pre-built t
 - High contrast, bold appearance
 - Perfect for brutalist or retro-inspired dashboards
 
-**Glassmorphism:**
-- Backdrop blur effect (20px blur)
-- Semi-transparent backgrounds (10-15% opacity)
-- Subtle borders with transparency
-- Soft shadows
-- Works best with colorful wallpapers behind
+**Material Design:**
+- Clean white background with subtle elevation shadows
+- Purple gradient header (667eea to 764ba2)
+- Material elevation system (2dp, 4dp, 8dp shadows)
+- Smooth hover transitions with elevation changes
+- 8px border radius for modern look
+- Night mode: Dark backgrounds (#1e1e1e) with deep purple header
 
 **Minimal:**
 - Pure white backgrounds
@@ -441,7 +472,7 @@ custom_theme_colors:
 ```
 
 **Tips:**
-- Glassmorphism works best with colorful dashboards/wallpapers
+- Material Design provides a clean, modern Google-style appearance
 - Minimal theme is great for professional/work dashboards
 - Vibrant theme stands out and draws attention
 - Custom theme lets you match your Home Assistant theme perfectly
