@@ -2805,7 +2805,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .detailed-name-icon {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 8px;
       }
 
       .detailed-name-icon .day-icon {
