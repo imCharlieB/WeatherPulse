@@ -862,10 +862,10 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       `;if("detailed"===a){const t=e=>{if(void 0===e)return"";return["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"][Math.round(e/22.5)%16]},a=void 0!==e.wind_bearing?t(e.wind_bearing):"",d=void 0!==e.precipitation&&e.precipitation>0?e.precipitation:null;return B`
         <div class="forecast-day forecast-detailed">
           <div class="detailed-name-icon">
+            <div class="day-name">${i}</div>
             <div class="day-icon">
               ${this.renderWeatherIcon(e.condition||"clear",!0)}
             </div>
-            <div class="day-name">${i}</div>
           </div>
           <div class="detailed-temps">
             <span class="temp-item">${Ee("colder",!1!==this.config.animate_icons)}${o}°</span>
@@ -2802,8 +2802,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .forecast-hour.forecast-detailed {
         display: grid;
         grid-template-columns: auto 1fr auto;
-        gap: 24px;
-        padding: 12px 0;
+        gap: 16px;
+        padding: 8px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
         align-items: center;
       }
@@ -2811,11 +2811,11 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .detailed-name-icon {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
       }
 
       .detailed-name-icon .day-icon {
-        font-size: 56px;
+        font-size: 64px;
       }
 
       .detailed-name-icon .day-name {
@@ -2826,7 +2826,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       .detailed-temps {
         display: flex;
-        gap: 24px;
+        gap: 16px;
         align-items: center;
         justify-content: center;
       }

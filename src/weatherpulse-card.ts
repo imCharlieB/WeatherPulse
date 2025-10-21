@@ -1121,10 +1121,10 @@ export class WeatherPulseCard extends LitElement {
       return html`
         <div class="forecast-day forecast-detailed">
           <div class="detailed-name-icon">
+            <div class="day-name">${dayName}</div>
             <div class="day-icon">
               ${this.renderWeatherIcon(day.condition || 'clear', true)}
             </div>
-            <div class="day-name">${dayName}</div>
           </div>
           <div class="detailed-temps">
             <span class="temp-item">${getTemperatureIcon('colder', this.config.animate_icons !== false)}${lowTemp}°</span>
@@ -3200,8 +3200,8 @@ export class WeatherPulseCard extends LitElement {
       .forecast-hour.forecast-detailed {
         display: grid;
         grid-template-columns: auto 1fr auto;
-        gap: 24px;
-        padding: 12px 0;
+        gap: 16px;
+        padding: 8px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
         align-items: center;
       }
@@ -3209,11 +3209,11 @@ export class WeatherPulseCard extends LitElement {
       .detailed-name-icon {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
       }
 
       .detailed-name-icon .day-icon {
-        font-size: 56px;
+        font-size: 64px;
       }
 
       .detailed-name-icon .day-name {
@@ -3224,7 +3224,7 @@ export class WeatherPulseCard extends LitElement {
 
       .detailed-temps {
         display: flex;
-        gap: 24px;
+        gap: 16px;
         align-items: center;
         justify-content: center;
       }
