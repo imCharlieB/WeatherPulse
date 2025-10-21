@@ -1107,6 +1107,17 @@ export class WeatherPulseCard extends LitElement {
 
     // Detailed mode - icon next to day name
     if (viewMode === 'detailed') {
+      // Convert wind bearing to compass direction
+      const getWindDirection = (bearing?: number): string => {
+        if (bearing === undefined) return '';
+        const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+        const index = Math.round(bearing / 22.5) % 16;
+        return directions[index];
+      };
+
+      const windDirection = day.wind_bearing !== undefined ? getWindDirection(day.wind_bearing) : '';
+      const precipAmount = day.precipitation !== undefined && day.precipitation > 0 ? day.precipitation : null;
+
       return html`
         <div class="forecast-day forecast-detailed">
           <div class="detailed-name-icon">
@@ -1120,9 +1131,24 @@ export class WeatherPulseCard extends LitElement {
             <span class="temp-item">${getTemperatureIcon('warmer', this.config.animate_icons !== false)}${highTemp}°</span>
           </div>
           <div class="detailed-info">
-            ${precipProb > 0 ? html`<div class="detail-item"><span>💧</span> ${precipProb}%</div>` : ''}
-            ${humidity ? html`<div class="detail-item"><span>💨</span> ${humidity}%</div>` : ''}
-            ${windSpeed ? html`<div class="detail-item"><span>🌬️</span> ${Math.round(windSpeed)} mph</div>` : ''}
+            ${precipProb > 0 ? html`
+              <div class="detail-item">
+                <span class="detail-icon">💧</span>
+                <span class="detail-text">${precipProb}%${precipAmount ? ` (${precipAmount}")` : ''}</span>
+              </div>
+            ` : ''}
+            ${humidity ? html`
+              <div class="detail-item">
+                <span class="detail-icon">💨</span>
+                <span class="detail-text">${humidity}%</span>
+              </div>
+            ` : ''}
+            ${windSpeed ? html`
+              <div class="detail-item">
+                <span class="detail-icon">🌬️</span>
+                <span class="detail-text">${Math.round(windSpeed)} mph ${windDirection}</span>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
@@ -3174,8 +3200,8 @@ export class WeatherPulseCard extends LitElement {
       .forecast-hour.forecast-detailed {
         display: grid;
         grid-template-columns: auto 1fr auto;
-        gap: 20px;
-        padding: 6px 0;
+        gap: 24px;
+        padding: 12px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
         align-items: center;
       }
@@ -3183,56 +3209,63 @@ export class WeatherPulseCard extends LitElement {
       .detailed-name-icon {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 14px;
       }
 
       .detailed-name-icon .day-icon {
-        font-size: 32px;
+        font-size: 48px;
       }
 
       .detailed-name-icon .day-name {
-        font-size: 16px;
-        font-weight: 500;
+        font-size: 20px;
+        font-weight: 600;
         white-space: nowrap;
       }
 
       .detailed-temps {
         display: flex;
-        gap: 20px;
+        gap: 24px;
         align-items: center;
+        justify-content: center;
       }
 
       .temp-item {
         display: flex;
         align-items: center;
-        gap: 4px;
-        font-size: 18px;
-        font-weight: 500;
+        gap: 6px;
+        font-size: 24px;
+        font-weight: 600;
         white-space: nowrap;
       }
 
       .temp-item .temp-icon {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
         flex-shrink: 0;
       }
 
       .detailed-info {
         display: flex;
-        gap: 16px;
-        font-size: 13px;
-        opacity: 0.8;
-        justify-content: flex-end;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 14px;
+        justify-content: center;
+        align-items: flex-end;
       }
 
       .detail-item {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 6px;
       }
 
-      .detail-item span {
+      .detail-icon {
+        font-size: 16px;
+      }
+
+      .detail-text {
         font-size: 14px;
+        font-weight: 500;
       }
 
       .temp-actual {
