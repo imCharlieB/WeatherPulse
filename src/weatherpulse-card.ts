@@ -3200,7 +3200,7 @@ export class WeatherPulseCard extends LitElement {
       .forecast-hour.forecast-detailed {
         display: grid;
         grid-template-columns: auto 1fr auto;
-        gap: 16px;
+        gap: 12px;
         padding: 4px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
         align-items: center;
