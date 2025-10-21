@@ -3173,8 +3173,9 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 500;
       }
 
-      /* Detailed view mode */
-      .forecast-detailed {
+      /* Detailed view mode - individual forecast items */
+      .forecast-day.forecast-detailed,
+      .forecast-hour.forecast-detailed {
         display: grid;
         grid-template-columns: 80px 1fr;
         gap: 16px;

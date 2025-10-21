@@ -2786,8 +2786,9 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         font-weight: 500;
       }
 
-      /* Detailed view mode */
-      .forecast-detailed {
+      /* Detailed view mode - individual forecast items */
+      .forecast-day.forecast-detailed,
+      .forecast-hour.forecast-detailed {
         display: grid;
         grid-template-columns: 80px 1fr;
         gap: 16px;
