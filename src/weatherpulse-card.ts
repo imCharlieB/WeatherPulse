@@ -2456,29 +2456,28 @@ export class WeatherPulseCard extends LitElement {
         border-bottom-color: rgba(255, 255, 255, 0.15) !important;
       }
 
-      /* MATERIAL DESIGN THEME */
+      /* GLASSMORPHISM THEME */
       ha-card.theme-glass {
-        background: #ffffff !important;
-        border: none !important;
-        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(50px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(50px) saturate(150%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        border-radius: 20px !important;
         box-shadow:
-          0 2px 4px rgba(0, 0, 0, 0.1),
-          0 8px 16px rgba(0, 0, 0, 0.1) !important;
-        transition: box-shadow 0.3s ease;
-      }
-
-      ha-card.theme-glass:hover {
-        box-shadow:
-          0 4px 8px rgba(0, 0, 0, 0.12),
-          0 12px 24px rgba(0, 0, 0, 0.15) !important;
+          0 20px 60px rgba(0, 0, 0, 0.3),
+          0 8px 16px rgba(0, 0, 0, 0.15),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
       }
 
       ha-card.theme-glass .card-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        color: #ffffff !important;
-        border-radius: 8px 8px 0 0 !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        border-bottom: none;
+        background: rgba(255, 255, 255, 0.12) !important;
+        backdrop-filter: blur(30px) saturate(140%) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px 20px 0 0 !important;
+        box-shadow:
+          0 4px 20px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.25);
       }
 
       ha-card.theme-glass .graphical-header::after {
@@ -2488,35 +2487,29 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-glass .forecast-day,
       ha-card.theme-glass .forecast-hour {
-        background: #ffffff !important;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+        backdrop-filter: blur(10px) !important;
         border: none !important;
-        border-bottom: 1px solid #e0e0e0 !important;
-        transition: background 0.2s ease, box-shadow 0.2s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25) !important;
       }
 
       ha-card.theme-glass .forecast-day:hover,
       ha-card.theme-glass .forecast-hour:hover {
-        background: #f5f5f5 !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+        backdrop-filter: blur(15px) !important;
       }
 
       ha-card.theme-glass .forecast-day.forecast-compact,
       ha-card.theme-glass .forecast-hour.forecast-compact {
-        background: #ffffff !important;
-        border: none !important;
-        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(35px) saturate(140%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        border-radius: 16px !important;
         box-shadow:
-          0 2px 4px rgba(0, 0, 0, 0.1),
-          0 4px 8px rgba(0, 0, 0, 0.08) !important;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      ha-card.theme-glass .forecast-day.forecast-compact:hover,
-      ha-card.theme-glass .forecast-hour.forecast-compact:hover {
-        transform: translateY(-4px);
-        box-shadow:
-          0 4px 8px rgba(0, 0, 0, 0.12),
-          0 8px 16px rgba(0, 0, 0, 0.1) !important;
+          0 8px 32px rgba(0, 0, 0, 0.2),
+          0 4px 12px rgba(0, 0, 0, 0.1),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.3) !important;
       }
 
       ha-card.theme-glass .weather-info-item {
@@ -2538,55 +2531,35 @@ export class WeatherPulseCard extends LitElement {
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
       }
 
-      /* MATERIAL DESIGN THEME - Night Mode */
+      /* GLASS THEME - Night Mode */
       ha-card.theme-glass.night-mode {
-        background: #1e1e1e !important;
-        box-shadow:
-          0 2px 4px rgba(0, 0, 0, 0.3),
-          0 8px 16px rgba(0, 0, 0, 0.3) !important;
+        background: rgba(10, 14, 39, 0.3) !important; /* Darker base */
+        backdrop-filter: blur(25px) !important;
       }
 
-      ha-card.theme-glass.night-mode:hover {
-        box-shadow:
-          0 4px 8px rgba(0, 0, 0, 0.4),
-          0 12px 24px rgba(0, 0, 0, 0.4) !important;
+      ha-card.theme-glass.night-mode::before {
+        opacity: 0.7 !important; /* Dimmer stars */
       }
 
       ha-card.theme-glass.night-mode .card-header {
-        background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 100%) !important;
-        color: #ffffff !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        background: rgba(10, 14, 39, 0.15) !important; /* Keep glass header style */
+        filter: none !important; /* No brightness filter */
+        backdrop-filter: blur(15px) !important;
+        color: #e8eaf6 !important;
+      }
+
+      ha-card.theme-glass.night-mode .card-header::after {
+        display: none !important; /* No default night overlay */
       }
 
       ha-card.theme-glass.night-mode .card-content {
         background: transparent !important;
-        color: #e0e0e0 !important;
-      }
-
-      ha-card.theme-glass.night-mode .forecast-day,
-      ha-card.theme-glass.night-mode .forecast-hour {
-        background: #2a2a2a !important;
-        border-bottom-color: #404040 !important;
-      }
-
-      ha-card.theme-glass.night-mode .forecast-day:hover,
-      ha-card.theme-glass.night-mode .forecast-hour:hover {
-        background: #333333 !important;
       }
 
       ha-card.theme-glass.night-mode .forecast-day.forecast-compact,
       ha-card.theme-glass.night-mode .forecast-hour.forecast-compact {
-        background: #2a2a2a !important;
-        box-shadow:
-          0 2px 4px rgba(0, 0, 0, 0.3),
-          0 4px 8px rgba(0, 0, 0, 0.2) !important;
-      }
-
-      ha-card.theme-glass.night-mode .forecast-day.forecast-compact:hover,
-      ha-card.theme-glass.night-mode .forecast-hour.forecast-compact:hover {
-        box-shadow:
-          0 4px 8px rgba(0, 0, 0, 0.4),
-          0 8px 16px rgba(0, 0, 0, 0.3) !important;
+        background: rgba(29, 33, 56, 0.5) !important;
+        backdrop-filter: blur(10px) !important;
       }
 
       /* MINIMAL THEME */
