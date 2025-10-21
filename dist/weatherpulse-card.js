@@ -2080,7 +2080,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
       }
 
-      ha-card.theme-glass .forecast-compact {
+      ha-card.theme-glass .forecast-day.forecast-compact,
+      ha-card.theme-glass .forecast-hour.forecast-compact {
         background: rgba(255, 255, 255, 0.08) !important;
         backdrop-filter: blur(10px) !important;
         border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -2130,7 +2131,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         background: transparent !important;
       }
 
-      ha-card.theme-glass.night-mode .forecast-compact {
+      ha-card.theme-glass.night-mode .forecast-day.forecast-compact,
+      ha-card.theme-glass.night-mode .forecast-hour.forecast-compact {
         background: rgba(29, 33, 56, 0.5) !important;
         backdrop-filter: blur(10px) !important;
       }
@@ -2166,7 +2168,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         color: #333 !important;
       }
 
-      ha-card.theme-minimal .forecast-compact {
+      ha-card.theme-minimal .forecast-day.forecast-compact,
+      ha-card.theme-minimal .forecast-hour.forecast-compact {
         background: #f8f8f8 !important;
         border: 1px solid #e0e0e0 !important;
       }
@@ -2234,7 +2237,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         color: #e8eaf6 !important;
       }
 
-      ha-card.theme-minimal.night-mode .forecast-compact {
+      ha-card.theme-minimal.night-mode .forecast-day.forecast-compact,
+      ha-card.theme-minimal.night-mode .forecast-hour.forecast-compact {
         background: rgba(29, 33, 56, 0.4) !important; /* More transparent - show stars */
         border-color: rgba(232, 234, 246, 0.1) !important;
       }
@@ -2293,7 +2297,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         color: white !important;
       }
 
-      ha-card.theme-vibrant .forecast-compact {
+      ha-card.theme-vibrant .forecast-day.forecast-compact,
+      ha-card.theme-vibrant .forecast-hour.forecast-compact {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)) !important;
         border: 1px solid rgba(255, 255, 255, 0.3) !important;
       }
@@ -2358,7 +2363,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         background: rgba(42, 58, 110, 0.3) !important;
       }
 
-      ha-card.theme-vibrant.night-mode .forecast-compact {
+      ha-card.theme-vibrant.night-mode .forecast-day.forecast-compact,
+      ha-card.theme-vibrant.night-mode .forecast-hour.forecast-compact {
         background: rgba(122, 75, 162, 0.3) !important;
       }
 
