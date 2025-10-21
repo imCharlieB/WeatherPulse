@@ -1092,7 +1092,7 @@ export class WeatherPulseCard extends LitElement {
     if (viewMode === 'compact') {
       const gradient = getTemperatureGradient(highTemp, unit);
       return html`
-        <div class="forecast-day forecast-compact" style="background: ${gradient.color};">
+        <div class="forecast-day forecast-compact" style="background: ${gradient.color}; color: ${gradient.textColor};">
           <div class="day-name">${dayName}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(day.condition || 'clear', true)}
