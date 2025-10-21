@@ -2125,8 +2125,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.theme-midnight .weather-info-section {
-        background: #0d0d0d !important;
-        border-top: 1px solid #1a1a1a !important;
+        background: transparent !important;
+        border-top: none !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
       }
@@ -2168,6 +2168,11 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
+      }
+
+      ha-card.theme-midnight.night-mode .weather-info-section {
+        background: transparent !important;
+        border-top: none !important;
       }
 
       /* MINIMAL THEME */

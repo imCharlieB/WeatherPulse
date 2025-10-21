@@ -2526,8 +2526,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-midnight .weather-info-section {
-        background: #0d0d0d !important;
-        border-top: 1px solid #1a1a1a !important;
+        background: transparent !important;
+        border-top: none !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
       }
@@ -2569,6 +2569,11 @@ export class WeatherPulseCard extends LitElement {
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
+      }
+
+      ha-card.theme-midnight.night-mode .weather-info-section {
+        background: transparent !important;
+        border-top: none !important;
       }
 
       /* MINIMAL THEME */
