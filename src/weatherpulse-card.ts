@@ -1464,7 +1464,8 @@ export class WeatherPulseCard extends LitElement {
         background: rgba(232, 234, 246, 0.15);
       }
 
-      ha-card.night-mode .forecast-compact {
+      ha-card.night-mode .forecast-day.forecast-compact,
+      ha-card.night-mode .forecast-hour.forecast-compact {
         background: linear-gradient(180deg, #1a3a52 0%, #2c5270 100%) !important;
         position: relative !important;
         z-index: 1 !important; /* Above stars */
@@ -1472,7 +1473,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       /* Add stars to night mode compact forecast boxes */
-      ha-card.night-mode .forecast-compact::before {
+      ha-card.night-mode .forecast-day.forecast-compact::before,
+      ha-card.night-mode .forecast-hour.forecast-compact::before {
         content: '';
         position: absolute;
         top: 0;
@@ -1508,7 +1510,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       /* Ensure content is above stars */
-      ha-card.night-mode .forecast-compact > * {
+      ha-card.night-mode .forecast-day.forecast-compact > *,
+      ha-card.night-mode .forecast-hour.forecast-compact > * {
         position: relative;
         z-index: 1;
       }
