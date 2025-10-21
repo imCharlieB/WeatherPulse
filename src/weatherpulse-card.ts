@@ -2458,30 +2458,26 @@ export class WeatherPulseCard extends LitElement {
 
       /* GLASSMORPHISM THEME */
       ha-card.theme-glass {
-        background: linear-gradient(135deg,
-          rgba(255, 235, 205, 0.15) 0%,
-          rgba(222, 184, 135, 0.08) 50%,
-          rgba(245, 222, 179, 0.12) 100%) !important;
-        backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
-        -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
-        border: 1px solid rgba(255, 255, 255, 0.5) !important;
-        border-radius: 16px !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(50px) saturate(150%) !important;
+        -webkit-backdrop-filter: blur(50px) saturate(150%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        border-radius: 20px !important;
         box-shadow:
-          0 8px 32px 0 rgba(139, 90, 43, 0.15),
-          0 2px 8px 0 rgba(210, 180, 140, 0.1),
-          inset 0 1px 0 0 rgba(255, 255, 255, 0.6) !important;
+          0 20px 60px rgba(0, 0, 0, 0.3),
+          0 8px 16px rgba(0, 0, 0, 0.15),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
       }
 
       ha-card.theme-glass .card-header {
-        background: linear-gradient(135deg,
-          rgba(255, 245, 225, 0.25) 0%,
-          rgba(245, 222, 179, 0.12) 100%) !important;
-        backdrop-filter: blur(25px) saturate(180%) brightness(1.15) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-        border-radius: 16px 16px 0 0 !important;
+        background: rgba(255, 255, 255, 0.12) !important;
+        backdrop-filter: blur(30px) saturate(140%) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px 20px 0 0 !important;
         box-shadow:
-          0 4px 16px rgba(139, 90, 43, 0.08),
-          inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+          0 4px 20px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.25);
       }
 
       ha-card.theme-glass .graphical-header::after {
@@ -2505,16 +2501,15 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-glass .forecast-day.forecast-compact,
       ha-card.theme-glass .forecast-hour.forecast-compact {
-        background: linear-gradient(135deg,
-          rgba(255, 245, 225, 0.35) 0%,
-          rgba(245, 222, 179, 0.20) 100%) !important;
-        backdrop-filter: blur(25px) saturate(180%) brightness(1.12) !important;
-        border: 1px solid rgba(255, 255, 255, 0.5) !important;
-        border-radius: 12px !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(35px) saturate(140%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+        border-radius: 16px !important;
         box-shadow:
-          0 6px 20px rgba(139, 90, 43, 0.12),
-          0 2px 6px rgba(210, 180, 140, 0.08),
-          inset 0 1px 0 0 rgba(255, 255, 255, 0.7) !important;
+          0 8px 32px rgba(0, 0, 0, 0.2),
+          0 4px 12px rgba(0, 0, 0, 0.1),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.3) !important;
       }
 
       ha-card.theme-glass .weather-info-item {
