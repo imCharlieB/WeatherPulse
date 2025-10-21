@@ -960,7 +960,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         <ha-card>
           <div class="error">Entity ${this.config.entity} not found</div>
         </ha-card>
-      `;const e=this.getWeatherData(),t=e.forecast&&e.forecast.length>0,a=!1!==this.config.show_forecast&&t,i=this.config.night_mode&&this.isNightTime()?"night-mode":"",r="compact"===(this.config?.weather_info_layout||"standard"),o=this.nwsAlerts.some(e=>"Extreme"===e.severity||"Severe"===e.severity)?this.nwsAlerts.some(e=>"Extreme"===e.severity)?"alert-glow-extreme":"alert-glow-severe":"",n=this.getCurrentTemp();let s="";n>=95?s="temp-glow-hot":n<=20&&(s="temp-glow-freezing");const l=this.config?.theme||"default",d="default"!==l?`theme-${l}`:"";let c="";if("custom"===l&&this.config?.custom_theme_colors){const e=this.config.custom_theme_colors;c=`\n        --custom-primary: ${e.primary||"#667eea"};\n        --custom-secondary: ${e.secondary||"#764ba2"};\n        --custom-background: ${e.background||"#ffffff"};\n        --custom-text: ${e.text||"#333333"};\n        --custom-border: ${e.border||"#e0e0e0"};\n        --custom-accent: ${e.accent||"#f093fb"};\n      `}return R`
+      `;const e=this.getWeatherData(),t=e.forecast&&e.forecast.length>0,a=!1!==this.config.show_forecast&&t,i=this.config.night_mode&&this.isNightTime()?"night-mode":"",r="compact"===(this.config?.weather_info_layout||"standard"),o=this.nwsAlerts.some(e=>"Extreme"===e.severity||"Severe"===e.severity)?this.nwsAlerts.some(e=>"Extreme"===e.severity)?"alert-glow-extreme":"alert-glow-severe":"",n=this.getCurrentTemp();let s="";n>=95?s="temp-glow-hot":n<=20&&(s="temp-glow-freezing");const l=this.config?.theme||"default",d="default"!==l?`theme-${l}`:"";let c="";if("custom"===l&&this.config?.custom_theme_colors){const e=this.config.custom_theme_colors;c=`\n        --custom-primary: ${e.primary||"#667eea"};\n        --custom-secondary: ${e.secondary||"#764ba2"};\n        --custom-background: ${e.background||"#ffffff"};\n        --custom-text: ${e.text||"#333333"};\n        --custom-border: ${e.border||"#e0e0e0"};\n        --custom-accent: ${e.accent||"#f093fb"};\n      `}const h="compact"===(this.config.view_mode||"standard")?"card-content card-content-compact":"card-content";return R`
       <ha-card class="${i} ${o} ${s} ${d}" style="${c}">
         ${this.renderHolidayDecorations()}
         ${this.renderHeader()}
@@ -968,7 +968,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         ${this.renderNWSAlerts()}
         ${r?"":this.renderWeatherInfo()}
         ${a?R`
-          <div class="card-content">
+          <div class="${h}">
             ${this.renderForecast()}
           </div>
         `:""}
@@ -2471,7 +2471,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       /* Make card-content transparent for compact view - show background through */
-      .card-content:has(.forecast-container.forecast-compact) {
+      .card-content-compact {
         background: transparent !important;
       }
 

@@ -1340,6 +1340,9 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
+    const viewMode = this.config.view_mode || 'standard';
+    const cardContentClass = viewMode === 'compact' ? 'card-content card-content-compact' : 'card-content';
+
     return html`
       <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
@@ -1348,7 +1351,7 @@ export class WeatherPulseCard extends LitElement {
         ${this.renderNWSAlerts()}
         ${!showWeatherInfoInHeader ? this.renderWeatherInfo() : ''}
         ${showForecast ? html`
-          <div class="card-content">
+          <div class="${cardContentClass}">
             ${this.renderForecast()}
           </div>
         ` : ''}
@@ -2855,7 +2858,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       /* Make card-content transparent for compact view - show background through */
-      .card-content:has(.forecast-container.forecast-compact) {
+      .card-content-compact {
         background: transparent !important;
       }
 
