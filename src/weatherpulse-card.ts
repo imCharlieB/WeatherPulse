@@ -188,13 +188,15 @@ export class WeatherPulseCard extends LitElement {
       console.debug('Could not fetch hourly forecast for rain timing:', error);
     }
     
-    // Fallback: use hourly forecast from entity attributes
-    const entity = this.hass.states[this.config.entity];
-    if (entity?.attributes?.forecast) {
-      this.hourlyForecastData = entity.attributes.forecast;
-    } else {
-      this.hourlyForecastData = [];
-    }
+     // Fallback: use hourly forecast from entity attributes
+     const entity = this.hass.states[this.config.entity];
+     if (entity?.attributes?.forecast) {
+       this.hourlyForecastData = entity.attributes.forecast;
+       console.debug('Used fallback hourly forecast from attributes:', this.hourlyForecastData);
+     } else {
+       this.hourlyForecastData = [];
+       console.debug('No hourly forecast data available in attributes.');
+     }
   }
 
   private getWeatherData(): WeatherData {
