@@ -1396,7 +1396,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         flex-direction: column;
         align-items: flex-end;
         gap: 2px;
-        margin-top: -5px;
+        margin-top: 4px;
       }
 
       .actual-temp-value {

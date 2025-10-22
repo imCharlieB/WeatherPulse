@@ -1776,7 +1776,7 @@ export class WeatherPulseCard extends LitElement {
         flex-direction: column;
         align-items: flex-end;
         gap: 2px;
-        margin-top: -5px;
+        margin-top: 4px;
       }
 
       .actual-temp-value {
