@@ -1473,7 +1473,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       /* Compact Layout - single line, more items per row */
       .weather-info-layout-compact {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
         padding: 12px 20px;
         gap: 8px;
       }
@@ -1570,7 +1570,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       /* Weather Info in Header (compact mode) */
       .weather-info-in-header {
-        margin-top: 12px;
+        margin-top: 8px;
       }
 
       .weather-info-in-header .weather-info-section {
@@ -1578,13 +1578,13 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         border-top: none;
         padding: 0;
         gap: 0;
-        grid-template-columns: repeat(auto-fit, minmax(50px, max-content));
+        grid-template-columns: 1fr 1fr 1fr;
         justify-content: space-evenly;
       }
 
       .weather-info-in-header .weather-info-item {
         background: transparent;
-        padding: 0;
+        padding: 4px;
         border-radius: 0;
         gap: 2px;
         flex-direction: column;
