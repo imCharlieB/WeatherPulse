@@ -146,6 +146,10 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
       (eid.includes('temp') || eid.includes('temperature'))
     );
 
+    // Get list of forecast-capable sensor entities
+    const forecastSensors = Object.keys(this.hass.states)
+  .filter(eid => eid.startsWith('sensor.') && this.hass.states[eid].attributes.forecast);
+
     return html`
       <div class="card-config">
         <h3>WeatherPulse Card Configuration</h3>
@@ -173,6 +177,25 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               `
             )}
           </ha-select>
+
+          <ha-select
+          label="Forecast Sensor (Recommended for Hourly)"
+          .configValue=${'forecast_sensor'}
+          .value=${this._config.forecast_sensor || ''}
+          @selected=${this._valueChanged}
+          @closed=${(ev: Event) => ev.stopPropagation()}
+        >
+          ${forecastSensors.map(
+            (sensor) => html`
+              <mwc-list-item .value=${sensor}>
+                ${sensor}
+              </mwc-list-item>
+            `
+          )}
+        </ha-select>
+        <p class="helper-text">
+          Select a sensor that provides forecast data for hourly. This enables hourly alerts
+        </p>
           ` : ''}
         </div>
 

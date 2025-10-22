@@ -169,34 +169,23 @@ export class WeatherPulseCard extends LitElement {
    * Uses weather.get_forecasts WebSocket call
    */
   private async fetchHourlyForRainTiming(): Promise<void> {
-    if (!this.hass || !this.config?.entity) {
+    // Always use forecast_sensor (user-selected) for forecast data
+    const forecastEntity = this.config.forecast_sensor;
+  
+    if (!this.hass || !forecastEntity) {
+      this.hourlyForecastData = [];
       return;
     }
-
-    try {
-      const response: any = await this.hass.callWS({
-        type: 'weather/get_forecasts',
-        entity_id: [this.config.entity],
-        forecast_type: 'hourly'
-      });
-
-      if (response && response[this.config.entity]?.forecast) {
-        this.hourlyForecastData = response[this.config.entity].forecast;
-      }
-    } catch (error) {
-      // Silently fail - rain timing is optional feature
-      console.debug('Could not fetch hourly forecast for rain timing:', error);
+  
+    // Get forecast data from the selected sensor's attributes
+    const entity = this.hass.states[forecastEntity];
+    if (entity?.attributes?.forecast) {
+      this.hourlyForecastData = entity.attributes.forecast;
+      console.debug('Used hourly forecast from selected sensor:', this.hourlyForecastData);
+    } else {
+      this.hourlyForecastData = [];
+      console.debug('No hourly forecast data available in selected sensor attributes.');
     }
-    
-     // Fallback: use hourly forecast from entity attributes
-     const entity = this.hass.states[this.config.entity];
-     if (entity?.attributes?.forecast) {
-       this.hourlyForecastData = entity.attributes.forecast;
-       console.debug('Used fallback hourly forecast from attributes:', this.hourlyForecastData);
-     } else {
-       this.hourlyForecastData = [];
-       console.debug('No hourly forecast data available in attributes.');
-     }
   }
 
   private getWeatherData(): WeatherData {
