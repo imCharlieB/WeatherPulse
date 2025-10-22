@@ -1688,7 +1688,6 @@ export class WeatherPulseCard extends LitElement {
         font-size: 64px;
         font-weight: 300;
         line-height: 1;
-        margin-bottom: 2px;
         position: relative;
       }
 
@@ -1748,7 +1747,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .date-small {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 400;
         opacity: 0.9;
         text-align: left;
