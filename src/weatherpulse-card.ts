@@ -2913,6 +2913,10 @@ export class WeatherPulseCard extends LitElement {
       .card-content {
         padding: 20px;
       }
+      
+      .card-content-compact {
+        padding: 20px 5px;
+      }
 
       /* Make card-content transparent for compact view - show background through */
       .card-content-compact {

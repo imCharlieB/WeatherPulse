@@ -2533,6 +2533,10 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .card-content {
         padding: 20px;
       }
+      
+      .card-content-compact {
+        padding: 20px 5px;
+      }
 
       /* Make card-content transparent for compact view - show background through */
       .card-content-compact {
