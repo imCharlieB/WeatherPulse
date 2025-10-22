@@ -664,7 +664,7 @@ export class WeatherPulseCard extends LitElement {
 
       if (value) {
         if (layout === 'compact') {
-          // Compact: Label below value (like ACTUAL temp)
+          // Compact: icon below value
           items.push(html`
             <div class="weather-info-item weather-info-compact">
               <div class="weather-info-value">${value}</div>
