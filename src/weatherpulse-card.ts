@@ -664,10 +664,10 @@ export class WeatherPulseCard extends LitElement {
 
       if (value) {
         if (layout === 'compact') {
-          // Compact: Label above value (like ACTUAL temp)
+          // Compact: Label below value (like ACTUAL temp)
           items.push(html`
             <div class="weather-info-item weather-info-compact">
-              <div class="weather-info-value">${value}</div>
+              <div class="weather-info-value">${icon}</div>
               <div class="weather-info-label-compact">${label.toUpperCase()}</div>
             </div>
           `);
@@ -1973,8 +1973,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .weather-info-in-header .weather-info-value {
-        font-size: 18px;
-        font-weight: 500;
+        font-size: 12px;
+        font-weight: 200;
         line-height: 1;
       }
 

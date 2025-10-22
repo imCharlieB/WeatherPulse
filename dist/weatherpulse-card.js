@@ -670,7 +670,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       </div>
     `:B``}renderWeatherInfo(e){const t=this.config?.show_weather_info;if(!t||0===t.length)return B``;const a=this.getWeatherData(),i=e||this.config?.weather_info_layout||"standard",r=[];for(const e of t){let t="",o="",n="";switch(e){case"uv_index":void 0!==a.uv_index&&(t="☀️",o="UV Index",n=String(Math.round(a.uv_index)));break;case"wind":if(void 0!==a.wind_speed){t="💨",o="Wind";const e=a.wind_speed_unit||"mph";n=`${Math.round(a.wind_speed)} ${e}`,a.wind_gust_speed&&(n+=` (gusts ${Math.round(a.wind_gust_speed)} ${e})`)}break;case"feels_like":let e=a.apparent_temperature;if(void 0===e&&void 0!==a.temperature){const t=a.temperature,i=a.wind_speed||0;if(t<=50&&i>3)e=35.74+.6215*t-35.75*Math.pow(i,.16)+.4275*t*Math.pow(i,.16);else if(t>=80){const i=a.humidity||50;e=2.04901523*t-42.379+10.14333127*i-.22475541*t*i-.00683783*t*t-.05481717*i*i+.00122874*t*t*i+85282e-8*t*i*i-199e-8*t*t*i*i}else e=t}if(void 0!==e){t="🌡️",o="Feels Like";const i=a.temperature_unit?.replace("°","")||"F";n=`${Math.round(e)}°${i}`}break;case"precipitation":if(void 0!==a.precipitation&&a.precipitation>0){t="💧",o="Precipitation";const e=a.precipitation_unit||"in";n=`${a.precipitation} ${e}`}break;case"humidity":void 0!==a.humidity&&(t="💧",o="Humidity",n=`${Math.round(a.humidity)}%`);break;case"pressure":if(void 0!==a.pressure){t="🔽",o="Pressure";const e=a.pressure_unit||"hPa";n=`${Math.round(a.pressure)} ${e}`}break;case"visibility":if(void 0!==a.visibility){t="👁️",o="Visibility";const e=a.visibility_unit||"mi";n=`${a.visibility} ${e}`}break;case"sunrise_sunset":const i=this.getSunEntity();if(i&&i.attributes){const e="above_horizon"===i.state,a=e?i.attributes.next_setting:i.attributes.next_rising;if(a){t=e?"🌅":"🌄",o=e?"Sunset":"Sunrise",n=new Date(a).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}}}n&&("compact"===i?r.push(B`
             <div class="weather-info-item weather-info-compact">
-              <div class="weather-info-value">${n}</div>
+              <div class="weather-info-value">${t}</div>
               <div class="weather-info-label-compact">${o.toUpperCase()}</div>
             </div>
           `):"detailed"===i?r.push(B`
@@ -1593,8 +1593,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .weather-info-in-header .weather-info-value {
-        font-size: 18px;
-        font-weight: 500;
+        font-size: 12px;
+        font-weight: 200;
         line-height: 1;
       }
 
