@@ -187,6 +187,14 @@ export class WeatherPulseCard extends LitElement {
       // Silently fail - rain timing is optional feature
       console.debug('Could not fetch hourly forecast for rain timing:', error);
     }
+    
+    // Fallback: use hourly forecast from entity attributes
+    const entity = this.hass.states[this.config.entity];
+    if (entity?.attributes?.forecast) {
+      this.hourlyForecastData = entity.attributes.forecast;
+    } else {
+      this.hourlyForecastData = [];
+    }
   }
 
   private getWeatherData(): WeatherData {
