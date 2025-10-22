@@ -66,6 +66,205 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 📺 **Lower Third Style** - Professional TV weather broadcast appearance with shimmer effect
 - 🎯 **Works Everywhere** - Fetches hourly data separately, works in daily or hourly forecast mode
 
+#### National Weather Service (NWS) Alerts
+
+WeatherPulse integrates directly with the National Weather Service API to display real-time severe weather alerts for your location. **No custom components or plugins required!**
+
+**How It Works:**
+- Automatically uses your Home Assistant location coordinates (Settings → System → General → Location)
+- Fetches alerts directly from `api.weather.gov` every 5 minutes
+- Only displays alerts that are active for your specific location
+- Alert section auto-hides when no active alerts exist
+
+**Supported Alert Types:**
+- 🌀 Hurricanes & Tropical Storms
+- 🌪️ Tornado Warnings & Watches
+- ⛈️ Severe Thunderstorm Warnings
+- 🌨️ Winter Storm Warnings & Advisories
+- 🔥 Heat Advisories & Excessive Heat Warnings
+- 🌊 Flood Warnings & Flash Flood Warnings
+- 🌬️ High Wind Warnings
+- And many more NWS alert types
+
+**Severity Color Coding:**
+- 🔴 **Extreme** (Red) - Life-threatening situations (hurricanes, major tornadoes)
+- 🟠 **Severe** (Orange) - Severe weather threats (thunderstorms, winter storms)
+- 🟡 **Moderate** (Yellow) - Moderate warnings (winter weather advisories)
+- 🔵 **Minor** (Blue) - Minor advisories (frost, wind, heat)
+
+**Alert Information Displayed:**
+- Event name (e.g., "Tornado Warning", "Heat Advisory")
+- Affected area/counties
+- Headline summary
+- Expiration time
+
+Toggle "Show NWS Weather Alerts" in the visual editor's Display Options section.
+
+**Note:** NWS alerts are only available for locations within the United States and its territories. The feature will gracefully fail for international locations without showing errors.
+
+#### Graphical Header Mode
+
+The graphical header mode displays a large, immersive header with seasonal background images.
+
+**✨ Bundled Images Included**: The card comes with beautiful default seasonal images! Just set `header_mode: graphical` and it works out of the box.
+
+**Default Images**:
+- 🌸 **Spring** - Cherry blossoms and tulips
+- 🏖️ **Summer** - Tropical beach sunset
+- 🍂 **Fall** - Autumn pumpkin and maple leaves
+- ❄️ **Winter** - Snowy winter beach scene
+
+**🎨 Use Alternate Bundled Images**:
+The card includes multiple images per season. Switch to alternates in the visual editor or via YAML:
+```yaml
+seasonal_images:
+  spring: /hacsfiles/weatherpulse/images/spring-alt1.jpg  # More tulips & flowers
+  summer: /hacsfiles/weatherpulse/images/summer-alt1.jpg  # Sunset beach painting
+  fall: /hacsfiles/weatherpulse/images/fall-alt1.jpg      # Autumn forest scene
+  winter: /hacsfiles/weatherpulse/images/winter-alt1.jpg  # Snowy palm tree beach
+```
+
+**📁 Using Your Own Custom Images**:
+1. Upload your images to `/config/www/images/` in Home Assistant
+2. Reference them in the visual editor or YAML see config section below.
+
+**Image Specifications** (for custom images):
+- **Recommended size**: 800x280 pixels or larger
+- **Format**: JPG (smaller) or PNG
+- **File size**: Keep under 300KB each for fast loading
+
+**Features**:
+- **Auto-switching**: Backgrounds automatically change based on current season (Mar-May Spring, Jun-Aug Summer, Sep-Nov Fall, Dec-Feb Winter)
+- **Dark overlay**: Gradient overlay ensures white text is always readable over any image
+- **Large display**: 280px tall header with prominent time, date, weather icon, and temperature
+- **No setup required**: Works immediately with bundled images, customize only if desired
+
+#### Moon Phase Display
+
+When enabled (on by default), the weather icon on clear nights will display the **actual current moon phase** instead of a generic moon icon.
+
+**How It Works:**
+- Reads the `sensor.moon_phase` entity from your Home Assistant installation
+- Detects when weather condition is `clear-night`
+- Replaces the generic moon icon with one of 8 accurate moon phase icons
+- Updates automatically as the moon phase changes throughout the month
+
+**Moon Phases Supported:**
+- 🌑 **New Moon** - Moon is not visible
+- 🌒 **Waxing Crescent** - Thin crescent growing
+- 🌓 **First Quarter** - Half moon, right side lit
+- 🌔 **Waxing Gibbous** - More than half lit, growing
+- 🌕 **Full Moon** - Fully illuminated
+- 🌖 **Waning Gibbous** - More than half lit, shrinking
+- 🌗 **Last Quarter** - Half moon, left side lit
+- 🌘 **Waning Crescent** - Thin crescent shrinking
+
+**Requirements:**
+- Home Assistant `sensor.moon_phase` entity (usually auto-created)
+- Weather condition must be `clear-night` (clear skies at nighttime)
+- Animated icons must be enabled (default)
+
+#### Holiday Themes
+
+Automatically add festive decorative icons to your weather card during holidays! When enabled, the card displays subtle, animated holiday-themed emojis as overlays during specific holiday periods.
+
+**How It Works:**
+- Automatically detects the current date and displays decorations during holiday periods
+- Shows 4 themed icons per holiday as floating overlays
+- Icons are semi-transparent (30-50% opacity) so they don't interfere with weather data
+- Gentle floating animation for a festive feel
+- Completely optional - toggle on/off in settings
+
+**Supported Holidays:**
+
+| Holiday | Dates | Decorations |
+|---------|-------|-------------|
+| 🎃 **Halloween** | Oct 25-31 | Pumpkins, ghosts, bats, spiders |
+| 🎄 **Christmas** | Dec 18-25 | Trees, snowmen, Santa, snowflakes |
+| 🎆 **New Year** | Dec 31 - Jan 1 | Fireworks, confetti, party poppers, sparkles |
+| ❤️ **Valentine's Day** | Feb 13-14 | Hearts, roses, love symbols |
+| 🍀 **St. Patrick's Day** | Mar 17 | Shamrocks, rainbows, four-leaf clovers |
+| 🐰 **Easter** | Late Mar - Early Apr* | Bunnies, eggs, flowers, chicks |
+| 🇺🇸 **4th of July** | Jul 4 | American flag, fireworks, stars |
+| 🇲🇽 **Cinco de Mayo** | May 5 | Mexican flag, tacos, cacti, celebration |
+
+*Easter dates vary yearly; the card shows Easter decorations from March 25 - April 10 as an approximation.
+
+**Features:**
+- **Automatic Detection** - No configuration needed, just enable the feature
+- **Subtle Design** - Semi-transparent overlays don't block weather information
+- **Animated** - Gentle floating animation adds festive movement
+- **4 Icons Per Holiday** - Positioned in different corners for balanced decoration
+- **Respects Dark Mode** - Icons blend well with both day and night themes
+
+Toggle "Enable Holiday Themes" in the visual editor's Display Options section.
+
+**Example:**
+During Halloween week (Oct 25-31), you'll see 🎃 pumpkins, 👻 ghosts, 🦇 bats, and 🕷️ spiders gently floating around your weather card as subtle decorations!
+
+#### Pre-built Visual Themes
+
+Transform the look and feel of your weather card with 5 professional pre-built themes, or create your own custom theme!
+
+**Available Themes:**
+
+| Theme | Description | Best For |
+|-------|-------------|----------|
+| **Default** | Clean modern design with temperature gradients | General use, all dashboards |
+| **Retro/Neubrutalism** | Bold 4px black borders, sharp corners, hard shadows, no border-radius | Bold, statement dashboards, retro aesthetics |
+| **Midnight** | Sleek dark theme with dark gray backgrounds and blue accents | Dark mode lovers, nighttime use, professional dark dashboards |
+| **Minimal** | Clean white, monochrome, thin borders, subtle grayscale filter | Professional, clean dashboards |
+| **Vibrant** | Bright gradient backgrounds, saturated colors, white text | Colorful, energetic dashboards |
+| **Custom** | Define your own colors for complete customization | Matching your specific color scheme |
+
+**How Themes Work:**
+- Themes apply visual styling to the entire card
+- Each theme has its own border style, shadows, colors, and effects
+- Temperature gradients still work with all themes (adjusted for visibility)
+- Forecast cards, weather info, alerts all match the theme
+- Easy one-click switching in the visual editor
+
+**Theme Details:**
+
+**Retro/Neubrutalism:**
+- 4px solid black borders on everything
+- Sharp 90-degree corners (no rounding)
+- Hard drop shadows (8px x 8px)
+- High contrast, bold appearance
+- Perfect for brutalist or retro-inspired dashboards
+
+**Midnight:**
+- Dark gray backgrounds (#1a1a1a, #212121)
+- Blue gradient header (#1e3a5f to #2d5a8c)
+- Subtle shadows for depth (no harsh contrast)
+- Light gray text (#e0e0e0) for comfortable reading
+- Blue accents on hover interactions
+- Even darker in night mode (#0f0f0f)
+- Perfect for dark mode enthusiasts and nighttime viewing
+
+**Minimal:**
+- Pure white backgrounds
+- Light gray borders (#e0e0e0)
+- No shadows
+- 30% grayscale filter on icons/temps
+- Clean, professional, simple
+
+**Vibrant:**
+- Purple-to-pink gradient backgrounds
+- Bright saturated colors everywhere
+- White text for contrast
+- Colorful weather info cards (pink-to-yellow gradients)
+- High energy, eye-catching
+
+**Custom Theme:**
+Define your own color palette with 6 customizable colors:
+- **Primary**: Main header background
+- **Secondary**: Forecast cards, weather info background
+- **Background**: Card background
+- **Text**: Text color
+- **Border**: Border color
+- **Accent**: Accent highlights
+
 #### Visual Themes
 - 🎨 **Pre-built Themes** - 5 professional themes: Default, Retro (1990s Weather Channel), Midnight, Minimal, Vibrant
 - 🎭 **Custom Theme** - Create your own 6-color theme palette
@@ -136,6 +335,9 @@ temp_display_mode: both  # forecast | actual | both
 animate_icons: true
 show_forecast: true
 night_mode: true  # Auto day/night theme switching
+holiday_themes: true # This will enable Holiday Themes
+show_nws_alerts: true # Enables NWS weather alerts
+
 
 # Weather Information Display
 show_weather_info:
@@ -161,247 +363,7 @@ seasonal_images:
   summer: /local/images/beach-sunset.jpg
   fall: /local/images/autumn-leaves.jpg
   winter: /local/images/snowy-mountains.jpg
-```
 
-#### Graphical Header Mode
-
-The graphical header mode displays a large, immersive header with seasonal background images.
-
-**✨ Bundled Images Included**: The card comes with beautiful default seasonal images! Just set `header_mode: graphical` and it works out of the box.
-
-**Default Images**:
-- 🌸 **Spring** - Cherry blossoms and tulips
-- 🏖️ **Summer** - Tropical beach sunset
-- 🍂 **Fall** - Autumn pumpkin and maple leaves
-- ❄️ **Winter** - Snowy winter beach scene
-
-**🎨 Use Alternate Bundled Images**:
-The card includes multiple images per season. Switch to alternates in the visual editor or via YAML:
-```yaml
-seasonal_images:
-  spring: /hacsfiles/weatherpulse/images/spring-alt1.jpg  # More tulips & flowers
-  summer: /hacsfiles/weatherpulse/images/summer-alt1.jpg  # Sunset beach painting
-  fall: /hacsfiles/weatherpulse/images/fall-alt1.jpg      # Autumn forest scene
-  winter: /hacsfiles/weatherpulse/images/winter-alt1.jpg  # Snowy palm tree beach
-```
-
-**📁 Using Your Own Custom Images**:
-1. Upload your images to `/config/www/images/` in Home Assistant
-2. Reference them in the visual editor or YAML:
-```yaml
-seasonal_images:
-  spring: /local/images/my-spring.jpg
-  summer: /local/images/my-summer.jpg
-  fall: /local/images/my-fall.jpg
-  winter: /local/images/my-winter.jpg
-```
-
-**Image Specifications** (for custom images):
-- **Recommended size**: 800x280 pixels or larger
-- **Format**: JPG (smaller) or PNG
-- **File size**: Keep under 300KB each for fast loading
-
-**Features**:
-- **Auto-switching**: Backgrounds automatically change based on current season (Mar-May Spring, Jun-Aug Summer, Sep-Nov Fall, Dec-Feb Winter)
-- **Dark overlay**: Gradient overlay ensures white text is always readable over any image
-- **Large display**: 280px tall header with prominent time, date, weather icon, and temperature
-- **No setup required**: Works immediately with bundled images, customize only if desired
-
-#### National Weather Service (NWS) Alerts
-
-WeatherPulse integrates directly with the National Weather Service API to display real-time severe weather alerts for your location. **No custom components or plugins required!**
-
-**How It Works:**
-- Automatically uses your Home Assistant location coordinates (Settings → System → General → Location)
-- Fetches alerts directly from `api.weather.gov` every 5 minutes
-- Only displays alerts that are active for your specific location
-- Alert section auto-hides when no active alerts exist
-
-**Supported Alert Types:**
-- 🌀 Hurricanes & Tropical Storms
-- 🌪️ Tornado Warnings & Watches
-- ⛈️ Severe Thunderstorm Warnings
-- 🌨️ Winter Storm Warnings & Advisories
-- 🔥 Heat Advisories & Excessive Heat Warnings
-- 🌊 Flood Warnings & Flash Flood Warnings
-- 🌬️ High Wind Warnings
-- And many more NWS alert types
-
-**Severity Color Coding:**
-- 🔴 **Extreme** (Red) - Life-threatening situations (hurricanes, major tornadoes)
-- 🟠 **Severe** (Orange) - Severe weather threats (thunderstorms, winter storms)
-- 🟡 **Moderate** (Yellow) - Moderate warnings (winter weather advisories)
-- 🔵 **Minor** (Blue) - Minor advisories (frost, wind, heat)
-
-**Alert Information Displayed:**
-- Event name (e.g., "Tornado Warning", "Heat Advisory")
-- Affected area/counties
-- Headline summary
-- Expiration time
-
-**To Enable:**
-```yaml
-show_nws_alerts: true
-```
-
-Or toggle "Show NWS Weather Alerts" in the visual editor's Display Options section.
-
-**Note:** NWS alerts are only available for locations within the United States and its territories. The feature will gracefully fail for international locations without showing errors.
-
-#### Moon Phase Display
-
-When enabled (on by default), the weather icon on clear nights will display the **actual current moon phase** instead of a generic moon icon.
-
-**How It Works:**
-- Reads the `sensor.moon_phase` entity from your Home Assistant installation
-- Detects when weather condition is `clear-night`
-- Replaces the generic moon icon with one of 8 accurate moon phase icons
-- Updates automatically as the moon phase changes throughout the month
-
-**Moon Phases Supported:**
-- 🌑 **New Moon** - Moon is not visible
-- 🌒 **Waxing Crescent** - Thin crescent growing
-- 🌓 **First Quarter** - Half moon, right side lit
-- 🌔 **Waxing Gibbous** - More than half lit, growing
-- 🌕 **Full Moon** - Fully illuminated
-- 🌖 **Waning Gibbous** - More than half lit, shrinking
-- 🌗 **Last Quarter** - Half moon, left side lit
-- 🌘 **Waning Crescent** - Thin crescent shrinking
-
-**Requirements:**
-- Home Assistant `sensor.moon_phase` entity (usually auto-created)
-- Weather condition must be `clear-night` (clear skies at nighttime)
-- Animated icons must be enabled (default)
-
-**To Disable:**
-Set `show_moon_phase: false` in your configuration or toggle "Show Moon Phase Icons" off in the visual editor.
-
-**Custom Moon Entity:**
-If your moon phase sensor has a different name, you can specify it:
-```yaml
-moon_entity: sensor.my_custom_moon_phase
-```
-
-#### Holiday Themes
-
-Automatically add festive decorative icons to your weather card during holidays! When enabled, the card displays subtle, animated holiday-themed emojis as overlays during specific holiday periods.
-
-**How It Works:**
-- Automatically detects the current date and displays decorations during holiday periods
-- Shows 4 themed icons per holiday as floating overlays
-- Icons are semi-transparent (30-50% opacity) so they don't interfere with weather data
-- Gentle floating animation for a festive feel
-- Completely optional - toggle on/off in settings
-
-**Supported Holidays:**
-
-| Holiday | Dates | Decorations |
-|---------|-------|-------------|
-| 🎃 **Halloween** | Oct 25-31 | Pumpkins, ghosts, bats, spiders |
-| 🎄 **Christmas** | Dec 18-25 | Trees, snowmen, Santa, snowflakes |
-| 🎆 **New Year** | Dec 31 - Jan 1 | Fireworks, confetti, party poppers, sparkles |
-| ❤️ **Valentine's Day** | Feb 13-14 | Hearts, roses, love symbols |
-| 🍀 **St. Patrick's Day** | Mar 17 | Shamrocks, rainbows, four-leaf clovers |
-| 🐰 **Easter** | Late Mar - Early Apr* | Bunnies, eggs, flowers, chicks |
-| 🇺🇸 **4th of July** | Jul 4 | American flag, fireworks, stars |
-| 🇲🇽 **Cinco de Mayo** | May 5 | Mexican flag, tacos, cacti, celebration |
-
-*Easter dates vary yearly; the card shows Easter decorations from March 25 - April 10 as an approximation.
-
-**Features:**
-- **Automatic Detection** - No configuration needed, just enable the feature
-- **Subtle Design** - Semi-transparent overlays don't block weather information
-- **Animated** - Gentle floating animation adds festive movement
-- **4 Icons Per Holiday** - Positioned in different corners for balanced decoration
-- **Respects Dark Mode** - Icons blend well with both day and night themes
-
-**To Enable:**
-```yaml
-holiday_themes: true
-```
-
-Or toggle "Enable Holiday Themes" in the visual editor's Display Options section.
-
-**To Disable:**
-Set `holiday_themes: false` or turn off the toggle. The card will display normally without any decorative overlays.
-
-**Example:**
-During Halloween week (Oct 25-31), you'll see 🎃 pumpkins, 👻 ghosts, 🦇 bats, and 🕷️ spiders gently floating around your weather card as subtle decorations!
-
-#### Pre-built Visual Themes
-
-Transform the look and feel of your weather card with 5 professional pre-built themes, or create your own custom theme!
-
-**Available Themes:**
-
-| Theme | Description | Best For |
-|-------|-------------|----------|
-| **Default** | Clean modern design with temperature gradients | General use, all dashboards |
-| **Retro/Neubrutalism** | Bold 4px black borders, sharp corners, hard shadows, no border-radius | Bold, statement dashboards, retro aesthetics |
-| **Midnight** | Pure dark theme with near-black backgrounds and grayscale palette | Dark mode lovers, nighttime use, OLED displays, reducing eye strain |
-| **Minimal** | Clean white, monochrome, thin borders, subtle grayscale filter | Professional, clean dashboards |
-| **Vibrant** | Bright gradient backgrounds, saturated colors, white text | Colorful, energetic dashboards |
-| **Custom** | Define your own colors for complete customization | Matching your specific color scheme |
-
-**How Themes Work:**
-- Themes apply visual styling to the entire card
-- Each theme has its own border style, shadows, colors, and effects
-- Temperature gradients still work with all themes (adjusted for visibility)
-- Forecast cards, weather info, alerts all match the theme
-- Easy one-click switching in the visual editor
-
-**Theme Details:**
-
-**Retro/Neubrutalism:**
-- 4px solid black borders on everything
-- Sharp 90-degree corners (no rounding)
-- Hard drop shadows (8px x 8px)
-- High contrast, bold appearance
-- Perfect for brutalist or retro-inspired dashboards
-
-**Midnight:**
-- Pure dark theme with near-black backgrounds (#0d0d0d, #151515)
-- Dark gray gradient header (#1a1a1a to #252525) - no bright colors
-- Subtle shadows for depth (no harsh contrast)
-- Light gray text (#c0c0c0) for comfortable reading
-- No boxes on weather info items - clean minimal look
-- Even darker in night mode (pure black #000000)
-- Perfect for dark mode enthusiasts and nighttime viewing
-
-**Minimal:**
-- Pure white backgrounds
-- Light gray borders (#e0e0e0)
-- No shadows
-- 30% grayscale filter on icons/temps
-- Clean, professional, simple
-
-**Vibrant:**
-- Purple-to-pink gradient backgrounds
-- Bright saturated colors everywhere
-- White text for contrast
-- Colorful weather info cards (pink-to-yellow gradients)
-- High energy, eye-catching
-
-**Custom Theme:**
-Define your own color palette with 6 customizable colors:
-- **Primary**: Main header background
-- **Secondary**: Forecast cards, weather info background
-- **Background**: Card background
-- **Text**: Text color
-- **Border**: Border color
-- **Accent**: Accent highlights
-
-**To Use:**
-
-**Via Visual Editor:**
-1. Open card configuration
-2. Find "Theme Settings" section
-3. Select your desired theme from dropdown
-4. For custom theme, enter your color values in the fields that appear
-5. Save
-
-**Via YAML:**
-```yaml
 # Use a pre-built theme
 theme: retro  # or: midnight, minimal, vibrant
 
@@ -413,8 +375,17 @@ custom_theme_colors:
   background: "#ffffff"
   text: "#333333"
   border: "#e0e0e0"
-  accent: "#f093fb"
+  accent: "#f093fb"  
 ```
+
+**To Use Theme's:**
+
+**Via Visual Editor:**
+1. Open card configuration
+2. Find "Theme Settings" section
+3. Select your desired theme from dropdown
+4. For custom theme, enter your color values in the fields that appear
+5. Save
 
 **Examples:**
 
@@ -430,16 +401,6 @@ theme: minimal
 
 # Bright & Fun
 theme: vibrant
-
-# Match Your Dashboard
-theme: custom
-custom_theme_colors:
-  primary: "#1e88e5"      # Blue
-  secondary: "#43a047"    # Green
-  background: "#fafafa"   # Light gray
-  text: "#212121"         # Dark gray
-  border: "#bdbdbd"       # Medium gray
-  accent: "#ff6f00"       # Orange
 ```
 
 **Tips:**
