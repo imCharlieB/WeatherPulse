@@ -181,7 +181,7 @@ export class WeatherPulseCard extends LitElement {
     const entity = this.hass.states[forecastEntity];
     if (entity?.attributes?.forecast) {
       this.hourlyForecastData = entity.attributes.forecast;
-      console.debug('Used hourly forecast from selected sensor:', this.hourlyForecastData);
+     // console.debug('Used hourly forecast from selected sensor:', this.hourlyForecastData);
     } else {
       this.hourlyForecastData = [];
       console.debug('No hourly forecast data available in selected sensor attributes.');
@@ -270,36 +270,33 @@ export class WeatherPulseCard extends LitElement {
    * Uses hourly forecast data regardless of card display mode
    */
   private getRainTiming(): { isRaining: boolean; message: string; time: string } | null {
-    // Use dedicated hourly forecast data for rain detection
     const forecast = this.hourlyForecastData;
-
+  
     if (!forecast || forecast.length === 0) {
       return null;
     }
-
+  
     const now = new Date();
     const fourHoursFromNow = new Date(now.getTime() + (4 * 60 * 60 * 1000));
-
-    // Find first instance of rain in next 4 hours
+  
     for (const item of forecast) {
       const forecastTime = new Date(item.datetime);
-
-      // Skip if forecast time is in the past or beyond 4 hours
+  
       if (forecastTime <= now || forecastTime > fourHoursFromNow) {
         continue;
       }
-
-      // Check if this hour has rain
-      const hasHighPrecipChance = (item.precipitation_probability || 0) > 50;
+  
+      // Support both probability and actual precipitation
+      const hasHighPrecipChance = (item.precipitation_probability ?? 0) > 50;
+      const hasRainAmount = (item.precipitation ?? 0) > 0;
       const isRainyCondition = ['rainy', 'pouring', 'rain', 'drizzle', 'lightning-rainy', 'thunderstorm', 'thunderstorms'].includes(
         (item.condition || '').toLowerCase()
       );
-
-      if (hasHighPrecipChance || isRainyCondition) {
-        // Calculate hours until rain
+  
+      if (hasHighPrecipChance || hasRainAmount || isRainyCondition) {
         const hoursUntilRain = Math.round((forecastTime.getTime() - now.getTime()) / (60 * 60 * 1000));
         const timeString = forecastTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-
+  
         let message = '';
         if (hoursUntilRain < 1) {
           message = 'Rain expected within the hour';
@@ -308,7 +305,7 @@ export class WeatherPulseCard extends LitElement {
         } else {
           message = `Rain expected in ${hoursUntilRain} hours`;
         }
-
+  
         return {
           isRaining: true,
           message: message,
@@ -316,7 +313,7 @@ export class WeatherPulseCard extends LitElement {
         };
       }
     }
-
+  
     return null;
   }
 

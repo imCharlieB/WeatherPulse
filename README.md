@@ -102,6 +102,50 @@ Toggle "Show NWS Weather Alerts" in the visual editor's Display Options section.
 
 **Note:** NWS alerts are only available for locations within the United States and its territories. The feature will gracefully fail for international locations without showing errors.
 
+## ⚡️ Forecast Sensor Setup (Home Assistant 2024.2+)
+
+With the latest Home Assistant weather model, forecast data (hourly/daily) is no longer available directly from weather entities.  
+**WeatherPulse now uses a dedicated sensor to provide forecast data.**
+
+### How It Works
+
+- You create a [template sensor or automation](https://www.home-assistant.io/integrations/template/#sensor) that calls the `weather.get_forecasts` service.
+- This sensor stores the forecast data in its attributes.
+- WeatherPulse reads the forecast from your selected sensor, enabling hourly weather alerts.
+
+### Example Automation
+
+```yaml
+- trigger:
+    - platform: time_pattern
+      minutes: "/30"
+  action:
+    - service: weather.get_forecasts
+      data:
+        type: hourly
+      target:
+        entity_id: weather.pirateweather
+      response_variable: hourly
+  sensor:
+    - name: Pirate Weather Hourly
+      unique_id: pirateweather_hourly
+      state: "{{ hourly['weather.pirateweather'].forecast[0].condition }}"
+      attributes:
+        forecast: "{{ hourly['weather.pirateweather'].forecast[:24] }}"
+```
+
+### How to Use in WeatherPulse
+
+1. **Create your forecast sensor** using the automation/template above.
+2. **Select your sensor** in the WeatherPulse card editor under "Forecast Sensor".
+3. **The card will use this sensor** for all forecast features (hourly/rain timing).
+
+**Note:**  
+- You must have a forecast sensor set up for hourly forecast features to work.
+- The card will automatically detect available sensors with forecast data.
+
+For more details, see [Home Assistant Weather Forecasts](https://www.home-assistant.io/integrations/weather/) and [Template Sensor](https://www.home-assistant.io/integrations/template/#sensor).
+
 #### Graphical Header Mode
 
 The graphical header mode displays a large, immersive header with seasonal background images.
