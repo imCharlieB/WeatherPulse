@@ -871,8 +871,9 @@ export class WeatherPulseCard extends LitElement {
               <div class="condition-temp">${conditionText}, ${Math.round(forecastTemp || currentTemp)}°${unit.replace('°', '')}</div>
               <div class="time-large">
                 ${this.currentTime.replace(/\s?(AM|PM)/i, '')}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0] || ''}</span>
-              </div>
-              ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
+                 ${this.config.show_date ? html`<div class="date-small">${this.currentDate}</div>` : ''}
+                </div>
+             
               ${tempDisplayMode === 'both' && hasOutdoorSensor ? html`
                 <div class="actual-temp-below">
                   <span class="actual-temp-value">${Math.round(currentTemp)}°${unit.replace('°', '')}</span>

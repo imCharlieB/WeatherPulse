@@ -794,8 +794,9 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               <div class="condition-temp">${h}, ${Math.round(a||t)}°${s.replace("°","")}</div>
               <div class="time-large">
                 ${this.currentTime.replace(/\s?(AM|PM)/i,"")}<span class="time-period">${this.currentTime.match(/(AM|PM)/i)?.[0]||""}</span>
-              </div>
-              ${this.config.show_date?B`<div class="date-small">${this.currentDate}</div>`:""}
+                 ${this.config.show_date?B`<div class="date-small">${this.currentDate}</div>`:""}
+                </div>
+             
               ${"both"===n&&i||"actual"===n&&i?B`
                 <div class="actual-temp-below">
                   <span class="actual-temp-value">${Math.round(t)}°${s.replace("°","")}</span>
