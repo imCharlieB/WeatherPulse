@@ -1853,7 +1853,7 @@ export class WeatherPulseCard extends LitElement {
 
       /* Compact Layout - single line, more items per row */
       .weather-info-layout-compact {
-        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        grid-template-columns: 1fr 1fr 1fr;
         padding: 12px 20px;
         gap: 8px;
       }
