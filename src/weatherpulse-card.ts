@@ -1751,7 +1751,7 @@ export class WeatherPulseCard extends LitElement {
         font-size: 18px;
         font-weight: 400;
         opacity: 0.9;
-        text-align: center;
+        text-align: left;
       }
 
       .condition-temp {
@@ -1776,7 +1776,7 @@ export class WeatherPulseCard extends LitElement {
         flex-direction: column;
         align-items: flex-end;
         gap: 2px;
-        margin-top: 4px;
+        margin-top: -5px;
       }
 
       .actual-temp-value {
