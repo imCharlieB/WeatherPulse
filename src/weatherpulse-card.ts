@@ -1881,8 +1881,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .weather-info-compact .weather-info-icon {
-        font-size: 18px;
-        min-width: 18px;
+        font-size: 14px;
+        min-width: 14px;
       }
 
       .weather-info-compact .weather-info-value {
@@ -1973,8 +1973,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .weather-info-in-header .weather-info-value {
-        font-size: 12px;
-        font-weight: 200;
+        font-size: 15px;
+        font-weight: 500;
         line-height: 1;
       }
 
