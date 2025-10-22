@@ -274,11 +274,8 @@ Define your own color palette with 6 customizable colors:
 - 📊 Air Quality integration (requires AQI sensor)
 - 🌤️ "Best time to go outside today" suggestions
 - 🌾 Pollen count alerts (requires pollen sensor)
-- 📈 Weather trend indicators
 
 ## 🚧 Development Status
-
-**Phase 1, 2, & 3 Complete!** All core features, advanced features, and smart notifications are implemented and working. The card includes professional Meteocons icons, rain timing notifications, NWS weather alerts, holiday themes, and much more.
 
 See [FEATURES.md](FEATURES.md) for complete feature list and roadmap.
 
@@ -386,22 +383,6 @@ custom_theme_colors:
 3. Select your desired theme from dropdown
 4. For custom theme, enter your color values in the fields that appear
 5. Save
-
-**Examples:**
-
-```yaml
-# Bold Retro Look
-theme: retro
-
-# Sleek Dark Mode
-theme: midnight
-
-# Clean Professional
-theme: minimal
-
-# Bright & Fun
-theme: vibrant
-```
 
 **Tips:**
 - Midnight theme is perfect for dark mode dashboards and reduces eye strain at night

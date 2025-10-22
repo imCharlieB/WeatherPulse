@@ -1,7 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { HomeAssistant, fireEvent, LovelaceCardEditor } from 'custom-card-helpers';
-import { WeatherPulseCardConfig } from './types';
+import { WeatherInfoOption, WeatherPulseCardConfig } from './types';
+
 
 @customElement('weatherpulse-card-editor')
 export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEditor {
@@ -103,7 +104,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
     fireEvent(this, 'config-changed', { config: newConfig });
   }
 
-  private _weatherInfoToggle(ev: CustomEvent, infoType: string): void {
+  private _weatherInfoToggle(ev: CustomEvent, infoType: WeatherInfoOption): void {
     if (!this._config || !this.hass) {
       return;
     }
