@@ -1308,7 +1308,6 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         font-size: 64px;
         font-weight: 300;
         line-height: 1;
-        margin-bottom: 2px;
         position: relative;
       }
 
@@ -1368,10 +1367,10 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .date-small {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 400;
         opacity: 0.9;
-        text-align: center;
+        text-align: left;
       }
 
       .condition-temp {
@@ -1396,7 +1395,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         flex-direction: column;
         align-items: flex-end;
         gap: 2px;
-        margin-top: 4px;
+        margin-top: -5px;
       }
 
       .actual-temp-value {
@@ -1501,8 +1500,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .weather-info-compact .weather-info-icon {
-        font-size: 18px;
-        min-width: 18px;
+        font-size: 14px;
+        min-width: 14px;
       }
 
       .weather-info-compact .weather-info-value {
@@ -1593,8 +1592,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .weather-info-in-header .weather-info-value {
-        font-size: 12px;
-        font-weight: 200;
+        font-size: 15px;
+        font-weight: 500;
         line-height: 1;
       }
 
