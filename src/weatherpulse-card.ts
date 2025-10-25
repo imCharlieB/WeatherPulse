@@ -373,28 +373,46 @@ export class WeatherPulseCard extends LitElement {
   private renderHolidayDecorations(): unknown {
     const holiday = this.getCurrentHoliday();
     if (!holiday) {
-      return html``;
+      return '';
     }
-
+  
     const decorations: { [key: string]: string[] } = {
-      halloween: ['🎃', '👻', '🦇', '🕷️'],
-      christmas: ['🎄', '⛄', '🎅', '❄️'],
-      newyear: ['🎆', '🎊', '🥳', '✨'],
-      valentine: ['❤️', '💕', '💝', '🌹'],
-      stpatrick: ['🍀', '🌈', '☘️', '💚'],
-      july4th: ['🇺🇸', '🎆', '⭐', '🎇'],
-      easter: ['🐰', '🥚', '🌷', '🐣'],
-      cincodemayo: ['🇲🇽', '🌮', '🌵', '🎉']
+      halloween: ['🎃', '👻', '🦇', '🕷️', '🧙‍♀️', '🍬', '🪦'],
+      christmas: ['🎄', '⛄', '🎅', '❄️', '🎁', '🦌', '🔔'],
+      newyear: ['🎆', '🎊', '🥳', '✨', '🍾', '🎉'],
+      valentine: ['❤️', '💕', '💝', '🌹', '💘', '💌'],
+      stpatrick: ['🍀', '🌈', '☘️', '💚', '🍻'],
+      july4th: ['🇺🇸', '🎆', '⭐', '🎇', '🗽'],
+      easter: ['🐰', '🥚', '🌷', '🐣', '🐇'],
+      cincodemayo: ['🇲🇽', '🌮', '🌵', '🎉', '🍹']
     };
-
+  
     const icons = decorations[holiday] || [];
-
+  
+    // Generate random style for each icon
+    const iconSpans = icons.map((icon, i) => {
+      const size = (1.2 + Math.random() * 1.2).toFixed(2); // 1.2em–2.4em
+      const rotation = (-20 + Math.random() * 40).toFixed(1); // -20deg to +20deg
+      const delay = (Math.random() * 3).toFixed(2); // 0–3s
+      const top = Math.random() * 80; // 0–80%
+      const left = Math.random() * 80; // 0–80%
+      return html`
+        <span
+          class="holiday-icon"
+          style="
+            font-size: ${size}em;
+            transform: rotate(${rotation}deg);
+            animation-delay: ${delay}s;
+            top: ${top}%;
+            left: ${left}%;
+          "
+        >${icon}</span>
+      `;
+    });
+  
     return html`
       <div class="holiday-overlay">
-        <span class="holiday-icon holiday-icon-1">${icons[0] || ''}</span>
-        <span class="holiday-icon holiday-icon-2">${icons[1] || ''}</span>
-        <span class="holiday-icon holiday-icon-3">${icons[2] || ''}</span>
-        <span class="holiday-icon holiday-icon-4">${icons[3] || ''}</span>
+        ${iconSpans}
       </div>
     `;
   }
