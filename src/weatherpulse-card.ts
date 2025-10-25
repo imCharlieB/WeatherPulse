@@ -396,10 +396,10 @@ export class WeatherPulseCard extends LitElement {
       const delay = (Math.random() * 3).toFixed(2); // 0–3s
       const top = Math.random() * 80; // 0–80%
       const left = Math.random() * 80; // 0–80%
-      const spin = Math.random() > 0.5 ? 'holiday-spin' : '';
+      
       return html`
         <span
-          class="holiday-icon ${spin}"
+          class="holiday-icon"
           style="
             font-size: ${size}em;
             transform: rotate(${rotation}deg);
@@ -2351,9 +2351,6 @@ export class WeatherPulseCard extends LitElement {
         animation-delay: 3s;
       }
       
-      .holiday-spin {
-        animation: holiday-float 4s ease-in-out infinite, holiday-spin 8s linear infinite;
-      }
        @keyframes holiday-float {
          0%, 100% {
           transform: translateY(0px) rotate(var(--rotation, 0deg));
@@ -2374,10 +2371,7 @@ export class WeatherPulseCard extends LitElement {
           opacity: 1;
         }
       }
-      @keyframes holiday-spin {
-        0% { transform: rotate(0deg);}
-        100% { transform: rotate(360deg);}
-      }
+    
       /* ========================================
          PRE-BUILT THEMES
          ======================================== */
