@@ -633,18 +633,12 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         font-size: 0.9em;
         color: var(--secondary-text-color);
       }
-    `}};e([me({attribute:!1})],Ne.prototype,"hass",void 0),e([fe()],Ne.prototype,"_config",void 0),e([fe()],Ne.prototype,"_expandedSections",void 0),Ne=e([ce("weatherpulse-card-editor")],Ne);var De=Object.freeze({__proto__:null,get WeatherPulseCardEditor(){return Ne}});const Pe={halloween:{foreground:["🪦","🎃","🍬"],background:["🦇","🧙‍♀️","🕷️","👻","🕸️","🩸","🦹‍♂️","🧛","🧟"]},christmas:{foreground:["🎄","🎁","🧦","🕯️"],background:["❄️","🔔","🦌","🎅","⛄","🌟","🧑‍🎄","🕯️"]},newyear:{foreground:["🎆","🥳","🍾","🥂"],background:["🎇","🎉","✨","🎊"]},valentine:{foreground:["💝","🌹","💌"],background:["❤️","💕","💘","💖"]},stpatrick:{foreground:["🍀","☘️","🍻"],background:["🌈","💚","🎩","🪙"]},july4th:{foreground:["🇺🇸","🗽","🎆"],background:["🎇","⭐","🎉","🎊"]},easter:{foreground:["🐰","🥚","🐇"],background:["🌷","🐣","💐","🌸"]},cincodemayo:{foreground:["🇲🇽","🌮","🍹"],background:["🌵","🎉","🎊","🎺"]}};let Ge=class extends de{constructor(){super(...arguments),this.currentTime=ge(),this.currentDate=be(),this.forecastData=[],this.hourlyForecastData=[],this.nwsAlerts=[],this.lastAlertFetch=0}static async getConfigElement(){return await Promise.resolve().then(function(){return De}),document.createElement("weatherpulse-card-editor")}static getStubConfig(){return{type:"custom:weatherpulse-card",entity:"weather.home",header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation","wind"]}}setConfig(e){if(!e.entity)throw new Error("You need to define an entity");this.config={header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation"],show_forecast:!0,temp_display_mode:"forecast",...e}}connectedCallback(){super.connectedCallback(),this.startClock(),this.fetchForecast(),this.fetchNWSAlerts(),this.forecastUpdateInterval=window.setInterval(()=>this.fetchForecast(),18e5),this.alertUpdateInterval=window.setInterval(()=>this.fetchNWSAlerts(),3e5)}disconnectedCallback(){super.disconnectedCallback(),this.stopClock(),this.forecastUpdateInterval&&clearInterval(this.forecastUpdateInterval),this.alertUpdateInterval&&clearInterval(this.alertUpdateInterval)}startClock(){this.updateTime(),this.timeInterval=window.setInterval(()=>this.updateTime(),1e3)}stopClock(){this.timeInterval&&clearInterval(this.timeInterval)}updateTime(){this.currentTime=ge(),this.currentDate=be()}shouldUpdate(e){if(e.has("config"))return!0;if(e.has("hass")){const t=e.get("hass");return!t||t.states[this.config.entity]!==this.hass.states[this.config.entity]}return!0}async fetchForecast(){if(this.hass&&this.config?.entity)try{const e=this.config.forecast_type||"daily";this.hass.connection.subscribeMessage(e=>{e?.forecast&&(this.forecastData=e.forecast)},{type:"weather/subscribe_forecast",forecast_type:e,entity_id:this.config.entity}),await this.fetchHourlyForRainTiming()}catch(e){const t=this.hass.states[this.config.entity];t?.attributes?.forecast&&(this.forecastData=t.attributes.forecast)}}async fetchHourlyForRainTiming(){const e=this.config.forecast_sensor;if(!this.hass||!e)return void(this.hourlyForecastData=[]);const t=this.hass.states[e];t?.attributes?.forecast?this.hourlyForecastData=t.attributes.forecast:(this.hourlyForecastData=[],console.debug("No hourly forecast data available in selected sensor attributes."))}getWeatherData(){const e=this.hass.states[this.config.entity];if(!e)return{};let t=this.forecastData.length>0?this.forecastData:e.attributes.forecast||[];return{temperature:e.attributes.temperature,temperature_unit:e.attributes.temperature_unit||"°F",humidity:e.attributes.humidity,pressure:e.attributes.pressure,pressure_unit:e.attributes.pressure_unit,wind_speed:e.attributes.wind_speed,wind_speed_unit:e.attributes.wind_speed_unit,wind_bearing:e.attributes.wind_bearing,wind_gust_speed:e.attributes.wind_gust_speed,condition:e.state,forecast:t,apparent_temperature:e.attributes.apparent_temperature,uv_index:e.attributes.uv_index,visibility:e.attributes.visibility,visibility_unit:e.attributes.visibility_unit,precipitation:e.attributes.precipitation,precipitation_unit:e.attributes.precipitation_unit,cloud_coverage:e.attributes.cloud_coverage,dew_point:e.attributes.dew_point,ozone:e.attributes.ozone}}getCurrentTemp(){if(this.config.outdoor_temp_sensor){const e=this.hass.states[this.config.outdoor_temp_sensor];if(e)return parseFloat(e.state)}return this.getWeatherData().temperature||70}getSunEntity(){const e=this.config.sun_entity||"sun.sun";return this.hass.states[e]}getMoonEntity(){const e=this.config.moon_entity||"sensor.moon_phase";return this.hass.states[e]}isNightTime(){const e=this.getSunEntity();if(e)return"below_horizon"===e.state;const t=(new Date).getHours();return t>=20||t<6}getMoonPhase(){const e=this.getMoonEntity();return e?e.state:"unknown"}getRainTiming(){const e=this.hourlyForecastData;if(!e||0===e.length)return null;const t=new Date,a=new Date(t.getTime()+144e5);for(const i of e){const e=new Date(i.datetime);if(e<=t||e>a)continue;const r=(i.precipitation_probability??0)>50,o=(i.precipitation??0)>0,n=["rainy","pouring","rain","drizzle","lightning-rainy","thunderstorm","thunderstorms"].includes((i.condition||"").toLowerCase());if(r||o||n){const a=Math.round((e.getTime()-t.getTime())/36e5);let i="";return i=a<1?"Rain expected within the hour":1===a?"Rain expected in 1 hour":`Rain expected in ${a} hours`,{isRaining:!0,message:i,time:e.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}}}return null}getCurrentHoliday(){if(!this.config?.holiday_themes)return null;const e=new Date,t=e.getMonth()+1,a=e.getDate();return 10===t&&a>=25?"halloween":12===t&&a>=18&&a<=25?"christmas":12===t&&31===a||1===t&&1===a?"newyear":2!==t||13!==a&&14!==a?3===t&&17===a?"stpatrick":5===t&&5===a?"cincodemayo":7===t&&4===a?"july4th":3===t&&a>=25||4===t&&a<=10?"easter":null:"valentine"}renderHolidayDecorations(){const e=this.getCurrentHoliday();if(!e)return"";const{foreground:t=[],background:a=[]}=Pe[e]||{},i=B`
-      <div class="holiday-foreground-cluster">
-        ${t.map((e,t)=>B`
-          <span class="holiday-icon holiday-foreground holiday-foreground-${t}">${e}</span>
-        `)}
-      </div>
-    `,r=["🎆","🎇","⭐","✨"],o=a.map((e,t)=>{const a=(1.8+1.7*Math.random()).toFixed(2),i=r.includes(e)?(60*Math.random()-30).toFixed(1):"0",o=(3*Math.random()).toFixed(2),n=80*Math.random(),s=80*Math.random();return B`
+    `}};e([me({attribute:!1})],Ne.prototype,"hass",void 0),e([fe()],Ne.prototype,"_config",void 0),e([fe()],Ne.prototype,"_expandedSections",void 0),Ne=e([ce("weatherpulse-card-editor")],Ne);var De=Object.freeze({__proto__:null,get WeatherPulseCardEditor(){return Ne}});const Pe={halloween:{foreground:["🪦","🎃","🍬"],background:["🦇","🧙‍♀️","🕷️","👻","🕸️","🩸","🦹‍♂️","🧛","🧟"]},christmas:{foreground:["🎄","🎁","🧦","🕯️"],background:["❄️","🔔","🦌","🎅","⛄","🌟","🧑‍🎄","🕯️"]},newyear:{foreground:["🎆","🥳","🍾","🥂"],background:["🎇","🎉","✨","🎊"]},valentine:{foreground:["💝","🌹","💌"],background:["❤️","💕","💘","💖"]},stpatrick:{foreground:["🍀","☘️","🍻"],background:["🌈","💚","🎩","🪙"]},july4th:{foreground:["🇺🇸","🗽","🎆"],background:["🎇","⭐","🎉","🎊"]},easter:{foreground:["🐰","🥚","🐇"],background:["🌷","🐣","💐","🌸"]},cincodemayo:{foreground:["🇲🇽","🌮","🍹"],background:["🌵","🎉","🎊","🎺"]}};let Ge=class extends de{constructor(){super(...arguments),this.currentTime=ge(),this.currentDate=be(),this.forecastData=[],this.hourlyForecastData=[],this.nwsAlerts=[],this.lastAlertFetch=0}static async getConfigElement(){return await Promise.resolve().then(function(){return De}),document.createElement("weatherpulse-card-editor")}static getStubConfig(){return{type:"custom:weatherpulse-card",entity:"weather.home",header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation","wind"]}}setConfig(e){if(!e.entity)throw new Error("You need to define an entity");this.config={header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation"],show_forecast:!0,temp_display_mode:"forecast",...e}}connectedCallback(){super.connectedCallback(),this.startClock(),this.fetchForecast(),this.fetchNWSAlerts(),this.forecastUpdateInterval=window.setInterval(()=>this.fetchForecast(),18e5),this.alertUpdateInterval=window.setInterval(()=>this.fetchNWSAlerts(),3e5)}disconnectedCallback(){super.disconnectedCallback(),this.stopClock(),this.forecastUpdateInterval&&clearInterval(this.forecastUpdateInterval),this.alertUpdateInterval&&clearInterval(this.alertUpdateInterval)}startClock(){this.updateTime(),this.timeInterval=window.setInterval(()=>this.updateTime(),1e3)}stopClock(){this.timeInterval&&clearInterval(this.timeInterval)}updateTime(){this.currentTime=ge(),this.currentDate=be()}shouldUpdate(e){if(e.has("config"))return!0;if(e.has("hass")){const t=e.get("hass");return!t||t.states[this.config.entity]!==this.hass.states[this.config.entity]}return!0}async fetchForecast(){if(this.hass&&this.config?.entity)try{const e=this.config.forecast_type||"daily";this.hass.connection.subscribeMessage(e=>{e?.forecast&&(this.forecastData=e.forecast)},{type:"weather/subscribe_forecast",forecast_type:e,entity_id:this.config.entity}),await this.fetchHourlyForRainTiming()}catch(e){const t=this.hass.states[this.config.entity];t?.attributes?.forecast&&(this.forecastData=t.attributes.forecast)}}async fetchHourlyForRainTiming(){const e=this.config.forecast_sensor;if(!this.hass||!e)return void(this.hourlyForecastData=[]);const t=this.hass.states[e];t?.attributes?.forecast?this.hourlyForecastData=t.attributes.forecast:(this.hourlyForecastData=[],console.debug("No hourly forecast data available in selected sensor attributes."))}getWeatherData(){const e=this.hass.states[this.config.entity];if(!e)return{};let t=this.forecastData.length>0?this.forecastData:e.attributes.forecast||[];return{temperature:e.attributes.temperature,temperature_unit:e.attributes.temperature_unit||"°F",humidity:e.attributes.humidity,pressure:e.attributes.pressure,pressure_unit:e.attributes.pressure_unit,wind_speed:e.attributes.wind_speed,wind_speed_unit:e.attributes.wind_speed_unit,wind_bearing:e.attributes.wind_bearing,wind_gust_speed:e.attributes.wind_gust_speed,condition:e.state,forecast:t,apparent_temperature:e.attributes.apparent_temperature,uv_index:e.attributes.uv_index,visibility:e.attributes.visibility,visibility_unit:e.attributes.visibility_unit,precipitation:e.attributes.precipitation,precipitation_unit:e.attributes.precipitation_unit,cloud_coverage:e.attributes.cloud_coverage,dew_point:e.attributes.dew_point,ozone:e.attributes.ozone}}getCurrentTemp(){if(this.config.outdoor_temp_sensor){const e=this.hass.states[this.config.outdoor_temp_sensor];if(e)return parseFloat(e.state)}return this.getWeatherData().temperature||70}getSunEntity(){const e=this.config.sun_entity||"sun.sun";return this.hass.states[e]}getMoonEntity(){const e=this.config.moon_entity||"sensor.moon_phase";return this.hass.states[e]}isNightTime(){const e=this.getSunEntity();if(e)return"below_horizon"===e.state;const t=(new Date).getHours();return t>=20||t<6}getMoonPhase(){const e=this.getMoonEntity();return e?e.state:"unknown"}getRainTiming(){const e=this.hourlyForecastData;if(!e||0===e.length)return null;const t=new Date,a=new Date(t.getTime()+144e5);for(const i of e){const e=new Date(i.datetime);if(e<=t||e>a)continue;const r=(i.precipitation_probability??0)>50,o=(i.precipitation??0)>0,n=["rainy","pouring","rain","drizzle","lightning-rainy","thunderstorm","thunderstorms"].includes((i.condition||"").toLowerCase());if(r||o||n){const a=Math.round((e.getTime()-t.getTime())/36e5);let i="";return i=a<1?"Rain expected within the hour":1===a?"Rain expected in 1 hour":`Rain expected in ${a} hours`,{isRaining:!0,message:i,time:e.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}}}return null}getCurrentHoliday(){if(!this.config?.holiday_themes)return null;const e=new Date,t=e.getMonth()+1,a=e.getDate();return 10===t&&a>=25?"halloween":12===t&&a>=18&&a<=25?"christmas":12===t&&31===a||1===t&&1===a?"newyear":2!==t||13!==a&&14!==a?3===t&&17===a?"stpatrick":5===t&&5===a?"cincodemayo":7===t&&4===a?"july4th":3===t&&a>=25||4===t&&a<=10?"easter":null:"valentine"}renderHolidayDecorations(){const e=this.getCurrentHoliday();if(!e)return"";const{background:t=[]}=Pe[e]||{},a=["🎆","🎇","⭐","✨"],i=t.map((e,t)=>{const i=(1.8+1.7*Math.random()).toFixed(2),r=a.includes(e)?(60*Math.random()-30).toFixed(1):"0",o=(3*Math.random()).toFixed(2),n=80*Math.random(),s=80*Math.random();return B`
         <span
           class="holiday-icon holiday-background"
           style="
-            font-size: ${a}em;
-            transform: rotate(${i}deg);
+            font-size: ${i}em;
+            transform: rotate(${r}deg);
             animation-delay: ${o}s;
             top: ${n}%;
             left: ${s}%;
@@ -653,7 +647,6 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       `});return B`
       <div class="holiday-overlay">
         ${i}
-        ${o}
       </div>
     `}async fetchNWSAlerts(){if(!this.config?.show_nws_alerts||!this.hass)return;const e=Date.now();if(!(e-this.lastAlertFetch<3e5))try{let t;if(this.config?.nws_test_mode)t="https://api.weather.gov/alerts/active?status=actual&message_type=alert",console.log("NWS Test Mode: Fetching active US alerts for display testing");else{const e=this.hass.config.latitude;t=`https://api.weather.gov/alerts/active?point=${e},${this.hass.config.longitude}`}const a=await fetch(t);if(!a.ok)return void console.warn("Failed to fetch NWS alerts:",a.status);const i=await a.json(),r=[];if(i.features&&Array.isArray(i.features)){const e=this.config?.nws_test_mode?i.features.slice(0,2):i.features;for(const t of e){const e=t.properties;e&&r.push({id:e.id||"",event:e.event||"",headline:e.headline||"",description:e.description||"",instruction:e.instruction||"",severity:e.severity||"Unknown",urgency:e.urgency||"Unknown",certainty:e.certainty||"Unknown",onset:e.onset||"",expires:e.expires||"",areaDesc:e.areaDesc||""})}}this.nwsAlerts=r,this.lastAlertFetch=e,this.config?.nws_test_mode&&r.length>0&&console.log(`NWS Test Mode: Displaying ${r.length} sample alert(s)`,r)}catch(e){console.error("Failed to fetch NWS alerts:",e)}}renderNWSAlerts(){return this.config?.show_nws_alerts&&0!==this.nwsAlerts.length?B`
       <div class="nws-alerts-section">
@@ -820,19 +813,27 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               `:""}
             </div>
           </div>
-        `}const c="compact"===(this.config?.weather_info_layout||"standard"),h=c?this.renderWeatherInfo("compact"):"";return"graphical"===o?B`
+        `}const c=this.getCurrentHoliday();let h="";if(c){const{foreground:e=[]}=Pe[c]||{};h=B`
+        <div class="holiday-foreground-cluster">
+          ${e.map((e,t)=>B`
+            <span class="holiday-icon holiday-foreground holiday-foreground-${t}">${e}</span>
+          `)}
+        </div>
+      `}const p="compact"===(this.config?.weather_info_layout||"standard"),m=p?this.renderWeatherInfo("compact"):"";return"graphical"===o?B`
         ${d}
-        ${c?B`
+        ${h}
+        ${p?B`
           <div class="weather-info-in-header">
-            ${h}
+            ${m}
           </div>
         `:""}
       `:B`
-      <div class="card-header" style="background: ${r.color}; color: ${r.textColor};">
+      <div class="card-header" style="background: ${r.color}; color: ${r.textColor}; position: relative;">
         ${d}
-        ${c?B`
+        ${h}
+        ${p?B`
           <div class="weather-info-in-header">
-            ${h}
+            ${m}
           </div>
         `:""}
       </div>
@@ -1659,12 +1660,6 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         animation: shimmer 3s infinite;
       }
 
-      @keyframes shimmer {
-        0% { left: -100%; }
-        100% { left: 100%; }
-      }
-
-      .rain-timing-content {
         display: flex;
         align-items: center;
         gap: 12px;
@@ -1997,20 +1992,20 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         z-index: 12;
       }
       .holiday-foreground-0 {
-        font-size: 2.8em;
-        z-index: 3;
-        margin-right: -0.3em;
+        font-size: 4em; /* Increase main icon size */
+        z-index: 1;
+        margin-right: -0.6em;
       }
       .holiday-foreground-1 {
-        font-size: 2em;
+        font-size: 2.2em;
         z-index: 2;
-        margin-left: -0.5em;
+        margin-left: -1.2em;
         margin-right: -0.2em;
       }
       .holiday-foreground-2 {
-        font-size: 1.6em;
-        z-index: 1;
-        margin-left: -0.4em;
+        font-size: 1.8em;
+        z-index: 3;
+        margin-left: -1.0em;
       }
 
       /* ========================================
@@ -2042,7 +2037,6 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-retro .graphical-header::after,
       ha-card.theme-retro .graphical-overlay {
         background: transparent !important;
-        backdrop-filter: none !important;
       }
 
       ha-card.theme-retro .card-content {

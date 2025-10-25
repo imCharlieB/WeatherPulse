@@ -415,16 +415,7 @@ export class WeatherPulseCard extends LitElement {
     const holiday = this.getCurrentHoliday();
     if (!holiday) return '';
 
-    const { foreground = [], background = [] } = decorations[holiday] || {};
-
-    // Foreground: cluster in bottom left of header
-    const foregroundIcons = html`
-      <div class="holiday-foreground-cluster">
-        ${foreground.map((icon, i) => html`
-          <span class="holiday-icon holiday-foreground holiday-foreground-${i}">${icon}</span>
-        `)}
-      </div>
-    `;
+    const { background = [] } = decorations[holiday] || {};
 
     // Background: animated, random position/size/rotation
     const rotatableIcons = ['🎆', '🎇', '⭐', '✨'];
@@ -450,7 +441,6 @@ export class WeatherPulseCard extends LitElement {
 
     return html`
       <div class="holiday-overlay">
-        ${foregroundIcons}
         ${backgroundIcons}
       </div>
     `;
@@ -947,6 +937,20 @@ export class WeatherPulseCard extends LitElement {
         `;
     }
 
+    // Render foreground holiday icons inside the header
+    const holiday = this.getCurrentHoliday();
+    let holidayForegroundIcons: unknown = '';
+    if (holiday) {
+      const { foreground = [] } = decorations[holiday] || {};
+      holidayForegroundIcons = html`
+        <div class="holiday-foreground-cluster">
+          ${foreground.map((icon, i) => html`
+            <span class="holiday-icon holiday-foreground holiday-foreground-${i}">${icon}</span>
+          `)}
+        </div>
+      `;
+    }
+
     // Check if we should show weather info in header (compact layout)
     const layout = this.config?.weather_info_layout || 'standard';
     const showWeatherInfoInHeader = layout === 'compact';
@@ -956,6 +960,7 @@ export class WeatherPulseCard extends LitElement {
     if (headerMode === 'graphical') {
       return html`
         ${headerContent}
+        ${holidayForegroundIcons}
         ${showWeatherInfoInHeader ? html`
           <div class="weather-info-in-header">
             ${weatherInfoInHeader}
@@ -965,8 +970,9 @@ export class WeatherPulseCard extends LitElement {
     }
 
     return html`
-      <div class="card-header" style="background: ${gradient.color}; color: ${gradient.textColor};">
+      <div class="card-header" style="background: ${gradient.color}; color: ${gradient.textColor}; position: relative;">
         ${headerContent}
+        ${holidayForegroundIcons}
         ${showWeatherInfoInHeader ? html`
           <div class="weather-info-in-header">
             ${weatherInfoInHeader}
@@ -2081,12 +2087,6 @@ export class WeatherPulseCard extends LitElement {
         animation: shimmer 3s infinite;
       }
 
-      @keyframes shimmer {
-        0% { left: -100%; }
-        100% { left: 100%; }
-      }
-
-      .rain-timing-content {
         display: flex;
         align-items: center;
         gap: 12px;
@@ -2419,20 +2419,20 @@ export class WeatherPulseCard extends LitElement {
         z-index: 12;
       }
       .holiday-foreground-0 {
-        font-size: 2.8em;
-        z-index: 3;
-        margin-right: -0.3em;
+        font-size: 4em; /* Increase main icon size */
+        z-index: 1;
+        margin-right: -0.6em;
       }
       .holiday-foreground-1 {
-        font-size: 2em;
+        font-size: 2.2em;
         z-index: 2;
-        margin-left: -0.5em;
+        margin-left: -1.2em;
         margin-right: -0.2em;
       }
       .holiday-foreground-2 {
-        font-size: 1.6em;
-        z-index: 1;
-        margin-left: -0.4em;
+        font-size: 1.8em;
+        z-index: 3;
+        margin-left: -1.0em;
       }
 
       /* ========================================
@@ -2464,7 +2464,6 @@ export class WeatherPulseCard extends LitElement {
       ha-card.theme-retro .graphical-header::after,
       ha-card.theme-retro .graphical-overlay {
         background: transparent !important;
-        backdrop-filter: none !important;
       }
 
       ha-card.theme-retro .card-content {
