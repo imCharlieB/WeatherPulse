@@ -2435,6 +2435,16 @@ export class WeatherPulseCard extends LitElement {
         margin-left: -1.0em;
       }
 
+      .holiday-icon.holiday-foreground {
+        position: static;
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px orange);
+        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        pointer-events: none;
+      }
+
       /* ========================================
          PRE-BUILT THEMES
          ======================================== */
