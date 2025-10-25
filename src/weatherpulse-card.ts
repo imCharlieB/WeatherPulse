@@ -2299,8 +2299,7 @@ export class WeatherPulseCard extends LitElement {
 
       .holiday-icon {
         position: absolute;
-        font-size: 52px;
-        opacity: 0.85;
+        font-size: 42px;
         filter: none;
         animation: holiday-float 4s ease-in-out infinite;
         text-shadow: 0 1px 4px rgba(0,0,0,0.25);
