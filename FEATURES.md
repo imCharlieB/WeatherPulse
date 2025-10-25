@@ -257,3 +257,40 @@ custom_colors:
 - Accessibility considerations for all visual elements
 - Mobile-first responsive design
 - Follow Home Assistant design guidelines
+
+### Holiday Overlay Design (Foreground/Background)
+- Each holiday has a main foreground icon (e.g., grave for Halloween, tree for Christmas) that is larger and centered in the header.
+- Additional foreground icons (e.g., pumpkin, candy) are smaller and clustered/overlapped around the main icon in the header, creating a festive badge/group effect.
+- Background icons (e.g., bats, spiders, ghosts) are animated, floating, and randomly placed around the card as before.
+- This approach provides a strong, festive cluster in the header while keeping playful, animated effects around the card.
+- The foreground/background split is defined per holiday in the decorations object, allowing for easy customization and a polished look.
+
+### Holiday Overlay Icon Groups
+For each holiday, the following icons are used:
+
+- **Halloween**
+  - Foreground: 🪦 (main), 🎃, 🍬
+  - Background: 🦇, 🧙‍♀️, 🕷️, 👻, 🕸️, 🩸, 🦹‍♂️, 🧛, 🧟
+- **Christmas**
+  - Foreground: 🎄 (main), 🎁, 🧦, 🕯️
+  - Background: ❄️, 🔔, 🦌, 🎅, ⛄, 🌟, 🧑‍🎄, 🕯️
+- **New Year**
+  - Foreground: 🎆 (main), 🥳, 🍾, 🥂
+  - Background: 🎇, 🎉, ✨, 🎊
+- **Valentine's Day**
+  - Foreground: 💝 (main), 🌹, 💌
+  - Background: ❤️, 💕, 💘, 💖
+- **St. Patrick's Day**
+  - Foreground: 🍀 (main), ☘️, 🍻
+  - Background: 🌈, 💚, 🎩, 🪙
+- **4th of July**
+  - Foreground: 🇺🇸 (main), 🗽, 🎆
+  - Background: 🎇, ⭐, 🎉, 🎊
+- **Easter**
+  - Foreground: 🐰 (main), 🥚, 🐇
+  - Background: 🌷, 🐣, 💐, 🌸
+- **Cinco de Mayo**
+  - Foreground: 🇲🇽 (main), 🌮, 🍹
+  - Background: 🌵, 🎉, 🎊, 🎺
+
+This structure ensures each holiday has a visually strong, festive cluster in the header (foreground) and playful animated icons around the card (background).

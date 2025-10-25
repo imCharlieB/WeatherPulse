@@ -19,6 +19,47 @@ import { getAnimatedWeatherIcon, getMoonPhaseIcon, getTemperatureIcon } from './
 // Import the editor
 import './editor';
 
+// Move decorations object outside the class
+const decorations: {
+  [key: string]: {
+    foreground: string[];
+    background: string[];
+  }
+} = {
+  halloween: {
+    foreground: ['🪦', '🎃', '🍬'],
+    background: ['🦇', '🧙‍♀️', '🕷️', '👻', '🕸️', '🩸', '🦹‍♂️', '🧛', '🧟'],
+  },
+  christmas: {
+    foreground: ['🎄', '🎁', '🧦', '🕯️'],
+    background: ['❄️', '🔔', '🦌', '🎅', '⛄', '🌟', '🧑‍🎄', '🕯️'],
+  },
+  newyear: {
+    foreground: ['🎆', '🥳', '🍾', '🥂'],
+    background: ['🎇', '🎉', '✨', '🎊'],
+  },
+  valentine: {
+    foreground: ['💝', '🌹', '💌'],
+    background: ['❤️', '💕', '💘', '💖'],
+  },
+  stpatrick: {
+    foreground: ['🍀', '☘️', '🍻'],
+    background: ['🌈', '💚', '🎩', '🪙'],
+  },
+  july4th: {
+    foreground: ['🇺🇸', '🗽', '🎆'],
+    background: ['🎇', '⭐', '🎉', '🎊'],
+  },
+  easter: {
+    foreground: ['🐰', '🥚', '🐇'],
+    background: ['🌷', '🐣', '💐', '🌸'],
+  },
+  cincodemayo: {
+    foreground: ['🇲🇽', '🌮', '🍹'],
+    background: ['🌵', '🎉', '🎊', '🎺'],
+  },
+};
+
 // Define the card in the customElements registry
 @customElement('weatherpulse-card')
 export class WeatherPulseCard extends LitElement {
@@ -372,34 +413,30 @@ export class WeatherPulseCard extends LitElement {
 
   private renderHolidayDecorations(): unknown {
     const holiday = this.getCurrentHoliday();
-    if (!holiday) {
-      return '';
-    }
-  
-    const decorations: { [key: string]: string[] } = {
-      halloween: ['🎃', '👻', '🦇', '🕷️', '🧙‍♀️', '🍬', '🪦'],
-      christmas: ['🎄', '⛄', '🎅', '❄️', '🎁', '🦌', '🔔'],
-      newyear: ['🎆', '🎊', '🥳', '✨', '🍾', '🎉'],
-      valentine: ['❤️', '💕', '💝', '🌹', '💘', '💌'],
-      stpatrick: ['🍀', '🌈', '☘️', '💚', '🍻'],
-      july4th: ['🇺🇸', '🎆', '⭐', '🎇', '🗽'],
-      easter: ['🐰', '🥚', '🌷', '🐣', '🐇'],
-      cincodemayo: ['🇲🇽', '🌮', '🌵', '🎉', '🍹']
-    };
-  
-    const icons = decorations[holiday] || [];
-  
-    // Generate random style for each icon
-    const iconSpans = icons.map((icon, i) => {
-      const size = (1.8 + Math.random() * 1.7).toFixed(2); // 1.2em–2.4em
-      const rotation = (-30 + Math.random() * 60).toFixed(1); // -20deg to +20deg
-      const delay = (Math.random() * 3).toFixed(2); // 0–3s
-      const top = Math.random() * 80; // 0–80%
-      const left = Math.random() * 80; // 0–80%
-      
+    if (!holiday) return '';
+
+    const { foreground = [], background = [] } = decorations[holiday] || {};
+
+    // Foreground: cluster in bottom left of header
+    const foregroundIcons = html`
+      <div class="holiday-foreground-cluster">
+        ${foreground.map((icon, i) => html`
+          <span class="holiday-icon holiday-foreground holiday-foreground-${i}">${icon}</span>
+        `)}
+      </div>
+    `;
+
+    // Background: animated, random position/size/rotation
+    const rotatableIcons = ['🎆', '🎇', '⭐', '✨'];
+    const backgroundIcons = background.map((icon, i) => {
+      const size = (1.8 + Math.random() * 1.7).toFixed(2);
+      const rotation = rotatableIcons.includes(icon) ? (-30 + Math.random() * 60).toFixed(1) : '0';
+      const delay = (Math.random() * 3).toFixed(2);
+      const top = Math.random() * 80;
+      const left = Math.random() * 80;
       return html`
         <span
-          class="holiday-icon"
+          class="holiday-icon holiday-background"
           style="
             font-size: ${size}em;
             transform: rotate(${rotation}deg);
@@ -410,10 +447,11 @@ export class WeatherPulseCard extends LitElement {
         >${icon}</span>
       `;
     });
-  
+
     return html`
       <div class="holiday-overlay">
-        ${iconSpans}
+        ${foregroundIcons}
+        ${backgroundIcons}
       </div>
     `;
   }
@@ -1124,7 +1162,7 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
-    // Detailed mode - icon next to day name
+    // Detailed mode - with extra weather details
     if (viewMode === 'detailed') {
       // Convert wind bearing to compass direction
       const getWindDirection = (bearing?: number): string => {
@@ -2371,7 +2409,32 @@ export class WeatherPulseCard extends LitElement {
           opacity: 1;
         }
       }
-    
+
+      .holiday-foreground-cluster {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        display: flex;
+        align-items: flex-end;
+        z-index: 12;
+      }
+      .holiday-foreground-0 {
+        font-size: 2.8em;
+        z-index: 3;
+        margin-right: -0.3em;
+      }
+      .holiday-foreground-1 {
+        font-size: 2em;
+        z-index: 2;
+        margin-left: -0.5em;
+        margin-right: -0.2em;
+      }
+      .holiday-foreground-2 {
+        font-size: 1.6em;
+        z-index: 1;
+        margin-left: -0.4em;
+      }
+
       /* ========================================
          PRE-BUILT THEMES
          ======================================== */
