@@ -1954,11 +1954,11 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       @keyframes holiday-float {
         0%, 100% {
           transform: translateY(0px) rotate(0deg);
-          opacity: 0.3;
+          opacity: 0.7;
         }
         50% {
           transform: translateY(-10px) rotate(5deg);
-          opacity: 0.5;
+          opacity: 1;
         }
       }
 
