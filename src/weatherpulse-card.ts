@@ -391,14 +391,15 @@ export class WeatherPulseCard extends LitElement {
   
     // Generate random style for each icon
     const iconSpans = icons.map((icon, i) => {
-      const size = (1.2 + Math.random() * 1.2).toFixed(2); // 1.2em–2.4em
-      const rotation = (-20 + Math.random() * 40).toFixed(1); // -20deg to +20deg
+      const size = (1.8 + Math.random() * 1.7).toFixed(2); // 1.2em–2.4em
+      const rotation = (-30 + Math.random() * 60).toFixed(1); // -20deg to +20deg
       const delay = (Math.random() * 3).toFixed(2); // 0–3s
       const top = Math.random() * 80; // 0–80%
       const left = Math.random() * 80; // 0–80%
+      const spin = Math.random() > 0.5 ? 'holiday-spin' : '';
       return html`
         <span
-          class="holiday-icon"
+          class="holiday-icon ${spin}"
           style="
             font-size: ${size}em;
             transform: rotate(${rotation}deg);
@@ -2317,10 +2318,11 @@ export class WeatherPulseCard extends LitElement {
 
       .holiday-icon {
         position: absolute;
-        font-size: 42px;
-        filter: none;
+        filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px orange);
+        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        pointer-events: none;
         animation: holiday-float 4s ease-in-out infinite;
-        text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+        
       }
 
       .holiday-icon-1 {
@@ -2348,7 +2350,20 @@ export class WeatherPulseCard extends LitElement {
         transform: translateX(50%);
         animation-delay: 3s;
       }
-
+      
+      .holiday-spin {
+        animation: holiday-float 4s ease-in-out infinite, holiday-spin 8s linear infinite;
+      }
+       @keyframes holiday-float {
+         0%, 100% {
+          transform: translateY(0px) rotate(var(--rotation, 0deg));
+          opacity: 0.85;
+        }
+        50% {
+         transform: translateY(-12px) rotate(var(--rotation, 0deg));
+         opacity: 1;
+       }
+    }
       @keyframes holiday-float {
         0%, 100% {
           transform: translateY(0px) rotate(0deg);
@@ -2359,7 +2374,10 @@ export class WeatherPulseCard extends LitElement {
           opacity: 1;
         }
       }
-
+      @keyframes holiday-spin {
+        0% { transform: rotate(0deg);}
+        100% { transform: rotate(360deg);}
+      }
       /* ========================================
          PRE-BUILT THEMES
          ======================================== */
