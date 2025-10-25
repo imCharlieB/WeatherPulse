@@ -1759,7 +1759,7 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 400;
         opacity: 0.95;
         margin-bottom: 2px;
-        text-align: center;
+        text-align: left;
       }
 
       .actual-temp-display {
@@ -2299,9 +2299,11 @@ export class WeatherPulseCard extends LitElement {
 
       .holiday-icon {
         position: absolute;
-        font-size: 32px;
-        opacity: 0.3;
+        font-size: 52px;
+        opacity: 0.85;
+        filter: none;
         animation: holiday-float 4s ease-in-out infinite;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.25);
       }
 
       .holiday-icon-1 {

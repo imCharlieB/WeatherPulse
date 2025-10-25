@@ -202,6 +202,16 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 
 ### Phase 4: Polish & Release
 - Performance optimization
+  - **Reduce unnecessary renders:** In `shouldUpdate`, compare only relevant state/attribute changes to avoid re-rendering the card when not needed. Use `@state()` only for properties that affect rendering.
+  - **Debounce/throttle data fetches:** For methods like `fetchForecast` and `fetchNWSAlerts`, ensure you don’t fetch more often than needed. Use debouncing or throttling if user interaction can trigger fetches.
+  - **Memoize expensive calculations:** Cache results of functions like `getWeatherData()` if the underlying entity hasn’t changed, to avoid recalculating on every render.
+  - **Minimize inline styles:** Move as much styling as possible to the static `styles` block for better performance and easier theming. Avoid inline `style` attributes in templates.
+  - **Split large methods:** Break up large methods (like `renderHeader` and `renderWeatherInfo`) into smaller, focused helper methods for readability and maintainability.
+  - **Use optional chaining and nullish coalescing:** Ensure these are used everywhere to avoid runtime errors when accessing deeply nested properties.
+  - **Remove legacy fallbacks:** If only supporting new Home Assistant models, remove any legacy attribute fallbacks for clarity and maintainability.
+  - **Avoid unnecessary state:** Only use `@state()` for properties that must trigger a re-render. Use regular class properties for others.
+  - **Optimize CSS:** Use CSS variables for theme colors, avoid deeply nested selectors, and prefer flat, efficient selectors for better performance.
+  - **Improve accessibility:** Add `aria-labels` and roles to important elements, and ensure keyboard navigation is supported for better accessibility.
 - Comprehensive documentation
 - Example configurations
 - Testing across HA versions

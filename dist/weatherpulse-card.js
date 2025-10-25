@@ -1379,7 +1379,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         font-weight: 400;
         opacity: 0.95;
         margin-bottom: 2px;
-        text-align: center;
+        text-align: left;
       }
 
       .actual-temp-display {
@@ -1919,9 +1919,11 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       .holiday-icon {
         position: absolute;
-        font-size: 32px;
-        opacity: 0.3;
+        font-size: 52px;
+        opacity: 0.85;
+        filter: none;
         animation: holiday-float 4s ease-in-out infinite;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.25);
       }
 
       .holiday-icon-1 {
