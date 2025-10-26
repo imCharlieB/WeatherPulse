@@ -2417,8 +2417,8 @@ export class WeatherPulseCard extends LitElement {
 
       .holiday-foreground-cluster {
         position: absolute;
-        bottom: 0px; /* Flush with bottom */
-        left: 0px; /* Flush with left */
+        bottom: -8px; /* Slightly below to sit on edge */
+        left: -8px; /* Slightly to left to sit on edge */
         display: flex;
         flex-direction: row;
         align-items: flex-end;
@@ -2431,18 +2431,21 @@ export class WeatherPulseCard extends LitElement {
         font-size: 3.5em; /* Main/center icon - largest */
         z-index: 3;
         order: 2; /* Center position */
+        line-height: 1;
       }
       .holiday-foreground-1 {
         font-size: 2em; /* Left side icon */
         z-index: 2;
         order: 1; /* Left position */
-        margin-right: -0.3em; /* Slight overlap with center */
+        margin-right: -0.8em; /* More overlap with center */
+        line-height: 1;
       }
       .holiday-foreground-2 {
         font-size: 2em; /* Right side icon */
         z-index: 2;
         order: 3; /* Right position */
-        margin-left: -0.3em; /* Slight overlap with center */
+        margin-left: -0.8em; /* More overlap with center */
+        line-height: 1;
       }
 
       .holiday-icon.holiday-foreground {
