@@ -1526,6 +1526,12 @@ export class WeatherPulseCard extends LitElement {
         z-index: 1;
       }
 
+      /* Keep holiday cluster absolutely positioned even in night mode */
+      ha-card.night-mode .holiday-foreground-cluster {
+        position: absolute !important;
+        z-index: 0 !important;
+      }
+
       ha-card.night-mode .graphical-overlay {
         background: linear-gradient(180deg, rgba(10,14,39,0.5) 0%, rgba(10,14,39,0.8) 100%);
       }
@@ -2417,8 +2423,8 @@ export class WeatherPulseCard extends LitElement {
 
       .holiday-foreground-cluster {
         position: absolute;
-        bottom: -8px; /* Slightly below to sit on edge */
-        left: -8px; /* Slightly to left to sit on edge */
+        bottom: 8px; /* 8px from bottom edge */
+        left: 8px; /* 8px from left edge */
         display: flex;
         flex-direction: row;
         align-items: flex-end;
