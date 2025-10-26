@@ -2522,6 +2522,7 @@ export class WeatherPulseCard extends LitElement {
         filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         pointer-events: none;
         animation: holiday-float 4s ease-in-out infinite;
+        z-index: -1;
       }
 
       @keyframes holiday-float {
@@ -2543,26 +2544,23 @@ export class WeatherPulseCard extends LitElement {
         flex-direction: row;
         align-items: flex-end;
         justify-content: flex-start;
-        z-index: 0; /* Behind weather icon (which gets z-index: 1 in night mode) */
+        z-index: -1; /* Behind weather info cards */
         gap: 0px;
         pointer-events: none; /* Don't block clicks */
       }
       .holiday-foreground-0 {
         font-size: 3.5em; /* Main/center icon - largest */
-        z-index: 3;
         order: 2; /* Center position */
         line-height: 1;
       }
       .holiday-foreground-1 {
         font-size: 2em; /* Left side icon */
-        z-index: 2;
         order: 1; /* Left position */
         margin-right: -0.8em; /* More overlap with center */
         line-height: 1;
       }
       .holiday-foreground-2 {
         font-size: 2em; /* Right side icon */
-        z-index: 2;
         order: 3; /* Right position */
         margin-left: -0.8em; /* More overlap with center */
         line-height: 1;
