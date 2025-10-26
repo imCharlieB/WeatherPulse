@@ -56,19 +56,11 @@ const decorations: {
   },
   valentine: {
     foreground: ['💝', '🌹', '💌'],
-    background: ['❤️', '💕', '💘', '💖'],
-    lights: {
-      colors: ['#ff69b4', '#ff1493', '#ffb6c1', '#ff6b9d'],
-      style: 'round'
-    }
+    background: ['❤️', '💕', '💘', '💖']
   },
   stpatrick: {
     foreground: ['🍀', '☘️', '🍻'],
-    background: ['🌈', '💚', '🎩', '🪙'],
-    lights: {
-      colors: ['#00ff00', '#ffd700', '#32cd32', '#ffdf00'],
-      style: 'round'
-    }
+    background: ['🌈', '💚', '🎩', '🪙']
   },
   july4th: {
     foreground: ['🇺🇸', '🗽', '🎆'],
@@ -80,11 +72,7 @@ const decorations: {
   },
   easter: {
     foreground: ['🐰', '🥚', '🐇'],
-    background: ['🌷', '🐣', '💐', '🌸'],
-    lights: {
-      colors: ['#ffb6c1', '#87ceeb', '#98fb98', '#ffeb3b'],
-      style: 'round'
-    }
+    background: ['🌷', '🐣', '💐', '🌸']
   },
   cincodemayo: {
     foreground: ['🇲🇽', '🌮', '🍹'],
@@ -453,14 +441,29 @@ export class WeatherPulseCard extends LitElement {
 
     const { background = [] } = decorations[holiday] || {};
 
-    // Background: animated, random position/size/rotation
+    // Limit to 5 icons max and use strategic placement zones
+    const maxIcons = Math.min(5, background.length);
+    const selectedIcons = background.slice(0, maxIcons);
+
+    // Define placement zones (avoid center where text/weather icon is)
+    const zones = [
+      { top: 5, left: 5 },      // Top-left
+      { top: 5, left: 85 },     // Top-right
+      { top: 45, left: 5 },     // Mid-left
+      { top: 45, left: 85 },    // Mid-right
+      { top: 80, left: 50 }     // Bottom-center
+    ];
+
     const rotatableIcons = ['🎆', '🎇', '⭐', '✨'];
-    const backgroundIcons = background.map((icon, i) => {
-      const size = (1.8 + Math.random() * 1.7).toFixed(2);
-      const rotation = rotatableIcons.includes(icon) ? (-30 + Math.random() * 60).toFixed(1) : '0';
-      const delay = (Math.random() * 3).toFixed(2);
-      const top = Math.random() * 80;
-      const left = Math.random() * 80;
+    const backgroundIcons = selectedIcons.map((icon, i) => {
+      const zone = zones[i % zones.length];
+      const size = (1.5 + Math.random() * 1).toFixed(2);
+      const rotation = rotatableIcons.includes(icon) ? (-20 + Math.random() * 40).toFixed(1) : '0';
+      const delay = (i * 0.8).toFixed(2);
+      // Add small random offset within zone
+      const top = zone.top + (Math.random() * 10 - 5);
+      const left = zone.left + (Math.random() * 10 - 5);
+
       return html`
         <span
           class="holiday-icon holiday-background"
