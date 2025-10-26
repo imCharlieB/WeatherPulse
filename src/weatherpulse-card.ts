@@ -1239,8 +1239,11 @@ export class WeatherPulseCard extends LitElement {
 
     // Compact mode - vertical card in horizontal row (same as daily)
     if (viewMode === 'compact') {
+      const gradient = getTemperatureGradient(temp, unit);
+      // Convert diagonal gradient to vertical for compact boxes
+      const verticalGradient = gradient.color.replace('135deg', '180deg');
       return html`
-        <div class="forecast-hour forecast-compact">
+        <div class="forecast-hour forecast-compact" style="background: ${verticalGradient}; color: ${gradient.textColor}; background-clip: padding-box;">
           <div class="hour-name">${hourString}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(condition, true)}
@@ -3676,10 +3679,10 @@ export class WeatherPulseCard extends LitElement {
       /* Hourly forecast styles */
       .forecast-hour {
         display: grid;
-        grid-template-columns: 55px 45px auto auto;
+        grid-template-columns: 50px 40px auto auto;
         align-items: center;
-        gap: 10px;
-        padding: 5px 0;
+        gap: 8px;
+        padding: 3px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
@@ -3691,14 +3694,15 @@ export class WeatherPulseCard extends LitElement {
       .forecast-type-hourly.forecast-standard {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 8px 16px;
+        gap: 4px 16px;
       }
 
       .forecast-type-hourly.forecast-standard .forecast-hour {
         border-bottom: none;
-        padding: 8px;
+        padding: 6px 4px;
         background: var(--card-background-color, rgba(0,0,0,0.05));
-        border-radius: 8px;
+        border-radius: 6px;
+        min-width: 0;
       }
 
       .hour-name {
@@ -3715,16 +3719,16 @@ export class WeatherPulseCard extends LitElement {
       .forecast-hour.forecast-detailed {
         display: flex;
         flex-direction: column;
-        gap: 6px;
-        padding: 8px 0;
+        gap: 4px;
+        padding: 4px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
       .hour-info-row {
         display: grid;
-        grid-template-columns: 55px 45px auto;
+        grid-template-columns: 50px 40px auto;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
       }
 
       .hour-temp-display {

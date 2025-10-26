@@ -852,8 +852,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       <div class="${`forecast-container forecast-${r} forecast-type-${t}`}">
         ${i.map(a=>"hourly"===t?this.renderForecastHour(a,e.temperature_unit||"°F",r):this.renderForecastDay(a,e.temperature_unit||"°F",r))}
       </div>
-    `}renderForecastHour(e,t,a="standard"){const i=new Date(e.datetime).toLocaleTimeString("en-US",{hour:"numeric",hour12:!0}),r=Math.round(e.temperature||0),o=e.precipitation_probability||0,n=e.condition||"clear",s=e.humidity,l=e.wind_speed;return"compact"===a?B`
-        <div class="forecast-hour forecast-compact">
+    `}renderForecastHour(e,t,a="standard"){const i=new Date(e.datetime).toLocaleTimeString("en-US",{hour:"numeric",hour12:!0}),r=Math.round(e.temperature||0),o=e.precipitation_probability||0,n=e.condition||"clear",s=e.humidity,l=e.wind_speed;if("compact"===a){const e=ue(r,t),a=e.color.replace("135deg","180deg");return B`
+        <div class="forecast-hour forecast-compact" style="background: ${a}; color: ${e.textColor}; background-clip: padding-box;">
           <div class="hour-name">${i}</div>
           <div class="day-icon-small">
             ${this.renderWeatherIcon(n,!0)}
@@ -861,7 +861,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
           <div class="hour-temp">${r}°</div>
           ${o>0?B`<div class="precip-compact">💧${o}%</div>`:""}
         </div>
-      `:"detailed"===a?B`
+      `}return"detailed"===a?B`
         <div class="forecast-hour forecast-detailed">
           <div class="hour-info-row">
             <div class="hour-name">${i}</div>
@@ -3104,10 +3104,10 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       /* Hourly forecast styles */
       .forecast-hour {
         display: grid;
-        grid-template-columns: 55px 45px auto auto;
+        grid-template-columns: 50px 40px auto auto;
         align-items: center;
-        gap: 10px;
-        padding: 5px 0;
+        gap: 8px;
+        padding: 3px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
@@ -3119,14 +3119,15 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .forecast-type-hourly.forecast-standard {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 8px 16px;
+        gap: 4px 16px;
       }
 
       .forecast-type-hourly.forecast-standard .forecast-hour {
         border-bottom: none;
-        padding: 8px;
+        padding: 6px 4px;
         background: var(--card-background-color, rgba(0,0,0,0.05));
-        border-radius: 8px;
+        border-radius: 6px;
+        min-width: 0;
       }
 
       .hour-name {
@@ -3143,16 +3144,16 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .forecast-hour.forecast-detailed {
         display: flex;
         flex-direction: column;
-        gap: 6px;
-        padding: 8px 0;
+        gap: 4px;
+        padding: 4px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
       .hour-info-row {
         display: grid;
-        grid-template-columns: 55px 45px auto;
+        grid-template-columns: 50px 40px auto;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
       }
 
       .hour-temp-display {
