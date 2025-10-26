@@ -942,11 +942,15 @@ export class WeatherPulseCard extends LitElement {
     let holidayForegroundIcons: unknown = '';
     if (holiday) {
       const { foreground = [] } = decorations[holiday] || {};
+      // Reorder: icon 1 (left), icon 0 (center/main), icon 2 (right)
+      const reordered = [foreground[1], foreground[0], foreground[2]].filter(Boolean);
       holidayForegroundIcons = html`
         <div class="holiday-foreground-cluster">
-          ${foreground.map((icon, i) => html`
-            <span class="holiday-icon holiday-foreground holiday-foreground-${i}">${icon}</span>
-          `)}
+          ${reordered.map((icon, i) => {
+            // Map display position to original CSS class
+            const cssIndex = i === 0 ? 1 : i === 1 ? 0 : 2;
+            return html`<span class="holiday-icon holiday-foreground holiday-foreground-${cssIndex}">${icon}</span>`;
+          })}
         </div>
       `;
     }
@@ -2413,29 +2417,32 @@ export class WeatherPulseCard extends LitElement {
 
       .holiday-foreground-cluster {
         position: absolute;
-        bottom: 4px; /* Tight to bottom edge */
-        left: 4px; /* Tight to left edge */
+        bottom: 0px; /* Flush with bottom */
+        left: 0px; /* Flush with left */
         display: flex;
+        flex-direction: row;
         align-items: flex-end;
+        justify-content: flex-start;
         z-index: 1; /* Behind weather icon */
-        max-height: 70px; /* Prevent cluster from getting too tall */
+        gap: 0px;
         pointer-events: none; /* Don't block clicks */
       }
       .holiday-foreground-0 {
-        font-size: 3em; /* Main icon - reduced from 4em */
-        z-index: 1;
-        margin-right: -0.5em;
+        font-size: 3.5em; /* Main/center icon - largest */
+        z-index: 3;
+        order: 2; /* Center position */
       }
       .holiday-foreground-1 {
-        font-size: 1.8em; /* Reduced from 2.2em */
+        font-size: 2em; /* Left side icon */
         z-index: 2;
-        margin-left: -1em;
-        margin-right: -0.2em;
+        order: 1; /* Left position */
+        margin-right: -0.3em; /* Slight overlap with center */
       }
       .holiday-foreground-2 {
-        font-size: 1.4em; /* Reduced from 1.8em */
-        z-index: 3;
-        margin-left: -0.8em;
+        font-size: 2em; /* Right side icon */
+        z-index: 2;
+        order: 3; /* Right position */
+        margin-left: -0.3em; /* Slight overlap with center */
       }
 
       .holiday-icon.holiday-foreground {
