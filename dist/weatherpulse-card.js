@@ -1195,6 +1195,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         border-radius: 12px 12px 0 0;
         transition: background 0.5s ease;
         position: relative; /* Required for holiday-foreground-cluster absolute positioning */
+        overflow: visible; /* Allow lights to extend beyond header */
       }
 
       .datetime-header {
@@ -2004,80 +2005,95 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       /* Holiday string lights */
       .holiday-lights {
         position: absolute;
-        top: 0;
+        top: 4px;
         left: 0;
         right: 0;
-        height: 24px;
+        height: 32px;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         align-items: flex-start;
-        padding: 0 12px;
+        padding: 0 8px;
         pointer-events: none;
         z-index: 2;
+      }
+
+      /* Wire connecting all bulbs */
+      .holiday-lights::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 8px;
+        right: 8px;
+        height: 2px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 1px;
       }
 
       .light-bulb {
         position: relative;
         animation: light-glow 1.5s ease-in-out infinite;
+        flex-shrink: 0;
       }
 
       /* Round bulbs (most holidays) */
       .light-round {
-        width: 8px;
-        height: 8px;
+        width: 12px;
+        height: 12px;
         border-radius: 50%;
         background: var(--bulb-color);
         box-shadow:
-          0 0 6px var(--bulb-color),
-          0 0 12px var(--bulb-color);
+          0 0 8px var(--bulb-color),
+          0 0 16px var(--bulb-color);
+        margin-top: 8px;
       }
 
       .light-round::before {
         content: '';
         position: absolute;
-        top: -6px;
+        top: -8px;
         left: 50%;
         transform: translateX(-50%);
-        width: 1px;
-        height: 6px;
-        background: rgba(255, 255, 255, 0.3);
+        width: 2px;
+        height: 8px;
+        background: rgba(50, 50, 50, 0.5);
       }
 
       /* Long Christmas-style bulbs */
       .light-long {
-        width: 6px;
-        height: 14px;
-        border-radius: 3px 3px 40% 40%;
+        width: 10px;
+        height: 18px;
+        border-radius: 4px 4px 40% 40%;
         background: linear-gradient(180deg,
           rgba(255, 255, 255, 0.4) 0%,
           var(--bulb-color) 50%,
           var(--bulb-color) 100%);
         box-shadow:
-          0 0 8px var(--bulb-color),
-          0 0 16px var(--bulb-color);
+          0 0 10px var(--bulb-color),
+          0 0 20px var(--bulb-color);
+        margin-top: 8px;
       }
 
       .light-long::before {
         content: '';
         position: absolute;
-        top: -4px;
+        top: -6px;
         left: 50%;
         transform: translateX(-50%);
-        width: 4px;
-        height: 4px;
-        background: rgba(100, 100, 100, 0.6);
-        border-radius: 2px 2px 0 0;
+        width: 6px;
+        height: 6px;
+        background: rgba(80, 80, 80, 0.7);
+        border-radius: 3px 3px 0 0;
       }
 
       .light-long::after {
         content: '';
         position: absolute;
-        top: -6px;
+        top: -8px;
         left: 50%;
         transform: translateX(-50%);
-        width: 1px;
-        height: 6px;
-        background: rgba(255, 255, 255, 0.3);
+        width: 2px;
+        height: 8px;
+        background: rgba(50, 50, 50, 0.5);
       }
 
       @keyframes light-glow {
