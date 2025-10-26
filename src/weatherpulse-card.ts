@@ -2485,7 +2485,7 @@ export class WeatherPulseCard extends LitElement {
       /* Holiday string lights */
       .holiday-lights {
         position: absolute;
-        top: 4px;
+        top: 0px;
         left: 0;
         right: 0;
         height: 32px;
@@ -2495,6 +2495,12 @@ export class WeatherPulseCard extends LitElement {
         padding: 0 8px;
         pointer-events: none;
         z-index: 2;
+      }
+
+      /* Ensure lights stretch properly in night mode */
+      ha-card.night-mode .holiday-lights {
+        position: absolute !important;
+        width: 100%;
       }
 
       /* Wire connecting all bulbs */

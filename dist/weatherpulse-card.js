@@ -2005,7 +2005,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       /* Holiday string lights */
       .holiday-lights {
         position: absolute;
-        top: 4px;
+        top: 0px;
         left: 0;
         right: 0;
         height: 32px;
@@ -2015,6 +2015,12 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         padding: 0 8px;
         pointer-events: none;
         z-index: 2;
+      }
+
+      /* Ensure lights stretch properly in night mode */
+      ha-card.night-mode .holiday-lights {
+        position: absolute !important;
+        width: 100%;
       }
 
       /* Wire connecting all bulbs */
