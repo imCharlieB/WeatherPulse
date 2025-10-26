@@ -39,8 +39,8 @@ const decorations: {
     }
   },
   christmas: {
-    foreground: ['🎄', '🎁', '🧦', '🕯️'],
-    background: ['❄️', '🔔', '🦌', '🎅', '⛄', '🌟', '🧑‍🎄', '🕯️'],
+    foreground: ['🎄', '🎁', '🕯️'],
+    background: ['❄️', '🔔', '🦌', '🎅', '⛄', '🌟', '🧑‍🎄'],
     lights: {
       colors: ['#ff0000', '#00ff00', '#ffff00', '#0000ff', '#ff69b4'],
       style: 'long'
@@ -459,6 +459,47 @@ export class WeatherPulseCard extends LitElement {
         { icon: '🕷️', top: 18, left: 88, size: 2 },        // Spider top-right
         { icon: '👻', top: 72, left: 10, size: 2.4 },       // Ghost bottom-left
         { icon: '🕸️', top: 10, left: 88, size: 1.8 }       // Web top-right corner
+      ];
+    } else if (holiday === 'christmas') {
+      // Rotate between Santa and elf
+      const rotatingIndex = Math.floor(Date.now() / 10000) % 2;
+      const rotatingIcons = ['🎅', '🧑‍🎄'];
+      const rotatingIcon = rotatingIcons[rotatingIndex];
+
+      iconPlacements = [
+        { icon: '❄️', top: 8, left: 8, size: 2.8 },         // Snowflake #1 top-left
+        { icon: '❄️', top: 10, left: 90, size: 2.6 },       // Snowflake #2 top-right
+        { icon: '🦌', top: 40, left: 50, size: 2.5 },       // Reindeer center
+        { icon: rotatingIcon, top: 50, left: 88, size: 2.4 }, // Rotating: Santa/Elf
+        { icon: '⛄', top: 72, left: 10, size: 2.2 },       // Snowman bottom-left
+        { icon: '🌟', top: 5, left: 50, size: 2.3 },        // Star #1 top-center
+        { icon: '🌟', top: 75, left: 88, size: 2 }          // Star #2 bottom-right
+      ];
+    } else if (holiday === 'newyear') {
+      iconPlacements = [
+        { icon: '🎇', top: 8, left: 10, size: 2.8 },        // Firework #1 top-left
+        { icon: '🎇', top: 10, left: 88, size: 2.6 },       // Firework #2 top-right
+        { icon: '✨', top: 35, left: 50, size: 2.4 },       // Sparkles #1 center
+        { icon: '✨', top: 55, left: 48, size: 2.2 },       // Sparkles #2 center-lower
+        { icon: '🎉', top: 72, left: 10, size: 2.2 },       // Party popper #1 bottom-left
+        { icon: '🎉', top: 50, left: 88, size: 2 }          // Party popper #2 right
+      ];
+    } else if (holiday === 'valentine') {
+      iconPlacements = [
+        { icon: '❤️', top: 8, left: 10, size: 2.8 },        // Red heart #1 top-left
+        { icon: '❤️', top: 10, left: 88, size: 2.6 },       // Red heart #2 top-right
+        { icon: '💕', top: 40, left: 50, size: 2.4 },       // Two hearts center
+        { icon: '💘', top: 72, left: 88, size: 2.2 },       // Heart with arrow bottom-right
+        { icon: '💖', top: 72, left: 10, size: 2.2 }        // Sparkling heart bottom-left
+      ];
+    } else if (holiday === 'july4th') {
+      iconPlacements = [
+        { icon: '🎇', top: 8, left: 10, size: 2.8 },        // Firework #1 top-left
+        { icon: '🎇', top: 10, left: 88, size: 2.6 },       // Firework #2 top-right
+        { icon: '⭐', top: 40, left: 50, size: 2.4 },       // Star #1 center
+        { icon: '⭐', top: 72, left: 88, size: 2.2 },       // Star #2 bottom-right
+        { icon: '🎉', top: 72, left: 10, size: 2.2 },       // Party popper bottom-left
+        { icon: '🎊', top: 55, left: 48, size: 2 }          // Confetti ball center-lower
       ];
     } else {
       // Default: use first 5 icons with generic zones
