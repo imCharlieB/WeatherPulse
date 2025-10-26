@@ -2005,7 +2005,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       /* Holiday string lights */
       .holiday-lights {
         position: absolute;
-        top: 2px;
+        top: 4px;
         left: 0;
         right: 0;
         height: 32px;
@@ -2027,11 +2027,11 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .holiday-lights::before {
         content: '';
         position: absolute;
-        top: 2px;
+        top: 4px;
         left: 8px;
         right: 8px;
         height: 2px;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.35);
         border-radius: 1px;
       }
 
