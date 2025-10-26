@@ -2096,6 +2096,8 @@ export class WeatherPulseCard extends LitElement {
         padding: 8px;
         background: var(--secondary-background-color, rgba(0,0,0,0.05));
         border-radius: 8px;
+        position: relative;
+        z-index: 2;
       }
 
       /* Compact item styling */
@@ -2544,7 +2546,7 @@ export class WeatherPulseCard extends LitElement {
         flex-direction: row;
         align-items: flex-end;
         justify-content: flex-start;
-        z-index: -1; /* Behind weather info cards */
+        z-index: 1; /* Behind weather info cards but above background */
         gap: 0px;
         pointer-events: none; /* Don't block clicks */
       }
