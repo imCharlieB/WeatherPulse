@@ -453,9 +453,9 @@ export class WeatherPulseCard extends LitElement {
 
       iconPlacements = [
         { icon: '🦇', top: 8, left: 8, size: 2.8 },         // Bat #1 top-left
-        { icon: '🦇', top: 12, left: 90, size: 2.6 },       // Bat #2 top-right
+        { icon: '🦇', top: 35, left: 50, size: 2.6 },       // Bat #2 center
         { icon: rotatingIcon, top: 48, left: 88, size: 2.5 }, // Rotating: witch/vampire/zombie
-        { icon: '🕷️', top: 40, left: 48, size: 2.2 },      // Spider center
+        { icon: '🕷️', top: 55, left: 48, size: 2.2 },      // Spider center-lower
         { icon: '🕷️', top: 18, left: 88, size: 2 },        // Spider top-right
         { icon: '👻', top: 72, left: 10, size: 2.4 },       // Ghost bottom-left
         { icon: '🕸️', top: 10, left: 88, size: 1.8 }       // Web top-right corner
