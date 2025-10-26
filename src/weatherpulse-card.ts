@@ -24,39 +24,75 @@ const decorations: {
   [key: string]: {
     foreground: string[];
     background: string[];
+    lights?: {
+      colors: string[];
+      style: 'round' | 'long';
+    };
   }
 } = {
   halloween: {
     foreground: ['🪦', '🎃', '🍬'],
     background: ['🦇', '🧙‍♀️', '🕷️', '👻', '🕸️', '🩸', '🦹‍♂️', '🧛', '🧟'],
+    lights: {
+      colors: ['#ff6b00', '#9c27b0', '#ff9800', '#7b1fa2'],
+      style: 'round'
+    }
   },
   christmas: {
     foreground: ['🎄', '🎁', '🧦', '🕯️'],
     background: ['❄️', '🔔', '🦌', '🎅', '⛄', '🌟', '🧑‍🎄', '🕯️'],
+    lights: {
+      colors: ['#ff0000', '#00ff00', '#ffff00', '#0000ff', '#ff69b4'],
+      style: 'long'
+    }
   },
   newyear: {
     foreground: ['🎆', '🥳', '🍾', '🥂'],
     background: ['🎇', '🎉', '✨', '🎊'],
+    lights: {
+      colors: ['#ffd700', '#ffffff', '#c0c0c0', '#ffe135'],
+      style: 'round'
+    }
   },
   valentine: {
     foreground: ['💝', '🌹', '💌'],
     background: ['❤️', '💕', '💘', '💖'],
+    lights: {
+      colors: ['#ff69b4', '#ff1493', '#ffb6c1', '#ff6b9d'],
+      style: 'round'
+    }
   },
   stpatrick: {
     foreground: ['🍀', '☘️', '🍻'],
     background: ['🌈', '💚', '🎩', '🪙'],
+    lights: {
+      colors: ['#00ff00', '#ffd700', '#32cd32', '#ffdf00'],
+      style: 'round'
+    }
   },
   july4th: {
     foreground: ['🇺🇸', '🗽', '🎆'],
     background: ['🎇', '⭐', '🎉', '🎊'],
+    lights: {
+      colors: ['#ff0000', '#ffffff', '#0000ff', '#ff0000', '#ffffff', '#0000ff'],
+      style: 'round'
+    }
   },
   easter: {
     foreground: ['🐰', '🥚', '🐇'],
     background: ['🌷', '🐣', '💐', '🌸'],
+    lights: {
+      colors: ['#ffb6c1', '#87ceeb', '#98fb98', '#ffeb3b'],
+      style: 'round'
+    }
   },
   cincodemayo: {
     foreground: ['🇲🇽', '🌮', '🍹'],
     background: ['🌵', '🎉', '🎊', '🎺'],
+    lights: {
+      colors: ['#ff0000', '#ffffff', '#00ff00', '#ff0000', '#ffffff', '#00ff00'],
+      style: 'round'
+    }
   },
 };
 
@@ -940,8 +976,9 @@ export class WeatherPulseCard extends LitElement {
     // Render foreground holiday icons inside the header
     const holiday = this.getCurrentHoliday();
     let holidayForegroundIcons: unknown = '';
+    let holidayLights: unknown = '';
     if (holiday) {
-      const { foreground = [] } = decorations[holiday] || {};
+      const { foreground = [], lights } = decorations[holiday] || {};
       // Reorder: icon 1 (left), icon 0 (center/main), icon 2 (right)
       const reordered = [foreground[1], foreground[0], foreground[2]].filter(Boolean);
       holidayForegroundIcons = html`
@@ -953,6 +990,22 @@ export class WeatherPulseCard extends LitElement {
           })}
         </div>
       `;
+
+      // Render holiday lights if configured
+      if (lights) {
+        const lightCount = 12; // Number of lights across header
+        holidayLights = html`
+          <div class="holiday-lights">
+            ${Array(lightCount).fill(0).map((_, i) => {
+              const color = lights.colors[i % lights.colors.length];
+              const delay = (i * 0.15).toFixed(2);
+              return html`
+                <div class="light-bulb ${lights.style === 'long' ? 'light-long' : 'light-round'}" style="--bulb-color: ${color}; animation-delay: ${delay}s;"></div>
+              `;
+            })}
+          </div>
+        `;
+      }
     }
 
     // Check if we should show weather info in header (compact layout)
@@ -963,6 +1016,7 @@ export class WeatherPulseCard extends LitElement {
     // Graphical mode doesn't use card-header wrapper (it has its own background)
     if (headerMode === 'graphical') {
       return html`
+        ${holidayLights}
         ${headerContent}
         ${holidayForegroundIcons}
         ${showWeatherInfoInHeader ? html`
@@ -975,6 +1029,7 @@ export class WeatherPulseCard extends LitElement {
 
     return html`
       <div class="card-header" style="background: ${gradient.color}; color: ${gradient.textColor}; position: relative;">
+        ${holidayLights}
         ${headerContent}
         ${holidayForegroundIcons}
         ${showWeatherInfoInHeader ? html`
@@ -2424,6 +2479,96 @@ export class WeatherPulseCard extends LitElement {
         opacity: 1 !important;
         filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         pointer-events: none;
+      }
+
+      /* Holiday string lights */
+      .holiday-lights {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 24px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: flex-start;
+        padding: 0 12px;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .light-bulb {
+        position: relative;
+        animation: light-glow 1.5s ease-in-out infinite;
+      }
+
+      /* Round bulbs (most holidays) */
+      .light-round {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--bulb-color);
+        box-shadow:
+          0 0 6px var(--bulb-color),
+          0 0 12px var(--bulb-color);
+      }
+
+      .light-round::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Long Christmas-style bulbs */
+      .light-long {
+        width: 6px;
+        height: 14px;
+        border-radius: 3px 3px 40% 40%;
+        background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          var(--bulb-color) 50%,
+          var(--bulb-color) 100%);
+        box-shadow:
+          0 0 8px var(--bulb-color),
+          0 0 16px var(--bulb-color);
+      }
+
+      .light-long::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        background: rgba(100, 100, 100, 0.6);
+        border-radius: 2px 2px 0 0;
+      }
+
+      .light-long::after {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      @keyframes light-glow {
+        0%, 100% {
+          opacity: 0.8;
+          filter: brightness(1);
+        }
+        50% {
+          opacity: 1;
+          filter: brightness(1.3);
+        }
       }
 
       /* ========================================
