@@ -2365,51 +2365,14 @@ export class WeatherPulseCard extends LitElement {
         overflow: hidden;
       }
 
+      /* Background holiday icons (floating/animated) */
       .holiday-icon {
         position: absolute;
-        filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px orange);
-        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         pointer-events: none;
         animation: holiday-float 4s ease-in-out infinite;
-        
       }
 
-      .holiday-icon-1 {
-        top: 10px;
-        right: 10px;
-        animation-delay: 0s;
-      }
-
-      .holiday-icon-2 {
-        top: 50%;
-        left: 10px;
-        transform: translateY(-50%);
-        animation-delay: 1s;
-      }
-
-      .holiday-icon-3 {
-        bottom: 10px;
-        right: 50px;
-        animation-delay: 2s;
-      }
-
-      .holiday-icon-4 {
-        top: 100px;
-        right: 50%;
-        transform: translateX(50%);
-        animation-delay: 3s;
-      }
-      
-       @keyframes holiday-float {
-         0%, 100% {
-          transform: translateY(0px) rotate(var(--rotation, 0deg));
-          opacity: 0.85;
-        }
-        50% {
-         transform: translateY(-12px) rotate(var(--rotation, 0deg));
-         opacity: 1;
-       }
-    }
       @keyframes holiday-float {
         0%, 100% {
           transform: translateY(0px) rotate(0deg);
@@ -2459,8 +2422,7 @@ export class WeatherPulseCard extends LitElement {
         animation: none !important;
         transform: none !important;
         opacity: 1 !important;
-        filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px orange);
-        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         pointer-events: none;
       }
 
