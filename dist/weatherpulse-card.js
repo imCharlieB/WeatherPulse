@@ -1990,7 +1990,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         flex-direction: row;
         align-items: flex-end;
         justify-content: flex-start;
-        z-index: 1; /* Behind weather icon */
+        z-index: 0; /* Behind weather icon (which gets z-index: 1 in night mode) */
         gap: 0px;
         pointer-events: none; /* Don't block clicks */
       }
