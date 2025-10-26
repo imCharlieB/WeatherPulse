@@ -3679,10 +3679,10 @@ export class WeatherPulseCard extends LitElement {
       /* Hourly forecast styles */
       .forecast-hour {
         display: grid;
-        grid-template-columns: 50px 40px auto auto;
+        grid-template-columns: 55px 45px auto auto;
         align-items: center;
-        gap: 8px;
-        padding: 3px 0;
+        gap: 10px;
+        padding: 5px 0;
         border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
       }
 
@@ -3694,15 +3694,19 @@ export class WeatherPulseCard extends LitElement {
       .forecast-type-hourly.forecast-standard {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 4px 16px;
+        gap: 0 16px;
       }
 
       .forecast-type-hourly.forecast-standard .forecast-hour {
+        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        padding: 5px 0;
+        background: transparent;
+        border-radius: 0;
+      }
+
+      .forecast-type-hourly.forecast-standard .forecast-hour:last-child,
+      .forecast-type-hourly.forecast-standard .forecast-hour:nth-last-child(2):nth-child(odd) {
         border-bottom: none;
-        padding: 6px 4px;
-        background: var(--card-background-color, rgba(0,0,0,0.05));
-        border-radius: 6px;
-        min-width: 0;
       }
 
       .hour-name {
@@ -3726,9 +3730,9 @@ export class WeatherPulseCard extends LitElement {
 
       .hour-info-row {
         display: grid;
-        grid-template-columns: 50px 40px auto;
+        grid-template-columns: 55px 45px auto;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
       }
 
       .hour-temp-display {
