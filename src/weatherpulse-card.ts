@@ -3499,12 +3499,12 @@ export class WeatherPulseCard extends LitElement {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
-        padding: 14px 10px;
+        gap: 8px;
+        padding: 10px 8px;
         background: linear-gradient(180deg, #2E5F8A 0%, #4A7FA8 100%);
         border-radius: 4px;
         flex: 0 0 auto;
-        width: 80px;
+        width: 70px;
         border: 2px solid transparent;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
         transition: transform 0.2s ease;
