@@ -1304,6 +1304,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         align-items: center;
         justify-content: center;
         min-width: 180px;
+        position: relative;
+        z-index: 3;
       }
 
       .icon-emoji {

@@ -1879,6 +1879,8 @@ export class WeatherPulseCard extends LitElement {
         align-items: center;
         justify-content: center;
         min-width: 180px;
+        position: relative;
+        z-index: 3;
       }
 
       .icon-emoji {
