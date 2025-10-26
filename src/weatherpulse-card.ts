@@ -501,6 +501,30 @@ export class WeatherPulseCard extends LitElement {
         { icon: '🎉', top: 72, left: 10, size: 2.2 },       // Party popper bottom-left
         { icon: '🎊', top: 55, left: 48, size: 2 }          // Confetti ball center-lower
       ];
+    } else if (holiday === 'stpatrick') {
+      iconPlacements = [
+        { icon: '🌈', top: 8, left: 10, size: 2.8 },        // Rainbow top-left
+        { icon: '🌈', top: 10, left: 88, size: 2.6 },       // Rainbow top-right
+        { icon: '💚', top: 40, left: 50, size: 2.4 },       // Green heart center
+        { icon: '🎩', top: 55, left: 88, size: 2.2 },       // Leprechaun hat right
+        { icon: '🪙', top: 72, left: 10, size: 2.2 }        // Gold coin bottom-left
+      ];
+    } else if (holiday === 'easter') {
+      iconPlacements = [
+        { icon: '🌷', top: 8, left: 10, size: 2.8 },        // Tulip #1 top-left
+        { icon: '🌷', top: 10, left: 88, size: 2.6 },       // Tulip #2 top-right
+        { icon: '🐣', top: 40, left: 50, size: 2.4 },       // Hatching chick center
+        { icon: '💐', top: 72, left: 88, size: 2.2 },       // Bouquet bottom-right
+        { icon: '🌸', top: 72, left: 10, size: 2.2 }        // Cherry blossom bottom-left
+      ];
+    } else if (holiday === 'cincodemayo') {
+      iconPlacements = [
+        { icon: '🌵', top: 8, left: 10, size: 2.8 },        // Cactus #1 top-left
+        { icon: '🌵', top: 10, left: 88, size: 2.6 },       // Cactus #2 top-right
+        { icon: '🎺', top: 40, left: 50, size: 2.4 },       // Trumpet center
+        { icon: '🎉', top: 72, left: 10, size: 2.2 },       // Party popper bottom-left
+        { icon: '🎊', top: 55, left: 88, size: 2 }          // Confetti ball right
+      ];
     } else {
       // Default: use first 5 icons with generic zones
       const maxIcons = Math.min(5, background.length);

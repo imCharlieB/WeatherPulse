@@ -308,10 +308,11 @@ This structure ensures each holiday has a visually strong, festive cluster in th
   - [x] Remove duplicate `@keyframes holiday-float` definitions ✅
   - [x] Remove unused `.holiday-icon-1` through `.holiday-icon-4` classes ✅
   - [x] Replace orange glow with subtle shadow on all holiday icons ✅
-- [ ] **Improve background icon placement**: Strategic positioning instead of all random
-  - [ ] Create placement zones for background icons (top, sides, corners)
-  - [ ] Consider rotating through icons instead of showing all 8-9 at once
-  - [ ] Reduce visual clutter while maintaining festive feel
+- [x] **Improve background icon placement**: Strategic positioning instead of all random ✅
+  - [x] Create placement zones for background icons (top, sides, corners) ✅
+  - [x] Implement icon rotation system (time-based, cycles every 10 seconds) ✅
+  - [x] Custom layouts per holiday with specific placements ✅
+  - [x] Reduce visual clutter while maintaining festive feel ✅
 - [x] **Add string lights decoration**: Holiday light strings across header ✅
   - [x] Christmas: Long traditional bulb style ✅
   - [x] Other holidays: Round bulb style with holiday-specific colors ✅
@@ -325,6 +326,16 @@ This structure ensures each holiday has a visually strong, festive cluster in th
   - [x] 12 lights per holiday stretching edge-to-edge ✅
   - [x] Visible connecting wire across top ✅
   - [x] Pulsing glow/shimmer animation ✅
+  - [x] Valentine's, St. Patrick's, and Easter omit lights (not needed) ✅
+- [x] **Create custom layouts for each holiday**: Holiday-specific icon placements ✅
+  - [x] **Halloween**: Witch/vampire/zombie rotation, 2 bats, 2 spiders, ghost, web ✅
+  - [x] **Christmas**: Santa/Elf rotation, 2 snowflakes, 2 stars, reindeer, snowman ✅
+  - [x] **New Year**: 2 fireworks, 2 sparkles, 2 party poppers ✅
+  - [x] **Valentine's**: All 5 heart types distributed across header ✅
+  - [x] **4th of July**: 2 fireworks, 2 stars, party popper, confetti ✅
+  - [x] **St. Patrick's**: 2 rainbows, green heart, leprechaun hat, gold coin ✅
+  - [x] **Easter**: 2 tulips, hatching chick, bouquet, cherry blossom ✅
+  - [x] **Cinco de Mayo**: 2 cacti, trumpet, party popper, confetti ✅
 - [ ] **Test all holidays**: Verify both day and night modes work correctly
   - [x] Halloween (Oct 25-31) - Tested ✅
   - [ ] Christmas (Dec 18-25)
