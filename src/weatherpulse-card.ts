@@ -446,14 +446,14 @@ export class WeatherPulseCard extends LitElement {
     let iconPlacements: {icon: string, top: number, left: number, size: number}[] = [];
 
     if (holiday === 'halloween') {
-      // Rotate through vampire/superhero/zombie (show one of three)
-      const rotatingIndex = Math.floor(Date.now() / 10000) % 3; // Change every 10 seconds
-      const rotatingIcons = ['🧛', '🦹‍♂️', '🧟'];
+      // Rotate through witch/vampire/zombie (show one of three every 10 seconds)
+      const rotatingIndex = Math.floor(Date.now() / 10000) % 3;
+      const rotatingIcons = ['🧙‍♀️', '🧛', '🧟'];
       const rotatingIcon = rotatingIcons[rotatingIndex];
 
       iconPlacements = [
         { icon: '🦇', top: 8, left: 10, size: 2.5 },        // Bat top-left
-        { icon: rotatingIcon, top: 50, left: 88, size: 2.2 }, // Rotating character right
+        { icon: rotatingIcon, top: 50, left: 88, size: 2.2 }, // Rotating: witch/vampire/zombie
         { icon: '🕷️', top: 15, left: 88, size: 1.8 },      // Spider top-right
         { icon: '👻', top: 75, left: 10, size: 2 },         // Ghost bottom-left
         { icon: '🕸️', top: 8, left: 88, size: 1.5 }        // Web top-right corner
