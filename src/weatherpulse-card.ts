@@ -32,7 +32,7 @@ const decorations: {
 } = {
   halloween: {
     foreground: ['🪦', '🎃', '🍬'],
-    background: ['🦇', '🧙‍♀️', '🕷️', '👻', '🕸️', '🩸', '🦹‍♂️', '🧛', '🧟'],
+    background: ['🦇', '🧛', '🕷️', '👻', '🕸️', '🕷️', '🦹‍♂️', '🧟'],
     lights: {
       colors: ['#ff6b00', '#9c27b0', '#ff9800', '#7b1fa2'],
       style: 'round'
@@ -441,40 +441,62 @@ export class WeatherPulseCard extends LitElement {
 
     const { background = [] } = decorations[holiday] || {};
 
-    // Limit to 5 icons max and use strategic placement zones
-    const maxIcons = Math.min(5, background.length);
-    const selectedIcons = background.slice(0, maxIcons);
+    // Custom placement per holiday
+    let selectedIcons: string[] = [];
+    let iconPlacements: {icon: string, top: number, left: number, size: number}[] = [];
 
-    // Define placement zones (avoid center where text/weather icon is)
-    const zones = [
-      { top: 5, left: 5 },      // Top-left
-      { top: 5, left: 85 },     // Top-right
-      { top: 45, left: 5 },     // Mid-left
-      { top: 45, left: 85 },    // Mid-right
-      { top: 80, left: 50 }     // Bottom-center
-    ];
+    if (holiday === 'halloween') {
+      // Rotate through vampire/superhero/zombie (show one of three)
+      const rotatingIndex = Math.floor(Date.now() / 10000) % 3; // Change every 10 seconds
+      const rotatingIcons = ['🧛', '🦹‍♂️', '🧟'];
+      const rotatingIcon = rotatingIcons[rotatingIndex];
+
+      iconPlacements = [
+        { icon: '🦇', top: 8, left: 10, size: 2.5 },        // Bat top-left
+        { icon: rotatingIcon, top: 50, left: 88, size: 2.2 }, // Rotating character right
+        { icon: '🕷️', top: 15, left: 88, size: 1.8 },      // Spider top-right
+        { icon: '👻', top: 75, left: 10, size: 2 },         // Ghost bottom-left
+        { icon: '🕸️', top: 8, left: 88, size: 1.5 }        // Web top-right corner
+      ];
+    } else {
+      // Default: use first 5 icons with generic zones
+      const maxIcons = Math.min(5, background.length);
+      selectedIcons = background.slice(0, maxIcons);
+      const zones = [
+        { top: 5, left: 5 },
+        { top: 5, left: 85 },
+        { top: 45, left: 5 },
+        { top: 45, left: 85 },
+        { top: 80, left: 50 }
+      ];
+
+      iconPlacements = selectedIcons.map((icon, i) => {
+        const zone = zones[i % zones.length];
+        return {
+          icon,
+          top: zone.top + (Math.random() * 10 - 5),
+          left: zone.left + (Math.random() * 10 - 5),
+          size: 1.5 + Math.random() * 1
+        };
+      });
+    }
 
     const rotatableIcons = ['🎆', '🎇', '⭐', '✨'];
-    const backgroundIcons = selectedIcons.map((icon, i) => {
-      const zone = zones[i % zones.length];
-      const size = (1.5 + Math.random() * 1).toFixed(2);
-      const rotation = rotatableIcons.includes(icon) ? (-20 + Math.random() * 40).toFixed(1) : '0';
+    const backgroundIcons = iconPlacements.map((placement, i) => {
+      const rotation = rotatableIcons.includes(placement.icon) ? (-20 + Math.random() * 40).toFixed(1) : '0';
       const delay = (i * 0.8).toFixed(2);
-      // Add small random offset within zone
-      const top = zone.top + (Math.random() * 10 - 5);
-      const left = zone.left + (Math.random() * 10 - 5);
 
       return html`
         <span
           class="holiday-icon holiday-background"
           style="
-            font-size: ${size}em;
+            font-size: ${placement.size.toFixed(2)}em;
             transform: rotate(${rotation}deg);
             animation-delay: ${delay}s;
-            top: ${top}%;
-            left: ${left}%;
+            top: ${placement.top}%;
+            left: ${placement.left}%;
           "
-        >${icon}</span>
+        >${placement.icon}</span>
       `;
     });
 
