@@ -2413,27 +2413,29 @@ export class WeatherPulseCard extends LitElement {
 
       .holiday-foreground-cluster {
         position: absolute;
-        bottom: 12px;
-        left: 12px;
+        bottom: 4px; /* Tight to bottom edge */
+        left: 4px; /* Tight to left edge */
         display: flex;
         align-items: flex-end;
-        z-index: 12;
+        z-index: 1; /* Behind weather icon */
+        max-height: 70px; /* Prevent cluster from getting too tall */
+        pointer-events: none; /* Don't block clicks */
       }
       .holiday-foreground-0 {
-        font-size: 4em; /* Increase main icon size */
+        font-size: 3em; /* Main icon - reduced from 4em */
         z-index: 1;
-        margin-right: -0.6em;
+        margin-right: -0.5em;
       }
       .holiday-foreground-1 {
-        font-size: 2.2em;
+        font-size: 1.8em; /* Reduced from 2.2em */
         z-index: 2;
-        margin-left: -1.2em;
+        margin-left: -1em;
         margin-right: -0.2em;
       }
       .holiday-foreground-2 {
-        font-size: 1.8em;
+        font-size: 1.4em; /* Reduced from 1.8em */
         z-index: 3;
-        margin-left: -1.0em;
+        margin-left: -0.8em;
       }
 
       .holiday-icon.holiday-foreground {
