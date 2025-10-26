@@ -2811,7 +2811,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .forecast-container.forecast-compact.forecast-type-hourly {
         display: flex !important;
         flex-direction: row !important;
-        gap: 8px !important;
+        gap: 2px !important;
         overflow-x: auto !important;
         flex-wrap: nowrap !important;
         padding-bottom: 8px;
@@ -2924,12 +2924,12 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
-        padding: 10px 8px;
+        gap: 4px;
+        padding: 6px 4px;
         background: linear-gradient(180deg, #2E5F8A 0%, #4A7FA8 100%);
         border-radius: 4px;
         flex: 0 0 auto;
-        width: 70px;
+        width: 55px;
         border: 2px solid transparent;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
         transition: transform 0.2s ease;
