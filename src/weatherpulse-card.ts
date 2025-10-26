@@ -2492,7 +2492,7 @@ export class WeatherPulseCard extends LitElement {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        padding: 0 8px;
+        padding: 0;
         pointer-events: none;
         z-index: 2;
       }
@@ -2508,8 +2508,8 @@ export class WeatherPulseCard extends LitElement {
         content: '';
         position: absolute;
         top: 4px;
-        left: 8px;
-        right: 8px;
+        left: 0;
+        right: 0;
         height: 2px;
         background: rgba(0, 0, 0, 0.35);
         border-radius: 1px;

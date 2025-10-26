@@ -2012,7 +2012,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        padding: 0 8px;
+        padding: 0;
         pointer-events: none;
         z-index: 2;
       }
@@ -2028,8 +2028,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         content: '';
         position: absolute;
         top: 4px;
-        left: 8px;
-        right: 8px;
+        left: 0;
+        right: 0;
         height: 2px;
         background: rgba(0, 0, 0, 0.35);
         border-radius: 1px;
