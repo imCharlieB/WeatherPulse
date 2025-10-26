@@ -1698,6 +1698,11 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         50% { transform: translateY(-4px); }
       }
 
+      @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+      }
+
       .rain-message {
         flex: 1;
         letter-spacing: 0.3px;

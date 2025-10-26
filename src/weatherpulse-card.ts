@@ -2273,6 +2273,11 @@ export class WeatherPulseCard extends LitElement {
         50% { transform: translateY(-4px); }
       }
 
+      @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+      }
+
       .rain-message {
         flex: 1;
         letter-spacing: 0.3px;
