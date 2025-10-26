@@ -259,9 +259,9 @@ custom_colors:
 - Follow Home Assistant design guidelines
 
 ### Holiday Overlay Design (Foreground/Background)
-- Each holiday has a main foreground icon (e.g., grave for Halloween, tree for Christmas) that is larger and centered in the header.
+- Each holiday has a main foreground icon (e.g., grave for Halloween, tree for Christmas) that is larger and in lower left in the header.
 - Additional foreground icons (e.g., pumpkin, candy) are smaller and clustered/overlapped around the main icon in the header, creating a festive badge/group effect.
-- Background icons (e.g., bats, spiders, ghosts) are animated, floating, and randomly placed around the card as before.
+- Background icons (e.g., bats, spiders, ghosts) are animated, floating, and randomly placed around the card but we should put some thought has to what shows where and when we have lots of icons maybe not show all at once rotate thru them
 - This approach provides a strong, festive cluster in the header while keeping playful, animated effects around the card.
 - The foreground/background split is defined per holiday in the decorations object, allowing for easy customization and a polished look.
 
@@ -294,3 +294,47 @@ For each holiday, the following icons are used:
   - Background: 🌵, 🎉, 🎊, 🎺
 
 This structure ensures each holiday has a visually strong, festive cluster in the header (foreground) and playful animated icons around the card (background).
+
+### Holiday Theme Fixes & Enhancements (In Progress)
+- [x] **Fix foreground cluster positioning**: Main holiday icons (foreground) are not appearing in lower left of header as designed ✅
+  - [x] Add `position: relative` to `.card-header` base style (currently only in night-mode) ✅
+  - [ ] Verify `.holiday-foreground-cluster` absolute positioning works correctly (needs testing)
+  - [ ] Ensure cluster appears in lower left at `bottom: 12px; left: 12px` (needs testing)
+- [ ] **Fix z-index layering**: Holiday icons should be BEHIND weather icon, not in front
+  - [ ] Lower `.holiday-foreground-cluster` z-index (currently 12, too high)
+  - [ ] Ensure weather icon remains prominent and visible
+- [ ] **Clean up duplicate CSS**: Remove redundant/unused holiday styles
+  - [ ] Remove duplicate `@keyframes holiday-float` definitions (lines ~2392 and ~2402)
+  - [ ] Remove unused `.holiday-icon-1` through `.holiday-icon-4` classes (background icons don't use these)
+- [ ] **Improve background icon placement**: Strategic positioning instead of all random
+  - [ ] Create placement zones for background icons (top, sides, corners)
+  - [ ] Consider rotating through icons instead of showing all 8-9 at once
+  - [ ] Reduce visual clutter while maintaining festive feel
+- [ ] **Add string lights decoration**: Holiday light strings across header
+  - [ ] Christmas: Long traditional bulb style (https://www.chinedudaniel.com/posts/2019/12/16/lets-build-christmas-lights-with-html-css-javascript)
+  - [ ] Other holidays: Round bulb style with holiday-specific colors
+    - Halloween: Orange and purple bulbs
+    - Valentine's: Pink and red bulbs
+    - St. Patrick's: Green and gold bulbs
+    - 4th of July: Red, white, and blue bulbs
+  - [ ] Optional per holiday (not all holidays need lights)
+  - [ ] Subtle glow/shimmer animation
+- [ ] **Add night mode dimming**: Holiday decorations should be more subtle at night
+  - [ ] Reduce opacity of holiday icons in night mode
+  - [ ] Dim glow effects to match night theme aesthetic
+  - [ ] Ensure decorations don't overpower the starry background
+- [ ] **Test all holidays**: Verify both day and night modes work correctly
+  - [ ] Halloween (Oct 25-31)
+  - [ ] Christmas (Dec 18-25)
+  - [ ] New Year (Dec 31 - Jan 1)
+  - [ ] Valentine's Day (Feb 13-14)
+  - [ ] St. Patrick's Day (Mar 17)
+  - [ ] Easter (Late Mar - Early Apr)
+  - [ ] 4th of July (Jul 4)
+  - [ ] Cinco de Mayo (May 5)
+
+### Future Alert Enhancements
+- [ ] **Rain timing visual overlay**: When rain is detected in next few hours, add animated rain effect over header
+  - Visual rain animation cascading down the header
+  - Works with existing rain timing alert banner
+  - Could be extended to other alert types (snow, storm, etc.)

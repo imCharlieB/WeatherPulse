@@ -1182,6 +1182,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         padding: 24px;
         border-radius: 12px 12px 0 0;
         transition: background 0.5s ease;
+        position: relative; /* Required for holiday-foreground-cluster absolute positioning */
       }
 
       .datetime-header {

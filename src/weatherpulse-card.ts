@@ -1609,6 +1609,7 @@ export class WeatherPulseCard extends LitElement {
         padding: 24px;
         border-radius: 12px 12px 0 0;
         transition: background 0.5s ease;
+        position: relative; /* Required for holiday-foreground-cluster absolute positioning */
       }
 
       .datetime-header {
