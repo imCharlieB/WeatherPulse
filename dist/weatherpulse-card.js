@@ -1661,7 +1661,6 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .rain-timing-banner {
         background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
         padding: 12px 20px;
-        border-bottom: 3px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         position: relative;
         overflow: hidden;
@@ -1718,7 +1717,6 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       /* Night mode styling for rain banner */
       ha-card.night-mode .rain-timing-banner {
         background: linear-gradient(135deg, #2c5f8d 0%, #1a3a5c 100%);
-        border-bottom-color: rgba(255, 255, 255, 0.2);
       }
 
       /* NWS Alerts Section */
