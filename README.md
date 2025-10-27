@@ -31,7 +31,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 📊 **Dual Temperature Display** - Show both forecast and actual sensor readings side-by-side
 - 🎬 **Animated Weather Icons** - Beautiful SVG animations for sun, clouds, rain, snow, storms, fog, and wind
 - 📅 **Flexible Forecast Views** - Choose between daily (5 or 7 days) or hourly forecasts
-- 🎯 **Four View Modes** - Compact, Standard, Detailed, and Chart (TV-style temperature trend lines)
+- 🎯 **Four View Modes** - Compact, Standard, Detailed, and Chart
 - ⏰ **Hourly Forecasts** - View upcoming weather by hour with customizable count
 - 🎨 **Six Header Modes** - Time-Focused, Date-Focused, Balanced, Minimal, Greeting, and Graphical
 - ⚙️ **Visual Configuration Editor** - Easy setup through Home Assistant UI
@@ -183,6 +183,40 @@ seasonal_images:
 - **Large display**: 280px tall header with prominent time, date, weather icon, and temperature
 - **No setup required**: Works immediately with bundled images, customize only if desired
 
+#### View Modes
+
+WeatherPulse offers four distinct forecast view modes to match your dashboard style and information density preferences:
+
+**Compact Mode:**
+- Minimal space usage with small forecast cards
+- Perfect for smaller dashboards or when space is limited
+- Shows essential info: day/time, icon, high/low temps
+- Cards are tightly spaced for maximum density
+- Temperature gradient backgrounds for quick visual reference
+
+**Standard Mode:**
+- Balanced information display with moderate sizing
+- Clean row-based layout with border dividers
+- Shows day/time, icon, conditions, and temperatures
+- Comfortable spacing for easy reading
+- Default mode - works well for most use cases
+
+**Detailed Mode:**
+- Maximum information display with larger cards
+- Additional weather details per forecast item
+- More padding and spacing for comfortable viewing
+- Best for large dashboards or TV displays
+- Shows extended forecast information
+
+**Chart Mode:**
+- Visual temperature trend display
+- Line graph showing temperature changes over time
+- TV weather broadcast style
+- Perfect for quickly seeing temperature patterns
+- Works with both daily and hourly forecasts
+
+Select your preferred view mode in the visual editor under "View Mode" or via YAML with `view_mode: compact | standard | detailed | chart`.
+
 #### Moon Phase Display
 
 When enabled (on by default), the weather icon on clear nights will display the **actual current moon phase** instead of a generic moon icon.
@@ -210,41 +244,67 @@ When enabled (on by default), the weather icon on clear nights will display the 
 
 #### Holiday Themes
 
-Automatically add festive decorative icons to your weather card during holidays! When enabled, the card displays subtle, animated holiday-themed emojis as overlays during specific holiday periods.
+Automatically add festive decorative icons to your weather card during holidays! When enabled, the card displays a sophisticated multi-layer holiday decoration system with custom layouts for each holiday.
 
 **How It Works:**
 - Automatically detects the current date and displays decorations during holiday periods
-- Shows 4 themed icons per holiday as floating overlays
-- Icons are semi-transparent (30-50% opacity) so they don't interfere with weather data
-- Gentle floating animation for a festive feel
+- **Two-Layer System**: Background floating icons + foreground static cluster
+- **String Lights**: 12 animated bulbs with visible wire across the top (holiday-specific colors)
+- **Custom Positioned Layouts**: Each holiday has strategically placed icons (no random positioning)
+- **Icon Rotation**: Some holidays feature rotating characters (e.g., witch → vampire → zombie)
+- Gentle floating animation on background icons for festive movement
 - Completely optional - toggle on/off in settings
+
+**Decoration System:**
+
+Each holiday features up to 3 decoration layers:
+
+1. **String Lights** (Top Edge)
+   - 12 bulbs with connecting wire across header
+   - Holiday-specific colors and bulb styles
+   - Staggered glow animation
+   - Christmas uses long traditional bulbs, others use round bulbs
+
+2. **Background Floating Icons** (Strategic Positions)
+   - 5-6 themed icons positioned in specific zones
+   - Gentle floating animation with staggered delays
+   - Semi-transparent to not obstruct weather data
+   - Custom layouts avoid center area (weather icon/text)
+
+3. **Foreground Static Cluster** (Bottom-Left Corner)
+   - 3 main holiday icons in compact arrangement
+   - Larger center icon flanked by smaller icons
+   - Static position for consistent branding
+   - Example: Halloween shows pumpkin, gravestone, and candy
 
 **Supported Holidays:**
 
-| Holiday | Dates | Decorations |
-|---------|-------|-------------|
-| 🎃 **Halloween** | Oct 25-31 | Pumpkins, ghosts, bats, spiders |
-| 🎄 **Christmas** | Dec 18-25 | Trees, snowmen, Santa, snowflakes |
-| 🎆 **New Year** | Dec 31 - Jan 1 | Fireworks, confetti, party poppers, sparkles |
-| ❤️ **Valentine's Day** | Feb 13-14 | Hearts, roses, love symbols |
-| 🍀 **St. Patrick's Day** | Mar 17 | Shamrocks, rainbows, four-leaf clovers |
-| 🐰 **Easter** | Late Mar - Early Apr* | Bunnies, eggs, flowers, chicks |
-| 🇺🇸 **4th of July** | Jul 4 | American flag, fireworks, stars |
-| 🇲🇽 **Cinco de Mayo** | May 5 | Mexican flag, tacos, cacti, celebration |
+| Holiday | Dates | String Lights | Foreground Cluster | Background Icons | Special Features |
+|---------|-------|---------------|-------------------|------------------|------------------|
+| 🎃 **Halloween** | Oct 25-31 | Orange & Purple | Pumpkin, Grave, Candy | Bats (2), Spiders (2), Ghost, Web | Rotating character: Witch → Vampire → Zombie |
+| 🎄 **Christmas** | Dec 18-25 | Red, Green, Yellow (long bulbs) | Tree, Snowman, Gift | Snowflakes (2), Stars (2), Reindeer | Rotating character: Santa → Elf |
+| 🎆 **New Year** | Dec 31 - Jan 1 | Gold, Silver, Blue | Firework, Champagne, Party Hat | Fireworks (2), Sparkles (2), Party Poppers (2) | - |
+| ❤️ **Valentine's Day** | Feb 13-14 | Pink, Red, White | Heart, Rose, Cupid | Red Hearts (2), Two Hearts, Heart w/ Arrow, Sparkling Heart | - |
+| 🍀 **St. Patrick's Day** | Mar 17 | Green, Gold, White | Shamrock, Pot of Gold, Clover | Rainbows (2), Green Heart, Leprechaun Hat, Gold Coin | - |
+| 🐰 **Easter** | Mar 25 - Apr 10* | Pastel (Pink, Yellow, Blue, Lavender) | Bunny, Egg, Chick | Tulips (2), Hatching Chick, Bouquet, Cherry Blossom | - |
+| 🇺🇸 **4th of July** | Jul 4 | Red, White, Blue | Flag, Firework, Star | Fireworks (2), Stars (2), Party Popper, Confetti Ball | - |
+| 🇲🇽 **Cinco de Mayo** | May 5 | Red, White, Green | Mexican Flag, Taco, Cactus | Cacti (2), Trumpet, Party Popper, Confetti Ball | - |
 
-*Easter dates vary yearly; the card shows Easter decorations from March 25 - April 10 as an approximation.
+*Easter dates vary yearly; decorations shown as approximation.
 
 **Features:**
 - **Automatic Detection** - No configuration needed, just enable the feature
-- **Subtle Design** - Semi-transparent overlays don't block weather information
-- **Animated** - Gentle floating animation adds festive movement
-- **4 Icons Per Holiday** - Positioned in different corners for balanced decoration
-- **Respects Dark Mode** - Icons blend well with both day and night themes
+- **Multi-Layer Design** - String lights, floating icons, and static cluster work together
+- **Custom Layouts** - Each holiday has hand-crafted icon placement
+- **Icon Rotation** - Dynamic character changes every 10 seconds (Halloween, Christmas)
+- **Z-Index Layering** - Decorations never obstruct weather icon or important information
+- **Animated Elements** - Floating, glowing, and rotation animations
+- **Respects Dark Mode** - Works seamlessly in both day and night themes
 
 Toggle "Enable Holiday Themes" in the visual editor's Display Options section.
 
 **Example:**
-During Halloween week (Oct 25-31), you'll see 🎃 pumpkins, 👻 ghosts, 🦇 bats, and 🕷️ spiders gently floating around your weather card as subtle decorations!
+During Halloween week (Oct 25-31), you'll see orange and purple string lights across the top, a pumpkin/grave/candy cluster in the bottom-left, and floating bats, spiders, ghosts, and a rotating witch/vampire/zombie character throughout the header!
 
 #### Pre-built Visual Themes
 
@@ -308,11 +368,6 @@ Define your own color palette with 6 customizable colors:
 - **Text**: Text color
 - **Border**: Border color
 - **Accent**: Accent highlights
-
-#### Visual Themes
-- 🎨 **Pre-built Themes** - 5 professional themes: Default, Retro (1990s Weather Channel), Midnight, Minimal, Vibrant
-- 🎭 **Custom Theme** - Create your own 6-color theme palette
-- 🎉 **Holiday Decorations** - Festive overlays for 8 holidays throughout the year
 
 ### 🚧 Future Enhancements
 - 📊 Air Quality integration (requires AQI sensor)
