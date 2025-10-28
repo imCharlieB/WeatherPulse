@@ -1683,6 +1683,89 @@ export class WeatherPulseCard extends LitElement {
     return css`
       :host {
         display: block;
+
+        /* Color Variables - Night Mode */
+        --night-bg: #0a0e27;
+        --night-bg-overlay-light: rgba(10, 14, 27, 0.6);
+        --night-bg-overlay-medium: rgba(10, 14, 27, 0.7);
+        --night-bg-alt-light: rgba(10, 14, 39, 0.5);
+        --night-bg-alt-medium: rgba(10, 14, 39, 0.8);
+        --night-gradient-secondary: rgba(20, 25, 45, 0.6);
+        --night-surface: rgba(29, 33, 56, 0.6);
+        --night-surface-light: rgba(29, 33, 56, 0.4);
+        --night-text: white;
+        --night-text-secondary: #e8eaf6;
+        --night-border: rgba(232, 234, 246, 0.1);
+        --night-border-medium: rgba(232, 234, 246, 0.15);
+
+        /* Color Variables - Dark/Midnight Theme */
+        --dark-bg: #0d0d0d;
+        --dark-bg-alt: #1a1a1a;
+        --dark-surface: #151515;
+        --dark-minimal: #000000;
+        --dark-minimal-alt: #0a0a0a;
+        --dark-text: #c0c0c0;
+        --dark-text-alt: #d0d0d0;
+        --dark-text-dim: #b0b0b0;
+
+        /* Color Variables - Light/Minimal Theme */
+        --light-bg: #ffffff;
+        --light-surface: #f8f8f8;
+        --light-border: #e0e0e0;
+        --light-border-alt: #f0f0f0;
+        --light-text: #333;
+        --light-text-alt: #333333;
+
+        /* Color Variables - Overlays */
+        --overlay-dark-subtle: var(--overlay-dark-subtle);
+        --overlay-dark-light: var(--overlay-dark-light);
+        --overlay-dark-normal: var(--overlay-dark-normal);
+        --overlay-dark-medium: var(--overlay-dark-medium);
+        --overlay-dark-strong: var(--overlay-dark-strong);
+        --overlay-dark-very-strong: var(--overlay-dark-very-strong);
+        --overlay-light-subtle: var(--overlay-light-subtle);
+        --overlay-light-light: var(--overlay-light-light);
+        --overlay-light-normal: var(--overlay-light-normal);
+        --overlay-light-medium: var(--overlay-light-medium);
+
+        /* Color Variables - Alerts */
+        --alert-extreme: #d32f2f;
+        --alert-extreme-glow-strong: var(--alert-extreme-glow-strong);
+        --alert-extreme-glow-medium: var(--alert-extreme-glow-medium);
+        --alert-extreme-glow-light: var(--alert-extreme-glow-light);
+        --alert-severe: #f57c00;
+        --alert-severe-glow-strong: var(--alert-severe-glow-strong);
+        --alert-severe-glow-medium: var(--alert-severe-glow-medium);
+        --alert-severe-glow-light: var(--alert-severe-glow-light);
+        --alert-moderate: #fbc02d;
+        --alert-minor: #1976d2;
+        --alert-unknown: #757575;
+
+        /* Color Variables - Temperature */
+        --temp-cold: #4A9EFF;
+        --temp-cold-alt: rgba(74, 158, 255, 0.6);
+        --temp-freezing-glow-strong: var(--temp-freezing-glow-strong);
+        --temp-freezing-glow-medium: var(--temp-freezing-glow-medium);
+        --temp-freezing-glow-light: var(--temp-freezing-glow-light);
+        --temp-hot: #e67e22;
+        --temp-hot-alt: var(--temp-hot-alt);
+        --temp-hot-glow-medium: var(--temp-hot-glow-medium);
+        --temp-hot-glow-light: var(--temp-hot-glow-light);
+
+        /* Color Variables - Chart/Gradients */
+        --chart-temp-high-start: rgba(255, 120, 80, 1);
+        --chart-temp-high-end: #f1c40f;
+        --chart-temp-low-start: #a8dadc;
+        --chart-temp-low-end: #457b9d;
+        --chart-temp-single: rgba(255, 150, 100, 1);
+
+        /* Color Variables - Theme Variants */
+        --vibrant-primary: #667eea;
+        --vibrant-secondary: #764ba2;
+        --vibrant-accent: #f093fb;
+        --vibrant-gradient: #f5576c;
+        --retro-primary: #0074D9;
+        --retro-secondary: #001f3f;
       }
 
       ha-card {
@@ -1693,7 +1776,7 @@ export class WeatherPulseCard extends LitElement {
 
       /* Night Mode Styling */
       ha-card.night-mode {
-        background: #0a0e27;
+        background: var(--night-bg);
         position: relative;
       }
 
@@ -1744,7 +1827,7 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.night-mode .card-header {
         position: relative;
-        color: white !important; /* Bright white text */
+        color: var(--night-text) !important; /* Bright white text */
         filter: none !important; /* No filter - don't dim text */
       }
 
@@ -1755,7 +1838,7 @@ export class WeatherPulseCard extends LitElement {
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, rgba(10, 14, 27, 0.6) 0%, rgba(20, 25, 45, 0.6) 100%); /* Darker overlay */
+        background: linear-gradient(135deg, var(--night-bg-overlay-light) 0%, var(--night-gradient-secondary) 100%); /* Darker overlay */
         pointer-events: none;
         z-index: 0;
       }
@@ -1772,22 +1855,22 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.night-mode .graphical-overlay {
-        background: linear-gradient(180deg, rgba(10,14,39,0.5) 0%, rgba(10,14,39,0.8) 100%);
+        background: linear-gradient(180deg, var(--night-bg-alt-light) 0%, var(--night-bg-alt-medium) 100%);
       }
 
       ha-card.night-mode .card-content {
         background: transparent; /* Transparent to show stars through */
-        color: #e8eaf6;
+        color: var(--night-text-secondary);
       }
 
       ha-card.night-mode .forecast-day,
       ha-card.night-mode .forecast-hour {
         background: transparent !important; /* Show stars through */
-        border-bottom-color: rgba(232, 234, 246, 0.1);
+        border-bottom-color: var(--night-border);
       }
 
       ha-card.night-mode .temp-bar {
-        background: rgba(232, 234, 246, 0.15);
+        background: var(--night-border-medium);
       }
 
       ha-card.night-mode .forecast-day.forecast-compact,
@@ -1843,7 +1926,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.night-mode .forecast-type-hourly.forecast-standard .forecast-hour {
-        background: rgba(29, 33, 56, 0.6) !important; /* Keep some background */
+        background: var(--night-surface) !important; /* Keep some background */
         position: relative !important;
         z-index: 1 !important; /* Above stars */
       }
@@ -1890,7 +1973,7 @@ export class WeatherPulseCard extends LitElement {
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+        background: linear-gradient(180deg, var(--overlay-dark-medium) 0%, rgba(0,0,0,0.6) 100%);
         backdrop-filter: blur(2px);
       }
 
@@ -1900,7 +1983,7 @@ export class WeatherPulseCard extends LitElement {
         padding: 32px 32px 32px 16px;
         width: 100%;
         color: white;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        text-shadow: 0 2px 8px var(--overlay-dark-strong);
       }
 
       .graphical-main {
@@ -2159,7 +2242,7 @@ export class WeatherPulseCard extends LitElement {
         gap: 12px;
         padding: 16px 20px;
         background: var(--card-background-color, rgba(0,0,0,0.02));
-        border-top: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-top: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       /* Standard Layout (default) */
@@ -2325,7 +2408,7 @@ export class WeatherPulseCard extends LitElement {
       .rain-timing-banner {
         background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
         padding: 12px 20px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 8px var(--overlay-dark-light);
         position: relative;
         overflow: hidden;
       }
@@ -2337,7 +2420,7 @@ export class WeatherPulseCard extends LitElement {
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        background: linear-gradient(90deg, transparent, var(--overlay-light-subtle), transparent);
         animation: shimmer 3s infinite;
       }
 
@@ -2369,7 +2452,7 @@ export class WeatherPulseCard extends LitElement {
       .rain-message {
         flex: 1;
         letter-spacing: 0.3px;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        text-shadow: 0 1px 2px var(--overlay-dark-normal);
       }
 
       .rain-time {
@@ -2390,7 +2473,7 @@ export class WeatherPulseCard extends LitElement {
         gap: 12px;
         padding: 16px 20px;
         background: var(--card-background-color, rgba(0,0,0,0.02));
-        border-top: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-top: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       .nws-alert {
@@ -2401,12 +2484,12 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .nws-alert.alert-extreme {
-        border-left-color: #d32f2f;
+        border-left-color: var(--alert-extreme);
         background: rgba(211, 47, 47, 0.1);
       }
 
       .nws-alert.alert-severe {
-        border-left-color: #f57c00;
+        border-left-color: var(--alert-severe);
         background: rgba(245, 124, 0, 0.1);
       }
 
@@ -2460,10 +2543,10 @@ export class WeatherPulseCard extends LitElement {
         font-weight: 700;
         padding: 2px 6px;
         border-radius: 3px;
-        background: rgba(255, 255, 255, 0.3);
+        background: var(--overlay-light-medium);
         color: #fff;
         letter-spacing: 0.5px;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        text-shadow: 0 1px 2px var(--overlay-dark-medium);
       }
 
       .alert-area {
@@ -2483,7 +2566,7 @@ export class WeatherPulseCard extends LitElement {
         line-height: 1.4;
         margin-bottom: 6px;
         padding: 8px;
-        background: rgba(0, 0, 0, 0.1);
+        background: var(--overlay-dark-subtle);
         border-radius: 4px;
       }
 
@@ -2503,11 +2586,11 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.night-mode .nws-alert.alert-extreme {
-        background: rgba(211, 47, 47, 0.2);
+        background: var(--alert-extreme-glow-light);
       }
 
       ha-card.night-mode .nws-alert.alert-severe {
-        background: rgba(245, 124, 0, 0.2);
+        background: var(--alert-severe-glow-light);
       }
 
       ha-card.night-mode .nws-alert.alert-moderate {
@@ -2520,83 +2603,83 @@ export class WeatherPulseCard extends LitElement {
 
       /* Alert Glow Effects for Extreme/Severe */
       ha-card.alert-glow-extreme {
-        box-shadow: 0 0 20px rgba(211, 47, 47, 0.6),
-                    0 0 40px rgba(211, 47, 47, 0.4),
-                    0 0 60px rgba(211, 47, 47, 0.2);
+        box-shadow: 0 0 20px var(--alert-extreme-glow-strong),
+                    0 0 40px var(--alert-extreme-glow-medium),
+                    0 0 60px var(--alert-extreme-glow-light);
         animation: pulse-extreme 2s ease-in-out infinite;
       }
 
       ha-card.alert-glow-severe {
-        box-shadow: 0 0 15px rgba(245, 124, 0, 0.5),
-                    0 0 30px rgba(245, 124, 0, 0.3),
-                    0 0 45px rgba(245, 124, 0, 0.2);
+        box-shadow: 0 0 15px var(--alert-severe-glow-strong),
+                    0 0 30px var(--alert-severe-glow-medium),
+                    0 0 45px var(--alert-severe-glow-light);
         animation: pulse-severe 2s ease-in-out infinite;
       }
 
       @keyframes pulse-extreme {
         0%, 100% {
-          box-shadow: 0 0 20px rgba(211, 47, 47, 0.6),
-                      0 0 40px rgba(211, 47, 47, 0.4),
-                      0 0 60px rgba(211, 47, 47, 0.2);
+          box-shadow: 0 0 20px var(--alert-extreme-glow-strong),
+                      0 0 40px var(--alert-extreme-glow-medium),
+                      0 0 60px var(--alert-extreme-glow-light);
         }
         50% {
           box-shadow: 0 0 25px rgba(211, 47, 47, 0.8),
-                      0 0 50px rgba(211, 47, 47, 0.6),
-                      0 0 75px rgba(211, 47, 47, 0.4);
+                      0 0 50px var(--alert-extreme-glow-strong),
+                      0 0 75px var(--alert-extreme-glow-medium);
         }
       }
 
       @keyframes pulse-severe {
         0%, 100% {
-          box-shadow: 0 0 15px rgba(245, 124, 0, 0.5),
-                      0 0 30px rgba(245, 124, 0, 0.3),
-                      0 0 45px rgba(245, 124, 0, 0.2);
+          box-shadow: 0 0 15px var(--alert-severe-glow-strong),
+                      0 0 30px var(--alert-severe-glow-medium),
+                      0 0 45px var(--alert-severe-glow-light);
         }
         50% {
           box-shadow: 0 0 20px rgba(245, 124, 0, 0.7),
-                      0 0 40px rgba(245, 124, 0, 0.5),
-                      0 0 60px rgba(245, 124, 0, 0.3);
+                      0 0 40px var(--alert-severe-glow-strong),
+                      0 0 60px var(--alert-severe-glow-medium);
         }
       }
 
       /* Extreme Temperature Glow Effects */
       ha-card.temp-glow-hot {
-        box-shadow: 0 0 20px rgba(230, 74, 25, 0.6),
-                    0 0 40px rgba(230, 74, 25, 0.4),
-                    0 0 60px rgba(230, 74, 25, 0.2);
+        box-shadow: 0 0 20px var(--temp-hot-alt),
+                    0 0 40px var(--temp-hot-glow-medium),
+                    0 0 60px var(--temp-hot-glow-light);
         animation: pulse-hot 3s ease-in-out infinite;
       }
 
       ha-card.temp-glow-freezing {
-        box-shadow: 0 0 20px rgba(79, 195, 247, 0.6),
-                    0 0 40px rgba(79, 195, 247, 0.4),
-                    0 0 60px rgba(79, 195, 247, 0.2);
+        box-shadow: 0 0 20px var(--temp-freezing-glow-strong),
+                    0 0 40px var(--temp-freezing-glow-medium),
+                    0 0 60px var(--temp-freezing-glow-light);
         animation: pulse-freezing 3s ease-in-out infinite;
       }
 
       @keyframes pulse-hot {
         0%, 100% {
-          box-shadow: 0 0 20px rgba(230, 74, 25, 0.6),
-                      0 0 40px rgba(230, 74, 25, 0.4),
-                      0 0 60px rgba(230, 74, 25, 0.2);
+          box-shadow: 0 0 20px var(--temp-hot-alt),
+                      0 0 40px var(--temp-hot-glow-medium),
+                      0 0 60px var(--temp-hot-glow-light);
         }
         50% {
           box-shadow: 0 0 25px rgba(230, 74, 25, 0.8),
-                      0 0 50px rgba(230, 74, 25, 0.6),
-                      0 0 75px rgba(230, 74, 25, 0.4);
+                      0 0 50px var(--temp-hot-alt),
+                      0 0 75px var(--temp-hot-glow-medium);
         }
       }
 
       @keyframes pulse-freezing {
         0%, 100% {
-          box-shadow: 0 0 20px rgba(79, 195, 247, 0.6),
-                      0 0 40px rgba(79, 195, 247, 0.4),
-                      0 0 60px rgba(79, 195, 247, 0.2);
+          box-shadow: 0 0 20px var(--temp-freezing-glow-strong),
+                      0 0 40px var(--temp-freezing-glow-medium),
+                      0 0 60px var(--temp-freezing-glow-light);
         }
         50% {
           box-shadow: 0 0 25px rgba(79, 195, 247, 0.8),
-                      0 0 50px rgba(79, 195, 247, 0.6),
-                      0 0 75px rgba(79, 195, 247, 0.4);
+                      0 0 50px var(--temp-freezing-glow-strong),
+                      0 0 75px var(--temp-freezing-glow-medium);
         }
       }
 
@@ -2615,7 +2698,7 @@ export class WeatherPulseCard extends LitElement {
       /* Background holiday icons (floating/animated) */
       .holiday-icon {
         position: absolute;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        filter: drop-shadow(0 2px 4px var(--overlay-dark-medium));
         pointer-events: none;
         animation: holiday-float 4s ease-in-out infinite;
         z-index: -1;
@@ -2667,7 +2750,7 @@ export class WeatherPulseCard extends LitElement {
         animation: none !important;
         transform: none !important;
         opacity: 1 !important;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        filter: drop-shadow(0 2px 4px var(--overlay-dark-medium));
         pointer-events: none;
       }
 
@@ -2821,7 +2904,7 @@ export class WeatherPulseCard extends LitElement {
       ha-card.theme-retro .forecast-hour {
         background: transparent !important;
         border: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-bottom: 1px solid var(--overlay-light-normal) !important;
         border-radius: 0 !important;
         box-shadow: none !important;
         color: white !important;
@@ -2843,7 +2926,7 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-retro .weather-info-section {
         background: transparent !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-top: 1px solid var(--overlay-light-normal) !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
       }
@@ -2866,7 +2949,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-retro .temp-bar {
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: var(--overlay-light-normal) !important;
       }
 
       /* RETRO THEME - Night Mode */
@@ -2889,60 +2972,60 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-retro.night-mode .forecast-day,
       ha-card.theme-retro.night-mode .forecast-hour {
-        border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+        border-bottom-color: var(--overlay-light-light) !important;
       }
 
       /* MIDNIGHT THEME - Sleek Modern Dark */
       ha-card.theme-midnight {
-        background: #0d0d0d !important;
-        border: 1px solid #1a1a1a !important;
+        background: var(--dark-bg) !important;
+        border: 1px solid var(--dark-bg-alt) !important;
         border-radius: 12px !important;
         box-shadow:
           0 8px 32px rgba(0, 0, 0, 0.8),
           0 2px 8px rgba(0, 0, 0, 0.6) !important;
-        color: #c0c0c0 !important;
+        color: var(--dark-text) !important;
       }
 
       ha-card.theme-midnight .card-header {
         background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%) !important;
         color: #d0d0d0 !important;
-        border-bottom: 1px solid #1a1a1a;
+        border-bottom: 1px solid var(--dark-bg-alt);
         border-radius: 12px 12px 0 0 !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 2px 8px var(--overlay-dark-strong);
       }
 
       ha-card.theme-midnight .graphical-header::after {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.8)) !important;
+        background: linear-gradient(to bottom, var(--overlay-dark-strong), rgba(0,0,0,0.8)) !important;
       }
 
       ha-card.theme-midnight .card-content {
-        background: #0d0d0d !important;
-        color: #c0c0c0 !important;
+        background: var(--dark-bg) !important;
+        color: var(--dark-text) !important;
       }
 
       ha-card.theme-midnight .forecast-day,
       ha-card.theme-midnight .forecast-hour {
-        background: #151515 !important;
+        background: var(--dark-surface) !important;
         border: none !important;
-        border-bottom: 1px solid #1a1a1a !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
-        color: #c0c0c0 !important;
+        border-bottom: 1px solid var(--dark-bg-alt) !important;
+        box-shadow: 0 2px 6px var(--overlay-dark-strong) !important;
+        color: var(--dark-text) !important;
         padding: 12px 16px !important;
       }
 
       ha-card.theme-midnight .forecast-day:hover,
       ha-card.theme-midnight .forecast-hour:hover {
         background: #1d1d1d !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7) !important;
+        box-shadow: 0 4px 12px var(--overlay-dark-very-strong) !important;
       }
 
       ha-card.theme-midnight .forecast-day.forecast-compact,
       ha-card.theme-midnight .forecast-hour.forecast-compact {
-        background: #151515 !important;
-        border: 1px solid #1a1a1a !important;
+        background: var(--dark-surface) !important;
+        border: 1px solid var(--dark-bg-alt) !important;
         border-radius: 10px !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7) !important;
-        color: #c0c0c0 !important;
+        box-shadow: 0 4px 12px var(--overlay-dark-very-strong) !important;
+        color: var(--dark-text) !important;
       }
 
       ha-card.theme-midnight .forecast-day.forecast-compact:hover,
@@ -2950,7 +3033,7 @@ export class WeatherPulseCard extends LitElement {
         background: #1d1d1d !important;
         border-color: #333333 !important;
         box-shadow:
-          0 4px 12px rgba(0, 0, 0, 0.7),
+          0 4px 12px var(--overlay-dark-very-strong),
           0 0 0 1px #333333 !important;
       }
 
@@ -2958,7 +3041,7 @@ export class WeatherPulseCard extends LitElement {
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
-        color: #c0c0c0 !important;
+        color: var(--dark-text) !important;
       }
 
       ha-card.theme-midnight .weather-info-section {
@@ -2969,15 +3052,15 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-midnight .nws-alert {
-        background: #151515 !important;
-        border: 1px solid #1a1a1a !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7) !important;
+        background: var(--dark-surface) !important;
+        border: 1px solid var(--dark-bg-alt) !important;
+        box-shadow: 0 4px 12px var(--overlay-dark-very-strong) !important;
       }
 
       /* MIDNIGHT THEME - Night Mode (Even Darker) */
       ha-card.theme-midnight.night-mode {
         background: #000000 !important;
-        border-color: #0d0d0d !important;
+        border-color: var(--dark-bg) !important;
       }
 
       ha-card.theme-midnight.night-mode .card-header {
@@ -2992,13 +3075,13 @@ export class WeatherPulseCard extends LitElement {
       ha-card.theme-midnight.night-mode .forecast-day,
       ha-card.theme-midnight.night-mode .forecast-hour {
         background: #0a0a0a !important;
-        border-bottom-color: #0d0d0d !important;
+        border-bottom-color: var(--dark-bg) !important;
       }
 
       ha-card.theme-midnight.night-mode .forecast-day.forecast-compact,
       ha-card.theme-midnight.night-mode .forecast-hour.forecast-compact {
         background: #0a0a0a !important;
-        border-color: #0d0d0d !important;
+        border-color: var(--dark-bg) !important;
       }
 
       ha-card.theme-midnight.night-mode .weather-info-item {
@@ -3015,7 +3098,7 @@ export class WeatherPulseCard extends LitElement {
       /* MINIMAL THEME */
       ha-card.theme-minimal {
         background: #ffffff !important;
-        border: 1px solid #e0e0e0 !important;
+        border: 1px solid var(--light-border) !important;
         box-shadow: none !important;
         color: #333 !important;
       }
@@ -3023,7 +3106,7 @@ export class WeatherPulseCard extends LitElement {
       ha-card.theme-minimal .card-header {
         background: #f8f8f8 !important; /* Override gradient */
         color: #333 !important;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid var(--light-border);
       }
 
       ha-card.theme-minimal .graphical-header::after {
@@ -3046,7 +3129,7 @@ export class WeatherPulseCard extends LitElement {
       ha-card.theme-minimal .forecast-day.forecast-compact,
       ha-card.theme-minimal .forecast-hour.forecast-compact {
         background: #f8f8f8 !important;
-        border: 1px solid #e0e0e0 !important;
+        border: 1px solid var(--light-border) !important;
       }
 
       ha-card.theme-minimal .weather-info-item {
@@ -3058,14 +3141,14 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-minimal .weather-info-section {
         background: #ffffff !important;
-        border-top: 1px solid #e0e0e0 !important;
+        border-top: 1px solid var(--light-border) !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
       }
 
       ha-card.theme-minimal .nws-alert {
         background: #f8f8f8 !important;
-        border: 1px solid #e0e0e0 !important;
+        border: 1px solid var(--light-border) !important;
         color: #333 !important;
       }
 
@@ -3079,7 +3162,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-minimal .temp-bar {
-        background: #e0e0e0 !important;
+        background: var(--light-border) !important;
       }
 
       ha-card.theme-minimal .weather-icon-svg {
@@ -3168,14 +3251,14 @@ export class WeatherPulseCard extends LitElement {
       ha-card.theme-vibrant .forecast-hour {
         background: transparent !important;
         border: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-bottom: 1px solid var(--overlay-light-normal) !important;
         color: white !important;
       }
 
       ha-card.theme-vibrant .forecast-day.forecast-compact,
       ha-card.theme-vibrant .forecast-hour.forecast-compact {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        background: linear-gradient(135deg, var(--overlay-light-normal), var(--overlay-light-subtle)) !important;
+        border: 1px solid var(--overlay-light-medium) !important;
       }
 
       ha-card.theme-vibrant .weather-info-item {
@@ -3186,13 +3269,13 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-vibrant .weather-info-section {
         background: transparent !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-top: 1px solid var(--overlay-light-normal) !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
       }
 
       ha-card.theme-vibrant .nws-alert {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15)) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), var(--overlay-light-light)) !important;
         border: 1px solid rgba(255, 255, 255, 0.4) !important;
         color: white !important;
       }
@@ -3207,7 +3290,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-vibrant .temp-bar {
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: var(--overlay-light-normal) !important;
       }
 
       ha-card.theme-vibrant .weather-icon-svg {
@@ -3493,7 +3576,7 @@ export class WeatherPulseCard extends LitElement {
         align-items: center;
         gap: 10px;
         padding: 5px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       .forecast-day:last-child {
@@ -3532,7 +3615,7 @@ export class WeatherPulseCard extends LitElement {
         flex: 1;
         height: 8px;
         border-radius: 4px;
-        background: var(--divider-color, rgba(0,0,0,0.1));
+        background: var(--divider-color, var(--overlay-dark-subtle));
         display: flex;
         overflow: hidden;
       }
@@ -3580,13 +3663,13 @@ export class WeatherPulseCard extends LitElement {
         flex: 1;
         min-width: 0;
         border: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 4px var(--overlay-dark-light);
         transition: transform 0.2s ease;
       }
 
       .forecast-type-daily .forecast-compact:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 8px var(--overlay-dark-normal);
       }
 
       .forecast-type-hourly .forecast-compact {
@@ -3600,13 +3683,13 @@ export class WeatherPulseCard extends LitElement {
         flex: 0 0 auto;
         width: 55px;
         border: 2px solid transparent;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 4px var(--overlay-dark-light);
         transition: transform 0.2s ease;
       }
 
       .forecast-type-hourly .forecast-compact:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 8px var(--overlay-dark-normal);
       }
 
       .forecast-compact .day-name {
@@ -3671,7 +3754,7 @@ export class WeatherPulseCard extends LitElement {
         grid-template-columns: auto 1fr auto;
         gap: 16px;
         padding: 4px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
         align-items: center;
       }
 
@@ -3777,7 +3860,7 @@ export class WeatherPulseCard extends LitElement {
         align-items: center;
         gap: 10px;
         padding: 5px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       .forecast-hour:last-child {
@@ -3792,7 +3875,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .forecast-type-hourly.forecast-standard .forecast-hour {
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
         padding: 5px 0;
         background: transparent;
         border-radius: 0;
@@ -3819,7 +3902,7 @@ export class WeatherPulseCard extends LitElement {
         flex-direction: column;
         gap: 4px;
         padding: 4px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       .hour-info-row {

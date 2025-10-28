@@ -1,4 +1,4 @@
-function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,a):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,a,i);else for(var s=e.length-1;s>=0;s--)(r=e[s])&&(n=(o<3?r(n):o>3?r(t,a,n):r(t,a))||n);return o>3&&n&&Object.defineProperty(t,a,n),n}"function"==typeof SuppressedError&&SuppressedError;const t=globalThis,a=t.ShadowRoot&&(void 0===t.ShadyCSS||t.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,i=Symbol(),r=new WeakMap;let o=class{constructor(e,t,a){if(this._$cssResult$=!0,a!==i)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=e,this.t=t}get styleSheet(){let e=this.o;const t=this.t;if(a&&void 0===e){const a=void 0!==t&&1===t.length;a&&(e=r.get(t)),void 0===e&&((this.o=e=new CSSStyleSheet).replaceSync(this.cssText),a&&r.set(t,e))}return e}toString(){return this.cssText}};const n=(e,...t)=>{const a=1===e.length?e[0]:t.reduce((t,a,i)=>t+(e=>{if(!0===e._$cssResult$)return e.cssText;if("number"==typeof e)return e;throw Error("Value passed to 'css' function must be a 'css' function result: "+e+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(a)+e[i+1],e[0]);return new o(a,e,i)},s=a?e=>e:e=>e instanceof CSSStyleSheet?(e=>{let t="";for(const a of e.cssRules)t+=a.cssText;return(e=>new o("string"==typeof e?e:e+"",void 0,i))(t)})(e):e,{is:l,defineProperty:d,getOwnPropertyDescriptor:c,getOwnPropertyNames:h,getOwnPropertySymbols:p,getPrototypeOf:m}=Object,f=globalThis,u=f.trustedTypes,g=u?u.emptyScript:"",b=f.reactiveElementPolyfillSupport,x=(e,t)=>e,w={toAttribute(e,t){switch(t){case Boolean:e=e?g:null;break;case Object:case Array:e=null==e?e:JSON.stringify(e)}return e},fromAttribute(e,t){let a=e;switch(t){case Boolean:a=null!==e;break;case Number:a=null===e?null:Number(e);break;case Object:case Array:try{a=JSON.parse(e)}catch(e){a=null}}return a}},v=(e,t)=>!l(e,t),y={attribute:!0,type:String,converter:w,reflect:!1,useDefault:!1,hasChanged:v};Symbol.metadata??=Symbol("metadata"),f.litPropertyMetadata??=new WeakMap;let _=class extends HTMLElement{static addInitializer(e){this._$Ei(),(this.l??=[]).push(e)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(e,t=y){if(t.state&&(t.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(e)&&((t=Object.create(t)).wrapped=!0),this.elementProperties.set(e,t),!t.noAccessor){const a=Symbol(),i=this.getPropertyDescriptor(e,a,t);void 0!==i&&d(this.prototype,e,i)}}static getPropertyDescriptor(e,t,a){const{get:i,set:r}=c(this.prototype,e)??{get(){return this[t]},set(e){this[t]=e}};return{get:i,set(t){const o=i?.call(this);r?.call(this,t),this.requestUpdate(e,o,a)},configurable:!0,enumerable:!0}}static getPropertyOptions(e){return this.elementProperties.get(e)??y}static _$Ei(){if(this.hasOwnProperty(x("elementProperties")))return;const e=m(this);e.finalize(),void 0!==e.l&&(this.l=[...e.l]),this.elementProperties=new Map(e.elementProperties)}static finalize(){if(this.hasOwnProperty(x("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(x("properties"))){const e=this.properties,t=[...h(e),...p(e)];for(const a of t)this.createProperty(a,e[a])}const e=this[Symbol.metadata];if(null!==e){const t=litPropertyMetadata.get(e);if(void 0!==t)for(const[e,a]of t)this.elementProperties.set(e,a)}this._$Eh=new Map;for(const[e,t]of this.elementProperties){const a=this._$Eu(e,t);void 0!==a&&this._$Eh.set(a,e)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(e){const t=[];if(Array.isArray(e)){const a=new Set(e.flat(1/0).reverse());for(const e of a)t.unshift(s(e))}else void 0!==e&&t.push(s(e));return t}static _$Eu(e,t){const a=t.attribute;return!1===a?void 0:"string"==typeof a?a:"string"==typeof e?e.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(e=>this.enableUpdating=e),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(e=>e(this))}addController(e){(this._$EO??=new Set).add(e),void 0!==this.renderRoot&&this.isConnected&&e.hostConnected?.()}removeController(e){this._$EO?.delete(e)}_$E_(){const e=new Map,t=this.constructor.elementProperties;for(const a of t.keys())this.hasOwnProperty(a)&&(e.set(a,this[a]),delete this[a]);e.size>0&&(this._$Ep=e)}createRenderRoot(){const e=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return((e,i)=>{if(a)e.adoptedStyleSheets=i.map(e=>e instanceof CSSStyleSheet?e:e.styleSheet);else for(const a of i){const i=document.createElement("style"),r=t.litNonce;void 0!==r&&i.setAttribute("nonce",r),i.textContent=a.cssText,e.appendChild(i)}})(e,this.constructor.elementStyles),e}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(e=>e.hostConnected?.())}enableUpdating(e){}disconnectedCallback(){this._$EO?.forEach(e=>e.hostDisconnected?.())}attributeChangedCallback(e,t,a){this._$AK(e,a)}_$ET(e,t){const a=this.constructor.elementProperties.get(e),i=this.constructor._$Eu(e,a);if(void 0!==i&&!0===a.reflect){const r=(void 0!==a.converter?.toAttribute?a.converter:w).toAttribute(t,a.type);this._$Em=e,null==r?this.removeAttribute(i):this.setAttribute(i,r),this._$Em=null}}_$AK(e,t){const a=this.constructor,i=a._$Eh.get(e);if(void 0!==i&&this._$Em!==i){const e=a.getPropertyOptions(i),r="function"==typeof e.converter?{fromAttribute:e.converter}:void 0!==e.converter?.fromAttribute?e.converter:w;this._$Em=i;const o=r.fromAttribute(t,e.type);this[i]=o??this._$Ej?.get(i)??o,this._$Em=null}}requestUpdate(e,t,a){if(void 0!==e){const i=this.constructor,r=this[e];if(a??=i.getPropertyOptions(e),!((a.hasChanged??v)(r,t)||a.useDefault&&a.reflect&&r===this._$Ej?.get(e)&&!this.hasAttribute(i._$Eu(e,a))))return;this.C(e,t,a)}!1===this.isUpdatePending&&(this._$ES=this._$EP())}C(e,t,{useDefault:a,reflect:i,wrapped:r},o){a&&!(this._$Ej??=new Map).has(e)&&(this._$Ej.set(e,o??t??this[e]),!0!==r||void 0!==o)||(this._$AL.has(e)||(this.hasUpdated||a||(t=void 0),this._$AL.set(e,t)),!0===i&&this._$Em!==e&&(this._$Eq??=new Set).add(e))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(e){Promise.reject(e)}const e=this.scheduleUpdate();return null!=e&&await e,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[e,t]of this._$Ep)this[e]=t;this._$Ep=void 0}const e=this.constructor.elementProperties;if(e.size>0)for(const[t,a]of e){const{wrapped:e}=a,i=this[t];!0!==e||this._$AL.has(t)||void 0===i||this.C(t,void 0,a,i)}}let e=!1;const t=this._$AL;try{e=this.shouldUpdate(t),e?(this.willUpdate(t),this._$EO?.forEach(e=>e.hostUpdate?.()),this.update(t)):this._$EM()}catch(t){throw e=!1,this._$EM(),t}e&&this._$AE(t)}willUpdate(e){}_$AE(e){this._$EO?.forEach(e=>e.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(e)),this.updated(e)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(e){return!0}update(e){this._$Eq&&=this._$Eq.forEach(e=>this._$ET(e,this[e])),this._$EM()}updated(e){}firstUpdated(e){}};_.elementStyles=[],_.shadowRootOptions={mode:"open"},_[x("elementProperties")]=new Map,_[x("finalized")]=new Map,b?.({ReactiveElement:_}),(f.reactiveElementVersions??=[]).push("2.1.1");const k=globalThis,$=k.trustedTypes,S=$?$.createPolicy("lit-html",{createHTML:e=>e}):void 0,C="$lit$",A=`lit$${Math.random().toFixed(9).slice(2)}$`,M="?"+A,z=`<${M}>`,T=document,E=()=>T.createComment(""),U=e=>null===e||"object"!=typeof e&&"function"!=typeof e,N=Array.isArray,D="[ \t\n\f\r]",P=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,G=/-->/g,O=/>/g,H=RegExp(`>|${D}(?:([^\\s"'>=/]+)(${D}*=${D}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),W=/'/g,I=/"/g,j=/^(?:script|style|textarea|title)$/i,F=e=>(t,...a)=>({_$litType$:e,strings:t,values:a}),B=F(1),R=F(2),L=Symbol.for("lit-noChange"),V=Symbol.for("lit-nothing"),q=new WeakMap,Y=T.createTreeWalker(T,129);function X(e,t){if(!N(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==S?S.createHTML(t):t}const K=(e,t)=>{const a=e.length-1,i=[];let r,o=2===t?"<svg>":3===t?"<math>":"",n=P;for(let t=0;t<a;t++){const a=e[t];let s,l,d=-1,c=0;for(;c<a.length&&(n.lastIndex=c,l=n.exec(a),null!==l);)c=n.lastIndex,n===P?"!--"===l[1]?n=G:void 0!==l[1]?n=O:void 0!==l[2]?(j.test(l[2])&&(r=RegExp("</"+l[2],"g")),n=H):void 0!==l[3]&&(n=H):n===H?">"===l[0]?(n=r??P,d=-1):void 0===l[1]?d=-2:(d=n.lastIndex-l[2].length,s=l[1],n=void 0===l[3]?H:'"'===l[3]?I:W):n===I||n===W?n=H:n===G||n===O?n=P:(n=H,r=void 0);const h=n===H&&e[t+1].startsWith("/>")?" ":"";o+=n===P?a+z:d>=0?(i.push(s),a.slice(0,d)+C+a.slice(d)+A+h):a+A+(-2===d?t:h)}return[X(e,o+(e[a]||"<?>")+(2===t?"</svg>":3===t?"</math>":"")),i]};class J{constructor({strings:e,_$litType$:t},a){let i;this.parts=[];let r=0,o=0;const n=e.length-1,s=this.parts,[l,d]=K(e,t);if(this.el=J.createElement(l,a),Y.currentNode=this.el.content,2===t||3===t){const e=this.el.content.firstChild;e.replaceWith(...e.childNodes)}for(;null!==(i=Y.nextNode())&&s.length<n;){if(1===i.nodeType){if(i.hasAttributes())for(const e of i.getAttributeNames())if(e.endsWith(C)){const t=d[o++],a=i.getAttribute(e).split(A),n=/([.?@])?(.*)/.exec(t);s.push({type:1,index:r,name:n[2],strings:a,ctor:"."===n[1]?ae:"?"===n[1]?ie:"@"===n[1]?re:te}),i.removeAttribute(e)}else e.startsWith(A)&&(s.push({type:6,index:r}),i.removeAttribute(e));if(j.test(i.tagName)){const e=i.textContent.split(A),t=e.length-1;if(t>0){i.textContent=$?$.emptyScript:"";for(let a=0;a<t;a++)i.append(e[a],E()),Y.nextNode(),s.push({type:2,index:++r});i.append(e[t],E())}}}else if(8===i.nodeType)if(i.data===M)s.push({type:2,index:r});else{let e=-1;for(;-1!==(e=i.data.indexOf(A,e+1));)s.push({type:7,index:r}),e+=A.length-1}r++}}static createElement(e,t){const a=T.createElement("template");return a.innerHTML=e,a}}function Z(e,t,a=e,i){if(t===L)return t;let r=void 0!==i?a._$Co?.[i]:a._$Cl;const o=U(t)?void 0:t._$litDirective$;return r?.constructor!==o&&(r?._$AO?.(!1),void 0===o?r=void 0:(r=new o(e),r._$AT(e,a,i)),void 0!==i?(a._$Co??=[])[i]=r:a._$Cl=r),void 0!==r&&(t=Z(e,r._$AS(e,t.values),r,i)),t}class Q{constructor(e,t){this._$AV=[],this._$AN=void 0,this._$AD=e,this._$AM=t}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(e){const{el:{content:t},parts:a}=this._$AD,i=(e?.creationScope??T).importNode(t,!0);Y.currentNode=i;let r=Y.nextNode(),o=0,n=0,s=a[0];for(;void 0!==s;){if(o===s.index){let t;2===s.type?t=new ee(r,r.nextSibling,this,e):1===s.type?t=new s.ctor(r,s.name,s.strings,this,e):6===s.type&&(t=new oe(r,this,e)),this._$AV.push(t),s=a[++n]}o!==s?.index&&(r=Y.nextNode(),o++)}return Y.currentNode=T,i}p(e){let t=0;for(const a of this._$AV)void 0!==a&&(void 0!==a.strings?(a._$AI(e,a,t),t+=a.strings.length-2):a._$AI(e[t])),t++}}class ee{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(e,t,a,i){this.type=2,this._$AH=V,this._$AN=void 0,this._$AA=e,this._$AB=t,this._$AM=a,this.options=i,this._$Cv=i?.isConnected??!0}get parentNode(){let e=this._$AA.parentNode;const t=this._$AM;return void 0!==t&&11===e?.nodeType&&(e=t.parentNode),e}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(e,t=this){e=Z(this,e,t),U(e)?e===V||null==e||""===e?(this._$AH!==V&&this._$AR(),this._$AH=V):e!==this._$AH&&e!==L&&this._(e):void 0!==e._$litType$?this.$(e):void 0!==e.nodeType?this.T(e):(e=>N(e)||"function"==typeof e?.[Symbol.iterator])(e)?this.k(e):this._(e)}O(e){return this._$AA.parentNode.insertBefore(e,this._$AB)}T(e){this._$AH!==e&&(this._$AR(),this._$AH=this.O(e))}_(e){this._$AH!==V&&U(this._$AH)?this._$AA.nextSibling.data=e:this.T(T.createTextNode(e)),this._$AH=e}$(e){const{values:t,_$litType$:a}=e,i="number"==typeof a?this._$AC(e):(void 0===a.el&&(a.el=J.createElement(X(a.h,a.h[0]),this.options)),a);if(this._$AH?._$AD===i)this._$AH.p(t);else{const e=new Q(i,this),a=e.u(this.options);e.p(t),this.T(a),this._$AH=e}}_$AC(e){let t=q.get(e.strings);return void 0===t&&q.set(e.strings,t=new J(e)),t}k(e){N(this._$AH)||(this._$AH=[],this._$AR());const t=this._$AH;let a,i=0;for(const r of e)i===t.length?t.push(a=new ee(this.O(E()),this.O(E()),this,this.options)):a=t[i],a._$AI(r),i++;i<t.length&&(this._$AR(a&&a._$AB.nextSibling,i),t.length=i)}_$AR(e=this._$AA.nextSibling,t){for(this._$AP?.(!1,!0,t);e!==this._$AB;){const t=e.nextSibling;e.remove(),e=t}}setConnected(e){void 0===this._$AM&&(this._$Cv=e,this._$AP?.(e))}}class te{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(e,t,a,i,r){this.type=1,this._$AH=V,this._$AN=void 0,this.element=e,this.name=t,this._$AM=i,this.options=r,a.length>2||""!==a[0]||""!==a[1]?(this._$AH=Array(a.length-1).fill(new String),this.strings=a):this._$AH=V}_$AI(e,t=this,a,i){const r=this.strings;let o=!1;if(void 0===r)e=Z(this,e,t,0),o=!U(e)||e!==this._$AH&&e!==L,o&&(this._$AH=e);else{const i=e;let n,s;for(e=r[0],n=0;n<r.length-1;n++)s=Z(this,i[a+n],t,n),s===L&&(s=this._$AH[n]),o||=!U(s)||s!==this._$AH[n],s===V?e=V:e!==V&&(e+=(s??"")+r[n+1]),this._$AH[n]=s}o&&!i&&this.j(e)}j(e){e===V?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,e??"")}}class ae extends te{constructor(){super(...arguments),this.type=3}j(e){this.element[this.name]=e===V?void 0:e}}class ie extends te{constructor(){super(...arguments),this.type=4}j(e){this.element.toggleAttribute(this.name,!!e&&e!==V)}}class re extends te{constructor(e,t,a,i,r){super(e,t,a,i,r),this.type=5}_$AI(e,t=this){if((e=Z(this,e,t,0)??V)===L)return;const a=this._$AH,i=e===V&&a!==V||e.capture!==a.capture||e.once!==a.once||e.passive!==a.passive,r=e!==V&&(a===V||i);i&&this.element.removeEventListener(this.name,this,a),r&&this.element.addEventListener(this.name,this,e),this._$AH=e}handleEvent(e){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,e):this._$AH.handleEvent(e)}}class oe{constructor(e,t,a){this.element=e,this.type=6,this._$AN=void 0,this._$AM=t,this.options=a}get _$AU(){return this._$AM._$AU}_$AI(e){Z(this,e)}}const ne=k.litHtmlPolyfillSupport;ne?.(J,ee),(k.litHtmlVersions??=[]).push("3.3.1");const se=globalThis;let le=class extends _{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const e=super.createRenderRoot();return this.renderOptions.renderBefore??=e.firstChild,e}update(e){const t=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(e),this._$Do=((e,t,a)=>{const i=a?.renderBefore??t;let r=i._$litPart$;if(void 0===r){const e=a?.renderBefore??null;i._$litPart$=r=new ee(t.insertBefore(E(),e),e,void 0,a??{})}return r._$AI(e),r})(t,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return L}};le._$litElement$=!0,le.finalized=!0,se.litElementHydrateSupport?.({LitElement:le});const de=se.litElementPolyfillSupport;de?.({LitElement:le}),(se.litElementVersions??=[]).push("4.2.1");const ce=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}):customElements.define(e,t)},he={attribute:!0,type:String,converter:w,reflect:!1,hasChanged:v},pe=(e=he,t,a)=>{const{kind:i,metadata:r}=a;let o=globalThis.litPropertyMetadata.get(r);if(void 0===o&&globalThis.litPropertyMetadata.set(r,o=new Map),"setter"===i&&((e=Object.create(e)).wrapped=!0),o.set(a.name,e),"accessor"===i){const{name:i}=a;return{set(a){const r=t.get.call(this);t.set.call(this,a),this.requestUpdate(i,r,e)},init(t){return void 0!==t&&this.C(i,void 0,e,t),t}}}if("setter"===i){const{name:i}=a;return function(a){const r=this[i];t.call(this,a),this.requestUpdate(i,r,e)}}throw Error("Unsupported decorator location: "+i)};function me(e){return(t,a)=>"object"==typeof a?pe(e,t,a):((e,t,a)=>{const i=t.hasOwnProperty(a);return t.constructor.createProperty(a,e),i?Object.getOwnPropertyDescriptor(t,a):void 0})(e,t,a)}function fe(e){return me({...e,state:!0,attribute:!1})}function ue(e,t="°F"){const a="°C"===t?9*e/5+32:e;return a<32?{color:"linear-gradient(135deg, #667eea 0%, #764ba2 100%)",backgroundColor:"#667eea",textColor:"#ffffff"}:a<50?{color:"linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",backgroundColor:"#4facfe",textColor:"#ffffff"}:a<70?{color:"linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",backgroundColor:"#43e97b",textColor:"#1a1a1a"}:a<85?{color:"linear-gradient(135deg, #fa709a 0%, #fee140 100%)",backgroundColor:"#fa709a",textColor:"#1a1a1a"}:{color:"linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)",backgroundColor:"#ff6b6b",textColor:"#ffffff"}}function ge(e=new Date){return e.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}function be(e=new Date){return e.toLocaleDateString("en-US",{weekday:"long",month:"2-digit",day:"2-digit",year:"2-digit"})}function xe(){const e=(new Date).getMonth();return e>=2&&e<=4?"spring":e>=5&&e<=7?"summer":e>=8&&e<=10?"fall":"winter"}function we(e){return new Date(e).toLocaleDateString("en-US",{weekday:"short"})}function ve(e){const t=e.toLowerCase(),a=function(){const e=(new Date).getHours();return e<6||e>=20}();return t.includes("clear")||t.includes("sunny")?a?"clear-night":"clear-day":t.includes("partlycloudy")||t.includes("partly")||t.includes("partial")?a?"partlycloudy-night":"partlycloudy":t.includes("cloud")?"cloudy":t.includes("rain")?"rainy":t.includes("snow")?"snowy":t.includes("storm")||t.includes("thunder")?"lightning":t.includes("fog")||t.includes("mist")?"fog":t.includes("wind")?"windy":a?"clear-night":"clear-day"}const ye=2;class _e{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t,a){this._$Ct=e,this._$AM=t,this._$Ci=a}_$AS(e,t){return this.update(e,t)}update(e,t){return this.render(...t)}}class ke extends _e{constructor(e){if(super(e),this.it=V,e.type!==ye)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(e){if(e===V||null==e)return this._t=void 0,this.it=e;if(e===L)return e;if("string"!=typeof e)throw Error(this.constructor.directiveName+"() called with a non-string value");if(e===this.it)return this._t;this.it=e;const t=[e];return t.raw=t,this._t={_$litType$:this.constructor.resultType,strings:t,values:[]}}}ke.directiveName="unsafeHTML",ke.resultType=1;const $e=(e=>(...t)=>({_$litDirective$:e,values:t}))(ke);var Se,Ce,Ae='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="26.75" x2="37.25" y1="22.91" y2="41.09" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fbbf24"/><stop offset=".45" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><circle cx="32" cy="32" r="10.5" fill="url(#a)" stroke="#f8af18" stroke-miterlimit="10" stroke-width=".5"/><path fill="none" stroke="#fbbf24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M32 15.71V9.5m0 45v-6.21m11.52-27.81l4.39-4.39M16.09 47.91l4.39-4.39m0-23l-4.39-4.39m31.82 31.78l-4.39-4.39M15.71 32H9.5m45 0h-6.21"><animateTransform attributeName="transform" dur="45s" repeatCount="indefinite" type="rotate" values="0 32 32; 360 32 32"/></path></svg>',Me='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="22.53" x2="25.47" y1="42.95" y2="48.05" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4286ee"/><stop offset=".45" stop-color="#4286ee"/><stop offset="1" stop-color="#0950bc"/></linearGradient><linearGradient id="c" x1="29.53" x2="32.47" y1="42.95" y2="48.05" xlink:href="#a"/><linearGradient id="d" x1="36.53" x2="39.47" y1="42.95" y2="48.05" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="none" stroke="url(#a)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M24.39 43.03l-.78 4.94"><animateTransform attributeName="transform" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M31.39 43.03l-.78 4.94"><animateTransform attributeName="transform" begin="-0.4s" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.4s" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#d)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M38.39 43.03l-.78 4.94"><animateTransform attributeName="transform" begin="-0.2s" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.2s" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path></svg>',ze='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="26.76" x2="41.62" y1="20.91" y2="46.65" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M39.12 16a18.38 18.38 0 00-2.38-.86l.08.06h0c11.54 12.1 2.63 32.1-14.07 31.62h-.1A18.21 18.21 0 0024.88 48a17.5 17.5 0 1014.24-32z"/></svg>';function Te(e,t=!0){let a="";switch(e.toLowerCase()){case"clear-day":case"sunny":default:a=Ae;break;case"clear-night":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="21.92" x2="38.52" y1="18.75" y2="47.52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/><animateTransform attributeName="gradientTransform" dur="10s" repeatCount="indefinite" type="rotate" values="5 32 32; -15 32 32; 5 32 32"/></linearGradient></defs><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M46.66 36.2a16.66 16.66 0 01-16.78-16.55 16.29 16.29 0 01.55-4.15A16.56 16.56 0 1048.5 36.1c-.61.06-1.22.1-1.84.1z"><animateTransform attributeName="transform" dur="10s" repeatCount="indefinite" type="rotate" values="-5 32 32; 15 32 32; -5 32 32"/></path></svg>';break;case"partlycloudy":case"partly-cloudy-day":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="16.5" x2="21.5" y1="19.67" y2="28.33" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fbbf24"/><stop offset=".45" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient></defs><circle cx="19" cy="24" r="5" fill="url(#a)" stroke="#f8af18" stroke-miterlimit="10" stroke-width=".5"/><path fill="none" stroke="#fbbf24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M19 15.67V12.5m0 23v-3.17m5.89-14.22l2.24-2.24M10.87 32.13l2.24-2.24m0-11.78l-2.24-2.24m16.26 16.26l-2.24-2.24M7.5 24h3.17m19.83 0h-3.17"><animateTransform attributeName="transform" dur="45s" repeatCount="indefinite" type="rotate" values="0 19 24; 360 19 24"/></path><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/></svg>';break;case"partlycloudy-night":case"partly-cloudy-night":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="13.58" x2="24.15" y1="15.57" y2="33.87" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/><animateTransform attributeName="gradientTransform" dur="10s" repeatCount="indefinite" type="rotate" values="10 19.22 24.293; -10 19.22 24.293; 10 19.22 24.293"/></linearGradient><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient></defs><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M29.33 26.68a10.61 10.61 0 01-10.68-10.54A10.5 10.5 0 0119 13.5a10.54 10.54 0 1011.5 13.11 11.48 11.48 0 01-1.17.07z"><animateTransform attributeName="transform" dur="10s" repeatCount="indefinite" type="rotate" values="-10 19.22 24.293; 10 19.22 24.293; -10 19.22 24.293"/></path><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/></svg>';break;case"cloudy":case"overcast":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient></defs><path fill="url(#a)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"><animateTransform attributeName="transform" dur="7s" repeatCount="indefinite" type="translate" values="-3 0; 3 0; -3 0"/></path></svg>';break;case"rainy":case"rain":case"pouring":case"heavy-rain":a=Me;break;case"drizzle":case"light-rain":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="23.31" x2="24.69" y1="44.3" y2="46.7" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4286ee"/><stop offset=".45" stop-color="#4286ee"/><stop offset="1" stop-color="#0950bc"/></linearGradient><linearGradient id="c" x1="30.31" x2="31.69" y1="44.3" y2="46.7" xlink:href="#a"/><linearGradient id="d" x1="37.31" x2="38.69" y1="44.3" y2="46.7" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M24.08 45.01l-.16.98"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#d)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M31.08 45.01l-.16.98"><animateTransform attributeName="transform" begin="-0.5s" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.5s" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#e)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M38.08 45.01l-.16.98"><animateTransform attributeName="transform" begin="-1s" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-1s" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path></svg>';break;case"snowy":case"snow":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="30.12" x2="31.88" y1="43.48" y2="46.52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient><linearGradient id="c" x1="29.67" x2="32.33" y1="42.69" y2="47.31" xlink:href="#a"/><linearGradient id="d" x1="23.12" x2="24.88" y1="43.48" y2="46.52" xlink:href="#a"/><linearGradient id="e" x1="22.67" x2="25.33" y1="42.69" y2="47.31" xlink:href="#a"/><linearGradient id="f" x1="37.12" x2="38.88" y1="43.48" y2="46.52" xlink:href="#a"/><linearGradient id="g" x1="36.67" x2="39.33" y1="42.69" y2="47.31" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><g><circle cx="31" cy="45" r="1.25" fill="none" stroke="url(#a)" stroke-miterlimit="10"/><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" d="M33.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M31 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" dur="4s" repeatCount="indefinite" type="translate" values="-1 -6; 1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 31 45; 360 31 45"/><animate attributeName="opacity" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g><g><circle cx="24" cy="45" r="1.25" fill="none" stroke="url(#d)" stroke-miterlimit="10"/><path fill="none" stroke="url(#e)" stroke-linecap="round" stroke-miterlimit="10" d="M26.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M24 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" begin="-2s" dur="4s" repeatCount="indefinite" type="translate" values="1 -6; -1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 24 45; 360 24 45"/><animate attributeName="opacity" begin="-2s" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g><g><circle cx="38" cy="45" r="1.25" fill="none" stroke="url(#f)" stroke-miterlimit="10"/><path fill="none" stroke="url(#g)" stroke-linecap="round" stroke-miterlimit="10" d="M40.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M38 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" begin="-1s" dur="4s" repeatCount="indefinite" type="translate" values="1 -6; -1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 38 45; 360 38 45"/><animate attributeName="opacity" begin="-1s" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g></svg>';break;case"snowy-rainy":case"sleet":case"mix":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="c" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="23.12" x2="24.88" y1="43.48" y2="46.52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient><linearGradient id="d" x1="22.67" x2="25.33" y1="42.69" y2="47.31" xlink:href="#a"/><linearGradient id="e" x1="37.12" x2="38.88" y1="43.48" y2="46.52" xlink:href="#a"/><linearGradient id="f" x1="36.67" x2="39.33" y1="42.69" y2="47.31" xlink:href="#a"/><linearGradient id="b" x1="23.31" x2="24.69" y1="44.3" y2="46.7" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4286ee"/><stop offset=".45" stop-color="#4286ee"/><stop offset="1" stop-color="#0950bc"/></linearGradient><linearGradient id="g" x1="30.31" x2="31.69" y1="44.3" y2="46.7" xlink:href="#b"/><linearGradient id="h" x1="37.31" x2="38.69" y1="44.3" y2="46.7" xlink:href="#b"/></defs><path fill="url(#c)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><g><circle cx="24" cy="45" r="1.25" fill="none" stroke="url(#a)" stroke-miterlimit="10"/><path fill="none" stroke="url(#d)" stroke-linecap="round" stroke-miterlimit="10" d="M26.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M24 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" begin="-2s" dur="4s" repeatCount="indefinite" type="translate" values="1 -6; -1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 24 45; 360 24 45"/><animate attributeName="opacity" begin="-2s" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g><g><circle cx="38" cy="45" r="1.25" fill="none" stroke="url(#e)" stroke-miterlimit="10"/><path fill="none" stroke="url(#f)" stroke-linecap="round" stroke-miterlimit="10" d="M40.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M38 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" begin="-1s" dur="4s" repeatCount="indefinite" type="translate" values="1 -6; -1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 38 45; 360 38 45"/><animate attributeName="opacity" begin="-1s" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g><path fill="none" stroke="url(#b)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M24.08 45.01l-.16.98"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#g)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M31.08 45.01l-.16.98"><animateTransform attributeName="transform" begin="-0.5s" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.5s" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#h)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M38.08 45.01l-.16.98"><animateTransform attributeName="transform" begin="-1s" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-1s" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path></svg>';break;case"hail":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="23.25" x2="24.75" y1="43.7" y2="46.3" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient><linearGradient id="c" x1="30.25" x2="31.75" y1="43.7" y2="46.3" xlink:href="#a"/><linearGradient id="d" x1="37.25" x2="38.75" y1="43.7" y2="46.3" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="url(#a)" d="M24 43.5a1.5 1.5 0 101.5 1.5 1.5 1.5 0 00-1.5-1.5z"><animateTransform attributeName="transform" dur="0.6s" repeatCount="indefinite" type="translate" values="1 -5; -2 18; -4 14"/><animate attributeName="opacity" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></path><path fill="url(#c)" d="M31 43.5a1.5 1.5 0 101.5 1.5 1.5 1.5 0 00-1.5-1.5z"><animateTransform attributeName="transform" begin="-0.4s" dur="0.6s" repeatCount="indefinite" type="translate" values="1 -5; -2 18; -4 14"/><animate attributeName="opacity" begin="-0.4s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></path><path fill="url(#d)" d="M38 43.5a1.5 1.5 0 101.5 1.5 1.5 1.5 0 00-1.5-1.5z"><animateTransform attributeName="transform" begin="-0.2s" dur="0.6s" repeatCount="indefinite" type="translate" values="1 -5; -2 18; -4 14"/><animate attributeName="opacity" begin="-0.2s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></path></svg>';break;case"lightning":case"thunderstorm":case"lightning-rainy":case"thunderstorms":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="22.53" x2="25.47" y1="42.95" y2="48.05" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4286ee"/><stop offset=".45" stop-color="#4286ee"/><stop offset="1" stop-color="#0950bc"/></linearGradient><linearGradient id="c" x1="29.53" x2="32.47" y1="42.95" y2="48.05" xlink:href="#a"/><linearGradient id="d" x1="36.53" x2="39.47" y1="42.95" y2="48.05" xlink:href="#a"/><linearGradient id="e" x1="26.74" x2="35.76" y1="37.88" y2="53.52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f7b23b"/><stop offset=".45" stop-color="#f7b23b"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="none" stroke="url(#a)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M24.39 43.03l-.78 4.94"><animateTransform attributeName="transform" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M31.39 43.03l-.78 4.94"><animateTransform attributeName="transform" begin="-0.4s" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.4s" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#d)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M38.39 43.03l-.78 4.94"><animateTransform attributeName="transform" begin="-0.2s" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.2s" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="url(#e)" stroke="#f6a823" stroke-miterlimit="10" stroke-width=".5" d="M30 36l-4 12h4l-2 10 10-14h-6l4-8h-6z"><animate attributeName="opacity" dur="2s" repeatCount="indefinite" values="1; 1; 1; 1; 1; 1; 0.1; 1; 0.1; 1; 1; 0.1; 1; 0.1; 1"/></path></svg>';break;case"fog":case"mist":case"foggy":case"haze":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="27.5" x2="36.5" y1="50.21" y2="65.79" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4d7dd"/><stop offset=".45" stop-color="#d4d7dd"/><stop offset="1" stop-color="#bec1c6"/></linearGradient><linearGradient id="c" y1="44.21" y2="59.79" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="none" stroke="url(#a)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M17 58h30"><animateTransform attributeName="transform" begin="0s" dur="5s" repeatCount="indefinite" type="translate" values="-4 0; 4 0; -4 0"/></path><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M17 52h30"><animateTransform attributeName="transform" begin="-4s" dur="5s" repeatCount="indefinite" type="translate" values="-4 0; 4 0; -4 0"/></path></svg>';break;case"windy":case"wind":case"exceptional":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="27.56" x2="38.27" y1="17.64" y2="36.19" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4d7dd"/><stop offset=".45" stop-color="#d4d7dd"/><stop offset="1" stop-color="#bec1c6"/></linearGradient><linearGradient id="b" x1="19.96" x2="31.37" y1="29.03" y2="48.8" xlink:href="#a"/></defs><path fill="none" stroke="url(#a)" stroke-dasharray="35 22" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M43.64 20a5 5 0 113.61 8.46h-35.5"><animate attributeName="stroke-dashoffset" dur="2s" repeatCount="indefinite" values="-57; 57"/></path><path fill="none" stroke="url(#b)" stroke-dasharray="24 15" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M29.14 44a5 5 0 103.61-8.46h-21"><animate attributeName="stroke-dashoffset" begin="-1.5s" dur="2s" repeatCount="indefinite" values="-39; 39"/></path></svg>'}return t||(a=a.replace(/<animate[^>]*>/g,"").replace(/<\/animate>/g,""),a=a.replace(/<animateTransform[^>]*\/>/g,"")),a=a.replace(/<svg/,'<svg class="weather-icon-svg"'),R`${$e(a)}`}function Ee(e,t=!0){let a="colder"===e?'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="23.73" x2="39.18" y1="19.16" y2="45.93" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#515a69" stop-opacity=".05"/><stop offset=".45" stop-color="#6b7280" stop-opacity=".05"/><stop offset="1" stop-color="#384354" stop-opacity=".1"/></linearGradient><linearGradient id="b" x1="23.48" x2="39.43" y1="18.73" y2="46.36" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4d7dd"/><stop offset=".45" stop-color="#d4d7dd"/><stop offset="1" stop-color="#bec1c6"/></linearGradient></defs><circle cx="32" cy="42" r="4.5" fill="#ef4444"/><path fill="none" stroke="#ef4444" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M32 33v9"><animateTransform attributeName="transform" dur="1s" repeatCount="indefinite" type="translate" values="0 0; 0 1; 0 0"/></path><path fill="url(#a)" stroke="url(#b)" stroke-linecap="round" stroke-linejoin="round" d="M32.5 29H36m3 12.9a7 7 0 11-14 0 7.12 7.12 0 013-5.83v-17a4 4 0 118 0v17a7.12 7.12 0 013 5.83zM32.5 25H36m-3.5-4H36"/><path fill="none" stroke="#2885c7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M44 26v12l-3-3.45L44 38l3-3.45"><animateTransform attributeName="transform" begin="0s" dur="1.5s" keyTimes="0.0; 0.5; 0.9; 1.0" repeatCount="indefinite" type="translate" values="0 0; 0 0; 0 6; 0 6"/><animate attributeName="opacity" dur="1.5s" keyTimes="0.0; 0.3; 0.8; 0.9; 1.0" repeatCount="indefinite" values="0; 1; 1; 0; 0"/></path></svg>':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="23.73" x2="39.18" y1="19.16" y2="45.93" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#515a69" stop-opacity=".05"/><stop offset=".45" stop-color="#6b7280" stop-opacity=".05"/><stop offset="1" stop-color="#384354" stop-opacity=".1"/></linearGradient><linearGradient id="b" x1="23.48" x2="39.43" y1="18.73" y2="46.36" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4d7dd"/><stop offset=".45" stop-color="#d4d7dd"/><stop offset="1" stop-color="#bec1c6"/></linearGradient></defs><circle cx="32" cy="42" r="4.5" fill="#ef4444"/><path fill="none" stroke="#ef4444" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M32 19v23"><animateTransform attributeName="transform" dur="1s" repeatCount="indefinite" type="translate" values="0 0; 0 1; 0 0"/></path><path fill="url(#a)" stroke="url(#b)" stroke-linecap="round" stroke-linejoin="round" d="M32.5 29H36m3 12.9a7 7 0 11-14 0 7.12 7.12 0 013-5.83v-17a4 4 0 118 0v17a7.12 7.12 0 013 5.83zM32.5 25H36m-3.5-4H36"/><path fill="none" stroke="#ef4444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M44 38V26l-3 3.45L44 26l3 3.45"><animateTransform attributeName="transform" begin="0s" dur="1.5s" keyTimes="0.0; 0.5; 0.9; 1.0" repeatCount="indefinite" type="translate" values="0 0; 0 0; 0 -6; 0 -6"/><animate attributeName="opacity" dur="1.5s" keyTimes="0.0; 0.3; 0.8; 0.9; 1.0" repeatCount="indefinite" values="0; 1; 1; 0; 0"/></path></svg>';return t||(a=a.replace(/<animate[^>]*>/g,"").replace(/<\/animate>/g,""),a=a.replace(/<animateTransform[^>]*\/>/g,"")),a=a.replace(/<svg/,'<svg class="weather-icon-svg temp-icon"'),R`${$e(a)}`}!function(e){e.language="language",e.system="system",e.comma_decimal="comma_decimal",e.decimal_comma="decimal_comma",e.space_comma="space_comma",e.none="none"}(Se||(Se={})),function(e){e.language="language",e.system="system",e.am_pm="12",e.twenty_four="24"}(Ce||(Ce={}));var Ue=function(e,t,a,i){i=i||{},a=null==a?{}:a;var r=new Event(t,{bubbles:void 0===i.bubbles||i.bubbles,cancelable:Boolean(i.cancelable),composed:void 0===i.composed||i.composed});return r.detail=a,e.dispatchEvent(r),r};let Ne=class extends le{constructor(){super(...arguments),this._expandedSections=new Set(["required","theme"])}setConfig(e){this._config=e}_toggleSection(e){const t=new Set(this._expandedSections);t.has(e)?t.delete(e):t.add(e),this._expandedSections=t}_valueChanged(e){if(!this._config||!this.hass)return;const t=e.target,a=t.configValue;let i=t.value;if("forecast_days"!==a&&"hourly_count"!==a||!i||(i=parseInt(i,10)),this._config[a]===i)return;const r={...this._config,[a]:""===i?void 0:i};Ue(this,"config-changed",{config:r})}_toggleChanged(e){if(!this._config||!this.hass)return;const t=e.target,a=t.configValue,i=t.checked,r={...this._config,[a]:i};Ue(this,"config-changed",{config:r})}_customColorChanged(e,t){if(!this._config||!this.hass)return;const a=e.target.value,i={...this._config,custom_theme_colors:{...this._config.custom_theme_colors,[t]:a||void 0}};Ue(this,"config-changed",{config:i})}_seasonalImageChanged(e,t){if(!this._config||!this.hass)return;const a=e.target.value,i="default"===a||""===a?void 0:a,r={...this._config,seasonal_images:{...this._config.seasonal_images||{},[t]:i}};Ue(this,"config-changed",{config:r})}_weatherInfoToggle(e,t){if(!this._config||!this.hass)return;const a=e.target.checked,i=this._config.show_weather_info||[];let r;r=a?i.includes(t)?i:[...i,t]:i.filter(e=>e!==t);const o={...this._config,show_weather_info:r.length>0?r:void 0};Ue(this,"config-changed",{config:o})}render(){if(!this.hass||!this._config)return B``;const e=Object.keys(this.hass.states).filter(e=>e.startsWith("weather.")),t=Object.keys(this.hass.states).filter(e=>e.startsWith("sensor.")&&(e.includes("temp")||e.includes("temperature"))),a=Object.keys(this.hass.states).filter(e=>e.startsWith("sensor.")&&this.hass.states[e].attributes.forecast);return B`
+function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,a):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,a,i);else for(var s=e.length-1;s>=0;s--)(r=e[s])&&(n=(o<3?r(n):o>3?r(t,a,n):r(t,a))||n);return o>3&&n&&Object.defineProperty(t,a,n),n}"function"==typeof SuppressedError&&SuppressedError;const t=globalThis,a=t.ShadowRoot&&(void 0===t.ShadyCSS||t.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,i=Symbol(),r=new WeakMap;let o=class{constructor(e,t,a){if(this._$cssResult$=!0,a!==i)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=e,this.t=t}get styleSheet(){let e=this.o;const t=this.t;if(a&&void 0===e){const a=void 0!==t&&1===t.length;a&&(e=r.get(t)),void 0===e&&((this.o=e=new CSSStyleSheet).replaceSync(this.cssText),a&&r.set(t,e))}return e}toString(){return this.cssText}};const n=(e,...t)=>{const a=1===e.length?e[0]:t.reduce((t,a,i)=>t+(e=>{if(!0===e._$cssResult$)return e.cssText;if("number"==typeof e)return e;throw Error("Value passed to 'css' function must be a 'css' function result: "+e+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(a)+e[i+1],e[0]);return new o(a,e,i)},s=a?e=>e:e=>e instanceof CSSStyleSheet?(e=>{let t="";for(const a of e.cssRules)t+=a.cssText;return(e=>new o("string"==typeof e?e:e+"",void 0,i))(t)})(e):e,{is:l,defineProperty:d,getOwnPropertyDescriptor:c,getOwnPropertyNames:h,getOwnPropertySymbols:p,getPrototypeOf:m}=Object,f=globalThis,u=f.trustedTypes,g=u?u.emptyScript:"",v=f.reactiveElementPolyfillSupport,b=(e,t)=>e,x={toAttribute(e,t){switch(t){case Boolean:e=e?g:null;break;case Object:case Array:e=null==e?e:JSON.stringify(e)}return e},fromAttribute(e,t){let a=e;switch(t){case Boolean:a=null!==e;break;case Number:a=null===e?null:Number(e);break;case Object:case Array:try{a=JSON.parse(e)}catch(e){a=null}}return a}},w=(e,t)=>!l(e,t),y={attribute:!0,type:String,converter:x,reflect:!1,useDefault:!1,hasChanged:w};Symbol.metadata??=Symbol("metadata"),f.litPropertyMetadata??=new WeakMap;let k=class extends HTMLElement{static addInitializer(e){this._$Ei(),(this.l??=[]).push(e)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(e,t=y){if(t.state&&(t.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(e)&&((t=Object.create(t)).wrapped=!0),this.elementProperties.set(e,t),!t.noAccessor){const a=Symbol(),i=this.getPropertyDescriptor(e,a,t);void 0!==i&&d(this.prototype,e,i)}}static getPropertyDescriptor(e,t,a){const{get:i,set:r}=c(this.prototype,e)??{get(){return this[t]},set(e){this[t]=e}};return{get:i,set(t){const o=i?.call(this);r?.call(this,t),this.requestUpdate(e,o,a)},configurable:!0,enumerable:!0}}static getPropertyOptions(e){return this.elementProperties.get(e)??y}static _$Ei(){if(this.hasOwnProperty(b("elementProperties")))return;const e=m(this);e.finalize(),void 0!==e.l&&(this.l=[...e.l]),this.elementProperties=new Map(e.elementProperties)}static finalize(){if(this.hasOwnProperty(b("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(b("properties"))){const e=this.properties,t=[...h(e),...p(e)];for(const a of t)this.createProperty(a,e[a])}const e=this[Symbol.metadata];if(null!==e){const t=litPropertyMetadata.get(e);if(void 0!==t)for(const[e,a]of t)this.elementProperties.set(e,a)}this._$Eh=new Map;for(const[e,t]of this.elementProperties){const a=this._$Eu(e,t);void 0!==a&&this._$Eh.set(a,e)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(e){const t=[];if(Array.isArray(e)){const a=new Set(e.flat(1/0).reverse());for(const e of a)t.unshift(s(e))}else void 0!==e&&t.push(s(e));return t}static _$Eu(e,t){const a=t.attribute;return!1===a?void 0:"string"==typeof a?a:"string"==typeof e?e.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(e=>this.enableUpdating=e),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(e=>e(this))}addController(e){(this._$EO??=new Set).add(e),void 0!==this.renderRoot&&this.isConnected&&e.hostConnected?.()}removeController(e){this._$EO?.delete(e)}_$E_(){const e=new Map,t=this.constructor.elementProperties;for(const a of t.keys())this.hasOwnProperty(a)&&(e.set(a,this[a]),delete this[a]);e.size>0&&(this._$Ep=e)}createRenderRoot(){const e=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return((e,i)=>{if(a)e.adoptedStyleSheets=i.map(e=>e instanceof CSSStyleSheet?e:e.styleSheet);else for(const a of i){const i=document.createElement("style"),r=t.litNonce;void 0!==r&&i.setAttribute("nonce",r),i.textContent=a.cssText,e.appendChild(i)}})(e,this.constructor.elementStyles),e}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(e=>e.hostConnected?.())}enableUpdating(e){}disconnectedCallback(){this._$EO?.forEach(e=>e.hostDisconnected?.())}attributeChangedCallback(e,t,a){this._$AK(e,a)}_$ET(e,t){const a=this.constructor.elementProperties.get(e),i=this.constructor._$Eu(e,a);if(void 0!==i&&!0===a.reflect){const r=(void 0!==a.converter?.toAttribute?a.converter:x).toAttribute(t,a.type);this._$Em=e,null==r?this.removeAttribute(i):this.setAttribute(i,r),this._$Em=null}}_$AK(e,t){const a=this.constructor,i=a._$Eh.get(e);if(void 0!==i&&this._$Em!==i){const e=a.getPropertyOptions(i),r="function"==typeof e.converter?{fromAttribute:e.converter}:void 0!==e.converter?.fromAttribute?e.converter:x;this._$Em=i;const o=r.fromAttribute(t,e.type);this[i]=o??this._$Ej?.get(i)??o,this._$Em=null}}requestUpdate(e,t,a){if(void 0!==e){const i=this.constructor,r=this[e];if(a??=i.getPropertyOptions(e),!((a.hasChanged??w)(r,t)||a.useDefault&&a.reflect&&r===this._$Ej?.get(e)&&!this.hasAttribute(i._$Eu(e,a))))return;this.C(e,t,a)}!1===this.isUpdatePending&&(this._$ES=this._$EP())}C(e,t,{useDefault:a,reflect:i,wrapped:r},o){a&&!(this._$Ej??=new Map).has(e)&&(this._$Ej.set(e,o??t??this[e]),!0!==r||void 0!==o)||(this._$AL.has(e)||(this.hasUpdated||a||(t=void 0),this._$AL.set(e,t)),!0===i&&this._$Em!==e&&(this._$Eq??=new Set).add(e))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(e){Promise.reject(e)}const e=this.scheduleUpdate();return null!=e&&await e,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[e,t]of this._$Ep)this[e]=t;this._$Ep=void 0}const e=this.constructor.elementProperties;if(e.size>0)for(const[t,a]of e){const{wrapped:e}=a,i=this[t];!0!==e||this._$AL.has(t)||void 0===i||this.C(t,void 0,a,i)}}let e=!1;const t=this._$AL;try{e=this.shouldUpdate(t),e?(this.willUpdate(t),this._$EO?.forEach(e=>e.hostUpdate?.()),this.update(t)):this._$EM()}catch(t){throw e=!1,this._$EM(),t}e&&this._$AE(t)}willUpdate(e){}_$AE(e){this._$EO?.forEach(e=>e.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(e)),this.updated(e)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(e){return!0}update(e){this._$Eq&&=this._$Eq.forEach(e=>this._$ET(e,this[e])),this._$EM()}updated(e){}firstUpdated(e){}};k.elementStyles=[],k.shadowRootOptions={mode:"open"},k[b("elementProperties")]=new Map,k[b("finalized")]=new Map,v?.({ReactiveElement:k}),(f.reactiveElementVersions??=[]).push("2.1.1");const _=globalThis,$=_.trustedTypes,S=$?$.createPolicy("lit-html",{createHTML:e=>e}):void 0,C="$lit$",A=`lit$${Math.random().toFixed(9).slice(2)}$`,M="?"+A,z=`<${M}>`,T=document,E=()=>T.createComment(""),U=e=>null===e||"object"!=typeof e&&"function"!=typeof e,N=Array.isArray,D="[ \t\n\f\r]",P=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,G=/-->/g,O=/>/g,H=RegExp(`>|${D}(?:([^\\s"'>=/]+)(${D}*=${D}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),W=/'/g,I=/"/g,F=/^(?:script|style|textarea|title)$/i,j=e=>(t,...a)=>({_$litType$:e,strings:t,values:a}),B=j(1),R=j(2),L=Symbol.for("lit-noChange"),V=Symbol.for("lit-nothing"),q=new WeakMap,Y=T.createTreeWalker(T,129);function X(e,t){if(!N(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==S?S.createHTML(t):t}const K=(e,t)=>{const a=e.length-1,i=[];let r,o=2===t?"<svg>":3===t?"<math>":"",n=P;for(let t=0;t<a;t++){const a=e[t];let s,l,d=-1,c=0;for(;c<a.length&&(n.lastIndex=c,l=n.exec(a),null!==l);)c=n.lastIndex,n===P?"!--"===l[1]?n=G:void 0!==l[1]?n=O:void 0!==l[2]?(F.test(l[2])&&(r=RegExp("</"+l[2],"g")),n=H):void 0!==l[3]&&(n=H):n===H?">"===l[0]?(n=r??P,d=-1):void 0===l[1]?d=-2:(d=n.lastIndex-l[2].length,s=l[1],n=void 0===l[3]?H:'"'===l[3]?I:W):n===I||n===W?n=H:n===G||n===O?n=P:(n=H,r=void 0);const h=n===H&&e[t+1].startsWith("/>")?" ":"";o+=n===P?a+z:d>=0?(i.push(s),a.slice(0,d)+C+a.slice(d)+A+h):a+A+(-2===d?t:h)}return[X(e,o+(e[a]||"<?>")+(2===t?"</svg>":3===t?"</math>":"")),i]};class J{constructor({strings:e,_$litType$:t},a){let i;this.parts=[];let r=0,o=0;const n=e.length-1,s=this.parts,[l,d]=K(e,t);if(this.el=J.createElement(l,a),Y.currentNode=this.el.content,2===t||3===t){const e=this.el.content.firstChild;e.replaceWith(...e.childNodes)}for(;null!==(i=Y.nextNode())&&s.length<n;){if(1===i.nodeType){if(i.hasAttributes())for(const e of i.getAttributeNames())if(e.endsWith(C)){const t=d[o++],a=i.getAttribute(e).split(A),n=/([.?@])?(.*)/.exec(t);s.push({type:1,index:r,name:n[2],strings:a,ctor:"."===n[1]?ae:"?"===n[1]?ie:"@"===n[1]?re:te}),i.removeAttribute(e)}else e.startsWith(A)&&(s.push({type:6,index:r}),i.removeAttribute(e));if(F.test(i.tagName)){const e=i.textContent.split(A),t=e.length-1;if(t>0){i.textContent=$?$.emptyScript:"";for(let a=0;a<t;a++)i.append(e[a],E()),Y.nextNode(),s.push({type:2,index:++r});i.append(e[t],E())}}}else if(8===i.nodeType)if(i.data===M)s.push({type:2,index:r});else{let e=-1;for(;-1!==(e=i.data.indexOf(A,e+1));)s.push({type:7,index:r}),e+=A.length-1}r++}}static createElement(e,t){const a=T.createElement("template");return a.innerHTML=e,a}}function Z(e,t,a=e,i){if(t===L)return t;let r=void 0!==i?a._$Co?.[i]:a._$Cl;const o=U(t)?void 0:t._$litDirective$;return r?.constructor!==o&&(r?._$AO?.(!1),void 0===o?r=void 0:(r=new o(e),r._$AT(e,a,i)),void 0!==i?(a._$Co??=[])[i]=r:a._$Cl=r),void 0!==r&&(t=Z(e,r._$AS(e,t.values),r,i)),t}class Q{constructor(e,t){this._$AV=[],this._$AN=void 0,this._$AD=e,this._$AM=t}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(e){const{el:{content:t},parts:a}=this._$AD,i=(e?.creationScope??T).importNode(t,!0);Y.currentNode=i;let r=Y.nextNode(),o=0,n=0,s=a[0];for(;void 0!==s;){if(o===s.index){let t;2===s.type?t=new ee(r,r.nextSibling,this,e):1===s.type?t=new s.ctor(r,s.name,s.strings,this,e):6===s.type&&(t=new oe(r,this,e)),this._$AV.push(t),s=a[++n]}o!==s?.index&&(r=Y.nextNode(),o++)}return Y.currentNode=T,i}p(e){let t=0;for(const a of this._$AV)void 0!==a&&(void 0!==a.strings?(a._$AI(e,a,t),t+=a.strings.length-2):a._$AI(e[t])),t++}}class ee{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(e,t,a,i){this.type=2,this._$AH=V,this._$AN=void 0,this._$AA=e,this._$AB=t,this._$AM=a,this.options=i,this._$Cv=i?.isConnected??!0}get parentNode(){let e=this._$AA.parentNode;const t=this._$AM;return void 0!==t&&11===e?.nodeType&&(e=t.parentNode),e}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(e,t=this){e=Z(this,e,t),U(e)?e===V||null==e||""===e?(this._$AH!==V&&this._$AR(),this._$AH=V):e!==this._$AH&&e!==L&&this._(e):void 0!==e._$litType$?this.$(e):void 0!==e.nodeType?this.T(e):(e=>N(e)||"function"==typeof e?.[Symbol.iterator])(e)?this.k(e):this._(e)}O(e){return this._$AA.parentNode.insertBefore(e,this._$AB)}T(e){this._$AH!==e&&(this._$AR(),this._$AH=this.O(e))}_(e){this._$AH!==V&&U(this._$AH)?this._$AA.nextSibling.data=e:this.T(T.createTextNode(e)),this._$AH=e}$(e){const{values:t,_$litType$:a}=e,i="number"==typeof a?this._$AC(e):(void 0===a.el&&(a.el=J.createElement(X(a.h,a.h[0]),this.options)),a);if(this._$AH?._$AD===i)this._$AH.p(t);else{const e=new Q(i,this),a=e.u(this.options);e.p(t),this.T(a),this._$AH=e}}_$AC(e){let t=q.get(e.strings);return void 0===t&&q.set(e.strings,t=new J(e)),t}k(e){N(this._$AH)||(this._$AH=[],this._$AR());const t=this._$AH;let a,i=0;for(const r of e)i===t.length?t.push(a=new ee(this.O(E()),this.O(E()),this,this.options)):a=t[i],a._$AI(r),i++;i<t.length&&(this._$AR(a&&a._$AB.nextSibling,i),t.length=i)}_$AR(e=this._$AA.nextSibling,t){for(this._$AP?.(!1,!0,t);e!==this._$AB;){const t=e.nextSibling;e.remove(),e=t}}setConnected(e){void 0===this._$AM&&(this._$Cv=e,this._$AP?.(e))}}class te{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(e,t,a,i,r){this.type=1,this._$AH=V,this._$AN=void 0,this.element=e,this.name=t,this._$AM=i,this.options=r,a.length>2||""!==a[0]||""!==a[1]?(this._$AH=Array(a.length-1).fill(new String),this.strings=a):this._$AH=V}_$AI(e,t=this,a,i){const r=this.strings;let o=!1;if(void 0===r)e=Z(this,e,t,0),o=!U(e)||e!==this._$AH&&e!==L,o&&(this._$AH=e);else{const i=e;let n,s;for(e=r[0],n=0;n<r.length-1;n++)s=Z(this,i[a+n],t,n),s===L&&(s=this._$AH[n]),o||=!U(s)||s!==this._$AH[n],s===V?e=V:e!==V&&(e+=(s??"")+r[n+1]),this._$AH[n]=s}o&&!i&&this.j(e)}j(e){e===V?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,e??"")}}class ae extends te{constructor(){super(...arguments),this.type=3}j(e){this.element[this.name]=e===V?void 0:e}}class ie extends te{constructor(){super(...arguments),this.type=4}j(e){this.element.toggleAttribute(this.name,!!e&&e!==V)}}class re extends te{constructor(e,t,a,i,r){super(e,t,a,i,r),this.type=5}_$AI(e,t=this){if((e=Z(this,e,t,0)??V)===L)return;const a=this._$AH,i=e===V&&a!==V||e.capture!==a.capture||e.once!==a.once||e.passive!==a.passive,r=e!==V&&(a===V||i);i&&this.element.removeEventListener(this.name,this,a),r&&this.element.addEventListener(this.name,this,e),this._$AH=e}handleEvent(e){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,e):this._$AH.handleEvent(e)}}class oe{constructor(e,t,a){this.element=e,this.type=6,this._$AN=void 0,this._$AM=t,this.options=a}get _$AU(){return this._$AM._$AU}_$AI(e){Z(this,e)}}const ne=_.litHtmlPolyfillSupport;ne?.(J,ee),(_.litHtmlVersions??=[]).push("3.3.1");const se=globalThis;let le=class extends k{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const e=super.createRenderRoot();return this.renderOptions.renderBefore??=e.firstChild,e}update(e){const t=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(e),this._$Do=((e,t,a)=>{const i=a?.renderBefore??t;let r=i._$litPart$;if(void 0===r){const e=a?.renderBefore??null;i._$litPart$=r=new ee(t.insertBefore(E(),e),e,void 0,a??{})}return r._$AI(e),r})(t,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return L}};le._$litElement$=!0,le.finalized=!0,se.litElementHydrateSupport?.({LitElement:le});const de=se.litElementPolyfillSupport;de?.({LitElement:le}),(se.litElementVersions??=[]).push("4.2.1");const ce=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}):customElements.define(e,t)},he={attribute:!0,type:String,converter:x,reflect:!1,hasChanged:w},pe=(e=he,t,a)=>{const{kind:i,metadata:r}=a;let o=globalThis.litPropertyMetadata.get(r);if(void 0===o&&globalThis.litPropertyMetadata.set(r,o=new Map),"setter"===i&&((e=Object.create(e)).wrapped=!0),o.set(a.name,e),"accessor"===i){const{name:i}=a;return{set(a){const r=t.get.call(this);t.set.call(this,a),this.requestUpdate(i,r,e)},init(t){return void 0!==t&&this.C(i,void 0,e,t),t}}}if("setter"===i){const{name:i}=a;return function(a){const r=this[i];t.call(this,a),this.requestUpdate(i,r,e)}}throw Error("Unsupported decorator location: "+i)};function me(e){return(t,a)=>"object"==typeof a?pe(e,t,a):((e,t,a)=>{const i=t.hasOwnProperty(a);return t.constructor.createProperty(a,e),i?Object.getOwnPropertyDescriptor(t,a):void 0})(e,t,a)}function fe(e){return me({...e,state:!0,attribute:!1})}function ue(e,t="°F"){const a="°C"===t?9*e/5+32:e;return a<32?{color:"linear-gradient(135deg, #667eea 0%, #764ba2 100%)",backgroundColor:"#667eea",textColor:"#ffffff"}:a<50?{color:"linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",backgroundColor:"#4facfe",textColor:"#ffffff"}:a<70?{color:"linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",backgroundColor:"#43e97b",textColor:"#1a1a1a"}:a<85?{color:"linear-gradient(135deg, #fa709a 0%, #fee140 100%)",backgroundColor:"#fa709a",textColor:"#1a1a1a"}:{color:"linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)",backgroundColor:"#ff6b6b",textColor:"#ffffff"}}function ge(e=new Date){return e.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}function ve(e=new Date){return e.toLocaleDateString("en-US",{weekday:"long",month:"2-digit",day:"2-digit",year:"2-digit"})}function be(){const e=(new Date).getMonth();return e>=2&&e<=4?"spring":e>=5&&e<=7?"summer":e>=8&&e<=10?"fall":"winter"}function xe(e){return new Date(e).toLocaleDateString("en-US",{weekday:"short"})}function we(e){const t=e.toLowerCase(),a=function(){const e=(new Date).getHours();return e<6||e>=20}();return t.includes("clear")||t.includes("sunny")?a?"clear-night":"clear-day":t.includes("partlycloudy")||t.includes("partly")||t.includes("partial")?a?"partlycloudy-night":"partlycloudy":t.includes("cloud")?"cloudy":t.includes("rain")?"rainy":t.includes("snow")?"snowy":t.includes("storm")||t.includes("thunder")?"lightning":t.includes("fog")||t.includes("mist")?"fog":t.includes("wind")?"windy":a?"clear-night":"clear-day"}const ye=2;class ke{constructor(e){}get _$AU(){return this._$AM._$AU}_$AT(e,t,a){this._$Ct=e,this._$AM=t,this._$Ci=a}_$AS(e,t){return this.update(e,t)}update(e,t){return this.render(...t)}}class _e extends ke{constructor(e){if(super(e),this.it=V,e.type!==ye)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(e){if(e===V||null==e)return this._t=void 0,this.it=e;if(e===L)return e;if("string"!=typeof e)throw Error(this.constructor.directiveName+"() called with a non-string value");if(e===this.it)return this._t;this.it=e;const t=[e];return t.raw=t,this._t={_$litType$:this.constructor.resultType,strings:t,values:[]}}}_e.directiveName="unsafeHTML",_e.resultType=1;const $e=(e=>(...t)=>({_$litDirective$:e,values:t}))(_e);var Se,Ce,Ae='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="26.75" x2="37.25" y1="22.91" y2="41.09" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fbbf24"/><stop offset=".45" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><circle cx="32" cy="32" r="10.5" fill="url(#a)" stroke="#f8af18" stroke-miterlimit="10" stroke-width=".5"/><path fill="none" stroke="#fbbf24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M32 15.71V9.5m0 45v-6.21m11.52-27.81l4.39-4.39M16.09 47.91l4.39-4.39m0-23l-4.39-4.39m31.82 31.78l-4.39-4.39M15.71 32H9.5m45 0h-6.21"><animateTransform attributeName="transform" dur="45s" repeatCount="indefinite" type="rotate" values="0 32 32; 360 32 32"/></path></svg>',Me='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="22.53" x2="25.47" y1="42.95" y2="48.05" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4286ee"/><stop offset=".45" stop-color="#4286ee"/><stop offset="1" stop-color="#0950bc"/></linearGradient><linearGradient id="c" x1="29.53" x2="32.47" y1="42.95" y2="48.05" xlink:href="#a"/><linearGradient id="d" x1="36.53" x2="39.47" y1="42.95" y2="48.05" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="none" stroke="url(#a)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M24.39 43.03l-.78 4.94"><animateTransform attributeName="transform" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M31.39 43.03l-.78 4.94"><animateTransform attributeName="transform" begin="-0.4s" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.4s" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#d)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M38.39 43.03l-.78 4.94"><animateTransform attributeName="transform" begin="-0.2s" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.2s" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path></svg>',ze='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="26.76" x2="41.62" y1="20.91" y2="46.65" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M39.12 16a18.38 18.38 0 00-2.38-.86l.08.06h0c11.54 12.1 2.63 32.1-14.07 31.62h-.1A18.21 18.21 0 0024.88 48a17.5 17.5 0 1014.24-32z"/></svg>';function Te(e,t=!0){let a="";switch(e.toLowerCase()){case"clear-day":case"sunny":default:a=Ae;break;case"clear-night":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="21.92" x2="38.52" y1="18.75" y2="47.52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/><animateTransform attributeName="gradientTransform" dur="10s" repeatCount="indefinite" type="rotate" values="5 32 32; -15 32 32; 5 32 32"/></linearGradient></defs><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M46.66 36.2a16.66 16.66 0 01-16.78-16.55 16.29 16.29 0 01.55-4.15A16.56 16.56 0 1048.5 36.1c-.61.06-1.22.1-1.84.1z"><animateTransform attributeName="transform" dur="10s" repeatCount="indefinite" type="rotate" values="-5 32 32; 15 32 32; -5 32 32"/></path></svg>';break;case"partlycloudy":case"partly-cloudy-day":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="16.5" x2="21.5" y1="19.67" y2="28.33" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fbbf24"/><stop offset=".45" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient></defs><circle cx="19" cy="24" r="5" fill="url(#a)" stroke="#f8af18" stroke-miterlimit="10" stroke-width=".5"/><path fill="none" stroke="#fbbf24" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M19 15.67V12.5m0 23v-3.17m5.89-14.22l2.24-2.24M10.87 32.13l2.24-2.24m0-11.78l-2.24-2.24m16.26 16.26l-2.24-2.24M7.5 24h3.17m19.83 0h-3.17"><animateTransform attributeName="transform" dur="45s" repeatCount="indefinite" type="rotate" values="0 19 24; 360 19 24"/></path><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/></svg>';break;case"partlycloudy-night":case"partly-cloudy-night":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="13.58" x2="24.15" y1="15.57" y2="33.87" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/><animateTransform attributeName="gradientTransform" dur="10s" repeatCount="indefinite" type="rotate" values="10 19.22 24.293; -10 19.22 24.293; 10 19.22 24.293"/></linearGradient><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient></defs><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M29.33 26.68a10.61 10.61 0 01-10.68-10.54A10.5 10.5 0 0119 13.5a10.54 10.54 0 1011.5 13.11 11.48 11.48 0 01-1.17.07z"><animateTransform attributeName="transform" dur="10s" repeatCount="indefinite" type="rotate" values="-10 19.22 24.293; 10 19.22 24.293; -10 19.22 24.293"/></path><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/></svg>';break;case"cloudy":case"overcast":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient></defs><path fill="url(#a)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"><animateTransform attributeName="transform" dur="7s" repeatCount="indefinite" type="translate" values="-3 0; 3 0; -3 0"/></path></svg>';break;case"rainy":case"rain":case"pouring":case"heavy-rain":a=Me;break;case"drizzle":case"light-rain":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="23.31" x2="24.69" y1="44.3" y2="46.7" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4286ee"/><stop offset=".45" stop-color="#4286ee"/><stop offset="1" stop-color="#0950bc"/></linearGradient><linearGradient id="c" x1="30.31" x2="31.69" y1="44.3" y2="46.7" xlink:href="#a"/><linearGradient id="d" x1="37.31" x2="38.69" y1="44.3" y2="46.7" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M24.08 45.01l-.16.98"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#d)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M31.08 45.01l-.16.98"><animateTransform attributeName="transform" begin="-0.5s" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.5s" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#e)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M38.08 45.01l-.16.98"><animateTransform attributeName="transform" begin="-1s" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-1s" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path></svg>';break;case"snowy":case"snow":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="30.12" x2="31.88" y1="43.48" y2="46.52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient><linearGradient id="c" x1="29.67" x2="32.33" y1="42.69" y2="47.31" xlink:href="#a"/><linearGradient id="d" x1="23.12" x2="24.88" y1="43.48" y2="46.52" xlink:href="#a"/><linearGradient id="e" x1="22.67" x2="25.33" y1="42.69" y2="47.31" xlink:href="#a"/><linearGradient id="f" x1="37.12" x2="38.88" y1="43.48" y2="46.52" xlink:href="#a"/><linearGradient id="g" x1="36.67" x2="39.33" y1="42.69" y2="47.31" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><g><circle cx="31" cy="45" r="1.25" fill="none" stroke="url(#a)" stroke-miterlimit="10"/><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" d="M33.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M31 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" dur="4s" repeatCount="indefinite" type="translate" values="-1 -6; 1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 31 45; 360 31 45"/><animate attributeName="opacity" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g><g><circle cx="24" cy="45" r="1.25" fill="none" stroke="url(#d)" stroke-miterlimit="10"/><path fill="none" stroke="url(#e)" stroke-linecap="round" stroke-miterlimit="10" d="M26.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M24 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" begin="-2s" dur="4s" repeatCount="indefinite" type="translate" values="1 -6; -1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 24 45; 360 24 45"/><animate attributeName="opacity" begin="-2s" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g><g><circle cx="38" cy="45" r="1.25" fill="none" stroke="url(#f)" stroke-miterlimit="10"/><path fill="none" stroke="url(#g)" stroke-linecap="round" stroke-miterlimit="10" d="M40.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M38 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" begin="-1s" dur="4s" repeatCount="indefinite" type="translate" values="1 -6; -1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 38 45; 360 38 45"/><animate attributeName="opacity" begin="-1s" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g></svg>';break;case"snowy-rainy":case"sleet":case"mix":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="c" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="23.12" x2="24.88" y1="43.48" y2="46.52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient><linearGradient id="d" x1="22.67" x2="25.33" y1="42.69" y2="47.31" xlink:href="#a"/><linearGradient id="e" x1="37.12" x2="38.88" y1="43.48" y2="46.52" xlink:href="#a"/><linearGradient id="f" x1="36.67" x2="39.33" y1="42.69" y2="47.31" xlink:href="#a"/><linearGradient id="b" x1="23.31" x2="24.69" y1="44.3" y2="46.7" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4286ee"/><stop offset=".45" stop-color="#4286ee"/><stop offset="1" stop-color="#0950bc"/></linearGradient><linearGradient id="g" x1="30.31" x2="31.69" y1="44.3" y2="46.7" xlink:href="#b"/><linearGradient id="h" x1="37.31" x2="38.69" y1="44.3" y2="46.7" xlink:href="#b"/></defs><path fill="url(#c)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><g><circle cx="24" cy="45" r="1.25" fill="none" stroke="url(#a)" stroke-miterlimit="10"/><path fill="none" stroke="url(#d)" stroke-linecap="round" stroke-miterlimit="10" d="M26.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M24 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" begin="-2s" dur="4s" repeatCount="indefinite" type="translate" values="1 -6; -1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 24 45; 360 24 45"/><animate attributeName="opacity" begin="-2s" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g><g><circle cx="38" cy="45" r="1.25" fill="none" stroke="url(#e)" stroke-miterlimit="10"/><path fill="none" stroke="url(#f)" stroke-linecap="round" stroke-miterlimit="10" d="M40.17 46.25l-1.09-.63m-2.16-1.24l-1.09-.63M38 42.5v1.25m0 3.75v-1.25m-1.08-.63l-1.09.63m4.34-2.5l-1.09.63"/><animateTransform additive="sum" attributeName="transform" begin="-1s" dur="4s" repeatCount="indefinite" type="translate" values="1 -6; -1 12"/><animateTransform additive="sum" attributeName="transform" dur="9s" repeatCount="indefinite" type="rotate" values="0 38 45; 360 38 45"/><animate attributeName="opacity" begin="-1s" dur="4s" repeatCount="indefinite" values="0;1;1;1;0"/></g><path fill="none" stroke="url(#b)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M24.08 45.01l-.16.98"><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#g)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M31.08 45.01l-.16.98"><animateTransform attributeName="transform" begin="-0.5s" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.5s" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#h)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M38.08 45.01l-.16.98"><animateTransform attributeName="transform" begin="-1s" dur="1.5s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-1s" dur="1.5s" repeatCount="indefinite" values="0;1;1;0"/></path></svg>';break;case"hail":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="23.25" x2="24.75" y1="43.7" y2="46.3" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient><linearGradient id="c" x1="30.25" x2="31.75" y1="43.7" y2="46.3" xlink:href="#a"/><linearGradient id="d" x1="37.25" x2="38.75" y1="43.7" y2="46.3" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="url(#a)" d="M24 43.5a1.5 1.5 0 101.5 1.5 1.5 1.5 0 00-1.5-1.5z"><animateTransform attributeName="transform" dur="0.6s" repeatCount="indefinite" type="translate" values="1 -5; -2 18; -4 14"/><animate attributeName="opacity" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></path><path fill="url(#c)" d="M31 43.5a1.5 1.5 0 101.5 1.5 1.5 1.5 0 00-1.5-1.5z"><animateTransform attributeName="transform" begin="-0.4s" dur="0.6s" repeatCount="indefinite" type="translate" values="1 -5; -2 18; -4 14"/><animate attributeName="opacity" begin="-0.4s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></path><path fill="url(#d)" d="M38 43.5a1.5 1.5 0 101.5 1.5 1.5 1.5 0 00-1.5-1.5z"><animateTransform attributeName="transform" begin="-0.2s" dur="0.6s" repeatCount="indefinite" type="translate" values="1 -5; -2 18; -4 14"/><animate attributeName="opacity" begin="-0.2s" dur="0.6s" repeatCount="indefinite" values="1;1;0"/></path></svg>';break;case"lightning":case"thunderstorm":case"lightning-rainy":case"thunderstorms":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="22.53" x2="25.47" y1="42.95" y2="48.05" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4286ee"/><stop offset=".45" stop-color="#4286ee"/><stop offset="1" stop-color="#0950bc"/></linearGradient><linearGradient id="c" x1="29.53" x2="32.47" y1="42.95" y2="48.05" xlink:href="#a"/><linearGradient id="d" x1="36.53" x2="39.47" y1="42.95" y2="48.05" xlink:href="#a"/><linearGradient id="e" x1="26.74" x2="35.76" y1="37.88" y2="53.52" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f7b23b"/><stop offset=".45" stop-color="#f7b23b"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="none" stroke="url(#a)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M24.39 43.03l-.78 4.94"><animateTransform attributeName="transform" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M31.39 43.03l-.78 4.94"><animateTransform attributeName="transform" begin="-0.4s" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.4s" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="none" stroke="url(#d)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M38.39 43.03l-.78 4.94"><animateTransform attributeName="transform" begin="-0.2s" dur="0.7s" repeatCount="indefinite" type="translate" values="1 -5; -2 10"/><animate attributeName="opacity" begin="-0.2s" dur="0.7s" repeatCount="indefinite" values="0;1;1;0"/></path><path fill="url(#e)" stroke="#f6a823" stroke-miterlimit="10" stroke-width=".5" d="M30 36l-4 12h4l-2 10 10-14h-6l4-8h-6z"><animate attributeName="opacity" dur="2s" repeatCount="indefinite" values="1; 1; 1; 1; 1; 1; 0.1; 1; 0.1; 1; 1; 0.1; 1; 0.1; 1"/></path></svg>';break;case"fog":case"mist":case"foggy":case"haze":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="22.56" x2="39.2" y1="21.96" y2="50.8" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f3f7fe"/><stop offset=".45" stop-color="#f3f7fe"/><stop offset="1" stop-color="#deeafb"/></linearGradient><linearGradient id="a" x1="27.5" x2="36.5" y1="50.21" y2="65.79" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4d7dd"/><stop offset=".45" stop-color="#d4d7dd"/><stop offset="1" stop-color="#bec1c6"/></linearGradient><linearGradient id="c" y1="44.21" y2="59.79" xlink:href="#a"/></defs><path fill="url(#b)" stroke="#e6effc" stroke-miterlimit="10" stroke-width=".5" d="M46.5 31.5h-.32a10.49 10.49 0 00-19.11-8 7 7 0 00-10.57 6 7.21 7.21 0 00.1 1.14A7.5 7.5 0 0018 45.5a4.19 4.19 0 00.5 0v0h28a7 7 0 000-14z"/><path fill="none" stroke="url(#a)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M17 58h30"><animateTransform attributeName="transform" begin="0s" dur="5s" repeatCount="indefinite" type="translate" values="-4 0; 4 0; -4 0"/></path><path fill="none" stroke="url(#c)" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M17 52h30"><animateTransform attributeName="transform" begin="-4s" dur="5s" repeatCount="indefinite" type="translate" values="-4 0; 4 0; -4 0"/></path></svg>';break;case"windy":case"wind":case"exceptional":a='<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="27.56" x2="38.27" y1="17.64" y2="36.19" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4d7dd"/><stop offset=".45" stop-color="#d4d7dd"/><stop offset="1" stop-color="#bec1c6"/></linearGradient><linearGradient id="b" x1="19.96" x2="31.37" y1="29.03" y2="48.8" xlink:href="#a"/></defs><path fill="none" stroke="url(#a)" stroke-dasharray="35 22" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M43.64 20a5 5 0 113.61 8.46h-35.5"><animate attributeName="stroke-dashoffset" dur="2s" repeatCount="indefinite" values="-57; 57"/></path><path fill="none" stroke="url(#b)" stroke-dasharray="24 15" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M29.14 44a5 5 0 103.61-8.46h-21"><animate attributeName="stroke-dashoffset" begin="-1.5s" dur="2s" repeatCount="indefinite" values="-39; 39"/></path></svg>'}return t||(a=a.replace(/<animate[^>]*>/g,"").replace(/<\/animate>/g,""),a=a.replace(/<animateTransform[^>]*\/>/g,"")),a=a.replace(/<svg/,'<svg class="weather-icon-svg"'),R`${$e(a)}`}function Ee(e,t=!0){let a="colder"===e?'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="23.73" x2="39.18" y1="19.16" y2="45.93" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#515a69" stop-opacity=".05"/><stop offset=".45" stop-color="#6b7280" stop-opacity=".05"/><stop offset="1" stop-color="#384354" stop-opacity=".1"/></linearGradient><linearGradient id="b" x1="23.48" x2="39.43" y1="18.73" y2="46.36" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4d7dd"/><stop offset=".45" stop-color="#d4d7dd"/><stop offset="1" stop-color="#bec1c6"/></linearGradient></defs><circle cx="32" cy="42" r="4.5" fill="#ef4444"/><path fill="none" stroke="#ef4444" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M32 33v9"><animateTransform attributeName="transform" dur="1s" repeatCount="indefinite" type="translate" values="0 0; 0 1; 0 0"/></path><path fill="url(#a)" stroke="url(#b)" stroke-linecap="round" stroke-linejoin="round" d="M32.5 29H36m3 12.9a7 7 0 11-14 0 7.12 7.12 0 013-5.83v-17a4 4 0 118 0v17a7.12 7.12 0 013 5.83zM32.5 25H36m-3.5-4H36"/><path fill="none" stroke="#2885c7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M44 26v12l-3-3.45L44 38l3-3.45"><animateTransform attributeName="transform" begin="0s" dur="1.5s" keyTimes="0.0; 0.5; 0.9; 1.0" repeatCount="indefinite" type="translate" values="0 0; 0 0; 0 6; 0 6"/><animate attributeName="opacity" dur="1.5s" keyTimes="0.0; 0.3; 0.8; 0.9; 1.0" repeatCount="indefinite" values="0; 1; 1; 0; 0"/></path></svg>':'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="23.73" x2="39.18" y1="19.16" y2="45.93" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#515a69" stop-opacity=".05"/><stop offset=".45" stop-color="#6b7280" stop-opacity=".05"/><stop offset="1" stop-color="#384354" stop-opacity=".1"/></linearGradient><linearGradient id="b" x1="23.48" x2="39.43" y1="18.73" y2="46.36" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#d4d7dd"/><stop offset=".45" stop-color="#d4d7dd"/><stop offset="1" stop-color="#bec1c6"/></linearGradient></defs><circle cx="32" cy="42" r="4.5" fill="#ef4444"/><path fill="none" stroke="#ef4444" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" d="M32 19v23"><animateTransform attributeName="transform" dur="1s" repeatCount="indefinite" type="translate" values="0 0; 0 1; 0 0"/></path><path fill="url(#a)" stroke="url(#b)" stroke-linecap="round" stroke-linejoin="round" d="M32.5 29H36m3 12.9a7 7 0 11-14 0 7.12 7.12 0 013-5.83v-17a4 4 0 118 0v17a7.12 7.12 0 013 5.83zM32.5 25H36m-3.5-4H36"/><path fill="none" stroke="#ef4444" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M44 38V26l-3 3.45L44 26l3 3.45"><animateTransform attributeName="transform" begin="0s" dur="1.5s" keyTimes="0.0; 0.5; 0.9; 1.0" repeatCount="indefinite" type="translate" values="0 0; 0 0; 0 -6; 0 -6"/><animate attributeName="opacity" dur="1.5s" keyTimes="0.0; 0.3; 0.8; 0.9; 1.0" repeatCount="indefinite" values="0; 1; 1; 0; 0"/></path></svg>';return t||(a=a.replace(/<animate[^>]*>/g,"").replace(/<\/animate>/g,""),a=a.replace(/<animateTransform[^>]*\/>/g,"")),a=a.replace(/<svg/,'<svg class="weather-icon-svg temp-icon"'),R`${$e(a)}`}!function(e){e.language="language",e.system="system",e.comma_decimal="comma_decimal",e.decimal_comma="decimal_comma",e.space_comma="space_comma",e.none="none"}(Se||(Se={})),function(e){e.language="language",e.system="system",e.am_pm="12",e.twenty_four="24"}(Ce||(Ce={}));var Ue=function(e,t,a,i){i=i||{},a=null==a?{}:a;var r=new Event(t,{bubbles:void 0===i.bubbles||i.bubbles,cancelable:Boolean(i.cancelable),composed:void 0===i.composed||i.composed});return r.detail=a,e.dispatchEvent(r),r};let Ne=class extends le{constructor(){super(...arguments),this._expandedSections=new Set(["required","theme"])}setConfig(e){this._config=e}_toggleSection(e){const t=new Set(this._expandedSections);t.has(e)?t.delete(e):t.add(e),this._expandedSections=t}_valueChanged(e){if(!this._config||!this.hass)return;const t=e.target,a=t.configValue;let i=t.value;if("forecast_days"!==a&&"hourly_count"!==a||!i||(i=parseInt(i,10)),this._config[a]===i)return;const r={...this._config,[a]:""===i?void 0:i};Ue(this,"config-changed",{config:r})}_toggleChanged(e){if(!this._config||!this.hass)return;const t=e.target,a=t.configValue,i=t.checked,r={...this._config,[a]:i};Ue(this,"config-changed",{config:r})}_customColorChanged(e,t){if(!this._config||!this.hass)return;const a=e.target.value,i={...this._config,custom_theme_colors:{...this._config.custom_theme_colors,[t]:a||void 0}};Ue(this,"config-changed",{config:i})}_seasonalImageChanged(e,t){if(!this._config||!this.hass)return;const a=e.target.value,i="default"===a||""===a?void 0:a,r={...this._config,seasonal_images:{...this._config.seasonal_images||{},[t]:i}};Ue(this,"config-changed",{config:r})}_weatherInfoToggle(e,t){if(!this._config||!this.hass)return;const a=e.target.checked,i=this._config.show_weather_info||[];let r;r=a?i.includes(t)?i:[...i,t]:i.filter(e=>e!==t);const o={...this._config,show_weather_info:r.length>0?r:void 0};Ue(this,"config-changed",{config:o})}render(){if(!this.hass||!this._config)return B``;const e=Object.keys(this.hass.states).filter(e=>e.startsWith("weather.")),t=Object.keys(this.hass.states).filter(e=>e.startsWith("sensor.")&&(e.includes("temp")||e.includes("temperature"))),a=Object.keys(this.hass.states).filter(e=>e.startsWith("sensor.")&&this.hass.states[e].attributes.forecast);return B`
       <div class="card-config">
         <h3>WeatherPulse Card Configuration</h3>
 
@@ -633,7 +633,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         font-size: 0.9em;
         color: var(--secondary-text-color);
       }
-    `}};e([me({attribute:!1})],Ne.prototype,"hass",void 0),e([fe()],Ne.prototype,"_config",void 0),e([fe()],Ne.prototype,"_expandedSections",void 0),Ne=e([ce("weatherpulse-card-editor")],Ne);var De=Object.freeze({__proto__:null,get WeatherPulseCardEditor(){return Ne}});const Pe={halloween:{foreground:["🪦","🎃","🍬"],background:["🦇","🧛","🕷️","👻","🕸️","🕷️","🦹‍♂️","🧟"],lights:{colors:["#ff6b00","#9c27b0","#ff9800","#7b1fa2"],style:"round"}},christmas:{foreground:["🎄","🎁","🕯️"],background:["❄️","🔔","🦌","🎅","⛄","🌟","🧑‍🎄"],lights:{colors:["#ff0000","#00ff00","#ffff00","#0000ff","#ff69b4"],style:"long"}},newyear:{foreground:["🎆","🥳","🍾","🥂"],background:["🎇","🎉","✨","🎊"],lights:{colors:["#ffd700","#ffffff","#c0c0c0","#ffe135"],style:"round"}},valentine:{foreground:["💝","🌹","💌"],background:["❤️","💕","💘","💖"]},stpatrick:{foreground:["🍀","☘️","🍻"],background:["🌈","💚","🎩","🪙"]},july4th:{foreground:["🇺🇸","🗽","🎆"],background:["🎇","⭐","🎉","🎊"],lights:{colors:["#ff0000","#ffffff","#0000ff","#ff0000","#ffffff","#0000ff"],style:"round"}},easter:{foreground:["🐰","🥚","🐇"],background:["🌷","🐣","💐","🌸"]},cincodemayo:{foreground:["🇲🇽","🌮","🍹"],background:["🌵","🎉","🎊","🎺"],lights:{colors:["#ff0000","#ffffff","#00ff00","#ff0000","#ffffff","#00ff00"],style:"round"}}};let Ge=class extends le{constructor(){super(...arguments),this.currentTime=ge(),this.currentDate=be(),this.forecastData=[],this.hourlyForecastData=[],this.nwsAlerts=[],this.lastAlertFetch=0,this.lastForecastFetch=0}static async getConfigElement(){return await Promise.resolve().then(function(){return De}),document.createElement("weatherpulse-card-editor")}static getStubConfig(){return{type:"custom:weatherpulse-card",entity:"weather.home",header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation","wind"]}}setConfig(e){if(!e.entity)throw new Error("You need to define an entity");this.config={header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation"],show_forecast:!0,temp_display_mode:"forecast",...e}}connectedCallback(){super.connectedCallback(),this.startClock(),this.fetchForecast(),this.fetchNWSAlerts(),this.forecastUpdateInterval=window.setInterval(()=>this.fetchForecast(),18e5),this.alertUpdateInterval=window.setInterval(()=>this.fetchNWSAlerts(),3e5)}disconnectedCallback(){super.disconnectedCallback(),this.stopClock(),this.forecastUpdateInterval&&clearInterval(this.forecastUpdateInterval),this.alertUpdateInterval&&clearInterval(this.alertUpdateInterval),this.forecastDebounceTimer&&clearTimeout(this.forecastDebounceTimer)}startClock(){this.updateTime(),this.timeInterval=window.setInterval(()=>this.updateTime(),1e3)}stopClock(){this.timeInterval&&clearInterval(this.timeInterval)}updateTime(){this.currentTime=ge(),this.currentDate=be(),(this.config.show_time||this.config.show_date)&&this.requestUpdate()}shouldUpdate(e){if(e.has("config"))return!0;if(e.has("hass")){const t=e.get("hass");if(!t)return!0;if(t.states[this.config.entity]!==this.hass.states[this.config.entity])return!0;if(this.config.outdoor_temp_sensor&&t.states[this.config.outdoor_temp_sensor]!==this.hass.states[this.config.outdoor_temp_sensor])return!0;if(this.config.forecast_sensor&&t.states[this.config.forecast_sensor]!==this.hass.states[this.config.forecast_sensor])return!0;const a=this.config.sun_entity||"sun.sun";if(this.config.show_weather_info?.includes("sunrise_sunset")&&t.states[a]!==this.hass.states[a])return!0;const i=this.config.moon_entity||"sensor.moon_phase";return!1!==this.config.show_moon_phase&&t.states[i]!==this.hass.states[i]}return!!(e.has("forecastData")||e.has("hourlyForecastData")||e.has("nwsAlerts"))}async fetchForecast(){this.forecastDebounceTimer&&clearTimeout(this.forecastDebounceTimer),this.forecastDebounceTimer=window.setTimeout(async()=>{const e=Date.now();if(!(e-this.lastForecastFetch<5e3)&&(this.lastForecastFetch=e,this.hass&&this.config?.entity))try{const e=this.config.forecast_type||"daily";this.hass.connection.subscribeMessage(e=>{e?.forecast&&(this.forecastData=e.forecast)},{type:"weather/subscribe_forecast",forecast_type:e,entity_id:this.config.entity}),await this.fetchHourlyForRainTiming()}catch(e){console.error("Failed to fetch forecast data:",e),this.forecastData=[]}},1e3)}async fetchHourlyForRainTiming(){const e=this.config.forecast_sensor;if(this.hass&&e)try{const t=await this.hass.callWS({type:"weather/subscribe_forecast",forecast_type:"hourly",entity_id:e});this.hourlyForecastData=t?.forecast?t.forecast:[]}catch(e){console.error("Failed to fetch hourly forecast data:",e),this.hourlyForecastData=[]}else this.hourlyForecastData=[]}getWeatherData(){const e=this.hass.states[this.config.entity];if(!e)return{};const t=`${e.last_changed}_${this.forecastData.length}`;if(this.cachedWeatherData&&this.lastWeatherEntityState===t)return this.cachedWeatherData;let a=this.forecastData;return this.cachedWeatherData={temperature:e.attributes.temperature,temperature_unit:e.attributes.temperature_unit||"°F",humidity:e.attributes.humidity,pressure:e.attributes.pressure,pressure_unit:e.attributes.pressure_unit,wind_speed:e.attributes.wind_speed,wind_speed_unit:e.attributes.wind_speed_unit,wind_bearing:e.attributes.wind_bearing,wind_gust_speed:e.attributes.wind_gust_speed,condition:e.state,forecast:a,apparent_temperature:e.attributes.apparent_temperature,uv_index:e.attributes.uv_index,visibility:e.attributes.visibility,visibility_unit:e.attributes.visibility_unit,precipitation:e.attributes.precipitation,precipitation_unit:e.attributes.precipitation_unit,cloud_coverage:e.attributes.cloud_coverage,dew_point:e.attributes.dew_point,ozone:e.attributes.ozone},this.lastWeatherEntityState=t,this.cachedWeatherData}getCurrentTemp(){if(this.config.outdoor_temp_sensor){const e=this.hass.states[this.config.outdoor_temp_sensor];if(e)return parseFloat(e.state)}return this.getWeatherData().temperature||70}getSunEntity(){const e=this.config.sun_entity||"sun.sun";return this.hass.states[e]}getMoonEntity(){const e=this.config.moon_entity||"sensor.moon_phase";return this.hass.states[e]}isNightTime(){const e=this.getSunEntity();if(e)return"below_horizon"===e.state;const t=(new Date).getHours();return t>=20||t<6}getMoonPhase(){const e=this.getMoonEntity();return e?e.state:"unknown"}getRainTiming(){const e=this.hourlyForecastData;if(!e||0===e.length)return null;const t=new Date,a=new Date(t.getTime()+144e5);for(const i of e){const e=new Date(i.datetime);if(e<=t||e>a)continue;const r=(i.precipitation_probability??0)>50,o=(i.precipitation??0)>0,n=["rainy","pouring","rain","drizzle","lightning-rainy","thunderstorm","thunderstorms"].includes((i.condition||"").toLowerCase());if(r||o||n){const a=Math.round((e.getTime()-t.getTime())/36e5);let i="";return i=a<1?"Rain expected within the hour":1===a?"Rain expected in 1 hour":`Rain expected in ${a} hours`,{isRaining:!0,message:i,time:e.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}}}return null}getCurrentHoliday(){if(!this.config?.holiday_themes)return null;const e=new Date,t=e.getMonth()+1,a=e.getDate();return 10===t&&a>=25?"halloween":12===t&&a>=18&&a<=25?"christmas":12===t&&31===a||1===t&&1===a?"newyear":2!==t||13!==a&&14!==a?3===t&&17===a?"stpatrick":5===t&&5===a?"cincodemayo":7===t&&4===a?"july4th":3===t&&a>=25||4===t&&a<=10?"easter":null:"valentine"}renderHolidayDecorations(){const e=this.getCurrentHoliday();if(!e)return"";const{background:t=[]}=Pe[e]||{};let a=[],i=[];if("halloween"===e){i=[{icon:"🦇",top:8,left:8,size:2.8},{icon:"🦇",top:35,left:50,size:2.6},{icon:["🧙‍♀️","🧛","🧟"][Math.floor(Date.now()/1e4)%3],top:48,left:88,size:2.5},{icon:"🕷️",top:55,left:48,size:2.2},{icon:"🕷️",top:18,left:88,size:2},{icon:"👻",top:72,left:10,size:2.4},{icon:"🕸️",top:10,left:88,size:1.8}]}else if("christmas"===e){i=[{icon:"❄️",top:8,left:8,size:2.8},{icon:"❄️",top:10,left:90,size:2.6},{icon:"🦌",top:40,left:50,size:2.5},{icon:["🎅","🧑‍🎄"][Math.floor(Date.now()/1e4)%2],top:50,left:88,size:2.4},{icon:"⛄",top:72,left:10,size:2.2},{icon:"🌟",top:5,left:50,size:2.3},{icon:"🌟",top:75,left:88,size:2}]}else if("newyear"===e)i=[{icon:"🎇",top:8,left:10,size:2.8},{icon:"🎇",top:10,left:88,size:2.6},{icon:"✨",top:35,left:50,size:2.4},{icon:"✨",top:55,left:48,size:2.2},{icon:"🎉",top:72,left:10,size:2.2},{icon:"🎉",top:50,left:88,size:2}];else if("valentine"===e)i=[{icon:"❤️",top:8,left:10,size:2.8},{icon:"❤️",top:10,left:88,size:2.6},{icon:"💕",top:40,left:50,size:2.4},{icon:"💘",top:72,left:88,size:2.2},{icon:"💖",top:72,left:10,size:2.2}];else if("july4th"===e)i=[{icon:"🎇",top:8,left:10,size:2.8},{icon:"🎇",top:10,left:88,size:2.6},{icon:"⭐",top:40,left:50,size:2.4},{icon:"⭐",top:72,left:88,size:2.2},{icon:"🎉",top:72,left:10,size:2.2},{icon:"🎊",top:55,left:48,size:2}];else if("stpatrick"===e)i=[{icon:"🌈",top:8,left:10,size:2.8},{icon:"🌈",top:10,left:88,size:2.6},{icon:"💚",top:40,left:50,size:2.4},{icon:"🎩",top:55,left:88,size:2.2},{icon:"🪙",top:72,left:10,size:2.2}];else if("easter"===e)i=[{icon:"🌷",top:8,left:10,size:2.8},{icon:"🌷",top:10,left:88,size:2.6},{icon:"🐣",top:40,left:50,size:2.4},{icon:"💐",top:72,left:88,size:2.2},{icon:"🌸",top:72,left:10,size:2.2}];else if("cincodemayo"===e)i=[{icon:"🌵",top:8,left:10,size:2.8},{icon:"🌵",top:10,left:88,size:2.6},{icon:"🎺",top:40,left:50,size:2.4},{icon:"🎉",top:72,left:10,size:2.2},{icon:"🎊",top:55,left:88,size:2}];else{const e=Math.min(5,t.length);a=t.slice(0,e);const r=[{top:5,left:5},{top:5,left:85},{top:45,left:5},{top:45,left:85},{top:80,left:50}];i=a.map((e,t)=>{const a=r[t%r.length];return{icon:e,top:a.top+(10*Math.random()-5),left:a.left+(10*Math.random()-5),size:1.5+1*Math.random()}})}const r=["🎆","🎇","⭐","✨"],o=i.map((e,t)=>{const a=r.includes(e.icon)?(40*Math.random()-20).toFixed(1):"0",i=(.8*t).toFixed(2);return B`
+    `}};e([me({attribute:!1})],Ne.prototype,"hass",void 0),e([fe()],Ne.prototype,"_config",void 0),e([fe()],Ne.prototype,"_expandedSections",void 0),Ne=e([ce("weatherpulse-card-editor")],Ne);var De=Object.freeze({__proto__:null,get WeatherPulseCardEditor(){return Ne}});const Pe={halloween:{foreground:["🪦","🎃","🍬"],background:["🦇","🧛","🕷️","👻","🕸️","🕷️","🦹‍♂️","🧟"],lights:{colors:["#ff6b00","#9c27b0","#ff9800","#7b1fa2"],style:"round"}},christmas:{foreground:["🎄","🎁","🕯️"],background:["❄️","🔔","🦌","🎅","⛄","🌟","🧑‍🎄"],lights:{colors:["#ff0000","#00ff00","#ffff00","#0000ff","#ff69b4"],style:"long"}},newyear:{foreground:["🎆","🥳","🍾","🥂"],background:["🎇","🎉","✨","🎊"],lights:{colors:["#ffd700","#ffffff","#c0c0c0","#ffe135"],style:"round"}},valentine:{foreground:["💝","🌹","💌"],background:["❤️","💕","💘","💖"]},stpatrick:{foreground:["🍀","☘️","🍻"],background:["🌈","💚","🎩","🪙"]},july4th:{foreground:["🇺🇸","🗽","🎆"],background:["🎇","⭐","🎉","🎊"],lights:{colors:["#ff0000","#ffffff","#0000ff","#ff0000","#ffffff","#0000ff"],style:"round"}},easter:{foreground:["🐰","🥚","🐇"],background:["🌷","🐣","💐","🌸"]},cincodemayo:{foreground:["🇲🇽","🌮","🍹"],background:["🌵","🎉","🎊","🎺"],lights:{colors:["#ff0000","#ffffff","#00ff00","#ff0000","#ffffff","#00ff00"],style:"round"}}};let Ge=class extends le{constructor(){super(...arguments),this.currentTime=ge(),this.currentDate=ve(),this.forecastData=[],this.hourlyForecastData=[],this.nwsAlerts=[],this.lastAlertFetch=0,this.lastForecastFetch=0}static async getConfigElement(){return await Promise.resolve().then(function(){return De}),document.createElement("weatherpulse-card-editor")}static getStubConfig(){return{type:"custom:weatherpulse-card",entity:"weather.home",header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation","wind"]}}setConfig(e){if(!e.entity)throw new Error("You need to define an entity");this.config={header_mode:"time-focused",show_date:!0,show_time:!0,forecast_type:"daily",forecast_days:5,hourly_count:12,view_mode:"standard",animate_icons:!0,data_rows:["temperature","precipitation"],show_forecast:!0,temp_display_mode:"forecast",...e}}connectedCallback(){super.connectedCallback(),this.startClock(),this.fetchForecast(),this.fetchNWSAlerts(),this.forecastUpdateInterval=window.setInterval(()=>this.fetchForecast(),18e5),this.alertUpdateInterval=window.setInterval(()=>this.fetchNWSAlerts(),3e5)}disconnectedCallback(){super.disconnectedCallback(),this.stopClock(),this.forecastUpdateInterval&&clearInterval(this.forecastUpdateInterval),this.alertUpdateInterval&&clearInterval(this.alertUpdateInterval),this.forecastDebounceTimer&&clearTimeout(this.forecastDebounceTimer)}startClock(){this.updateTime(),this.timeInterval=window.setInterval(()=>this.updateTime(),1e3)}stopClock(){this.timeInterval&&clearInterval(this.timeInterval)}updateTime(){this.currentTime=ge(),this.currentDate=ve(),(this.config.show_time||this.config.show_date)&&this.requestUpdate()}shouldUpdate(e){if(e.has("config"))return!0;if(e.has("hass")){const t=e.get("hass");if(!t)return!0;if(t.states[this.config.entity]!==this.hass.states[this.config.entity])return!0;if(this.config.outdoor_temp_sensor&&t.states[this.config.outdoor_temp_sensor]!==this.hass.states[this.config.outdoor_temp_sensor])return!0;if(this.config.forecast_sensor&&t.states[this.config.forecast_sensor]!==this.hass.states[this.config.forecast_sensor])return!0;const a=this.config.sun_entity||"sun.sun";if(this.config.show_weather_info?.includes("sunrise_sunset")&&t.states[a]!==this.hass.states[a])return!0;const i=this.config.moon_entity||"sensor.moon_phase";return!1!==this.config.show_moon_phase&&t.states[i]!==this.hass.states[i]}return!!(e.has("forecastData")||e.has("hourlyForecastData")||e.has("nwsAlerts"))}async fetchForecast(){this.forecastDebounceTimer&&clearTimeout(this.forecastDebounceTimer),this.forecastDebounceTimer=window.setTimeout(async()=>{const e=Date.now();if(!(e-this.lastForecastFetch<5e3)&&(this.lastForecastFetch=e,this.hass&&this.config?.entity))try{const e=this.config.forecast_type||"daily";this.hass.connection.subscribeMessage(e=>{e?.forecast&&(this.forecastData=e.forecast)},{type:"weather/subscribe_forecast",forecast_type:e,entity_id:this.config.entity}),await this.fetchHourlyForRainTiming()}catch(e){console.error("Failed to fetch forecast data:",e),this.forecastData=[]}},1e3)}async fetchHourlyForRainTiming(){const e=this.config.forecast_sensor;if(this.hass&&e)try{const t=await this.hass.callWS({type:"weather/subscribe_forecast",forecast_type:"hourly",entity_id:e});this.hourlyForecastData=t?.forecast?t.forecast:[]}catch(e){console.error("Failed to fetch hourly forecast data:",e),this.hourlyForecastData=[]}else this.hourlyForecastData=[]}getWeatherData(){const e=this.hass.states[this.config.entity];if(!e)return{};const t=`${e.last_changed}_${this.forecastData.length}`;if(this.cachedWeatherData&&this.lastWeatherEntityState===t)return this.cachedWeatherData;let a=this.forecastData;return this.cachedWeatherData={temperature:e.attributes.temperature,temperature_unit:e.attributes.temperature_unit||"°F",humidity:e.attributes.humidity,pressure:e.attributes.pressure,pressure_unit:e.attributes.pressure_unit,wind_speed:e.attributes.wind_speed,wind_speed_unit:e.attributes.wind_speed_unit,wind_bearing:e.attributes.wind_bearing,wind_gust_speed:e.attributes.wind_gust_speed,condition:e.state,forecast:a,apparent_temperature:e.attributes.apparent_temperature,uv_index:e.attributes.uv_index,visibility:e.attributes.visibility,visibility_unit:e.attributes.visibility_unit,precipitation:e.attributes.precipitation,precipitation_unit:e.attributes.precipitation_unit,cloud_coverage:e.attributes.cloud_coverage,dew_point:e.attributes.dew_point,ozone:e.attributes.ozone},this.lastWeatherEntityState=t,this.cachedWeatherData}getCurrentTemp(){if(this.config.outdoor_temp_sensor){const e=this.hass.states[this.config.outdoor_temp_sensor];if(e)return parseFloat(e.state)}return this.getWeatherData().temperature||70}getSunEntity(){const e=this.config.sun_entity||"sun.sun";return this.hass.states[e]}getMoonEntity(){const e=this.config.moon_entity||"sensor.moon_phase";return this.hass.states[e]}isNightTime(){const e=this.getSunEntity();if(e)return"below_horizon"===e.state;const t=(new Date).getHours();return t>=20||t<6}getMoonPhase(){const e=this.getMoonEntity();return e?e.state:"unknown"}getRainTiming(){const e=this.hourlyForecastData;if(!e||0===e.length)return null;const t=new Date,a=new Date(t.getTime()+144e5);for(const i of e){const e=new Date(i.datetime);if(e<=t||e>a)continue;const r=(i.precipitation_probability??0)>50,o=(i.precipitation??0)>0,n=["rainy","pouring","rain","drizzle","lightning-rainy","thunderstorm","thunderstorms"].includes((i.condition||"").toLowerCase());if(r||o||n){const a=Math.round((e.getTime()-t.getTime())/36e5);let i="";return i=a<1?"Rain expected within the hour":1===a?"Rain expected in 1 hour":`Rain expected in ${a} hours`,{isRaining:!0,message:i,time:e.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",hour12:!0})}}}return null}getCurrentHoliday(){if(!this.config?.holiday_themes)return null;const e=new Date,t=e.getMonth()+1,a=e.getDate();return 10===t&&a>=25?"halloween":12===t&&a>=18&&a<=25?"christmas":12===t&&31===a||1===t&&1===a?"newyear":2!==t||13!==a&&14!==a?3===t&&17===a?"stpatrick":5===t&&5===a?"cincodemayo":7===t&&4===a?"july4th":3===t&&a>=25||4===t&&a<=10?"easter":null:"valentine"}renderHolidayDecorations(){const e=this.getCurrentHoliday();if(!e)return"";const{background:t=[]}=Pe[e]||{};let a=[],i=[];if("halloween"===e){i=[{icon:"🦇",top:8,left:8,size:2.8},{icon:"🦇",top:35,left:50,size:2.6},{icon:["🧙‍♀️","🧛","🧟"][Math.floor(Date.now()/1e4)%3],top:48,left:88,size:2.5},{icon:"🕷️",top:55,left:48,size:2.2},{icon:"🕷️",top:18,left:88,size:2},{icon:"👻",top:72,left:10,size:2.4},{icon:"🕸️",top:10,left:88,size:1.8}]}else if("christmas"===e){i=[{icon:"❄️",top:8,left:8,size:2.8},{icon:"❄️",top:10,left:90,size:2.6},{icon:"🦌",top:40,left:50,size:2.5},{icon:["🎅","🧑‍🎄"][Math.floor(Date.now()/1e4)%2],top:50,left:88,size:2.4},{icon:"⛄",top:72,left:10,size:2.2},{icon:"🌟",top:5,left:50,size:2.3},{icon:"🌟",top:75,left:88,size:2}]}else if("newyear"===e)i=[{icon:"🎇",top:8,left:10,size:2.8},{icon:"🎇",top:10,left:88,size:2.6},{icon:"✨",top:35,left:50,size:2.4},{icon:"✨",top:55,left:48,size:2.2},{icon:"🎉",top:72,left:10,size:2.2},{icon:"🎉",top:50,left:88,size:2}];else if("valentine"===e)i=[{icon:"❤️",top:8,left:10,size:2.8},{icon:"❤️",top:10,left:88,size:2.6},{icon:"💕",top:40,left:50,size:2.4},{icon:"💘",top:72,left:88,size:2.2},{icon:"💖",top:72,left:10,size:2.2}];else if("july4th"===e)i=[{icon:"🎇",top:8,left:10,size:2.8},{icon:"🎇",top:10,left:88,size:2.6},{icon:"⭐",top:40,left:50,size:2.4},{icon:"⭐",top:72,left:88,size:2.2},{icon:"🎉",top:72,left:10,size:2.2},{icon:"🎊",top:55,left:48,size:2}];else if("stpatrick"===e)i=[{icon:"🌈",top:8,left:10,size:2.8},{icon:"🌈",top:10,left:88,size:2.6},{icon:"💚",top:40,left:50,size:2.4},{icon:"🎩",top:55,left:88,size:2.2},{icon:"🪙",top:72,left:10,size:2.2}];else if("easter"===e)i=[{icon:"🌷",top:8,left:10,size:2.8},{icon:"🌷",top:10,left:88,size:2.6},{icon:"🐣",top:40,left:50,size:2.4},{icon:"💐",top:72,left:88,size:2.2},{icon:"🌸",top:72,left:10,size:2.2}];else if("cincodemayo"===e)i=[{icon:"🌵",top:8,left:10,size:2.8},{icon:"🌵",top:10,left:88,size:2.6},{icon:"🎺",top:40,left:50,size:2.4},{icon:"🎉",top:72,left:10,size:2.2},{icon:"🎊",top:55,left:88,size:2}];else{const e=Math.min(5,t.length);a=t.slice(0,e);const r=[{top:5,left:5},{top:5,left:85},{top:45,left:5},{top:45,left:85},{top:80,left:50}];i=a.map((e,t)=>{const a=r[t%r.length];return{icon:e,top:a.top+(10*Math.random()-5),left:a.left+(10*Math.random()-5),size:1.5+1*Math.random()}})}const r=["🎆","🎇","⭐","✨"],o=i.map((e,t)=>{const a=r.includes(e.icon)?(40*Math.random()-20).toFixed(1):"0",i=(.8*t).toFixed(2);return B`
         <span
           class="holiday-icon holiday-background"
           style="
@@ -724,7 +724,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         </div>
       `,o){case"greeting":l=B`
           <div class="greeting-header">
-            <div class="weather-icon ${ve(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             <div class="greeting-content">
@@ -737,12 +737,12 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               ${d}
             </div>
           </div>
-        `;break;case"graphical":const r=xe(),o=this.config.seasonal_images?.[r],c=function(e,t){if(t)return`url(${t})`;const a="/local/community/WeatherPulse/images";switch(e||xe()){case"spring":default:return`url(${a}/spring-default.jpg)`;case"summer":return`url(${a}/summer-default.jpg)`;case"fall":return`url(${a}/fall-default.jpg)`;case"winter":return`url(${a}/winter-default.jpg)`}}(r,o);l=B`
+        `;break;case"graphical":const r=be(),o=this.config.seasonal_images?.[r],c=function(e,t){if(t)return`url(${t})`;const a="/local/community/WeatherPulse/images";switch(e||be()){case"spring":default:return`url(${a}/spring-default.jpg)`;case"summer":return`url(${a}/summer-default.jpg)`;case"fall":return`url(${a}/fall-default.jpg)`;case"winter":return`url(${a}/winter-default.jpg)`}}(r,o);l=B`
           <div class="graphical-header" style="background: ${c}; background-size: cover; background-position: center;">
             <div class="graphical-overlay">
               <div class="graphical-content">
                 <div class="graphical-main">
-                  <div class="weather-icon-graphical ${ve(e.condition||"clear")}">
+                  <div class="weather-icon-graphical ${we(e.condition||"clear")}">
                     ${this.renderWeatherIcon(e.condition||"clear")}
                   </div>
                   <div class="graphical-right">
@@ -762,14 +762,14 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
           </div>
         `;break;case"minimal":l=B`
           <div class="minimal-header">
-            <div class="weather-icon ${ve(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             ${d}
           </div>
         `;break;case"date-focused":l=B`
           <div class="datetime-header">
-            <div class="weather-icon ${ve(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             <div class="datetime-content">
@@ -782,7 +782,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
           </div>
         `;break;case"balanced":l=B`
           <div class="datetime-header balanced">
-            <div class="weather-icon ${ve(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             <div class="datetime-content">
@@ -795,7 +795,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
           </div>
         `;break;default:let h=e.condition||"clear";h=h.toLowerCase().includes("unavail")||h.toLowerCase().includes("unknown")?"Loading":h.split("-").map(e=>e.charAt(0).toUpperCase()+e.slice(1)).join(" "),l=B`
           <div class="datetime-header time-focused-header">
-            <div class="weather-icon ${ve(e.condition||"clear")}">
+            <div class="weather-icon ${we(e.condition||"clear")}">
               ${this.renderWeatherIcon(e.condition||"clear")}
             </div>
             <div class="datetime-content">
@@ -843,7 +843,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
           </div>
         `:""}
       </div>
-    `}renderWeatherIcon(e,t=!1){let a;if(t)a=function(e){const t=e.toLowerCase();return t.includes("clear")||t.includes("sunny")?"clear-day":t.includes("partlycloudy")||t.includes("partly")||t.includes("partial")?"partlycloudy":t.includes("cloud")?"cloudy":t.includes("rain")?"rainy":t.includes("snow")?"snowy":t.includes("storm")||t.includes("thunder")?"lightning":t.includes("fog")||t.includes("mist")?"fog":t.includes("wind")?"windy":"clear-day"}(e);else{const t=this.isNightTime(),i=e.toLowerCase();a=i.includes("clear")||i.includes("sunny")?t?"clear-night":"clear-day":i.includes("partlycloudy")||i.includes("partly")||i.includes("partial")?t?"partlycloudy-night":"partlycloudy":ve(e)}const i=!1!==this.config.animate_icons;if(("clear-night"===a||"partlycloudy-night"===a)&&i&&!1!==this.config.show_moon_phase){const e=this.getMoonPhase();if(e&&"unknown"!==e)return"clear-night"===a?function(e,t=!0){let a="";switch(e.toLowerCase()){case"new_moon":case"new-moon":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/></svg>';break;case"waxing_crescent":case"waxing-crescent":default:a=ze;break;case"first_quarter":case"first-quarter":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="24.26" x2="40.74" y1="18.57" y2="47.1" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M38.8 15.87a17.48 17.48 0 00-7.12-1.58 17.37 17.37 0 01-13 29.32 13.42 13.42 0 005.93 4.23A17.68 17.68 0 0048 39.12a17.68 17.68 0 00-9.2-23.25z"/></svg>';break;case"waxing_gibbous":case"waxing-gibbous":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="24.28" x2="40.93" y1="18.15" y2="47" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M49 27a16.78 16.78 0 00-19.45-11.9 17.2 17.2 0 011.73 4 17.76 17.76 0 01-13.82 22.19A16.83 16.83 0 0037 48.74 17.83 17.83 0 0049 27z"/></svg>';break;case"full_moon":case"full-moon":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="23.25" x2="40.75" y1="16.84" y2="47.16" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="17.5" fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5"/></svg>';break;case"waning_gibbous":case"waning-gibbous":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="20.23" x2="37.75" y1="18.52" y2="48.86" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M44.68 40.83a17.84 17.84 0 01-11.93-21.72 17.2 17.2 0 011.73-4A16.78 16.78 0 0015 27a17.83 17.83 0 0012 21.74 16.83 16.83 0 0019.58-7.45 18 18 0 01-1.9-.46z"/></svg>';break;case"last_quarter":case"third_quarter":case"last-quarter":case"third-quarter":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="19.64" x2="37.19" y1="18.96" y2="49.35" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M29.06 33.31a17.52 17.52 0 013.26-19 17.44 17.44 0 00-7.11 1.58A17.68 17.68 0 0016 39.12a17.68 17.68 0 0023.43 8.72 13.45 13.45 0 005.94-4.23 17.51 17.51 0 01-16.31-10.3z"/></svg>';break;case"waning_crescent":case"waning-crescent":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="17.54" x2="35.04" y1="20.14" y2="50.45" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M41.25 46.82c-16.7.48-25.61-19.52-14.07-31.61h0l.08-.06a18.38 18.38 0 00-2.38.86A17.5 17.5 0 1039.12 48a18.21 18.21 0 002.23-1.19z"/></svg>'}return t||(a=a.replace(/<animate[^>]*>/g,"").replace(/<\/animate>/g,""),a=a.replace(/<animateTransform[^>]*\/>/g,"")),a=a.replace(/<svg/,'<svg class="weather-icon-svg"'),R`${$e(a)}`}(e,!0):Te(a,!0)}if(i)return Te(a,!0);return B`<span class="icon-emoji">${{"clear-day":"☀️","clear-night":"🌙",cloudy:"☁️",rainy:"🌧️",snowy:"❄️",lightning:"⛈️",fog:"🌫️",windy:"💨"}[a]||"☀️"}</span>`}renderForecast(){const e=this.getWeatherData(),t=this.config.forecast_type||"daily",a="hourly"===t?this.config.hourly_count||12:this.config.forecast_days||5,i=e.forecast?.slice(0,a)||[],r=this.config.view_mode||"standard";if(0===i.length)return B`
+    `}renderWeatherIcon(e,t=!1){let a;if(t)a=function(e){const t=e.toLowerCase();return t.includes("clear")||t.includes("sunny")?"clear-day":t.includes("partlycloudy")||t.includes("partly")||t.includes("partial")?"partlycloudy":t.includes("cloud")?"cloudy":t.includes("rain")?"rainy":t.includes("snow")?"snowy":t.includes("storm")||t.includes("thunder")?"lightning":t.includes("fog")||t.includes("mist")?"fog":t.includes("wind")?"windy":"clear-day"}(e);else{const t=this.isNightTime(),i=e.toLowerCase();a=i.includes("clear")||i.includes("sunny")?t?"clear-night":"clear-day":i.includes("partlycloudy")||i.includes("partly")||i.includes("partial")?t?"partlycloudy-night":"partlycloudy":we(e)}const i=!1!==this.config.animate_icons;if(("clear-night"===a||"partlycloudy-night"===a)&&i&&!1!==this.config.show_moon_phase){const e=this.getMoonPhase();if(e&&"unknown"!==e)return"clear-night"===a?function(e,t=!0){let a="";switch(e.toLowerCase()){case"new_moon":case"new-moon":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/></svg>';break;case"waxing_crescent":case"waxing-crescent":default:a=ze;break;case"first_quarter":case"first-quarter":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="24.26" x2="40.74" y1="18.57" y2="47.1" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M38.8 15.87a17.48 17.48 0 00-7.12-1.58 17.37 17.37 0 01-13 29.32 13.42 13.42 0 005.93 4.23A17.68 17.68 0 0048 39.12a17.68 17.68 0 00-9.2-23.25z"/></svg>';break;case"waxing_gibbous":case"waxing-gibbous":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="24.28" x2="40.93" y1="18.15" y2="47" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M49 27a16.78 16.78 0 00-19.45-11.9 17.2 17.2 0 011.73 4 17.76 17.76 0 01-13.82 22.19A16.83 16.83 0 0037 48.74 17.83 17.83 0 0049 27z"/></svg>';break;case"full_moon":case"full-moon":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="23.25" x2="40.75" y1="16.84" y2="47.16" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="17.5" fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5"/></svg>';break;case"waning_gibbous":case"waning-gibbous":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="20.23" x2="37.75" y1="18.52" y2="48.86" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M44.68 40.83a17.84 17.84 0 01-11.93-21.72 17.2 17.2 0 011.73-4A16.78 16.78 0 0015 27a17.83 17.83 0 0012 21.74 16.83 16.83 0 0019.58-7.45 18 18 0 01-1.9-.46z"/></svg>';break;case"last_quarter":case"third_quarter":case"last-quarter":case"third-quarter":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="19.64" x2="37.19" y1="18.96" y2="49.35" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M29.06 33.31a17.52 17.52 0 013.26-19 17.44 17.44 0 00-7.11 1.58A17.68 17.68 0 0016 39.12a17.68 17.68 0 0023.43 8.72 13.45 13.45 0 005.94-4.23 17.51 17.51 0 01-16.31-10.3z"/></svg>';break;case"waning_crescent":case"waning-crescent":a='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="a" x1="17.54" x2="35.04" y1="20.14" y2="50.45" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#86c3db"/><stop offset=".45" stop-color="#86c3db"/><stop offset="1" stop-color="#5eafcf"/></linearGradient></defs><circle cx="32" cy="32" r="16.5" fill="none" stroke="#e5e7eb" stroke-dasharray="1.99 5.98" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" transform="rotate(-45 32.002 31.994)"/><path fill="url(#a)" stroke="#72b9d5" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5" d="M41.25 46.82c-16.7.48-25.61-19.52-14.07-31.61h0l.08-.06a18.38 18.38 0 00-2.38.86A17.5 17.5 0 1039.12 48a18.21 18.21 0 002.23-1.19z"/></svg>'}return t||(a=a.replace(/<animate[^>]*>/g,"").replace(/<\/animate>/g,""),a=a.replace(/<animateTransform[^>]*\/>/g,"")),a=a.replace(/<svg/,'<svg class="weather-icon-svg"'),R`${$e(a)}`}(e,!0):Te(a,!0)}if(i)return Te(a,!0);return B`<span class="icon-emoji">${{"clear-day":"☀️","clear-night":"🌙",cloudy:"☁️",rainy:"🌧️",snowy:"❄️",lightning:"⛈️",fog:"🌫️",windy:"💨"}[a]||"☀️"}</span>`}renderForecast(){const e=this.getWeatherData(),t=this.config.forecast_type||"daily",a="hourly"===t?this.config.hourly_count||12:this.config.forecast_days||5,i=e.forecast?.slice(0,a)||[],r=this.config.view_mode||"standard";if(0===i.length)return B`
         <div class="no-forecast">
           <p>No forecast data available</p>
           <p class="helper">Your weather integration may not provide forecast data, or you may need to use a weather service call to fetch it.</p>
@@ -887,7 +887,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         <div class="hour-temp">${r}°</div>
         ${o>0?B`<div class="precip-prob">${o}%</div>`:""}
       </div>
-    `}renderForecastDay(e,t,a="standard"){const i=we(e.datetime),r=Math.round(e.temperature||0),o=Math.round(e.templow||0),n=e.precipitation_probability||0,s=e.humidity,l=e.wind_speed,d=r-o>0?o/r*70:30;if("compact"===a){const a=ue(r,t),s=a.color.replace("135deg","180deg");return B`
+    `}renderForecastDay(e,t,a="standard"){const i=xe(e.datetime),r=Math.round(e.temperature||0),o=Math.round(e.templow||0),n=e.precipitation_probability||0,s=e.humidity,l=e.wind_speed,d=r-o>0?o/r*70:30;if("compact"===a){const a=ue(r,t),s=a.color.replace("135deg","180deg");return B`
         <div class="forecast-day forecast-compact" style="background: ${s}; color: ${a.textColor}; background-clip: padding-box;">
           <div class="day-name">${i}</div>
           <div class="day-icon-small">
@@ -948,7 +948,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       <div class="forecast-chart">
         <!-- Day names at top -->
         <div class="chart-labels">
-          ${e.map(e=>{const t="hourly"===a?new Date(e.datetime).toLocaleTimeString("en-US",{hour:"numeric",hour12:!0}):we(e.datetime);return B`
+          ${e.map(e=>{const t="hourly"===a?new Date(e.datetime).toLocaleTimeString("en-US",{hour:"numeric",hour12:!0}):xe(e.datetime);return B`
               <div class="chart-label">${t}</div>
             `})}
         </div>
@@ -1019,6 +1019,89 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
     `}static get styles(){return n`
       :host {
         display: block;
+
+        /* Color Variables - Night Mode */
+        --night-bg: #0a0e27;
+        --night-bg-overlay-light: rgba(10, 14, 27, 0.6);
+        --night-bg-overlay-medium: rgba(10, 14, 27, 0.7);
+        --night-bg-alt-light: rgba(10, 14, 39, 0.5);
+        --night-bg-alt-medium: rgba(10, 14, 39, 0.8);
+        --night-gradient-secondary: rgba(20, 25, 45, 0.6);
+        --night-surface: rgba(29, 33, 56, 0.6);
+        --night-surface-light: rgba(29, 33, 56, 0.4);
+        --night-text: white;
+        --night-text-secondary: #e8eaf6;
+        --night-border: rgba(232, 234, 246, 0.1);
+        --night-border-medium: rgba(232, 234, 246, 0.15);
+
+        /* Color Variables - Dark/Midnight Theme */
+        --dark-bg: #0d0d0d;
+        --dark-bg-alt: #1a1a1a;
+        --dark-surface: #151515;
+        --dark-minimal: #000000;
+        --dark-minimal-alt: #0a0a0a;
+        --dark-text: #c0c0c0;
+        --dark-text-alt: #d0d0d0;
+        --dark-text-dim: #b0b0b0;
+
+        /* Color Variables - Light/Minimal Theme */
+        --light-bg: #ffffff;
+        --light-surface: #f8f8f8;
+        --light-border: #e0e0e0;
+        --light-border-alt: #f0f0f0;
+        --light-text: #333;
+        --light-text-alt: #333333;
+
+        /* Color Variables - Overlays */
+        --overlay-dark-subtle: var(--overlay-dark-subtle);
+        --overlay-dark-light: var(--overlay-dark-light);
+        --overlay-dark-normal: var(--overlay-dark-normal);
+        --overlay-dark-medium: var(--overlay-dark-medium);
+        --overlay-dark-strong: var(--overlay-dark-strong);
+        --overlay-dark-very-strong: var(--overlay-dark-very-strong);
+        --overlay-light-subtle: var(--overlay-light-subtle);
+        --overlay-light-light: var(--overlay-light-light);
+        --overlay-light-normal: var(--overlay-light-normal);
+        --overlay-light-medium: var(--overlay-light-medium);
+
+        /* Color Variables - Alerts */
+        --alert-extreme: #d32f2f;
+        --alert-extreme-glow-strong: var(--alert-extreme-glow-strong);
+        --alert-extreme-glow-medium: var(--alert-extreme-glow-medium);
+        --alert-extreme-glow-light: var(--alert-extreme-glow-light);
+        --alert-severe: #f57c00;
+        --alert-severe-glow-strong: var(--alert-severe-glow-strong);
+        --alert-severe-glow-medium: var(--alert-severe-glow-medium);
+        --alert-severe-glow-light: var(--alert-severe-glow-light);
+        --alert-moderate: #fbc02d;
+        --alert-minor: #1976d2;
+        --alert-unknown: #757575;
+
+        /* Color Variables - Temperature */
+        --temp-cold: #4A9EFF;
+        --temp-cold-alt: rgba(74, 158, 255, 0.6);
+        --temp-freezing-glow-strong: var(--temp-freezing-glow-strong);
+        --temp-freezing-glow-medium: var(--temp-freezing-glow-medium);
+        --temp-freezing-glow-light: var(--temp-freezing-glow-light);
+        --temp-hot: #e67e22;
+        --temp-hot-alt: var(--temp-hot-alt);
+        --temp-hot-glow-medium: var(--temp-hot-glow-medium);
+        --temp-hot-glow-light: var(--temp-hot-glow-light);
+
+        /* Color Variables - Chart/Gradients */
+        --chart-temp-high-start: rgba(255, 120, 80, 1);
+        --chart-temp-high-end: #f1c40f;
+        --chart-temp-low-start: #a8dadc;
+        --chart-temp-low-end: #457b9d;
+        --chart-temp-single: rgba(255, 150, 100, 1);
+
+        /* Color Variables - Theme Variants */
+        --vibrant-primary: #667eea;
+        --vibrant-secondary: #764ba2;
+        --vibrant-accent: #f093fb;
+        --vibrant-gradient: #f5576c;
+        --retro-primary: #0074D9;
+        --retro-secondary: #001f3f;
       }
 
       ha-card {
@@ -1029,7 +1112,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       /* Night Mode Styling */
       ha-card.night-mode {
-        background: #0a0e27;
+        background: var(--night-bg);
         position: relative;
       }
 
@@ -1080,7 +1163,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       ha-card.night-mode .card-header {
         position: relative;
-        color: white !important; /* Bright white text */
+        color: var(--night-text) !important; /* Bright white text */
         filter: none !important; /* No filter - don't dim text */
       }
 
@@ -1091,7 +1174,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, rgba(10, 14, 27, 0.6) 0%, rgba(20, 25, 45, 0.6) 100%); /* Darker overlay */
+        background: linear-gradient(135deg, var(--night-bg-overlay-light) 0%, var(--night-gradient-secondary) 100%); /* Darker overlay */
         pointer-events: none;
         z-index: 0;
       }
@@ -1108,22 +1191,22 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.night-mode .graphical-overlay {
-        background: linear-gradient(180deg, rgba(10,14,39,0.5) 0%, rgba(10,14,39,0.8) 100%);
+        background: linear-gradient(180deg, var(--night-bg-alt-light) 0%, var(--night-bg-alt-medium) 100%);
       }
 
       ha-card.night-mode .card-content {
         background: transparent; /* Transparent to show stars through */
-        color: #e8eaf6;
+        color: var(--night-text-secondary);
       }
 
       ha-card.night-mode .forecast-day,
       ha-card.night-mode .forecast-hour {
         background: transparent !important; /* Show stars through */
-        border-bottom-color: rgba(232, 234, 246, 0.1);
+        border-bottom-color: var(--night-border);
       }
 
       ha-card.night-mode .temp-bar {
-        background: rgba(232, 234, 246, 0.15);
+        background: var(--night-border-medium);
       }
 
       ha-card.night-mode .forecast-day.forecast-compact,
@@ -1179,7 +1262,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.night-mode .forecast-type-hourly.forecast-standard .forecast-hour {
-        background: rgba(29, 33, 56, 0.6) !important; /* Keep some background */
+        background: var(--night-surface) !important; /* Keep some background */
         position: relative !important;
         z-index: 1 !important; /* Above stars */
       }
@@ -1226,7 +1309,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+        background: linear-gradient(180deg, var(--overlay-dark-medium) 0%, rgba(0,0,0,0.6) 100%);
         backdrop-filter: blur(2px);
       }
 
@@ -1236,7 +1319,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         padding: 32px 32px 32px 16px;
         width: 100%;
         color: white;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        text-shadow: 0 2px 8px var(--overlay-dark-strong);
       }
 
       .graphical-main {
@@ -1495,7 +1578,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         gap: 12px;
         padding: 16px 20px;
         background: var(--card-background-color, rgba(0,0,0,0.02));
-        border-top: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-top: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       /* Standard Layout (default) */
@@ -1661,7 +1744,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .rain-timing-banner {
         background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
         padding: 12px 20px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 8px var(--overlay-dark-light);
         position: relative;
         overflow: hidden;
       }
@@ -1673,7 +1756,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        background: linear-gradient(90deg, transparent, var(--overlay-light-subtle), transparent);
         animation: shimmer 3s infinite;
       }
 
@@ -1705,7 +1788,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .rain-message {
         flex: 1;
         letter-spacing: 0.3px;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        text-shadow: 0 1px 2px var(--overlay-dark-normal);
       }
 
       .rain-time {
@@ -1726,7 +1809,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         gap: 12px;
         padding: 16px 20px;
         background: var(--card-background-color, rgba(0,0,0,0.02));
-        border-top: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-top: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       .nws-alert {
@@ -1737,12 +1820,12 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .nws-alert.alert-extreme {
-        border-left-color: #d32f2f;
+        border-left-color: var(--alert-extreme);
         background: rgba(211, 47, 47, 0.1);
       }
 
       .nws-alert.alert-severe {
-        border-left-color: #f57c00;
+        border-left-color: var(--alert-severe);
         background: rgba(245, 124, 0, 0.1);
       }
 
@@ -1796,10 +1879,10 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         font-weight: 700;
         padding: 2px 6px;
         border-radius: 3px;
-        background: rgba(255, 255, 255, 0.3);
+        background: var(--overlay-light-medium);
         color: #fff;
         letter-spacing: 0.5px;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        text-shadow: 0 1px 2px var(--overlay-dark-medium);
       }
 
       .alert-area {
@@ -1819,7 +1902,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         line-height: 1.4;
         margin-bottom: 6px;
         padding: 8px;
-        background: rgba(0, 0, 0, 0.1);
+        background: var(--overlay-dark-subtle);
         border-radius: 4px;
       }
 
@@ -1839,11 +1922,11 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.night-mode .nws-alert.alert-extreme {
-        background: rgba(211, 47, 47, 0.2);
+        background: var(--alert-extreme-glow-light);
       }
 
       ha-card.night-mode .nws-alert.alert-severe {
-        background: rgba(245, 124, 0, 0.2);
+        background: var(--alert-severe-glow-light);
       }
 
       ha-card.night-mode .nws-alert.alert-moderate {
@@ -1856,83 +1939,83 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       /* Alert Glow Effects for Extreme/Severe */
       ha-card.alert-glow-extreme {
-        box-shadow: 0 0 20px rgba(211, 47, 47, 0.6),
-                    0 0 40px rgba(211, 47, 47, 0.4),
-                    0 0 60px rgba(211, 47, 47, 0.2);
+        box-shadow: 0 0 20px var(--alert-extreme-glow-strong),
+                    0 0 40px var(--alert-extreme-glow-medium),
+                    0 0 60px var(--alert-extreme-glow-light);
         animation: pulse-extreme 2s ease-in-out infinite;
       }
 
       ha-card.alert-glow-severe {
-        box-shadow: 0 0 15px rgba(245, 124, 0, 0.5),
-                    0 0 30px rgba(245, 124, 0, 0.3),
-                    0 0 45px rgba(245, 124, 0, 0.2);
+        box-shadow: 0 0 15px var(--alert-severe-glow-strong),
+                    0 0 30px var(--alert-severe-glow-medium),
+                    0 0 45px var(--alert-severe-glow-light);
         animation: pulse-severe 2s ease-in-out infinite;
       }
 
       @keyframes pulse-extreme {
         0%, 100% {
-          box-shadow: 0 0 20px rgba(211, 47, 47, 0.6),
-                      0 0 40px rgba(211, 47, 47, 0.4),
-                      0 0 60px rgba(211, 47, 47, 0.2);
+          box-shadow: 0 0 20px var(--alert-extreme-glow-strong),
+                      0 0 40px var(--alert-extreme-glow-medium),
+                      0 0 60px var(--alert-extreme-glow-light);
         }
         50% {
           box-shadow: 0 0 25px rgba(211, 47, 47, 0.8),
-                      0 0 50px rgba(211, 47, 47, 0.6),
-                      0 0 75px rgba(211, 47, 47, 0.4);
+                      0 0 50px var(--alert-extreme-glow-strong),
+                      0 0 75px var(--alert-extreme-glow-medium);
         }
       }
 
       @keyframes pulse-severe {
         0%, 100% {
-          box-shadow: 0 0 15px rgba(245, 124, 0, 0.5),
-                      0 0 30px rgba(245, 124, 0, 0.3),
-                      0 0 45px rgba(245, 124, 0, 0.2);
+          box-shadow: 0 0 15px var(--alert-severe-glow-strong),
+                      0 0 30px var(--alert-severe-glow-medium),
+                      0 0 45px var(--alert-severe-glow-light);
         }
         50% {
           box-shadow: 0 0 20px rgba(245, 124, 0, 0.7),
-                      0 0 40px rgba(245, 124, 0, 0.5),
-                      0 0 60px rgba(245, 124, 0, 0.3);
+                      0 0 40px var(--alert-severe-glow-strong),
+                      0 0 60px var(--alert-severe-glow-medium);
         }
       }
 
       /* Extreme Temperature Glow Effects */
       ha-card.temp-glow-hot {
-        box-shadow: 0 0 20px rgba(230, 74, 25, 0.6),
-                    0 0 40px rgba(230, 74, 25, 0.4),
-                    0 0 60px rgba(230, 74, 25, 0.2);
+        box-shadow: 0 0 20px var(--temp-hot-alt),
+                    0 0 40px var(--temp-hot-glow-medium),
+                    0 0 60px var(--temp-hot-glow-light);
         animation: pulse-hot 3s ease-in-out infinite;
       }
 
       ha-card.temp-glow-freezing {
-        box-shadow: 0 0 20px rgba(79, 195, 247, 0.6),
-                    0 0 40px rgba(79, 195, 247, 0.4),
-                    0 0 60px rgba(79, 195, 247, 0.2);
+        box-shadow: 0 0 20px var(--temp-freezing-glow-strong),
+                    0 0 40px var(--temp-freezing-glow-medium),
+                    0 0 60px var(--temp-freezing-glow-light);
         animation: pulse-freezing 3s ease-in-out infinite;
       }
 
       @keyframes pulse-hot {
         0%, 100% {
-          box-shadow: 0 0 20px rgba(230, 74, 25, 0.6),
-                      0 0 40px rgba(230, 74, 25, 0.4),
-                      0 0 60px rgba(230, 74, 25, 0.2);
+          box-shadow: 0 0 20px var(--temp-hot-alt),
+                      0 0 40px var(--temp-hot-glow-medium),
+                      0 0 60px var(--temp-hot-glow-light);
         }
         50% {
           box-shadow: 0 0 25px rgba(230, 74, 25, 0.8),
-                      0 0 50px rgba(230, 74, 25, 0.6),
-                      0 0 75px rgba(230, 74, 25, 0.4);
+                      0 0 50px var(--temp-hot-alt),
+                      0 0 75px var(--temp-hot-glow-medium);
         }
       }
 
       @keyframes pulse-freezing {
         0%, 100% {
-          box-shadow: 0 0 20px rgba(79, 195, 247, 0.6),
-                      0 0 40px rgba(79, 195, 247, 0.4),
-                      0 0 60px rgba(79, 195, 247, 0.2);
+          box-shadow: 0 0 20px var(--temp-freezing-glow-strong),
+                      0 0 40px var(--temp-freezing-glow-medium),
+                      0 0 60px var(--temp-freezing-glow-light);
         }
         50% {
           box-shadow: 0 0 25px rgba(79, 195, 247, 0.8),
-                      0 0 50px rgba(79, 195, 247, 0.6),
-                      0 0 75px rgba(79, 195, 247, 0.4);
+                      0 0 50px var(--temp-freezing-glow-strong),
+                      0 0 75px var(--temp-freezing-glow-medium);
         }
       }
 
@@ -1951,7 +2034,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       /* Background holiday icons (floating/animated) */
       .holiday-icon {
         position: absolute;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        filter: drop-shadow(0 2px 4px var(--overlay-dark-medium));
         pointer-events: none;
         animation: holiday-float 4s ease-in-out infinite;
         z-index: -1;
@@ -2003,7 +2086,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         animation: none !important;
         transform: none !important;
         opacity: 1 !important;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        filter: drop-shadow(0 2px 4px var(--overlay-dark-medium));
         pointer-events: none;
       }
 
@@ -2157,7 +2240,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-retro .forecast-hour {
         background: transparent !important;
         border: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-bottom: 1px solid var(--overlay-light-normal) !important;
         border-radius: 0 !important;
         box-shadow: none !important;
         color: white !important;
@@ -2179,7 +2262,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       ha-card.theme-retro .weather-info-section {
         background: transparent !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-top: 1px solid var(--overlay-light-normal) !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
       }
@@ -2202,7 +2285,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.theme-retro .temp-bar {
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: var(--overlay-light-normal) !important;
       }
 
       /* RETRO THEME - Night Mode */
@@ -2225,60 +2308,60 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       ha-card.theme-retro.night-mode .forecast-day,
       ha-card.theme-retro.night-mode .forecast-hour {
-        border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+        border-bottom-color: var(--overlay-light-light) !important;
       }
 
       /* MIDNIGHT THEME - Sleek Modern Dark */
       ha-card.theme-midnight {
-        background: #0d0d0d !important;
-        border: 1px solid #1a1a1a !important;
+        background: var(--dark-bg) !important;
+        border: 1px solid var(--dark-bg-alt) !important;
         border-radius: 12px !important;
         box-shadow:
           0 8px 32px rgba(0, 0, 0, 0.8),
           0 2px 8px rgba(0, 0, 0, 0.6) !important;
-        color: #c0c0c0 !important;
+        color: var(--dark-text) !important;
       }
 
       ha-card.theme-midnight .card-header {
         background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%) !important;
         color: #d0d0d0 !important;
-        border-bottom: 1px solid #1a1a1a;
+        border-bottom: 1px solid var(--dark-bg-alt);
         border-radius: 12px 12px 0 0 !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 2px 8px var(--overlay-dark-strong);
       }
 
       ha-card.theme-midnight .graphical-header::after {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.8)) !important;
+        background: linear-gradient(to bottom, var(--overlay-dark-strong), rgba(0,0,0,0.8)) !important;
       }
 
       ha-card.theme-midnight .card-content {
-        background: #0d0d0d !important;
-        color: #c0c0c0 !important;
+        background: var(--dark-bg) !important;
+        color: var(--dark-text) !important;
       }
 
       ha-card.theme-midnight .forecast-day,
       ha-card.theme-midnight .forecast-hour {
-        background: #151515 !important;
+        background: var(--dark-surface) !important;
         border: none !important;
-        border-bottom: 1px solid #1a1a1a !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5) !important;
-        color: #c0c0c0 !important;
+        border-bottom: 1px solid var(--dark-bg-alt) !important;
+        box-shadow: 0 2px 6px var(--overlay-dark-strong) !important;
+        color: var(--dark-text) !important;
         padding: 12px 16px !important;
       }
 
       ha-card.theme-midnight .forecast-day:hover,
       ha-card.theme-midnight .forecast-hour:hover {
         background: #1d1d1d !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7) !important;
+        box-shadow: 0 4px 12px var(--overlay-dark-very-strong) !important;
       }
 
       ha-card.theme-midnight .forecast-day.forecast-compact,
       ha-card.theme-midnight .forecast-hour.forecast-compact {
-        background: #151515 !important;
-        border: 1px solid #1a1a1a !important;
+        background: var(--dark-surface) !important;
+        border: 1px solid var(--dark-bg-alt) !important;
         border-radius: 10px !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7) !important;
-        color: #c0c0c0 !important;
+        box-shadow: 0 4px 12px var(--overlay-dark-very-strong) !important;
+        color: var(--dark-text) !important;
       }
 
       ha-card.theme-midnight .forecast-day.forecast-compact:hover,
@@ -2286,7 +2369,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         background: #1d1d1d !important;
         border-color: #333333 !important;
         box-shadow:
-          0 4px 12px rgba(0, 0, 0, 0.7),
+          0 4px 12px var(--overlay-dark-very-strong),
           0 0 0 1px #333333 !important;
       }
 
@@ -2294,7 +2377,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
-        color: #c0c0c0 !important;
+        color: var(--dark-text) !important;
       }
 
       ha-card.theme-midnight .weather-info-section {
@@ -2305,15 +2388,15 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.theme-midnight .nws-alert {
-        background: #151515 !important;
-        border: 1px solid #1a1a1a !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7) !important;
+        background: var(--dark-surface) !important;
+        border: 1px solid var(--dark-bg-alt) !important;
+        box-shadow: 0 4px 12px var(--overlay-dark-very-strong) !important;
       }
 
       /* MIDNIGHT THEME - Night Mode (Even Darker) */
       ha-card.theme-midnight.night-mode {
         background: #000000 !important;
-        border-color: #0d0d0d !important;
+        border-color: var(--dark-bg) !important;
       }
 
       ha-card.theme-midnight.night-mode .card-header {
@@ -2328,13 +2411,13 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-midnight.night-mode .forecast-day,
       ha-card.theme-midnight.night-mode .forecast-hour {
         background: #0a0a0a !important;
-        border-bottom-color: #0d0d0d !important;
+        border-bottom-color: var(--dark-bg) !important;
       }
 
       ha-card.theme-midnight.night-mode .forecast-day.forecast-compact,
       ha-card.theme-midnight.night-mode .forecast-hour.forecast-compact {
         background: #0a0a0a !important;
-        border-color: #0d0d0d !important;
+        border-color: var(--dark-bg) !important;
       }
 
       ha-card.theme-midnight.night-mode .weather-info-item {
@@ -2351,7 +2434,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       /* MINIMAL THEME */
       ha-card.theme-minimal {
         background: #ffffff !important;
-        border: 1px solid #e0e0e0 !important;
+        border: 1px solid var(--light-border) !important;
         box-shadow: none !important;
         color: #333 !important;
       }
@@ -2359,7 +2442,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-minimal .card-header {
         background: #f8f8f8 !important; /* Override gradient */
         color: #333 !important;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid var(--light-border);
       }
 
       ha-card.theme-minimal .graphical-header::after {
@@ -2382,7 +2465,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-minimal .forecast-day.forecast-compact,
       ha-card.theme-minimal .forecast-hour.forecast-compact {
         background: #f8f8f8 !important;
-        border: 1px solid #e0e0e0 !important;
+        border: 1px solid var(--light-border) !important;
       }
 
       ha-card.theme-minimal .weather-info-item {
@@ -2394,14 +2477,14 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       ha-card.theme-minimal .weather-info-section {
         background: #ffffff !important;
-        border-top: 1px solid #e0e0e0 !important;
+        border-top: 1px solid var(--light-border) !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
       }
 
       ha-card.theme-minimal .nws-alert {
         background: #f8f8f8 !important;
-        border: 1px solid #e0e0e0 !important;
+        border: 1px solid var(--light-border) !important;
         color: #333 !important;
       }
 
@@ -2415,7 +2498,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.theme-minimal .temp-bar {
-        background: #e0e0e0 !important;
+        background: var(--light-border) !important;
       }
 
       ha-card.theme-minimal .weather-icon-svg {
@@ -2504,14 +2587,14 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       ha-card.theme-vibrant .forecast-hour {
         background: transparent !important;
         border: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-bottom: 1px solid var(--overlay-light-normal) !important;
         color: white !important;
       }
 
       ha-card.theme-vibrant .forecast-day.forecast-compact,
       ha-card.theme-vibrant .forecast-hour.forecast-compact {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        background: linear-gradient(135deg, var(--overlay-light-normal), var(--overlay-light-subtle)) !important;
+        border: 1px solid var(--overlay-light-medium) !important;
       }
 
       ha-card.theme-vibrant .weather-info-item {
@@ -2522,13 +2605,13 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       ha-card.theme-vibrant .weather-info-section {
         background: transparent !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-top: 1px solid var(--overlay-light-normal) !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
       }
 
       ha-card.theme-vibrant .nws-alert {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15)) !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), var(--overlay-light-light)) !important;
         border: 1px solid rgba(255, 255, 255, 0.4) !important;
         color: white !important;
       }
@@ -2543,7 +2626,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card.theme-vibrant .temp-bar {
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: var(--overlay-light-normal) !important;
       }
 
       ha-card.theme-vibrant .weather-icon-svg {
@@ -2829,7 +2912,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         align-items: center;
         gap: 10px;
         padding: 5px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       .forecast-day:last-child {
@@ -2868,7 +2951,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         flex: 1;
         height: 8px;
         border-radius: 4px;
-        background: var(--divider-color, rgba(0,0,0,0.1));
+        background: var(--divider-color, var(--overlay-dark-subtle));
         display: flex;
         overflow: hidden;
       }
@@ -2916,13 +2999,13 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         flex: 1;
         min-width: 0;
         border: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 4px var(--overlay-dark-light);
         transition: transform 0.2s ease;
       }
 
       .forecast-type-daily .forecast-compact:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 8px var(--overlay-dark-normal);
       }
 
       .forecast-type-hourly .forecast-compact {
@@ -2936,13 +3019,13 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         flex: 0 0 auto;
         width: 55px;
         border: 2px solid transparent;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 4px var(--overlay-dark-light);
         transition: transform 0.2s ease;
       }
 
       .forecast-type-hourly .forecast-compact:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 8px var(--overlay-dark-normal);
       }
 
       .forecast-compact .day-name {
@@ -3007,7 +3090,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         grid-template-columns: auto 1fr auto;
         gap: 16px;
         padding: 4px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
         align-items: center;
       }
 
@@ -3113,7 +3196,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         align-items: center;
         gap: 10px;
         padding: 5px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       .forecast-hour:last-child {
@@ -3128,7 +3211,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .forecast-type-hourly.forecast-standard .forecast-hour {
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
         padding: 5px 0;
         background: transparent;
         border-radius: 0;
@@ -3155,7 +3238,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         flex-direction: column;
         gap: 4px;
         padding: 4px 0;
-        border-bottom: 1px solid var(--divider-color, rgba(0,0,0,0.1));
+        border-bottom: 1px solid var(--divider-color, var(--overlay-dark-subtle));
       }
 
       .hour-info-row {
