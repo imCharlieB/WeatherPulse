@@ -102,6 +102,10 @@ export class WeatherPulseCard extends LitElement {
   private forecastDebounceTimer?: number;
   private lastForecastFetch: number = 0;
 
+  // Memoization for expensive calculations
+  private cachedWeatherData?: WeatherData;
+  private lastWeatherEntityState?: string;
+
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
     await import('./editor');
     return document.createElement('weatherpulse-card-editor') as LovelaceCardEditor;
@@ -326,10 +330,20 @@ export class WeatherPulseCard extends LitElement {
       return {};
     }
 
+    // Create a cache key from the entity's last_changed and forecastData length
+    // This ensures we recalculate when the entity updates or forecast data changes
+    const cacheKey = `${entity.last_changed}_${this.forecastData.length}`;
+
+    // Return cached data if entity hasn't changed
+    if (this.cachedWeatherData && this.lastWeatherEntityState === cacheKey) {
+      return this.cachedWeatherData;
+    }
+
     // Use fetched forecast data or fall back to entity attributes
     let forecast = this.forecastData.length > 0 ? this.forecastData : (entity.attributes.forecast || []);
 
-    return {
+    // Calculate and cache the result
+    this.cachedWeatherData = {
       temperature: entity.attributes.temperature,
       temperature_unit: entity.attributes.temperature_unit || '°F',
       humidity: entity.attributes.humidity,
@@ -351,6 +365,9 @@ export class WeatherPulseCard extends LitElement {
       dew_point: entity.attributes.dew_point,
       ozone: entity.attributes.ozone
     };
+    this.lastWeatherEntityState = cacheKey;
+
+    return this.cachedWeatherData;
   }
 
   private getCurrentTemp(): number {
