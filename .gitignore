@@ -28,3 +28,6 @@ coverage/
 # Misc
 .env
 .env.local
+
+# Claude Code internal files
+.claude/
