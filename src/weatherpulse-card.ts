@@ -299,7 +299,7 @@ export class WeatherPulseCard extends LitElement {
 
   /**
    * Fetch hourly forecast data for rain timing detection
-   * Uses weather.get_forecasts WebSocket call
+   * Reads from sensor attributes (new HA method for hourly forecasts)
    */
   private async fetchHourlyForRainTiming(): Promise<void> {
     // Always use forecast_sensor (user-selected) for forecast data
@@ -310,22 +310,14 @@ export class WeatherPulseCard extends LitElement {
       return;
     }
 
-    // Fetch hourly forecast using WebSocket subscription (modern HA only)
-    try {
-      const result = await this.hass.callWS<any>({
-        type: 'weather/subscribe_forecast',
-        forecast_type: 'hourly',
-        entity_id: forecastEntity,
-      });
-
-      if (result?.forecast) {
-        this.hourlyForecastData = result.forecast;
-      } else {
-        this.hourlyForecastData = [];
-      }
-    } catch (error) {
-      console.error('Failed to fetch hourly forecast data:', error);
+    // Get forecast data from the selected sensor's attributes
+    const entity = this.hass.states[forecastEntity];
+    if (entity?.attributes?.forecast) {
+      this.hourlyForecastData = entity.attributes.forecast;
+      console.debug('Used hourly forecast from selected sensor:', this.hourlyForecastData);
+    } else {
       this.hourlyForecastData = [];
+      console.debug('No hourly forecast data available in selected sensor attributes.');
     }
   }
 
