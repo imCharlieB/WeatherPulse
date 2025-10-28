@@ -209,7 +209,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - [x] **Split large methods:** Break up large methods (like `renderHeader` and `renderWeatherInfo`) into smaller, focused helper methods for readability and maintainability. ✅
   - [x] **Use optional chaining and nullish coalescing:** Ensure these are used everywhere to avoid runtime errors when accessing deeply nested properties. ✅
   - [x] **Remove legacy fallbacks:** If only supporting new Home Assistant models, remove any legacy attribute fallbacks for clarity and maintainability. ✅
-  - **Avoid unnecessary state:** Only use `@state()` for properties that must trigger a re-render. Use regular class properties for others.
+  - [x] **Avoid unnecessary state:** Only use `@state()` for properties that must trigger a re-render. Use regular class properties for others. ✅
   - **Optimize CSS:** Use CSS variables for theme colors, avoid deeply nested selectors, and prefer flat, efficient selectors for better performance.
   - **Improve accessibility:** Add `aria-labels` and roles to important elements, and ensure keyboard navigation is supported for better accessibility.
 - Comprehensive documentation
