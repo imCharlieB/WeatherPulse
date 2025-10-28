@@ -211,6 +211,11 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - [x] **Remove legacy fallbacks:** If only supporting new Home Assistant models, remove any legacy attribute fallbacks for clarity and maintainability. ✅
   - [x] **Avoid unnecessary state:** Only use `@state()` for properties that must trigger a re-render. Use regular class properties for others. ✅
   - **Optimize CSS:** Use CSS variables for theme colors, avoid deeply nested selectors, and prefer flat, efficient selectors for better performance.
+    - Sub-tasks:
+      1. Extract hardcoded colors to CSS variables (foundation for theming)
+      2. Optimize night mode CSS using CSS variables
+      3. Consolidate duplicate CSS rules
+      4. Simplify deeply nested selectors to flat selectors
   - **Improve accessibility:** Add `aria-labels` and roles to important elements, and ensure keyboard navigation is supported for better accessibility.
 - Comprehensive documentation
 - Example configurations
