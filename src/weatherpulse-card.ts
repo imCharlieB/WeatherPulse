@@ -99,6 +99,8 @@ export class WeatherPulseCard extends LitElement {
   private forecastUpdateInterval?: number;
   private alertUpdateInterval?: number;
   private lastAlertFetch: number = 0;
+  private forecastDebounceTimer?: number;
+  private lastForecastFetch: number = 0;
 
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
     await import('./editor');
@@ -161,6 +163,9 @@ export class WeatherPulseCard extends LitElement {
     }
     if (this.alertUpdateInterval) {
       clearInterval(this.alertUpdateInterval);
+    }
+    if (this.forecastDebounceTimer) {
+      clearTimeout(this.forecastDebounceTimer);
     }
   }
 
@@ -244,36 +249,51 @@ export class WeatherPulseCard extends LitElement {
   }
 
   private async fetchForecast(): Promise<void> {
-    if (!this.hass || !this.config?.entity) {
-      return;
+    // Clear any pending debounce timer
+    if (this.forecastDebounceTimer) {
+      clearTimeout(this.forecastDebounceTimer);
     }
 
-    try {
-      // Determine forecast type from config
-      const forecastType = this.config.forecast_type || 'daily';
-
-      this.hass.connection.subscribeMessage(
-        (event: any) => {
-          if (event?.forecast) {
-            this.forecastData = event.forecast;
-          }
-        },
-        {
-          type: 'weather/subscribe_forecast',
-          forecast_type: forecastType,
-          entity_id: this.config.entity,
-        }
-      );
-
-      // Fetch hourly forecast for rain timing detection
-      await this.fetchHourlyForRainTiming();
-    } catch (error) {
-      // Fallback to legacy forecast from attributes
-      const entity = this.hass.states[this.config.entity];
-      if (entity?.attributes?.forecast) {
-        this.forecastData = entity.attributes.forecast;
+    // Debounce: wait 1 second before actually fetching
+    this.forecastDebounceTimer = window.setTimeout(async () => {
+      // Check if we fetched recently (within last 5 seconds)
+      const now = Date.now();
+      if (now - this.lastForecastFetch < 5000) {
+        return;
       }
-    }
+      this.lastForecastFetch = now;
+
+      if (!this.hass || !this.config?.entity) {
+        return;
+      }
+
+      try {
+        // Determine forecast type from config
+        const forecastType = this.config.forecast_type || 'daily';
+
+        this.hass.connection.subscribeMessage(
+          (event: any) => {
+            if (event?.forecast) {
+              this.forecastData = event.forecast;
+            }
+          },
+          {
+            type: 'weather/subscribe_forecast',
+            forecast_type: forecastType,
+            entity_id: this.config.entity,
+          }
+        );
+
+        // Fetch hourly forecast for rain timing detection
+        await this.fetchHourlyForRainTiming();
+      } catch (error) {
+        // Fallback to legacy forecast from attributes
+        const entity = this.hass.states[this.config.entity];
+        if (entity?.attributes?.forecast) {
+          this.forecastData = entity.attributes.forecast;
+        }
+      }
+    }, 1000);
   }
 
   /**
