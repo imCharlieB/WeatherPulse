@@ -1826,6 +1826,22 @@ export class WeatherPulseCard extends LitElement {
       .transition-transform { transition: transform 0.2s ease; }
       .transition-background { transition: background 0.5s ease; }
 
+      /* ========================================
+         CONSOLIDATED SELECTORS - Apply Utilities
+         ======================================== */
+
+      /* Pointer Events: None - Consolidation */
+      ha-card.night-mode::before,
+      ha-card.night-mode .forecast-day.forecast-compact::before,
+      ha-card.night-mode .forecast-hour.forecast-compact::before,
+      .holiday-overlay,
+      .holiday-icon,
+      .holiday-lights,
+      .holiday-foreground-cluster,
+      .chart-lines {
+        pointer-events: none;
+      }
+
       /* ======================================== */
 
       /* Night Mode Styling */
@@ -1860,7 +1876,6 @@ export class WeatherPulseCard extends LitElement {
         background-repeat: repeat;
         background-size: var(--night-stars-bg-size);
         opacity: var(--night-stars-opacity);
-        pointer-events: none;
         z-index: var(--night-z-stars);
         animation: starsFloat var(--night-stars-animation-duration) linear infinite;
         will-change: transform;
@@ -1959,7 +1974,6 @@ export class WeatherPulseCard extends LitElement {
         background-repeat: repeat;
         background-size: var(--night-compact-stars-bg-size);
         opacity: var(--night-compact-stars-opacity);
-        pointer-events: none;
         z-index: var(--night-z-stars);
         animation: starsTwinkle var(--night-twinkle-duration) ease-in-out infinite;
         will-change: opacity;
