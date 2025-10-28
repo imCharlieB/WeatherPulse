@@ -213,7 +213,7 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
   - **Optimize CSS:** Use CSS variables for theme colors, avoid deeply nested selectors, and prefer flat, efficient selectors for better performance.
     - Sub-tasks:
       1. ✅ Extract hardcoded colors to CSS variables (foundation for theming)
-      2. Optimize night mode CSS using CSS variables
+      2. ✅ Optimize night mode CSS using CSS variables
       3. Consolidate duplicate CSS rules
       4. Simplify deeply nested selectors to flat selectors
   - **Improve accessibility:** Add `aria-labels` and roles to important elements, and ensure keyboard navigation is supported for better accessibility.

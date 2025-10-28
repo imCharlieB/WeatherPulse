@@ -1717,26 +1717,26 @@ export class WeatherPulseCard extends LitElement {
         --light-text-alt: #333333;
 
         /* Color Variables - Overlays */
-        --overlay-dark-subtle: var(--overlay-dark-subtle);
-        --overlay-dark-light: var(--overlay-dark-light);
-        --overlay-dark-normal: var(--overlay-dark-normal);
-        --overlay-dark-medium: var(--overlay-dark-medium);
-        --overlay-dark-strong: var(--overlay-dark-strong);
-        --overlay-dark-very-strong: var(--overlay-dark-very-strong);
-        --overlay-light-subtle: var(--overlay-light-subtle);
-        --overlay-light-light: var(--overlay-light-light);
-        --overlay-light-normal: var(--overlay-light-normal);
-        --overlay-light-medium: var(--overlay-light-medium);
+        --overlay-dark-subtle: rgba(0, 0, 0, 0.1);
+        --overlay-dark-light: rgba(0, 0, 0, 0.15);
+        --overlay-dark-normal: rgba(0, 0, 0, 0.2);
+        --overlay-dark-medium: rgba(0, 0, 0, 0.3);
+        --overlay-dark-strong: rgba(0, 0, 0, 0.5);
+        --overlay-dark-very-strong: rgba(0, 0, 0, 0.7);
+        --overlay-light-subtle: rgba(255, 255, 255, 0.1);
+        --overlay-light-light: rgba(255, 255, 255, 0.15);
+        --overlay-light-normal: rgba(255, 255, 255, 0.2);
+        --overlay-light-medium: rgba(255, 255, 255, 0.3);
 
         /* Color Variables - Alerts */
         --alert-extreme: #d32f2f;
-        --alert-extreme-glow-strong: var(--alert-extreme-glow-strong);
-        --alert-extreme-glow-medium: var(--alert-extreme-glow-medium);
-        --alert-extreme-glow-light: var(--alert-extreme-glow-light);
+        --alert-extreme-glow-strong: rgba(211, 47, 47, 0.6);
+        --alert-extreme-glow-medium: rgba(211, 47, 47, 0.4);
+        --alert-extreme-glow-light: rgba(211, 47, 47, 0.2);
         --alert-severe: #f57c00;
-        --alert-severe-glow-strong: var(--alert-severe-glow-strong);
-        --alert-severe-glow-medium: var(--alert-severe-glow-medium);
-        --alert-severe-glow-light: var(--alert-severe-glow-light);
+        --alert-severe-glow-strong: rgba(245, 124, 0, 0.5);
+        --alert-severe-glow-medium: rgba(245, 124, 0, 0.3);
+        --alert-severe-glow-light: rgba(245, 124, 0, 0.2);
         --alert-moderate: #fbc02d;
         --alert-minor: #1976d2;
         --alert-unknown: #757575;
@@ -1744,13 +1744,13 @@ export class WeatherPulseCard extends LitElement {
         /* Color Variables - Temperature */
         --temp-cold: #4A9EFF;
         --temp-cold-alt: rgba(74, 158, 255, 0.6);
-        --temp-freezing-glow-strong: var(--temp-freezing-glow-strong);
-        --temp-freezing-glow-medium: var(--temp-freezing-glow-medium);
-        --temp-freezing-glow-light: var(--temp-freezing-glow-light);
+        --temp-freezing-glow-strong: rgba(79, 195, 247, 0.6);
+        --temp-freezing-glow-medium: rgba(79, 195, 247, 0.4);
+        --temp-freezing-glow-light: rgba(79, 195, 247, 0.2);
         --temp-hot: #e67e22;
-        --temp-hot-alt: var(--temp-hot-alt);
-        --temp-hot-glow-medium: var(--temp-hot-glow-medium);
-        --temp-hot-glow-light: var(--temp-hot-glow-light);
+        --temp-hot-alt: rgba(230, 74, 25, 0.6);
+        --temp-hot-glow-medium: rgba(230, 74, 25, 0.4);
+        --temp-hot-glow-light: rgba(230, 74, 25, 0.2);
 
         /* Color Variables - Chart/Gradients */
         --chart-temp-high-start: rgba(255, 120, 80, 1);
@@ -1766,6 +1766,21 @@ export class WeatherPulseCard extends LitElement {
         --vibrant-gradient: #f5576c;
         --retro-primary: #0074D9;
         --retro-secondary: #001f3f;
+
+        /* Night Mode Optimization Variables */
+        --night-stars-bg-size: 300px 150px;
+        --night-stars-opacity: 0.6;
+        --night-stars-animation-duration: 120s;
+        --night-stars-animation-distance: -150px;
+        --night-compact-stars-bg-size: 80px 80px;
+        --night-compact-stars-opacity: 0.4;
+        --night-twinkle-duration: 3s;
+        --night-twinkle-opacity-min: 0.3;
+        --night-twinkle-opacity-max: 0.6;
+        --night-z-stars: 0;
+        --night-z-content: 1;
+        --night-compact-gradient-start: #1a3a52;
+        --night-compact-gradient-end: #2c5270;
       }
 
       ha-card {
@@ -1788,27 +1803,28 @@ export class WeatherPulseCard extends LitElement {
         right: 0;
         bottom: 0;
         background-image:
-          radial-gradient(2px 2px at 20px 30px, white, transparent),
-          radial-gradient(2px 2px at 60px 70px, white, transparent),
-          radial-gradient(1px 1px at 50px 50px, white, transparent),
-          radial-gradient(1px 1px at 130px 80px, white, transparent),
-          radial-gradient(2px 2px at 90px 10px, white, transparent),
-          radial-gradient(1px 1px at 200px 60px, white, transparent),
-          radial-gradient(2px 2px at 170px 120px, white, transparent),
-          radial-gradient(1px 1px at 220px 90px, white, transparent),
-          radial-gradient(1px 1px at 30px 100px, white, transparent),
-          radial-gradient(2px 2px at 270px 40px, white, transparent),
-          radial-gradient(1px 1px at 150px 15px, white, transparent),
-          radial-gradient(1px 1px at 100px 130px, white, transparent),
-          radial-gradient(2px 2px at 240px 100px, white, transparent),
-          radial-gradient(1px 1px at 190px 70px, white, transparent),
-          radial-gradient(1px 1px at 80px 95px, white, transparent);
+          radial-gradient(2px 2px at 20px 30px, var(--night-text), transparent),
+          radial-gradient(2px 2px at 60px 70px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 50px 50px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 130px 80px, var(--night-text), transparent),
+          radial-gradient(2px 2px at 90px 10px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 200px 60px, var(--night-text), transparent),
+          radial-gradient(2px 2px at 170px 120px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 220px 90px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 30px 100px, var(--night-text), transparent),
+          radial-gradient(2px 2px at 270px 40px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 150px 15px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 100px 130px, var(--night-text), transparent),
+          radial-gradient(2px 2px at 240px 100px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 190px 70px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 80px 95px, var(--night-text), transparent);
         background-repeat: repeat;
-        background-size: 300px 150px;
-        opacity: 0.6;
+        background-size: var(--night-stars-bg-size);
+        opacity: var(--night-stars-opacity);
         pointer-events: none;
-        z-index: 0;
-        animation: starsFloat 120s linear infinite;
+        z-index: var(--night-z-stars);
+        animation: starsFloat var(--night-stars-animation-duration) linear infinite;
+        will-change: transform;
       }
 
       @keyframes starsFloat {
@@ -1816,13 +1832,13 @@ export class WeatherPulseCard extends LitElement {
           transform: translateY(0);
         }
         to {
-          transform: translateY(-150px);
+          transform: translateY(var(--night-stars-animation-distance));
         }
       }
 
       ha-card.night-mode > * {
         position: relative;
-        z-index: 1;
+        z-index: var(--night-z-content);
       }
 
       ha-card.night-mode .card-header {
@@ -1840,18 +1856,18 @@ export class WeatherPulseCard extends LitElement {
         bottom: 0;
         background: linear-gradient(135deg, var(--night-bg-overlay-light) 0%, var(--night-gradient-secondary) 100%); /* Darker overlay */
         pointer-events: none;
-        z-index: 0;
+        z-index: var(--night-z-stars);
       }
 
       ha-card.night-mode .card-header > * {
         position: relative;
-        z-index: 1;
+        z-index: var(--night-z-content);
       }
 
       /* Keep holiday cluster absolutely positioned even in night mode */
       ha-card.night-mode .holiday-foreground-cluster {
         position: absolute !important;
-        z-index: 0 !important;
+        z-index: var(--night-z-stars) !important;
       }
 
       ha-card.night-mode .graphical-overlay {
@@ -1875,9 +1891,9 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.night-mode .forecast-day.forecast-compact,
       ha-card.night-mode .forecast-hour.forecast-compact {
-        background: linear-gradient(180deg, #1a3a52 0%, #2c5270 100%) !important;
+        background: linear-gradient(180deg, var(--night-compact-gradient-start) 0%, var(--night-compact-gradient-end) 100%) !important;
         position: relative !important;
-        z-index: 1 !important; /* Above stars */
+        z-index: var(--night-z-content) !important; /* Above stars */
         overflow: hidden !important;
       }
 
@@ -1891,30 +1907,43 @@ export class WeatherPulseCard extends LitElement {
         right: 0;
         bottom: 0;
         background-image:
-          radial-gradient(1px 1px at 10px 15px, white, transparent),
-          radial-gradient(1px 1px at 30px 35px, white, transparent),
-          radial-gradient(1px 1px at 25px 25px, white, transparent),
-          radial-gradient(1px 1px at 65px 40px, white, transparent),
-          radial-gradient(1px 1px at 45px 5px, white, transparent),
-          radial-gradient(1px 1px at 15px 50px, white, transparent),
-          radial-gradient(1px 1px at 55px 60px, white, transparent),
-          radial-gradient(1px 1px at 40px 70px, white, transparent),
-          radial-gradient(1px 1px at 70px 20px, white, transparent),
-          radial-gradient(1px 1px at 20px 65px, white, transparent);
+          radial-gradient(1px 1px at 10px 15px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 30px 35px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 25px 25px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 65px 40px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 45px 5px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 15px 50px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 55px 60px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 40px 70px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 70px 20px, var(--night-text), transparent),
+          radial-gradient(1px 1px at 20px 65px, var(--night-text), transparent);
         background-repeat: repeat;
-        background-size: 80px 80px;
-        opacity: 0.4;
+        background-size: var(--night-compact-stars-bg-size);
+        opacity: var(--night-compact-stars-opacity);
         pointer-events: none;
-        z-index: 0;
-        animation: starsTwinkle 3s ease-in-out infinite;
+        z-index: var(--night-z-stars);
+        animation: starsTwinkle var(--night-twinkle-duration) ease-in-out infinite;
+        will-change: opacity;
       }
 
       @keyframes starsTwinkle {
         0%, 100% {
-          opacity: 0.3;
+          opacity: var(--night-twinkle-opacity-min);
         }
         50% {
-          opacity: 0.6;
+          opacity: var(--night-twinkle-opacity-max);
+        }
+      }
+
+      /* Respect user's motion preferences for accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        ha-card.night-mode::before {
+          animation: none;
+        }
+        ha-card.night-mode .forecast-day.forecast-compact::before,
+        ha-card.night-mode .forecast-hour.forecast-compact::before {
+          animation: none;
+          opacity: var(--night-twinkle-opacity-min);
         }
       }
 
@@ -1922,13 +1951,13 @@ export class WeatherPulseCard extends LitElement {
       ha-card.night-mode .forecast-day.forecast-compact > *,
       ha-card.night-mode .forecast-hour.forecast-compact > * {
         position: relative;
-        z-index: 1;
+        z-index: var(--night-z-content);
       }
 
       ha-card.night-mode .forecast-type-hourly.forecast-standard .forecast-hour {
         background: var(--night-surface) !important; /* Keep some background */
         position: relative !important;
-        z-index: 1 !important; /* Above stars */
+        z-index: var(--night-z-content) !important; /* Above stars */
       }
 
       .error {
