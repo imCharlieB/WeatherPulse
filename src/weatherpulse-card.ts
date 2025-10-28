@@ -89,8 +89,8 @@ const decorations: {
 export class WeatherPulseCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
   @state() private config!: WeatherPulseCardConfig;
-  @state() private currentTime: string = formatTime();
-  @state() private currentDate: string = formatDate();
+  private currentTime: string = formatTime();
+  private currentDate: string = formatDate();
   @state() private forecastData: any[] = [];
   @state() private hourlyForecastData: any[] = []; // For rain timing detection
   @state() private nwsAlerts: NWSAlert[] = [];
@@ -178,22 +178,69 @@ export class WeatherPulseCard extends LitElement {
   private updateTime(): void {
     this.currentTime = formatTime();
     this.currentDate = formatDate();
+
+    // Only trigger re-render if time or date is actually being displayed
+    if (this.config.show_time || this.config.show_date) {
+      this.requestUpdate();
+    }
   }
 
   protected shouldUpdate(changedProps: PropertyValues): boolean {
+    // Config changes always trigger update
     if (changedProps.has('config')) {
       return true;
     }
 
+    // Check if hass changed
     if (changedProps.has('hass')) {
       const oldHass = changedProps.get('hass') as HomeAssistant | undefined;
-      if (oldHass) {
-        return oldHass.states[this.config.entity] !== this.hass.states[this.config.entity];
+      if (!oldHass) {
+        return true;
       }
+
+      // Check main weather entity
+      if (oldHass.states[this.config.entity] !== this.hass.states[this.config.entity]) {
+        return true;
+      }
+
+      // Check outdoor temp sensor if configured
+      if (this.config.outdoor_temp_sensor &&
+          oldHass.states[this.config.outdoor_temp_sensor] !== this.hass.states[this.config.outdoor_temp_sensor]) {
+        return true;
+      }
+
+      // Check forecast sensor if configured
+      if (this.config.forecast_sensor &&
+          oldHass.states[this.config.forecast_sensor] !== this.hass.states[this.config.forecast_sensor]) {
+        return true;
+      }
+
+      // Check sun entity if showing sunrise/sunset
+      const sunEntity = this.config.sun_entity || 'sun.sun';
+      if (this.config.show_weather_info?.includes('sunrise_sunset') &&
+          oldHass.states[sunEntity] !== this.hass.states[sunEntity]) {
+        return true;
+      }
+
+      // Check moon entity if showing moon phase
+      const moonEntity = this.config.moon_entity || 'sensor.moon_phase';
+      if (this.config.show_moon_phase !== false &&
+          oldHass.states[moonEntity] !== this.hass.states[moonEntity]) {
+        return true;
+      }
+
+      // No relevant entities changed
+      return false;
+    }
+
+    // Check if state properties changed (forecastData, hourlyForecastData, nwsAlerts)
+    if (changedProps.has('forecastData') ||
+        changedProps.has('hourlyForecastData') ||
+        changedProps.has('nwsAlerts')) {
       return true;
     }
 
-    return true;
+    return false;
   }
 
   private async fetchForecast(): Promise<void> {
