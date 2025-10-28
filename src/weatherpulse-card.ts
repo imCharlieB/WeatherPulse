@@ -1781,6 +1781,53 @@ export class WeatherPulseCard extends LitElement {
         position: relative;
       }
 
+      /* ========================================
+         UTILITY CLASSES - Reusable CSS Patterns
+         ======================================== */
+
+      /* Background Utilities */
+      .bg-transparent { background: transparent; }
+      .bg-transparent-important { background: transparent !important; }
+
+      /* Opacity Utilities */
+      .opacity-90 { opacity: 0.9; }
+      .opacity-80 { opacity: 0.8; }
+      .opacity-75 { opacity: 0.75; }
+      .opacity-70 { opacity: 0.7; }
+
+      /* Shadow Utilities */
+      .shadow-light { box-shadow: 0 2px 4px var(--overlay-dark-light); }
+      .shadow-medium { box-shadow: 0 4px 8px var(--overlay-dark-normal); }
+      .drop-shadow-subtle { filter: drop-shadow(0 2px 4px var(--overlay-dark-medium)); }
+      .drop-shadow-normal { filter: drop-shadow(0 2px 8px var(--overlay-dark-normal)); }
+      .drop-shadow-strong { filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)); }
+
+      /* Text Utilities */
+      .text-lg-medium { font-size: 16px; font-weight: 500; }
+      .text-base-regular { font-size: 14px; font-weight: 400; }
+      .text-sm-regular { font-size: 12px; font-weight: 400; }
+      .label-uppercase { text-transform: uppercase; letter-spacing: 0.5px; }
+
+      /* Pointer Events */
+      .pointer-events-none { pointer-events: none; }
+
+      /* Position + Z-Index Utilities */
+      .relative-z-content { position: relative; z-index: var(--night-z-content); }
+      .relative-z-1 { position: relative; z-index: 1; }
+      .relative-z-2 { position: relative; z-index: 2; }
+      .relative-z-3 { position: relative; z-index: 3; }
+
+      /* Border Radius Utilities */
+      .rounded-sm { border-radius: 4px; }
+      .rounded { border-radius: 8px; }
+      .rounded-lg { border-radius: 12px; }
+
+      /* Transition Utilities */
+      .transition-transform { transition: transform 0.2s ease; }
+      .transition-background { transition: background 0.5s ease; }
+
+      /* ======================================== */
+
       /* Night Mode Styling */
       ha-card.night-mode {
         background: var(--night-bg);
