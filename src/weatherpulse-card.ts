@@ -291,11 +291,8 @@ export class WeatherPulseCard extends LitElement {
         // Fetch hourly forecast for rain timing detection
         await this.fetchHourlyForRainTiming();
       } catch (error) {
-        // Fallback to legacy forecast from attributes
-        const entity = this.hass.states[this.config.entity];
-        if (entity?.attributes?.forecast) {
-          this.forecastData = entity.attributes.forecast;
-        }
+        console.error('Failed to fetch forecast data:', error);
+        this.forecastData = [];
       }
     }, 1000);
   }
@@ -307,20 +304,28 @@ export class WeatherPulseCard extends LitElement {
   private async fetchHourlyForRainTiming(): Promise<void> {
     // Always use forecast_sensor (user-selected) for forecast data
     const forecastEntity = this.config.forecast_sensor;
-  
+
     if (!this.hass || !forecastEntity) {
       this.hourlyForecastData = [];
       return;
     }
-  
-    // Get forecast data from the selected sensor's attributes
-    const entity = this.hass.states[forecastEntity];
-    if (entity?.attributes?.forecast) {
-      this.hourlyForecastData = entity.attributes.forecast;
-     // console.debug('Used hourly forecast from selected sensor:', this.hourlyForecastData);
-    } else {
+
+    // Fetch hourly forecast using WebSocket subscription (modern HA only)
+    try {
+      const result = await this.hass.callWS<any>({
+        type: 'weather/subscribe_forecast',
+        forecast_type: 'hourly',
+        entity_id: forecastEntity,
+      });
+
+      if (result?.forecast) {
+        this.hourlyForecastData = result.forecast;
+      } else {
+        this.hourlyForecastData = [];
+      }
+    } catch (error) {
+      console.error('Failed to fetch hourly forecast data:', error);
       this.hourlyForecastData = [];
-      console.debug('No hourly forecast data available in selected sensor attributes.');
     }
   }
 
@@ -339,8 +344,8 @@ export class WeatherPulseCard extends LitElement {
       return this.cachedWeatherData;
     }
 
-    // Use fetched forecast data or fall back to entity attributes
-    let forecast = this.forecastData.length > 0 ? this.forecastData : (entity.attributes.forecast || []);
+    // Use fetched forecast data (modern HA only - no legacy fallback)
+    let forecast = this.forecastData;
 
     // Calculate and cache the result
     this.cachedWeatherData = {
