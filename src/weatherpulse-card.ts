@@ -1889,6 +1889,67 @@ export class WeatherPulseCard extends LitElement {
         border-radius: 8px;
       }
 
+      /* Background Transparent - Consolidation (without !important) */
+      ha-card.night-mode .card-content,
+      .weather-info-in-header .weather-info-section,
+      .weather-info-in-header .weather-info-item {
+        background: transparent;
+      }
+
+      /* Background Transparent - Consolidation (with !important for theme overrides) */
+      ha-card.night-mode .forecast-day,
+      ha-card.night-mode .forecast-hour,
+      ha-card.night-mode .weather-info-section,
+      ha-card.night-mode .weather-info-item,
+      ha-card.theme-midnight .forecast-day,
+      ha-card.theme-midnight .forecast-hour,
+      ha-card.theme-midnight .weather-info-section,
+      ha-card.theme-midnight .weather-info-item,
+      ha-card.theme-retro .forecast-day,
+      ha-card.theme-retro .forecast-hour,
+      ha-card.theme-retro .weather-info-section,
+      ha-card.theme-retro .weather-info-item,
+      ha-card.theme-minimal .forecast-day,
+      ha-card.theme-minimal .forecast-hour,
+      ha-card.theme-minimal .weather-info-section,
+      ha-card.theme-minimal .weather-info-item,
+      ha-card.theme-vibrant .forecast-day,
+      ha-card.theme-vibrant .forecast-hour,
+      ha-card.theme-vibrant .weather-info-section,
+      ha-card.theme-vibrant .weather-info-item {
+        background: transparent !important;
+      }
+
+      /* Text: 16px / 500 - Consolidation */
+      .temp-low,
+      .temp-high,
+      .temp-actual,
+      .hour-temp {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      /* Label Uppercase - Consolidation */
+      .actual-temp-label,
+      .temp-label,
+      .weather-info-label,
+      .weather-info-in-header .weather-info-label-compact,
+      .urgency-badge {
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* Transition: Transform 0.2s - Consolidation */
+      .forecast-type-daily .forecast-compact,
+      .forecast-type-hourly .forecast-compact {
+        transition: transform 0.2s ease;
+      }
+
+      /* Transition: Background 0.5s - Consolidation */
+      .card-header {
+        transition: background 0.5s ease;
+      }
+
       /* ======================================== */
 
       /* Night Mode Styling */
@@ -1976,13 +2037,11 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.night-mode .card-content {
-        background: transparent; /* Transparent to show stars through */
         color: var(--night-text-secondary);
       }
 
       ha-card.night-mode .forecast-day,
       ha-card.night-mode .forecast-hour {
-        background: transparent !important; /* Show stars through */
         border-bottom-color: var(--night-border);
       }
 
@@ -2069,7 +2128,6 @@ export class WeatherPulseCard extends LitElement {
       .card-header {
         padding: 24px;
         border-radius: 12px 12px 0 0;
-        transition: background 0.5s ease;
         position: relative; /* Required for holiday-foreground-cluster absolute positioning */
         overflow: visible; /* Allow lights to extend beyond header */
       }
@@ -2315,8 +2373,6 @@ export class WeatherPulseCard extends LitElement {
         font-size: 12px;
         font-weight: 400;
         opacity: 0.8;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
       }
 
       .temp-display {
@@ -2337,8 +2393,6 @@ export class WeatherPulseCard extends LitElement {
         font-size: 11px;
         font-weight: 400;
         opacity: 0.8;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
       }
 
       .temp-display-wrapper {
@@ -2453,8 +2507,6 @@ export class WeatherPulseCard extends LitElement {
         font-size: 11px;
         font-weight: 400;
         opacity: 0.7;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
         margin-bottom: 2px;
       }
 
@@ -2509,8 +2561,6 @@ export class WeatherPulseCard extends LitElement {
         font-size: 10px;
         font-weight: 400;
         opacity: 0.8;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
         line-height: 1;
       }
 
@@ -2670,7 +2720,6 @@ export class WeatherPulseCard extends LitElement {
         border-radius: 3px;
         background: var(--overlay-light-medium);
         color: #fff;
-        letter-spacing: 0.5px;
         text-shadow: 0 1px 2px var(--overlay-dark-medium);
       }
 
@@ -3027,7 +3076,6 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-retro .forecast-day,
       ha-card.theme-retro .forecast-hour {
-        background: transparent !important;
         border: none !important;
         border-bottom: 1px solid var(--overlay-light-normal) !important;
         border-radius: 0 !important;
@@ -3050,7 +3098,6 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-retro .weather-info-section {
-        background: transparent !important;
         border-top: 1px solid var(--overlay-light-normal) !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
@@ -3244,7 +3291,6 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-minimal .forecast-day,
       ha-card.theme-minimal .forecast-hour {
-        background: transparent !important;
         border: none !important;
         border-bottom: 1px solid #f0f0f0 !important;
         box-shadow: none !important;
@@ -3258,7 +3304,6 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-minimal .weather-info-item {
-        background: transparent !important;
         border: none !important;
         box-shadow: none !important;
         color: #333 !important;
@@ -3374,7 +3419,6 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.theme-vibrant .forecast-day,
       ha-card.theme-vibrant .forecast-hour {
-        background: transparent !important;
         border: none !important;
         border-bottom: 1px solid var(--overlay-light-normal) !important;
         color: white !important;
@@ -3387,13 +3431,11 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card.theme-vibrant .weather-info-item {
-        background: transparent !important;
         border: none !important;
         color: white !important;
       }
 
       ha-card.theme-vibrant .weather-info-section {
-        background: transparent !important;
         border-top: 1px solid var(--overlay-light-normal) !important;
         padding-top: 12px !important;
         margin-top: 8px !important;
@@ -3726,8 +3768,6 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .temp-low, .temp-high {
-        font-size: 16px;
-        font-weight: 500;
         min-width: 35px;
       }
 
@@ -3785,7 +3825,6 @@ export class WeatherPulseCard extends LitElement {
         flex: 1;
         min-width: 0;
         border: none;
-        transition: transform 0.2s ease;
       }
 
       .forecast-type-daily .forecast-compact:hover {
@@ -3803,7 +3842,6 @@ export class WeatherPulseCard extends LitElement {
         flex: 0 0 auto;
         width: 55px;
         border: 2px solid transparent;
-        transition: transform 0.2s ease;
       }
 
       .forecast-type-hourly .forecast-compact:hover {
@@ -3959,8 +3997,6 @@ export class WeatherPulseCard extends LitElement {
         display: inline-flex;
         align-items: center;
         gap: 4px;
-        font-size: 16px;
-        font-weight: 500;
         color: var(--primary-color);
         margin-left: 8px;
       }
@@ -4007,11 +4043,6 @@ export class WeatherPulseCard extends LitElement {
       .hour-name {
         font-weight: 500;
         font-size: 14px;
-      }
-
-      .hour-temp {
-        font-size: 16px;
-        font-weight: 500;
       }
 
       /* Hourly detailed mode */
