@@ -19,7 +19,7 @@ export function getTemperatureGradient(temp: number, unit: string = '°F'): Temp
     return {
       color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
       backgroundColor: '#4facfe',
-      textColor: '#ffffff'
+      textColor: '#1a1a1a'
     };
   } else if (fahrenheit < 70) {
     // Moderate - Pleasant greens/yellows
