@@ -771,10 +771,27 @@ export class WeatherPulseCard extends LitElement {
                     ${alert.event}
                     ${urgencyBadge ? html`<span class="urgency-badge">${urgencyBadge}</span>` : ''}
                   </div>
-                  <div class="alert-area">${alert.areaDesc}</div>
+                  ${alert.areaDesc ? html`
+                    <details class="alert-area-details">
+                      <summary class="alert-area-summary">
+                        <span class="expand-icon">▶</span>
+                        Affected areas
+                      </summary>
+                      <div class="alert-area-content">${alert.areaDesc}</div>
+                    </details>
+                  ` : ''}
                 </div>
               </div>
               <div class="alert-headline">${alert.headline}</div>
+              ${alert.description ? html`
+                <details class="alert-description-details">
+                  <summary class="alert-description-summary">
+                    <span class="expand-icon">▶</span>
+                    Full details
+                  </summary>
+                  <div class="alert-description-content">${alert.description}</div>
+                </details>
+              ` : ''}
               ${alert.instruction ? html`
                 <div class="alert-instruction">
                   <strong>⚠️ What to do:</strong> ${alert.instruction}
@@ -2727,6 +2744,57 @@ export class WeatherPulseCard extends LitElement {
         font-size: 12px;
         opacity: 0.7;
         line-height: 1.2;
+      }
+
+      /* Collapsible alert sections */
+      .alert-area-details,
+      .alert-description-details {
+        margin-top: 6px;
+      }
+
+      .alert-area-summary,
+      .alert-description-summary {
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 500;
+        opacity: 0.8;
+        padding: 4px 0;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        user-select: none;
+      }
+
+      .alert-area-summary:hover,
+      .alert-description-summary:hover {
+        opacity: 1;
+      }
+
+      .alert-area-summary::-webkit-details-marker,
+      .alert-description-summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .expand-icon {
+        display: inline-block;
+        transition: transform 0.2s ease;
+        font-size: 10px;
+      }
+
+      details[open] .expand-icon {
+        transform: rotate(90deg);
+      }
+
+      .alert-area-content,
+      .alert-description-content {
+        font-size: 12px;
+        line-height: 1.4;
+        margin-top: 6px;
+        padding: 8px;
+        background: var(--overlay-dark-subtle);
+        border-radius: 4px;
+        opacity: 0.9;
       }
 
       .alert-headline {
