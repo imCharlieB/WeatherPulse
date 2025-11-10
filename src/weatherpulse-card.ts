@@ -764,13 +764,19 @@ export class WeatherPulseCard extends LitElement {
 
           return html`
             <div class="nws-alert ${severityClass}">
-              <div class="alert-header">
-                <span class="alert-icon">${severityIcon}</span>
-                <div class="alert-title">
-                  <div class="alert-event">
+              <details class="alert-main-details">
+                <summary class="alert-main-summary">
+                  <span class="alert-icon">${severityIcon}</span>
+                  <span class="alert-event-compact">
                     ${alert.event}
                     ${urgencyBadge ? html`<span class="urgency-badge">${urgencyBadge}</span>` : ''}
-                  </div>
+                  </span>
+                  <span class="expand-icon-main">▼</span>
+                </summary>
+
+                <div class="alert-expanded-content">
+                  <div class="alert-headline">${alert.headline}</div>
+
                   ${alert.areaDesc ? html`
                     <details class="alert-area-details">
                       <summary class="alert-area-summary">
@@ -780,34 +786,36 @@ export class WeatherPulseCard extends LitElement {
                       <div class="alert-area-content">${alert.areaDesc}</div>
                     </details>
                   ` : ''}
+
+                  ${alert.description ? html`
+                    <details class="alert-description-details">
+                      <summary class="alert-description-summary">
+                        <span class="expand-icon">▶</span>
+                        Full details
+                      </summary>
+                      <div class="alert-description-content">${alert.description}</div>
+                    </details>
+                  ` : ''}
+
+                  ${alert.instruction ? html`
+                    <div class="alert-instruction">
+                      <strong>⚠️ What to do:</strong> ${alert.instruction}
+                    </div>
+                  ` : ''}
+
+                  ${alert.expires ? html`
+                    <div class="alert-expires">
+                      Expires: ${new Date(alert.expires).toLocaleString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true
+                      })}
+                    </div>
+                  ` : ''}
                 </div>
-              </div>
-              <div class="alert-headline">${alert.headline}</div>
-              ${alert.description ? html`
-                <details class="alert-description-details">
-                  <summary class="alert-description-summary">
-                    <span class="expand-icon">▶</span>
-                    Full details
-                  </summary>
-                  <div class="alert-description-content">${alert.description}</div>
-                </details>
-              ` : ''}
-              ${alert.instruction ? html`
-                <div class="alert-instruction">
-                  <strong>⚠️ What to do:</strong> ${alert.instruction}
-                </div>
-              ` : ''}
-              ${alert.expires ? html`
-                <div class="alert-expires">
-                  Expires: ${new Date(alert.expires).toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                  })}
-                </div>
-              ` : ''}
+              </details>
             </div>
           `;
         })}
@@ -2669,10 +2677,10 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .nws-alert {
-        padding: 12px;
         border-radius: 8px;
         border-left: 4px solid;
         background: var(--secondary-background-color, rgba(0,0,0,0.05));
+        overflow: hidden;
       }
 
       .nws-alert.alert-extreme {
@@ -2744,6 +2752,53 @@ export class WeatherPulseCard extends LitElement {
         font-size: 12px;
         opacity: 0.7;
         line-height: 1.2;
+      }
+
+      /* Main alert collapsible */
+      .alert-main-details {
+        width: 100%;
+      }
+
+      .alert-main-summary {
+        cursor: pointer;
+        padding: 12px;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        user-select: none;
+      }
+
+      .alert-main-summary:hover {
+        opacity: 0.9;
+      }
+
+      .alert-main-summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .alert-event-compact {
+        flex: 1;
+        font-size: 15px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .expand-icon-main {
+        font-size: 12px;
+        transition: transform 0.2s ease;
+        flex-shrink: 0;
+      }
+
+      .alert-main-details[open] .expand-icon-main {
+        transform: rotate(180deg);
+      }
+
+      .alert-expanded-content {
+        padding: 0 12px 12px 12px;
       }
 
       /* Collapsible alert sections */
