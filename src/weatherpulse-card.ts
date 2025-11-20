@@ -1226,6 +1226,9 @@ export class WeatherPulseCard extends LitElement {
     const weatherInfoInHeader = showWeatherInfoInHeader ? this.renderWeatherInfo('compact') : '';
 
     // Graphical mode doesn't use card-header wrapper (it has its own background)
+    // Determine if night mode is active for this card (used to choose text color)
+    const nightModeActive = !!(this.config?.night_mode && this.isNightTime());
+
     if (headerMode === 'graphical') {
       return html`
         ${holidayLights}
@@ -1239,8 +1242,11 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
+    // Use night text color when night mode is active; otherwise use gradient-provided textColor
+    const headerTextColor = nightModeActive ? 'var(--night-text)' : gradient.textColor;
+
     return html`
-      <div class="card-header" style="background: ${gradient.color}; color: ${gradient.textColor}; position: relative;">
+      <div class="card-header" style="background: ${gradient.color}; color: ${headerTextColor}; position: relative;">
         ${holidayLights}
         ${headerContent}
         ${holidayForegroundIcons}
@@ -2044,8 +2050,8 @@ export class WeatherPulseCard extends LitElement {
 
       ha-card.night-mode .card-header {
         position: relative;
-        color: var(--night-text) !important; /* Bright white text */
-        filter: none !important; /* No filter - don't dim text */
+        color: var(--night-text); /* Bright white text */
+        filter: none; /* No filter - don't dim text */
       }
 
       ha-card.night-mode .card-header::after {

@@ -848,7 +848,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
                 <div class="light-bulb ${"long"===t.style?"light-long":"light-round"}" style="--bulb-color: ${i}; animation-delay: ${r}s;"></div>
               `})}
           </div>
-        `}}const m="compact"===(this.config?.weather_info_layout||"standard"),f=m?this.renderWeatherInfo("compact"):"";return"graphical"===o?B`
+        `}}const m="compact"===(this.config?.weather_info_layout||"standard"),f=m?this.renderWeatherInfo("compact"):"",g=!(!this.config?.night_mode||!this.isNightTime());if("graphical"===o)return B`
         ${p}
         ${l}
         ${h}
@@ -857,8 +857,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             ${f}
           </div>
         `:""}
-      `:B`
-      <div class="card-header" style="background: ${r.color}; color: ${r.textColor}; position: relative;">
+      `;const u=g?"var(--night-text)":r.textColor;return B`
+      <div class="card-header" style="background: ${r.color}; color: ${u}; position: relative;">
         ${p}
         ${l}
         ${h}
@@ -1374,8 +1374,8 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       ha-card.night-mode .card-header {
         position: relative;
-        color: var(--night-text) !important; /* Bright white text */
-        filter: none !important; /* No filter - don't dim text */
+        color: var(--night-text); /* Bright white text */
+        filter: none; /* No filter - don't dim text */
       }
 
       ha-card.night-mode .card-header::after {
