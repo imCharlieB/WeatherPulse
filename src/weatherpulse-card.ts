@@ -89,8 +89,8 @@ const decorations: {
 export class WeatherPulseCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
   @state() private config!: WeatherPulseCardConfig;
-  private currentTime: string = formatTime();
-  private currentDate: string = formatDate();
+  @state() private currentTime: string = formatTime();
+  @state() private currentDate: string = formatDate();
   @state() private forecastData: any[] = [];
   @state() private hourlyForecastData: any[] = []; // For rain timing detection
   @state() private nwsAlerts: NWSAlert[] = [];
@@ -188,11 +188,8 @@ export class WeatherPulseCard extends LitElement {
     this.currentTime = formatTime();
     this.currentDate = formatDate();
 
-    console.log('WeatherPulse: updateTime called, currentTime:', this.currentTime, 'currentDate:', this.currentDate);
-
     // Only trigger re-render if time or date is actually being displayed
     if (this.config.show_time || this.config.show_date) {
-      console.log('WeatherPulse: requesting update for time/date change');
       this.requestUpdate();
     }
   }
@@ -205,7 +202,6 @@ export class WeatherPulseCard extends LitElement {
 
     // Allow time/date driven updates (clock)
     if (changedProps.has('currentTime') || changedProps.has('currentDate')) {
-      console.log('WeatherPulse: shouldUpdate triggered by time/date change');
       return true;
     }
 
