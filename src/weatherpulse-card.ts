@@ -200,6 +200,11 @@ export class WeatherPulseCard extends LitElement {
       return true;
     }
 
+    // Allow time/date driven updates (clock)
+    if (changedProps.has('currentTime') || changedProps.has('currentDate')) {
+      return true;
+    }
+
     // Check if hass changed
     if (changedProps.has('hass')) {
       const oldHass = changedProps.get('hass') as HomeAssistant | undefined;
