@@ -5,7 +5,7 @@ import { WeatherPulseCardConfig, WeatherData, NWSAlert } from './types';
 import {
   getTemperatureGradient,
   getGreeting,
-  getWeatherSuggestion,
+  getWeatherSuggestion, // eslint-disable-line @typescript-eslint/no-unused-vars
   formatTime,
   formatDate,
   getDayName,
@@ -342,7 +342,7 @@ export class WeatherPulseCard extends LitElement {
     }
 
     // Use fetched forecast data (modern HA only - no legacy fallback)
-    let forecast = this.forecastData;
+    const forecast = this.forecastData;
 
     // Calculate and cache the result
     this.cachedWeatherData = {
@@ -844,15 +844,16 @@ export class WeatherPulseCard extends LitElement {
       let value = '';
 
       switch (infoType) {
-        case 'uv_index':
+        case 'uv_index': {
           if (weatherData.uv_index !== undefined) {
             icon = '☀️';
             label = 'UV Index';
             value = String(Math.round(weatherData.uv_index));
           }
           break;
+        }
 
-        case 'wind':
+        case 'wind': {
           if (weatherData.wind_speed !== undefined) {
             icon = '💨';
             label = 'Wind';
@@ -863,8 +864,9 @@ export class WeatherPulseCard extends LitElement {
             }
           }
           break;
+        }
 
-        case 'feels_like':
+        case 'feels_like': {
           // Use apparent_temperature if available, otherwise calculate it
           let feelsLike = weatherData.apparent_temperature;
 
@@ -893,8 +895,9 @@ export class WeatherPulseCard extends LitElement {
             value = `${Math.round(feelsLike)}°${unit}`;
           }
           break;
+        }
 
-        case 'precipitation':
+        case 'precipitation': {
           // Only show if we have actual precipitation data
           if (weatherData.precipitation !== undefined && weatherData.precipitation > 0) {
             icon = '💧';
@@ -903,16 +906,18 @@ export class WeatherPulseCard extends LitElement {
             value = `${weatherData.precipitation} ${unit}`;
           }
           break;
+        }
 
-        case 'humidity':
+        case 'humidity': {
           if (weatherData.humidity !== undefined) {
             icon = '💧';
             label = 'Humidity';
             value = `${Math.round(weatherData.humidity)}%`;
           }
           break;
+        }
 
-        case 'pressure':
+        case 'pressure': {
           if (weatherData.pressure !== undefined) {
             icon = '🔽';
             label = 'Pressure';
@@ -920,8 +925,9 @@ export class WeatherPulseCard extends LitElement {
             value = `${Math.round(weatherData.pressure)} ${unit}`;
           }
           break;
+        }
 
-        case 'visibility':
+        case 'visibility': {
           // Only show if we have actual visibility data
           if (weatherData.visibility !== undefined) {
             icon = '👁️';
@@ -930,8 +936,9 @@ export class WeatherPulseCard extends LitElement {
             value = `${weatherData.visibility} ${unit}`;
           }
           break;
+        }
 
-        case 'sunrise_sunset':
+        case 'sunrise_sunset': {
           const sunEntity = this.getSunEntity();
           if (sunEntity && sunEntity.attributes) {
             const isDay = sunEntity.state === 'above_horizon';
@@ -946,6 +953,7 @@ export class WeatherPulseCard extends LitElement {
             }
           }
           break;
+        }
       }
 
       if (value) {
@@ -1009,7 +1017,6 @@ export class WeatherPulseCard extends LitElement {
     const tempDisplayMode = this.config.temp_display_mode || 'forecast';
     const unit = weatherData.temperature_unit || '°F';
     let tempDisplay: unknown = '';
-    let tempLabel = '';
 
     if (tempDisplayMode === 'both' && hasOutdoorSensor && forecastTemp) {
       tempDisplay = html`
@@ -1062,7 +1069,7 @@ export class WeatherPulseCard extends LitElement {
         `;
         break;
 
-      case 'graphical':
+      case 'graphical': {
         const season = getCurrentSeason();
         const customImage = this.config.seasonal_images?.[season];
         const seasonalBg = getSeasonalBackground(season, customImage);
@@ -1092,6 +1099,7 @@ export class WeatherPulseCard extends LitElement {
           </div>
         `;
         break;
+      }
 
       case 'minimal':
         headerContent = html`
@@ -1138,7 +1146,7 @@ export class WeatherPulseCard extends LitElement {
         `;
         break;
 
-      default: // time-focused
+      default: { // time-focused
         // Format condition text (capitalize first letter of each word)
         // Handle unavailable/unknown states gracefully
         let conditionText = (weatherData.condition || 'clear');
@@ -1174,6 +1182,7 @@ export class WeatherPulseCard extends LitElement {
             </div>
           </div>
         `;
+      }
     }
 
     // Render foreground holiday icons inside the header

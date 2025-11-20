@@ -1,4 +1,4 @@
-import { html, svg, SVGTemplateResult } from 'lit';
+import { svg, SVGTemplateResult } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 /**
