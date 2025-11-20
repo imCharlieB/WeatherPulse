@@ -40,7 +40,7 @@ export function getTemperatureGradient(temp: number, unit: string = '°F'): Temp
     return {
       color: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%)',
       backgroundColor: '#ff6b6b',
-      textColor: '#ffffff'
+      textColor: '#1a1a1a'
     };
   }
 }
