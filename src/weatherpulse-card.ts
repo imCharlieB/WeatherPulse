@@ -319,10 +319,8 @@ export class WeatherPulseCard extends LitElement {
     const entity = this.hass.states[forecastEntity];
     if (entity?.attributes?.forecast) {
       this.hourlyForecastData = entity.attributes.forecast;
-      console.debug('Used hourly forecast from selected sensor:', this.hourlyForecastData);
     } else {
       this.hourlyForecastData = [];
-      console.debug('No hourly forecast data available in selected sensor attributes.');
     }
   }
 
