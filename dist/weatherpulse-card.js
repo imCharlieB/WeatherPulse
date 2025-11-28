@@ -2246,14 +2246,14 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       ha-card.alert-glow-extreme {
         box-shadow: 0 0 20px var(--alert-extreme-glow-strong),
                     0 0 40px var(--alert-extreme-glow-medium),
-                    0 0 60px var(--alert-extreme-glow-light);
+                    0 0 60px var(--alert-extreme-glow-light) !important;
         animation: pulse-extreme 2s ease-in-out infinite;
       }
 
       ha-card.alert-glow-severe {
         box-shadow: 0 0 15px var(--alert-severe-glow-strong),
                     0 0 30px var(--alert-severe-glow-medium),
-                    0 0 45px var(--alert-severe-glow-light);
+                    0 0 45px var(--alert-severe-glow-light) !important;
         animation: pulse-severe 2s ease-in-out infinite;
       }
 
@@ -2261,12 +2261,12 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         0%, 100% {
           box-shadow: 0 0 20px var(--alert-extreme-glow-strong),
                       0 0 40px var(--alert-extreme-glow-medium),
-                      0 0 60px var(--alert-extreme-glow-light);
+                      0 0 60px var(--alert-extreme-glow-light) !important;
         }
         50% {
           box-shadow: 0 0 25px rgba(211, 47, 47, 0.8),
                       0 0 50px var(--alert-extreme-glow-strong),
-                      0 0 75px var(--alert-extreme-glow-medium);
+                      0 0 75px var(--alert-extreme-glow-medium) !important;
         }
       }
 
@@ -2274,12 +2274,12 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         0%, 100% {
           box-shadow: 0 0 15px var(--alert-severe-glow-strong),
                       0 0 30px var(--alert-severe-glow-medium),
-                      0 0 45px var(--alert-severe-glow-light);
+                      0 0 45px var(--alert-severe-glow-light) !important;
         }
         50% {
           box-shadow: 0 0 20px rgba(245, 124, 0, 0.7),
                       0 0 40px var(--alert-severe-glow-strong),
-                      0 0 60px var(--alert-severe-glow-medium);
+                      0 0 60px var(--alert-severe-glow-medium) !important;
         }
       }
 
