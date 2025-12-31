@@ -3049,97 +3049,92 @@ export class WeatherPulseCard extends LitElement {
         }
       }
 
-      /* CSS Fireworks - Particle Burst Style */
+      /* CSS Fireworks */
       .firework {
         position: absolute;
+        width: 0.5vmin;
+        aspect-ratio: 1;
+        background:
+          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 50% 00%,
+          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 00% 50%,
+          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 50% 99%,
+          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 99% 50%,
+          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 80% 90%,
+          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 95% 90%,
+          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 10% 60%,
+          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 31% 80%,
+          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 80% 10%,
+          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 20% 20%,
+          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 90% 23%,
+          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 70% 30%,
+          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 25% 70%,
+          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 15% 80%,
+          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 60% 80%,
+          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 70% 75%,
+          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 45% 45%,
+          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 55% 45%,
+          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 45% 55%,
+          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 55% 55%;
+        background-size: 0.5vmin 0.5vmin;
+        background-repeat: no-repeat;
+        animation: firework 2s infinite;
         pointer-events: none;
-        z-index: 10; /* Higher z-index to be visible */
+        z-index: 0;
       }
 
-      /* Regular particle fireworks */
-      .firework-1,
-      .firework-2 {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        box-shadow:
-          0 0 0 8px #FFD700, 0 0 0 12px #FFD700, 0 0 30px #FFD700,
-          60px -140px 0 2px #FFD700, -60px -140px 0 2px #C0C0C0,
-          140px -100px 0 2px #4169E1, -140px -100px 0 2px #FFFFFF,
-          100px -180px 0 2px #C0C0C0, -100px -180px 0 2px #FFD700,
-          180px -140px 0 2px #FFFFFF, -180px -140px 0 2px #4169E1,
-          140px -220px 0 2px #FF6B6B, -140px -220px 0 2px #FFD700,
-          220px -180px 0 2px #4169E1, -220px -180px 0 2px #C0C0C0,
-          180px -260px 0 2px #FFFFFF, -180px -260px 0 2px #FF6B6B,
-          260px -220px 0 2px #FFD700, -260px -220px 0 2px #4169E1,
-          220px -300px 0 2px #C0C0C0, -220px -300px 0 2px #FFFFFF;
-        animation: firework-burst 2s ease-out infinite;
+      .firework::before,
+      .firework::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        background-size: inherit;
+        background-repeat: inherit;
+      }
+
+      .firework::before {
+        transform: rotate(120deg);
+      }
+
+      .firework::after {
+        transform: rotate(240deg);
       }
 
       .firework-1 {
         top: 50%;
-        left: 25%;
+        left: 30%;
         animation-delay: 0s;
       }
 
       .firework-2 {
         top: 50%;
-        left: 75%;
-        animation-delay: 1s;
-      }
-
-      /* Text firework with "2026" */
-      .firework-3 {
-        top: 40%;
         left: 50%;
-        font-size: 64px;
-        font-weight: bold;
-        color: #FFD700;
-        text-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700, 0 0 80px #FFD700;
-        animation: text-firework 3s ease-out infinite;
         animation-delay: 0.5s;
       }
 
-      .firework-3::after {
-        content: '2026';
+      .firework-3 {
+        top: 50%;
+        left: 70%;
+        animation-delay: 1s;
       }
 
-      @keyframes firework-burst {
+      @keyframes firework {
         0% {
-          opacity: 0;
-          transform: translate(0, 150px) scale(0.3);
-        }
-        15% {
+          transform: translate(-50%, 60vh);
+          width: 0.5vmin;
           opacity: 1;
-          transform: translate(0, 0) scale(1);
         }
-        85% {
+        50% {
+          width: 40vmin;
           opacity: 1;
         }
         100% {
+          width: 40vmin;
+          transform: translate(-50%, -50%);
           opacity: 0;
-          transform: translate(0, -30px) scale(0.8);
-        }
-      }
-
-      @keyframes text-firework {
-        0% {
-          opacity: 0;
-          transform: translate(-50%, 120px) scale(0.2);
-        }
-        20% {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(1.3);
-        }
-        25% {
-          transform: translate(-50%, -50%) scale(1);
-        }
-        80% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-          transform: translate(-50%, -180px) scale(0.4);
         }
       }
 
