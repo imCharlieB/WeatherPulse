@@ -3062,9 +3062,21 @@ export class WeatherPulseCard extends LitElement {
 
       /* CSS Fireworks */
       @keyframes firework {
-        0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
-        50% { width: 0.5vmin; opacity: 1; }
-        100% { width: var(--finalSize); opacity: 0; }
+        0% { 
+          transform: translate(-50%, 0); 
+          width: var(--initialSize); 
+          opacity: 1; 
+        }
+        50% { 
+          transform: translate(-50%, var(--y));
+          width: 0.5vmin; 
+          opacity: 1; 
+        }
+        100% { 
+          transform: translate(-50%, var(--y));
+          width: var(--finalSize); 
+          opacity: 0; 
+        }
       }
 
       .firework,
