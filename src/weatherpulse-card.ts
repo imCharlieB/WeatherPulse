@@ -187,14 +187,19 @@ export class WeatherPulseCard extends LitElement {
     const fireworks = this.shadowRoot?.querySelectorAll('.firework');
     if (!fireworks) return;
 
-    const colors = ['#FFD700', '#C0C0C0', '#4169E1', '#FF6B6B', '#FFFFFF', '#FF1493', '#00FF00', '#FF8C00', '#9370DB', '#00CED1'];
+    const getRandomColor = () => {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return `rgb(${r}, ${g}, ${b})`;
+    };
     
     fireworks.forEach((firework: Element) => {
       const htmlElement = firework as HTMLElement;
-      // Pick 3-4 random colors for this firework
-      const color1 = colors[Math.floor(Math.random() * colors.length)];
-      const color2 = colors[Math.floor(Math.random() * colors.length)];
-      const color3 = colors[Math.floor(Math.random() * colors.length)];
+      // Generate completely random colors
+      const color1 = getRandomColor();
+      const color2 = getRandomColor();
+      const color3 = getRandomColor();
       
       htmlElement.style.setProperty('--fw-color1', color1);
       htmlElement.style.setProperty('--fw-color2', color2);
