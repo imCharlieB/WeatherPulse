@@ -2198,6 +2198,7 @@ export class WeatherPulseCard extends LitElement {
         left: 0;
         right: 0;
         bottom: 0;
+        border-radius: inherit;
         background-image:
           radial-gradient(2px 2px at 20px 30px, var(--night-text), transparent),
           radial-gradient(2px 2px at 60px 70px, var(--night-text), transparent),
@@ -2249,6 +2250,7 @@ export class WeatherPulseCard extends LitElement {
         left: 0;
         right: 0;
         bottom: 0;
+        border-radius: inherit;
         background: linear-gradient(135deg, var(--night-bg-overlay-light) 0%, var(--night-gradient-secondary) 100%); /* Darker overlay */
         pointer-events: none;
         z-index: var(--night-z-stars);
