@@ -278,9 +278,6 @@ export class WeatherPulseCard extends LitElement {
 
   private applyRandomFireworkColors(firework: HTMLElement): void {
     const colors = this.generateFireworkPalette();
-  const trailColor = colors.splice(Math.floor(Math.random() * colors.length), 1)[0];
-  colors.unshift(trailColor);
-    firework.style.setProperty('--trailColor', trailColor);
     colors.forEach((color, index) => {
       firework.style.setProperty(`--color${index + 1}`, color);
     });
@@ -3266,7 +3263,6 @@ export class WeatherPulseCard extends LitElement {
         --initialSize: 0.5vmin;
         --finalSize: 45vmin;
         --particleSize: 0.2vmin;
-        --trailColor: #FF1744;
         --color1: #FF3D00;
         --color2: #FFEA00;
         --color3: #00E676;
@@ -3288,7 +3284,6 @@ export class WeatherPulseCard extends LitElement {
         pointer-events: none;
         z-index: 10;
         background:
-          radial-gradient(circle, var(--trailColor) calc(var(--particleSize) * 2.5), #0000 0) 50% 100%,
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 100% 50%,
           radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 50% 100%,
@@ -3314,20 +3309,20 @@ export class WeatherPulseCard extends LitElement {
           /* top left */
           radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 80% 10%,
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 95% 14%,
-          radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 90% 23%,
-          radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 100% 43%,
-          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 85% 27%,
-          radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 77% 37%,
+          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 90% 23%,
+          radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 100% 43%,
+          radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 85% 27%,
+          radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 77% 37%,
           radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 60% 7%,
           
           /* top right */
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 22% 14%,
-          radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 45% 20%,
-          radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 33% 34%,
-          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 10% 29%,
-          radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 31% 37%,
+          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 45% 20%,
+          radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 33% 34%,
+          radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 10% 29%,
+          radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 31% 37%,
           radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 28% 7%,
-          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
+          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 13% 42%;
         background-size: var(--initialSize) var(--initialSize);
         background-repeat: no-repeat;
       }
