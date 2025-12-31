@@ -2401,7 +2401,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         --color6: mediumseagreen;
         --y: -30vmin;
         --x: -50%;
-        --initialY: 60vmin;
+        --initialY: 40%;
         content: "";
         animation: firework 2s infinite;
         position: absolute;
