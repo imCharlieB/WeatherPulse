@@ -204,7 +204,7 @@ export class WeatherPulseCard extends LitElement {
     super.updated(changedProperties);
     
     const holiday = this.getCurrentHoliday();
-    if (holiday === 'newyear') {
+    if (holiday === 'newyear' && !this.isNightModeActive()) {
       window.requestAnimationFrame(() => this.configureFireworks());
     }
   }
@@ -1824,12 +1824,13 @@ export class WeatherPulseCard extends LitElement {
       `;
     }
 
-    const weatherData = this.getWeatherData();
+  const weatherData = this.getWeatherData();
     const hasForecast = weatherData.forecast && weatherData.forecast.length > 0;
     const showForecast = this.config.show_forecast !== false && hasForecast;
 
-    // Apply night mode only if the toggle is ON and it's actually nighttime
-    const nightModeClass = (this.config.night_mode && this.isNightTime()) ? 'night-mode' : '';
+  // Apply night mode only if the toggle is ON and it's actually nighttime
+  const isNightModeActive = this.isNightModeActive();
+  const nightModeClass = isNightModeActive ? 'night-mode' : '';
 
     // Show weather info in header if compact layout, otherwise as separate section
     const layout = this.config?.weather_info_layout || 'standard';
@@ -1873,11 +1874,12 @@ export class WeatherPulseCard extends LitElement {
     const cardContentClass = viewMode === 'compact' ? 'card-content card-content-compact' : 'card-content';
     const currentHoliday = this.getCurrentHoliday();
     const holidayClass = currentHoliday ? `holiday-${currentHoliday}` : '';
+    const showFireworks = currentHoliday === 'newyear' && !isNightModeActive;
 
     return html`
   <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass} ${holidayClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
-        ${currentHoliday === 'newyear' ? html`
+        ${showFireworks ? html`
           <div class="fireworks-container">
             <div class="firework"></div>
             <div class="firework"></div>
@@ -1895,6 +1897,10 @@ export class WeatherPulseCard extends LitElement {
         ` : ''}
       </ha-card>
     `;
+  }
+
+  private isNightModeActive(): boolean {
+    return !!(this.config?.night_mode && this.isNightTime());
   }
 
   static get styles() {
