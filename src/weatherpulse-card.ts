@@ -1864,7 +1864,8 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card {
-        overflow: visible;
+        overflow-x: hidden; /* Prevent horizontal scrolling from fireworks */
+        overflow-y: visible; /* Allow vertical overflow for fireworks */
         border-radius: 12px;
         position: relative;
       }
