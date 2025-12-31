@@ -2382,21 +2382,9 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
 
       /* CSS Fireworks */
       @keyframes firework {
-        0% { 
-          transform: translate(-50%, 0); 
-          width: var(--initialSize); 
-          opacity: 1; 
-        }
-        50% { 
-          transform: translate(-50%, var(--y));
-          width: 0.5vmin; 
-          opacity: 1; 
-        }
-        100% { 
-          transform: translate(-50%, var(--y));
-          width: var(--finalSize); 
-          opacity: 0; 
-        }
+        0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
+        50% { width: 0.5vmin; opacity: 1; }
+        100% { width: var(--finalSize); opacity: 0; }
       }
 
       .firework,
@@ -2413,13 +2401,13 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         --color6: mediumseagreen;
         --y: -30vmin;
         --x: -50%;
-        --initialY: 100%;
+        --initialY: 0;
         content: "";
         animation: firework 2s infinite;
         position: absolute;
         bottom: 0;
         left: 50%;
-        transform: translate(-50%, 0);
+        transform: translate(-50%, var(--y));
         width: var(--initialSize);
         aspect-ratio: 1;
         background: 
