@@ -102,6 +102,7 @@ export class WeatherPulseCard extends LitElement {
   private forecastDebounceTimer?: number;
   private lastForecastFetch: number = 0;
   private readonly fireworkColorHandlers = new WeakMap<HTMLElement, () => void>();
+  private readonly fireworkColorIntervals = new WeakMap<HTMLElement, number>();
 
   // Memoization for expensive calculations
   private cachedWeatherData?: WeatherData;
@@ -172,6 +173,21 @@ export class WeatherPulseCard extends LitElement {
     if (this.forecastDebounceTimer) {
       clearTimeout(this.forecastDebounceTimer);
     }
+
+    const fireworks = this.shadowRoot?.querySelectorAll<HTMLElement>('.firework');
+    fireworks?.forEach((firework) => {
+      const handler = this.fireworkColorHandlers.get(firework);
+      if (handler) {
+        firework.removeEventListener('animationiteration', handler);
+        this.fireworkColorHandlers.delete(firework);
+      }
+
+      const intervalId = this.fireworkColorIntervals.get(firework);
+      if (intervalId !== undefined) {
+        window.clearInterval(intervalId);
+        this.fireworkColorIntervals.delete(firework);
+      }
+    });
   }
 
   protected updated(changedProperties: Map<string, any>): void {
@@ -230,9 +246,17 @@ export class WeatherPulseCard extends LitElement {
         firework.removeEventListener('animationiteration', existingHandler);
       }
 
+      const existingInterval = this.fireworkColorIntervals.get(firework);
+      if (existingInterval !== undefined) {
+        window.clearInterval(existingInterval);
+      }
+
       const handler = () => this.applyRandomFireworkColors(firework);
       this.fireworkColorHandlers.set(firework, handler);
       firework.addEventListener('animationiteration', handler);
+
+      const intervalId = window.setInterval(handler, 2100);
+      this.fireworkColorIntervals.set(firework, intervalId);
     });
 
     // Force a reflow so animations restart with new configuration
@@ -241,10 +265,21 @@ export class WeatherPulseCard extends LitElement {
   }
 
   private applyRandomFireworkColors(firework: HTMLElement): void {
-    const baseHue = Math.random() * 360;
-    const colors = Array.from({ length: 6 }, (_, index) =>
-      this.createFireworkColor(baseHue + index * (35 + Math.random() * 10))
-    );
+    const usedHues: number[] = [];
+    const colors = Array.from({ length: 6 }, () => {
+      let hue = Math.random() * 360;
+      let attempts = 0;
+      while (attempts < 10 && usedHues.some((existingHue) => {
+        const diff = Math.abs(existingHue - hue) % 360;
+        const wrappedDiff = diff > 180 ? 360 - diff : diff;
+        return wrappedDiff < 25;
+      })) {
+        hue = Math.random() * 360;
+        attempts += 1;
+      }
+      usedHues.push(hue);
+      return this.createFireworkColor(hue);
+    });
     colors.forEach((color, index) => {
       firework.style.setProperty(`--color${index + 1}`, color);
     });
@@ -3142,6 +3177,11 @@ export class WeatherPulseCard extends LitElement {
         pointer-events: none;
         z-index: 10;
         overflow: visible;
+        visibility: hidden;
+      }
+
+      .fireworks-container.active {
+        visibility: visible;
       }
 
       /* CSS Fireworks */
@@ -3156,12 +3196,14 @@ export class WeatherPulseCard extends LitElement {
       .fireworks-container:not(.active) .firework::after {
         animation-play-state: paused;
         opacity: 0;
+        visibility: hidden;
       }
 
       .fireworks-container.active .firework,
       .fireworks-container.active .firework::before,
       .fireworks-container.active .firework::after {
         animation-play-state: running;
+        visibility: visible;
       }
 
       .firework,
