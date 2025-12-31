@@ -175,16 +175,6 @@ export class WeatherPulseCard extends LitElement {
 
   protected updated(changedProperties: Map<string, any>): void {
     super.updated(changedProperties);
-    
-    // Initialize fireworks canvas if New Year's is active
-    const holiday = this.getCurrentHoliday();
-    if (holiday === 'newyear') {
-      const canvas = this.shadowRoot?.querySelector('#newyear-fireworks') as HTMLCanvasElement;
-      if (canvas && !canvas.dataset.initialized) {
-        canvas.dataset.initialized = 'true';
-        this.initFireworks(canvas);
-      }
-    }
   }
 
   private startClock(): void {
@@ -531,104 +521,6 @@ export class WeatherPulseCard extends LitElement {
     }
 
     return null;
-  }
-
-  private initFireworks(canvas: HTMLCanvasElement): void {
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size to match container
-    const resizeCanvas = () => {
-      const rect = canvas.parentElement?.getBoundingClientRect();
-      if (rect) {
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-      }
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Firework particle class
-    class Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      alpha: number;
-      color: string;
-      gravity: number = 0.05;
-      friction: number = 0.98;
-      
-      constructor(x: number, y: number, color: string) {
-        this.x = x;
-        this.y = y;
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 3 + 1;
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed;
-        this.alpha = 1;
-        this.color = color;
-      }
-
-      update(): boolean {
-        this.vx *= this.friction;
-        this.vy *= this.friction;
-        this.vy += this.gravity;
-        this.x += this.vx;
-        this.y += this.vy;
-        this.alpha -= 0.01;
-        return this.alpha > 0;
-      }
-
-      draw(ctx: CanvasRenderingContext2D): void {
-        ctx.save();
-        ctx.globalAlpha = this.alpha;
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, 2, 2);
-        ctx.restore();
-      }
-    }
-
-    const particles: Particle[] = [];
-    const colors = ['#FFD700', '#C0C0C0', '#4169E1', '#FF4500', '#FFD700'];
-    
-    // Create firework burst
-    const createBurst = (x: number, y: number) => {
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      for (let i = 0; i < 50; i++) {
-        particles.push(new Particle(x, y, color));
-      }
-    };
-
-    // Random bursts
-    const randomBurst = () => {
-      if (Math.random() < 0.03) { // 3% chance each frame
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * (canvas.height * 0.6); // Top 60% of canvas
-        createBurst(x, y);
-      }
-    };
-
-    // Animation loop
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Update and draw particles
-      for (let i = particles.length - 1; i >= 0; i--) {
-        if (!particles[i].update()) {
-          particles.splice(i, 1);
-        } else {
-          particles[i].draw(ctx);
-        }
-      }
-
-      randomBurst();
-      requestAnimationFrame(animate);
-    };
-
-    animate();
   }
 
   private renderHolidayDecorations(): unknown {
@@ -3128,17 +3020,6 @@ export class WeatherPulseCard extends LitElement {
       }
 
       /* Fireworks canvas for New Year's */
-      .holiday-fireworks-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -2;
-        opacity: 0.6;
-      }
-
       /* Year text styling for New Year's foreground cluster */
       .year-text {
         font-size: 2rem !important;
