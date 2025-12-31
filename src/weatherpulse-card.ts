@@ -223,6 +223,13 @@ export class WeatherPulseCard extends LitElement {
       firework.style.setProperty('--fw-delay', `${(index * 0.75).toFixed(2)}s`);
 
       this.applyRandomFireworkColors(firework);
+
+      if (!firework.dataset.colorListenerAttached) {
+        firework.addEventListener('animationiteration', () => {
+          this.applyRandomFireworkColors(firework);
+        });
+        firework.dataset.colorListenerAttached = 'true';
+      }
     });
 
     // Force a reflow so animations restart with new configuration
