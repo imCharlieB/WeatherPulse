@@ -2391,7 +2391,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       .firework::before,
       .firework::after {
         --initialSize: 0.5vmin;
-        --finalSize: 45vmin;
+        --finalSize: 45%;
         --particleSize: 0.2vmin;
         --color1: yellow;
         --color2: khaki;
@@ -2399,7 +2399,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         --color4: lime;
         --color5: gold;
         --color6: mediumseagreen;
-        --y: -30vmin;
+        --y: -30%;
         --x: -50%;
         --initialY: 40%;
         content: "";
@@ -2471,7 +2471,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       .firework:nth-child(2) {
-        --x: 30vmin;
+        --x: 30%;
       }
 
       .firework:nth-child(2),
@@ -2483,14 +2483,14 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         --color4: orchid;
         --color5: plum;
         --color6: lavender;  
-        --finalSize: 40vmin;
+        --finalSize: 40%;
         left: 30%;
         animation-delay: -0.25s;
       }
 
       .firework:nth-child(3) {
-        --x: -30vmin;
-        --y: -50vmin;
+        --x: -30%;
+        --y: -50%;
       }
 
       .firework:nth-child(3),
@@ -2502,7 +2502,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         --color4: PaleTurquoise;
         --color5: SkyBlue;
         --color6: lavender;
-        --finalSize: 35vmin;
+        --finalSize: 35%;
         left: 70%;
         animation-delay: -0.4s;
       }
