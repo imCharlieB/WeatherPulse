@@ -838,9 +838,9 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               `:""}
             </div>
           </div>
-        `}}const c=this.getCurrentHoliday();let h="",p="";if(c){const{foreground:e=[],lights:t}=Fe[c]||{},a=[e[1],e[0],e[2]].filter(Boolean);if(h=B`
+        `}}const c=this.getCurrentHoliday();let h="",p="";if(c){const{foreground:e=[],lights:t}=Fe[c]||{};if(h=B`
         <div class="holiday-foreground-cluster">
-          ${a.map((e,t)=>{const a=0===t?1:1===t?0:2;let i=e;if("YEAR"===e){const e=new Date;i=(11===e.getMonth()&&31===e.getDate()?e.getFullYear()+1:e.getFullYear()).toString()}return B`<span class="holiday-icon holiday-foreground holiday-foreground-${a} ${"YEAR"===e?"year-text":""}">${i}</span>`})}
+          ${e.map((e,t)=>{let a=e;if("YEAR"===e){const e=new Date;a=(11===e.getMonth()&&31===e.getDate()?e.getFullYear()+1:e.getFullYear()).toString()}return B`<span class="holiday-icon holiday-foreground holiday-foreground-${t} ${"YEAR"===e?"year-text":""}">${a}</span>`})}
         </div>
       `,t){p=B`
           <div class="holiday-lights">

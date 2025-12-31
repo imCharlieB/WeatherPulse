@@ -1199,13 +1199,9 @@ export class WeatherPulseCard extends LitElement {
     let holidayLights: unknown = '';
     if (holiday) {
       const { foreground = [], lights } = decorations[holiday] || {};
-      // Reorder: icon 1 (left), icon 0 (center/main), icon 2 (right)
-      const reordered = [foreground[1], foreground[0], foreground[2]].filter(Boolean);
       holidayForegroundIcons = html`
         <div class="holiday-foreground-cluster">
-          ${reordered.map((icon, i) => {
-            // Map display position to original CSS class
-            const cssIndex = i === 0 ? 1 : i === 1 ? 0 : 2;
+          ${foreground.map((icon, i) => {
             // Replace YEAR with next year for New Year's (show 2026 on Dec 31, 2025)
             let displayIcon = icon;
             if (icon === 'YEAR') {
@@ -1216,7 +1212,7 @@ export class WeatherPulseCard extends LitElement {
               displayIcon = year.toString();
             }
             const isYear = icon === 'YEAR';
-            return html`<span class="holiday-icon holiday-foreground holiday-foreground-${cssIndex} ${isYear ? 'year-text' : ''}">${displayIcon}</span>`;
+            return html`<span class="holiday-icon holiday-foreground holiday-foreground-${i} ${isYear ? 'year-text' : ''}">${displayIcon}</span>`;
           })}
         </div>
       `;
