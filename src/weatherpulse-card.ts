@@ -3081,11 +3081,11 @@ export class WeatherPulseCard extends LitElement {
         --color6: mediumseagreen;
         --y: -30vmin;
         --x: -50%;
-        --initialY: 0;
+        --initialY: 60vmin;
         content: "";
         animation: firework 2s infinite;
         position: absolute;
-        bottom: 0;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, var(--y));
         width: var(--initialSize);
