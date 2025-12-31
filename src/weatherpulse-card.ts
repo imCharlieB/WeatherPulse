@@ -566,7 +566,7 @@ export class WeatherPulseCard extends LitElement {
     } else if (holiday === 'newyear') {
       
       iconPlacements = [
-        { icon: '🕛', top: 8, left: 8, size: 2.8 },         // Clock top-left
+        { icon: '🍾', top: 8, left: 8, size: 2.8 },         // Clock top-left
         { icon: '🎊', top: 10, left: 88, size: 2.6 },       // Confetti ball top-right
         { icon: '🥳', top: 40, left: 50, size: 2.5 },       // Partying face center
         { icon: '🍾', top: 72, left: 88, size: 2.2 },       // Champagne bottom-right
@@ -2187,6 +2187,7 @@ export class WeatherPulseCard extends LitElement {
         border-radius: 12px 12px 0 0;
         position: relative; /* Required for holiday-foreground-cluster absolute positioning */
         overflow: visible; /* Allow lights to extend beyond header */
+        z-index: 1; /* Above fireworks */
       }
 
       .datetime-header {
@@ -3077,7 +3078,7 @@ export class WeatherPulseCard extends LitElement {
         background-repeat: no-repeat;
         animation: firework 2s infinite;
         pointer-events: none;
-        z-index: -2;
+        z-index: 0;
       }
 
       .firework::before,
@@ -3169,14 +3170,14 @@ export class WeatherPulseCard extends LitElement {
         pointer-events: none; /* Don't block clicks */
       }
       .holiday-foreground-0 {
-        font-size: 3.5em; /* Main/center icon - largest */
-        order: 2; /* Center position */
-        line-height: 1;
-      }
-      .holiday-foreground-1 {
         font-size: 2em; /* Left side icon */
         order: 1; /* Left position */
         margin-right: -0.8em; /* More overlap with center */
+        line-height: 1;
+      }
+      .holiday-foreground-1 {
+        font-size: 2.2em; /* Main/center icon - YEAR text */
+        order: 2; /* Center position */
         line-height: 1;
       }
       .holiday-foreground-2 {
@@ -3869,6 +3870,8 @@ export class WeatherPulseCard extends LitElement {
 
       .card-content {
         padding: 20px;
+        position: relative;
+        z-index: 1; /* Above fireworks */
       }
       
       .card-content-compact {
