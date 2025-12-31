@@ -197,24 +197,30 @@ export class WeatherPulseCard extends LitElement {
 
     container.classList.remove('active');
 
-    const horizontalOffsets = [-(containerWidth * 0.25), 0, containerWidth * 0.25];
-    const peakHeightMultipliers = [0.65, 0.7, 0.75];
-    const baseLaunchOffset = Math.max(containerHeight * 0.18, 40);
-    const baseFallOffset = -Math.max(containerHeight * 0.28, 70);
+    const positionPercents = [30, 50, 70];
+    const offsetMultipliers = [-0.2, 0, 0.2];
+    const baselineTopPercent = 50;
+    const halfHeight = containerHeight / 2;
 
     fireworks.forEach((firework, index) => {
-      const offsetX = horizontalOffsets[index % horizontalOffsets.length];
-      const peakMultiplier = peakHeightMultipliers[index % peakHeightMultipliers.length];
-      const peakOffset = -Math.max(containerHeight * peakMultiplier, 140);
-      const fallOffset = Math.min(baseFallOffset, peakOffset / 2);
-      const finalSize = Math.max(minDimension * (0.38 - index * 0.07), minDimension * 0.22);
+      const percentIndex = index % positionPercents.length;
+      const positionPercent = positionPercents[percentIndex];
+      const offsetMultiplier = offsetMultipliers[percentIndex];
 
-      firework.style.setProperty('--x', `calc(-50% + ${offsetX.toFixed(2)}px)`);
-      firework.style.setProperty('--initialY', `${baseLaunchOffset.toFixed(2)}px`);
-      firework.style.setProperty('--peakY', `${peakOffset.toFixed(2)}px`);
-      firework.style.setProperty('--fallY', `${fallOffset.toFixed(2)}px`);
+      const horizontalOffset = containerWidth * offsetMultiplier;
+      const launchDistance = Math.max(halfHeight - 20, Math.min(halfHeight, 200));
+      const peakTravel = Math.max(containerHeight * (0.55 + index * 0.04), 180);
+      const finalSize = Math.max(minDimension * (0.48 - index * 0.06), minDimension * 0.26);
+      const particleSize = Math.max(finalSize * 0.006, 1.2);
+
+      firework.style.left = `${positionPercent}%`;
+      firework.style.top = `${baselineTopPercent}%`;
+      firework.style.setProperty('--x', `calc(-50% + ${horizontalOffset.toFixed(2)}px)`);
+      firework.style.setProperty('--initialY', `${launchDistance.toFixed(2)}px`);
+      firework.style.setProperty('--y', `${(-peakTravel).toFixed(2)}px`);
       firework.style.setProperty('--finalSize', `${finalSize.toFixed(2)}px`);
-      firework.style.setProperty('--fw-delay', `${(index * 0.8).toFixed(2)}s`);
+      firework.style.setProperty('--particleSize', `${particleSize.toFixed(2)}px`);
+      firework.style.setProperty('--fw-delay', `${(index * 0.75).toFixed(2)}s`);
 
       this.applyRandomFireworkColors(firework);
     });
@@ -3127,26 +3133,9 @@ export class WeatherPulseCard extends LitElement {
 
       /* CSS Fireworks */
       @keyframes firework {
-        0% {
-          transform: translate(var(--x), var(--initialY));
-          width: var(--initialSize);
-          opacity: 0.85;
-        }
-        45% {
-          transform: translate(var(--x), var(--peakY));
-          width: 0.5vmin;
-          opacity: 1;
-        }
-        60% {
-          transform: translate(var(--x), var(--peakY));
-          width: var(--finalSize);
-          opacity: 1;
-        }
-        100% {
-          transform: translate(var(--x), var(--fallY));
-          width: var(--finalSize);
-          opacity: 0;
-        }
+        0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
+        50% { width: 0.5vmin; opacity: 1; }
+        100% { width: var(--finalSize); opacity: 0; }
       }
 
       .fireworks-container:not(.active) .firework,
@@ -3174,20 +3163,21 @@ export class WeatherPulseCard extends LitElement {
         --color4: lime;
         --color5: gold;
         --color6: mediumseagreen;
+        --y: -30vmin;
         --x: -50%;
-        --initialY: 40vmin;
-        --peakY: -30vmin;
-        --fallY: -15vmin;
+        --initialY: 60vmin;
         content: "";
-        animation: firework 3s ease-out infinite;
+        animation: firework 2s infinite;
         animation-delay: var(--fw-delay, 0s);
         position: absolute;
-        bottom: 0;
+        top: 50%;
         left: 50%;
-        transform: translate(var(--x), var(--initialY));
+        transform: translate(-50%, var(--y));
         width: var(--initialSize);
         aspect-ratio: 1;
-        background: 
+        pointer-events: none;
+        z-index: 10;
+        background:
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
           radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 50%,
           radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 50% 100%,
@@ -3229,8 +3219,6 @@ export class WeatherPulseCard extends LitElement {
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
         background-size: var(--initialSize) var(--initialSize);
         background-repeat: no-repeat;
-        pointer-events: none;
-        z-index: 10;
       }
 
       .firework::before {
