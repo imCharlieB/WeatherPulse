@@ -658,13 +658,6 @@ export class WeatherPulseCard extends LitElement {
 
     return html`
       <div class="holiday-overlay">
-        ${holiday === 'newyear' ? html`
-          <div class="fireworks-container">
-            <div class="firework"></div>
-            <div class="firework"></div>
-            <div class="firework"></div>
-          </div>
-        ` : ''}
         ${backgroundIcons}
       </div>
     `;
@@ -1717,6 +1710,11 @@ export class WeatherPulseCard extends LitElement {
     return html`
       <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
+        ${this.getCurrentHoliday() === 'newyear' ? html`
+          <div class="firework firework-1"></div>
+          <div class="firework firework-2"></div>
+          <div class="firework firework-3"></div>
+        ` : ''}
         ${this.renderHeader()}
         ${this.renderRainTiming()}
         ${this.renderNWSAlerts()}
@@ -3029,7 +3027,7 @@ export class WeatherPulseCard extends LitElement {
       /* Fireworks canvas for New Year's */
       /* Year text styling for New Year's foreground cluster */
       .year-text {
-        font-size: 3.5rem !important;
+        font-size: 2.2rem !important;
         font-weight: bold;
         color: #FFD700;
         text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
@@ -3037,6 +3035,7 @@ export class WeatherPulseCard extends LitElement {
         animation: year-glow 2s ease-in-out infinite;
         line-height: 1 !important;
         display: inline-block;
+        vertical-align: middle;
       }
 
       @keyframes year-glow {
@@ -3048,60 +3047,91 @@ export class WeatherPulseCard extends LitElement {
         }
       }
 
-      /* CSS-based fireworks animation for New Year's */
-      .fireworks-container {
+      /* CSS Fireworks */
+      .firework {
+        position: absolute;
+        width: 0.5vmin;
+        aspect-ratio: 1;
+        background:
+          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 50% 00%,
+          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 00% 50%,
+          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 50% 99%,
+          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 99% 50%,
+          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 80% 90%,
+          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 95% 90%,
+          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 10% 60%,
+          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 31% 80%,
+          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 80% 10%,
+          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 20% 20%,
+          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 90% 23%,
+          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 70% 30%,
+          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 25% 70%,
+          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 15% 80%,
+          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 60% 80%,
+          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 70% 75%,
+          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 45% 45%,
+          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 55% 45%,
+          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 45% 55%,
+          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 55% 55%;
+        background-size: 0.5vmin 0.5vmin;
+        background-repeat: no-repeat;
+        animation: firework 2s infinite;
+        pointer-events: none;
+        z-index: -2;
+      }
+
+      .firework::before,
+      .firework::after {
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        pointer-events: none;
-        z-index: -2;
-        overflow: hidden;
+        background: inherit;
+        background-size: inherit;
+        background-repeat: inherit;
       }
 
-      .firework {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        box-shadow: 
-          0 0 10px 2px #FFD700,
-          0 0 20px 4px #FFD700,
-          0 0 30px 6px #C0C0C0,
-          0 0 40px 8px #4169E1;
-        animation: firework-burst 2s ease-out infinite;
+      .firework::before {
+        transform: rotate(120deg);
       }
 
-      .firework:nth-child(1) {
-        top: 20%;
-        left: 25%;
+      .firework::after {
+        transform: rotate(240deg);
+      }
+
+      .firework-1 {
+        top: 50%;
+        left: 30%;
         animation-delay: 0s;
       }
 
-      .firework:nth-child(2) {
-        top: 35%;
-        left: 70%;
-        animation-delay: 0.7s;
-      }
-
-      .firework:nth-child(3) {
-        top: 15%;
+      .firework-2 {
+        top: 50%;
         left: 50%;
-        animation-delay: 1.4s;
+        animation-delay: 0.5s;
       }
 
-      @keyframes firework-burst {
+      .firework-3 {
+        top: 50%;
+        left: 70%;
+        animation-delay: 1s;
+      }
+
+      @keyframes firework {
         0% {
-          transform: scale(0);
+          transform: translate(-50%, 60vh);
+          width: 0.5vmin;
           opacity: 1;
         }
         50% {
-          transform: scale(20);
-          opacity: 0.8;
+          width: 40vmin;
+          opacity: 1;
         }
         100% {
-          transform: scale(40);
+          width: 40vmin;
+          transform: translate(-50%, -50%);
           opacity: 0;
         }
       }
