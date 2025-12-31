@@ -1032,9 +1032,11 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       <ha-card class="${i} ${o} ${s} ${d}" style="${c}">
         ${this.renderHolidayDecorations()}
         ${"newyear"===this.getCurrentHoliday()?B`
-          <div class="firework"></div>
-          <div class="firework"></div>
-          <div class="firework"></div>
+          <div class="fireworks-container">
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+          </div>
         `:""}
         ${this.renderHeader()}
         ${this.renderRainTiming()}
@@ -2364,6 +2366,18 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         50% {
           text-shadow: 0 0 15px #FFD700, 0 0 30px #FFD700;
         }
+      }
+
+      /* Fireworks Container */
+      .fireworks-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 10;
+        overflow: visible;
       }
 
       /* CSS Fireworks */

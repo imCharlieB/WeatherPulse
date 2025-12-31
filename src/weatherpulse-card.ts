@@ -1708,9 +1708,11 @@ export class WeatherPulseCard extends LitElement {
       <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
         ${this.getCurrentHoliday() === 'newyear' ? html`
-          <div class="firework"></div>
-          <div class="firework"></div>
-          <div class="firework"></div>
+          <div class="fireworks-container">
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+          </div>
         ` : ''}
         ${this.renderHeader()}
         ${this.renderRainTiming()}
@@ -3044,6 +3046,18 @@ export class WeatherPulseCard extends LitElement {
         50% {
           text-shadow: 0 0 15px #FFD700, 0 0 30px #FFD700;
         }
+      }
+
+      /* Fireworks Container */
+      .fireworks-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 10;
+        overflow: visible;
       }
 
       /* CSS Fireworks */
