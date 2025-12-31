@@ -720,11 +720,16 @@ export class WeatherPulseCard extends LitElement {
         }
       }
 
-      this.nwsAlerts = alerts;
+      // Deduplicate alerts by ID (NWS can return same alert for multiple zones)
+      const uniqueAlerts = alerts.filter((alert, index, self) =>
+        index === self.findIndex((a) => a.id === alert.id || (a.event === alert.event && a.headline === alert.headline))
+      );
+
+      this.nwsAlerts = uniqueAlerts;
       this.lastAlertFetch = now;
 
-      if (this.config?.nws_test_mode && alerts.length > 0) {
-        console.log(`NWS Test Mode: Displaying ${alerts.length} sample alert(s)`, alerts);
+      if (this.config?.nws_test_mode && uniqueAlerts.length > 0) {
+        console.log(`NWS Test Mode: Displaying ${uniqueAlerts.length} sample alert(s)`, uniqueAlerts);
       }
     } catch (error) {
       console.error('Failed to fetch NWS alerts:', error);
@@ -3174,17 +3179,20 @@ export class WeatherPulseCard extends LitElement {
         order: 1; /* Left position */
         margin-right: -0.8em; /* More overlap with center */
         line-height: 1;
+        z-index: 1;
       }
       .holiday-foreground-1 {
         font-size: 2.2em; /* Main/center icon - YEAR text */
         order: 2; /* Center position */
         line-height: 1;
+        z-index: 2; /* Above other icons */
       }
       .holiday-foreground-2 {
         font-size: 2em; /* Right side icon */
         order: 3; /* Right position */
         margin-left: -0.8em; /* More overlap with center */
         line-height: 1;
+        z-index: 1;
       }
 
       .holiday-icon.holiday-foreground {
