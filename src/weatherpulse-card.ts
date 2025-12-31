@@ -1763,6 +1763,7 @@ export class WeatherPulseCard extends LitElement {
     return css`
       :host {
         display: block;
+        overflow-x: clip; /* Prevent horizontal scrollbar while allowing content to extend */
 
         /* Color Variables - Night Mode */
         --night-bg: #0a0e27;
@@ -1864,8 +1865,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       ha-card {
-        overflow-x: hidden; /* Prevent horizontal scrolling from fireworks */
-        overflow-y: visible; /* Allow vertical overflow for fireworks */
+        overflow: visible;
         border-radius: 12px;
         position: relative;
       }

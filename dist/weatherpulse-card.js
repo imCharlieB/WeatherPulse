@@ -1049,6 +1049,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
     `}static get styles(){return n`
       :host {
         display: block;
+        overflow-x: clip; /* Prevent horizontal scrollbar while allowing content to extend */
 
         /* Color Variables - Night Mode */
         --night-bg: #0a0e27;
@@ -1150,8 +1151,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
       }
 
       ha-card {
-        overflow-x: hidden; /* Prevent horizontal scrolling from fireworks */
-        overflow-y: visible; /* Allow vertical overflow for fireworks */
+        overflow: visible;
         border-radius: 12px;
         position: relative;
       }
