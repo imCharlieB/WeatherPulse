@@ -2387,13 +2387,13 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         --color6: mediumseagreen;
         --y: -30vmin;
         --x: -50%;
-        --initialY: 60vmin;
+        --initialY: 100%;
         content: "";
         animation: firework 2s infinite;
         position: absolute;
-        top: 50%;
+        bottom: 0;
         left: 50%;
-        transform: translate(-50%, var(--y));
+        transform: translate(-50%, 0);
         width: var(--initialSize);
         aspect-ratio: 1;
         background: 
@@ -2471,7 +2471,6 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         --color6: lavender;  
         --finalSize: 40vmin;
         left: 30%;
-        top: 60%;
         animation-delay: -0.25s;
       }
 
@@ -2491,7 +2490,6 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
         --color6: lavender;
         --finalSize: 35vmin;
         left: 70%;
-        top: 60%;
         animation-delay: -0.4s;
       }
 
