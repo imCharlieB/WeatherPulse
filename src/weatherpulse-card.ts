@@ -47,10 +47,10 @@ const decorations: {
     }
   },
   newyear: {
-    foreground: ['🎆', '🥳', '🍾', '🥂'],
-    background: ['🎇', '🎉', '✨', '🎊'],
+    foreground: ['�', '🥳', '🍾'],
+    background: ['🕛', '�', '🥳', '�', '✨', '�'],
     lights: {
-      colors: ['#ffd700', '#ffffff', '#c0c0c0', '#ffe135'],
+      colors: ['#FFD700', '#C0C0C0', '#4169E1', '#FFD700', '#C0C0C0', '#4169E1'],
       style: 'round'
     }
   },
@@ -170,6 +170,20 @@ export class WeatherPulseCard extends LitElement {
     }
     if (this.forecastDebounceTimer) {
       clearTimeout(this.forecastDebounceTimer);
+    }
+  }
+
+  protected updated(changedProperties: Map<string, any>): void {
+    super.updated(changedProperties);
+    
+    // Initialize fireworks canvas if New Year's is active
+    const holiday = this.getCurrentHoliday();
+    if (holiday === 'newyear') {
+      const canvas = this.shadowRoot?.querySelector('#newyear-fireworks') as HTMLCanvasElement;
+      if (canvas && !canvas.dataset.initialized) {
+        canvas.dataset.initialized = 'true';
+        this.initFireworks(canvas);
+      }
     }
   }
 
@@ -519,6 +533,105 @@ export class WeatherPulseCard extends LitElement {
     return null;
   }
 
+  private initFireworks(canvas: HTMLCanvasElement): void {
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas size to match container
+    const resizeCanvas = () => {
+      const rect = canvas.parentElement?.getBoundingClientRect();
+      if (rect) {
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+      }
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Firework particle class
+    class Particle {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      alpha: number;
+      color: string;
+      gravity: number = 0.05;
+      friction: number = 0.98;
+      
+      constructor(x: number, y: number, color: string) {
+        this.x = x;
+        this.y = y;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 3 + 1;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.alpha = 1;
+        this.color = color;
+      }
+
+      update(): boolean {
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= 0.01;
+        return this.alpha > 0;
+      }
+
+      draw(ctx: CanvasRenderingContext2D): void {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, 2, 2);
+        ctx.restore();
+      }
+    }
+
+    const particles: Particle[] = [];
+    const colors = ['#FFD700', '#C0C0C0', '#4169E1', '#FF4500', '#FFD700'];
+    
+    // Create firework burst
+    const createBurst = (x: number, y: number) => {
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      for (let i = 0; i < 50; i++) {
+        particles.push(new Particle(x, y, color));
+      }
+    };
+
+    // Random bursts
+    const randomBurst = () => {
+      if (Math.random() < 0.03) { // 3% chance each frame
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * (canvas.height * 0.6); // Top 60% of canvas
+        createBurst(x, y);
+      }
+    };
+
+    // Animation loop
+    const animate = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update and draw particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        if (!particles[i].update()) {
+          particles.splice(i, 1);
+        } else {
+          particles[i].draw(ctx);
+        }
+      }
+
+      randomBurst();
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+  }
+
   private renderHolidayDecorations(): unknown {
     const holiday = this.getCurrentHoliday();
     if (!holiday) return '';
@@ -560,13 +673,14 @@ export class WeatherPulseCard extends LitElement {
         { icon: '🌟', top: 75, left: 88, size: 2 }          // Star #2 bottom-right
       ];
     } else if (holiday === 'newyear') {
+      
       iconPlacements = [
-        { icon: '🎇', top: 8, left: 10, size: 2.8 },        // Firework #1 top-left
-        { icon: '🎇', top: 10, left: 88, size: 2.6 },       // Firework #2 top-right
-        { icon: '✨', top: 35, left: 50, size: 2.4 },       // Sparkles #1 center
-        { icon: '✨', top: 55, left: 48, size: 2.2 },       // Sparkles #2 center-lower
-        { icon: '🎉', top: 72, left: 10, size: 2.2 },       // Party popper #1 bottom-left
-        { icon: '🎉', top: 50, left: 88, size: 2 }          // Party popper #2 right
+        { icon: '🕛', top: 8, left: 8, size: 2.8 },         // Clock top-left
+        { icon: '🎊', top: 10, left: 88, size: 2.6 },       // Confetti ball top-right
+        { icon: '🥳', top: 40, left: 50, size: 2.5 },       // Partying face center
+        { icon: '🍾', top: 72, left: 88, size: 2.2 },       // Champagne bottom-right
+        { icon: '✨', top: 55, left: 48, size: 2.2 },       // Sparkles center-lower
+        { icon: '🎉', top: 72, left: 10, size: 2.2 }        // Party popper bottom-left
       ];
     } else if (holiday === 'valentine') {
       iconPlacements = [
@@ -651,8 +765,23 @@ export class WeatherPulseCard extends LitElement {
       `;
     });
 
+    // Add canvas fireworks for New Year's
+    const fireworksCanvas = holiday === 'newyear' ? html`
+      <canvas 
+        id="newyear-fireworks" 
+        class="holiday-fireworks-canvas"
+      ></canvas>
+    ` : '';
+
+    // Add year text for New Year's
+    const yearText = holiday === 'newyear' ? html`
+      <div class="newyear-text">${new Date().getFullYear()}</div>
+    ` : '';
+
     return html`
       <div class="holiday-overlay">
+        ${fireworksCanvas}
+        ${yearText}
         ${backgroundIcons}
       </div>
     `;
@@ -3002,6 +3131,42 @@ export class WeatherPulseCard extends LitElement {
         pointer-events: none;
         z-index: 10;
         overflow: hidden;
+      }
+
+      /* Fireworks canvas for New Year's */
+      .holiday-fireworks-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+      }
+
+      /* Year text for New Year's */
+      .newyear-text {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3rem;
+        font-weight: bold;
+        color: #FFD700;
+        text-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        pointer-events: none;
+        z-index: 15;
+        animation: year-glow 2s ease-in-out infinite;
+      }
+
+      @keyframes year-glow {
+        0%, 100% {
+          text-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
+        }
+        50% {
+          text-shadow: 0 0 30px #FFD700, 0 0 60px #FFD700, 0 0 90px #FFD700;
+        }
       }
 
       /* Background holiday icons (floating/animated) */

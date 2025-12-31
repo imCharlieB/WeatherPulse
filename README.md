@@ -39,6 +39,20 @@ A modern, highly configurable weather card for Home Assistant with dynamic themi
 - 📦 **HACS Compatible** - Easy installation and updates
 
 #### Display Features
+
+---
+
+**Linux/Chromium Dashboard Users:**
+If you are viewing your Home Assistant dashboard on a Linux device using Chromium (including kiosk mode or the HA app), you may need to install emoji fonts for holiday and weather icons to display correctly. Otherwise, some icons may show as an "X" or blank box.
+
+Install emoji support with:
+
+```sh
+sudo apt-get update && sudo apt-get install fonts-noto-color-emoji
+```
+
+Restart Chromium after installing. This ensures all emoji-based icons render properly in WeatherPulse.
+---
 - 🖼️ **Graphical Seasonal Header** - Beautiful seasonal backgrounds that auto-switch with custom image support
 - 🌙 **Auto Day/Night Mode** - Automatically switches to darker starry theme at night based on sunrise/sunset
 - 🌕 **Moon Phase Icons** - On clear nights, weather icon shows actual current moon phase (new moon, crescent, quarter, gibbous, full moon) instead of generic moon icon
