@@ -267,30 +267,24 @@ export class WeatherPulseCard extends LitElement {
   }
 
   private applyRandomFireworkColors(firework: HTMLElement): void {
-    const usedHues: number[] = [];
-    const colors = Array.from({ length: 6 }, () => {
-      let hue = Math.random() * 360;
-      let attempts = 0;
-      while (attempts < 10 && usedHues.some((existingHue) => {
-        const diff = Math.abs(existingHue - hue) % 360;
-        const wrappedDiff = diff > 180 ? 360 - diff : diff;
-        return wrappedDiff < 25;
-      })) {
-        hue = Math.random() * 360;
-        attempts += 1;
-      }
-      usedHues.push(hue);
-      return this.createFireworkColor(hue);
-    });
+    const colors = this.generateFireworkPalette();
     colors.forEach((color, index) => {
       firework.style.setProperty(`--color${index + 1}`, color);
     });
   }
 
-  private createFireworkColor(hue: number): string {
+  private generateFireworkPalette(): string[] {
+    const baseHue = Math.random() * 360;
+    const hueOffsets = [0, 60, 150, 210, 300, 30].map((offset) => baseHue + offset + Math.random() * 15);
+    return hueOffsets.map((hue, index) => this.createFireworkColor(hue, index));
+  }
+
+  private createFireworkColor(hue: number, index: number): string {
     const normalizedHue = (Math.round(hue) % 360 + 360) % 360;
-    const saturation = Math.round(60 + Math.random() * 30); // 60% - 90%
-    const lightness = Math.round(45 + Math.random() * 20); // 45% - 65%
+    const rawSaturation = 70 + Math.sin((index + 1) * Math.PI / 6) * 20 + Math.random() * 10;
+    const rawLightness = 50 + Math.cos((index + 1) * Math.PI / 6) * 10 + Math.random() * 5;
+    const saturation = Math.max(55, Math.min(95, Math.round(rawSaturation)));
+    const lightness = Math.max(40, Math.min(65, Math.round(rawLightness)));
     return `hsl(${normalizedHue}deg, ${saturation}%, ${lightness}%)`;
   }
 
@@ -1335,7 +1329,7 @@ export class WeatherPulseCard extends LitElement {
       `;
 
       // Render holiday lights if configured
-      if (lights) {
+      if (lights && holiday !== 'newyear') {
         const lightCount = 12; // Number of lights across header
         holidayLights = html`
           <div class="holiday-lights">
