@@ -213,6 +213,7 @@ export class WeatherPulseCard extends LitElement {
     const minDimension = Math.max(Math.min(containerWidth, containerHeight), 200);
 
     container.classList.remove('active');
+  container.style.visibility = 'hidden';
 
     const positionPercents = [30, 50, 70];
     const offsetMultipliers = [-0.2, 0, 0.2];
@@ -261,6 +262,7 @@ export class WeatherPulseCard extends LitElement {
 
     // Force a reflow so animations restart with new configuration
     void container.offsetHeight;
+    container.style.visibility = 'visible';
     container.classList.add('active');
   }
 
@@ -3266,12 +3268,12 @@ export class WeatherPulseCard extends LitElement {
           
           /* top right */
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 22% 14%,
-          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 45% 20%,
-          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 34%,
-          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 10% 29%,
-          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 31% 37%,
-          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 28% 7%,
-          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
+          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 45% 20%,
+          radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 33% 34%,
+          radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 10% 29%,
+          radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 31% 37%,
+          radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 28% 7%,
+          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 13% 42%;
         background-size: var(--initialSize) var(--initialSize);
         background-repeat: no-repeat;
       }
