@@ -3077,9 +3077,9 @@ export class WeatherPulseCard extends LitElement {
           radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 55% 55%;
         background-size: 0.5vmin 0.5vmin;
         background-repeat: no-repeat;
-        animation: firework 2s infinite;
+        animation: firework 3s ease-out infinite;
         pointer-events: none;
-        z-index: 0;
+        z-index: 10; /* Above everything like floating icons */
       }
 
       .firework::before,
@@ -3104,36 +3104,42 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .firework-1 {
-        top: 50%;
+        bottom: 0;
         left: 30%;
         animation-delay: 0s;
       }
 
       .firework-2 {
-        top: 50%;
+        bottom: 0;
         left: 50%;
-        animation-delay: 0.5s;
+        animation-delay: 1s;
       }
 
       .firework-3 {
-        top: 50%;
+        bottom: 0;
         left: 70%;
-        animation-delay: 1s;
+        animation-delay: 2s;
       }
 
       @keyframes firework {
         0% {
-          transform: translate(-50%, 60vh);
+          transform: translate(-50%, 0);
           width: 0.5vmin;
           opacity: 1;
         }
         50% {
-          width: 40vmin;
+          transform: translate(-50%, -250px);
+          width: 0.5vmin;
+          opacity: 1;
+        }
+        60% {
+          transform: translate(-50%, -250px);
+          width: 35vmin;
           opacity: 1;
         }
         100% {
-          width: 40vmin;
-          transform: translate(-50%, -50%);
+          transform: translate(-50%, -300px);
+          width: 35vmin;
           opacity: 0;
         }
       }
