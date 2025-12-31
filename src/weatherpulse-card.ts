@@ -47,8 +47,8 @@ const decorations: {
     }
   },
   newyear: {
-    foreground: ['�', '🥳', '🍾'],
-    background: ['🕛', '�', '🥳', '�', '✨', '�'],
+    foreground: ['🎊', 'YEAR', '🍾'],  // YEAR will be replaced with dynamic year text
+    background: ['🕛', '🎊', '🥳', '🍾', '✨', '🎉'],
     lights: {
       colors: ['#FFD700', '#C0C0C0', '#4169E1', '#FFD700', '#C0C0C0', '#4169E1'],
       style: 'round'
@@ -773,15 +773,9 @@ export class WeatherPulseCard extends LitElement {
       ></canvas>
     ` : '';
 
-    // Add year text for New Year's
-    const yearText = holiday === 'newyear' ? html`
-      <div class="newyear-text">${new Date().getFullYear()}</div>
-    ` : '';
-
     return html`
       <div class="holiday-overlay">
         ${fireworksCanvas}
-        ${yearText}
         ${backgroundIcons}
       </div>
     `;
@@ -1325,7 +1319,17 @@ export class WeatherPulseCard extends LitElement {
           ${reordered.map((icon, i) => {
             // Map display position to original CSS class
             const cssIndex = i === 0 ? 1 : i === 1 ? 0 : 2;
-            return html`<span class="holiday-icon holiday-foreground holiday-foreground-${cssIndex}">${icon}</span>`;
+            // Replace YEAR with next year for New Year's (show 2026 on Dec 31, 2025)
+            let displayIcon = icon;
+            if (icon === 'YEAR') {
+              const now = new Date();
+              const year = now.getMonth() === 11 && now.getDate() === 31 
+                ? now.getFullYear() + 1  // Show next year on Dec 31
+                : now.getFullYear();      // Show current year on Jan 1
+              displayIcon = year.toString();
+            }
+            const isYear = icon === 'YEAR';
+            return html`<span class="holiday-icon holiday-foreground holiday-foreground-${cssIndex} ${isYear ? 'year-text' : ''}">${displayIcon}</span>`;
           })}
         </div>
       `;
@@ -3144,28 +3148,22 @@ export class WeatherPulseCard extends LitElement {
         z-index: 5;
       }
 
-      /* Year text for New Year's */
-      .newyear-text {
-        position: absolute;
-        top: 35%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 3rem;
+      /* Year text styling for New Year's foreground cluster */
+      .year-text {
+        font-size: 2rem !important;
         font-weight: bold;
         color: #FFD700;
-        text-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
+        text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        pointer-events: none;
-        z-index: 15;
         animation: year-glow 2s ease-in-out infinite;
       }
 
       @keyframes year-glow {
         0%, 100% {
-          text-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
+          text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
         }
         50% {
-          text-shadow: 0 0 30px #FFD700, 0 0 60px #FFD700, 0 0 90px #FFD700;
+          text-shadow: 0 0 15px #FFD700, 0 0 30px #FFD700;
         }
       }
 
