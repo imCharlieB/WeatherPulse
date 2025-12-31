@@ -278,7 +278,8 @@ export class WeatherPulseCard extends LitElement {
 
   private applyRandomFireworkColors(firework: HTMLElement): void {
     const colors = this.generateFireworkPalette();
-    const trailColor = colors[Math.floor(Math.random() * colors.length)];
+  const trailColor = colors.splice(Math.floor(Math.random() * colors.length), 1)[0];
+  colors.unshift(trailColor);
     firework.style.setProperty('--trailColor', trailColor);
     colors.forEach((color, index) => {
       firework.style.setProperty(`--color${index + 1}`, color);
@@ -3328,6 +3329,7 @@ export class WeatherPulseCard extends LitElement {
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
         background-size: var(--initialSize) var(--initialSize);
         background-repeat: no-repeat;
+        background-color: var(--trailColor);
       }
 
       .firework::before {
