@@ -47,8 +47,8 @@ const decorations: {
     }
   },
   newyear: {
-    foreground: ['🎊', 'YEAR', '🍾'],  // YEAR will be replaced with dynamic year text
-    background: ['🕛', '🎊', '🥳', '🍾', '✨', '🎉'],
+    foreground: ['🎊', 'YEAR', '🍾'],  // YEAR will be replaced with dynamic year text (left: confetti, center: 2026, right: champagne)
+    background: ['🍾', '🥳', '✨', '🎉'],  // Floating: champagne, party face, sparkles, party popper
     lights: {
       colors: ['#FFD700', '#C0C0C0', '#4169E1', '#FFD700', '#C0C0C0', '#4169E1'],
       style: 'round'
@@ -658,6 +658,13 @@ export class WeatherPulseCard extends LitElement {
 
     return html`
       <div class="holiday-overlay">
+        ${holiday === 'newyear' ? html`
+          <div class="fireworks-container">
+            <div class="firework"></div>
+            <div class="firework"></div>
+            <div class="firework"></div>
+          </div>
+        ` : ''}
         ${backgroundIcons}
       </div>
     `;
@@ -3022,12 +3029,14 @@ export class WeatherPulseCard extends LitElement {
       /* Fireworks canvas for New Year's */
       /* Year text styling for New Year's foreground cluster */
       .year-text {
-        font-size: 2rem !important;
+        font-size: 3.5rem !important;
         font-weight: bold;
         color: #FFD700;
         text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         animation: year-glow 2s ease-in-out infinite;
+        line-height: 1 !important;
+        display: inline-block;
       }
 
       @keyframes year-glow {
@@ -3036,6 +3045,64 @@ export class WeatherPulseCard extends LitElement {
         }
         50% {
           text-shadow: 0 0 15px #FFD700, 0 0 30px #FFD700;
+        }
+      }
+
+      /* CSS-based fireworks animation for New Year's */
+      .fireworks-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -2;
+        overflow: hidden;
+      }
+
+      .firework {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        box-shadow: 
+          0 0 10px 2px #FFD700,
+          0 0 20px 4px #FFD700,
+          0 0 30px 6px #C0C0C0,
+          0 0 40px 8px #4169E1;
+        animation: firework-burst 2s ease-out infinite;
+      }
+
+      .firework:nth-child(1) {
+        top: 20%;
+        left: 25%;
+        animation-delay: 0s;
+      }
+
+      .firework:nth-child(2) {
+        top: 35%;
+        left: 70%;
+        animation-delay: 0.7s;
+      }
+
+      .firework:nth-child(3) {
+        top: 15%;
+        left: 50%;
+        animation-delay: 1.4s;
+      }
+
+      @keyframes firework-burst {
+        0% {
+          transform: scale(0);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(20);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(40);
+          opacity: 0;
         }
       }
 
