@@ -173,6 +173,44 @@ export class WeatherPulseCard extends LitElement {
     }
   }
 
+  protected updated(changedProperties: Map<string, any>): void {
+    super.updated(changedProperties);
+    
+    const holiday = this.getCurrentHoliday();
+    if (holiday === 'newyear') {
+      this.setRandomFireworkColors();
+    }
+  }
+
+  private setRandomFireworkColors(): void {
+    const fireworks = this.shadowRoot?.querySelectorAll('.firework');
+    if (!fireworks) return;
+
+    const getRandomColor = () => {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      return `rgb(${r}, ${g}, ${b})`;
+    };
+    
+    fireworks.forEach((firework: Element) => {
+      const htmlElement = firework as HTMLElement;
+      const color1 = getRandomColor();
+      const color2 = getRandomColor();
+      const color3 = getRandomColor();
+      const color4 = getRandomColor();
+      const color5 = getRandomColor();
+      const color6 = getRandomColor();
+      
+      htmlElement.style.setProperty('--color1', color1);
+      htmlElement.style.setProperty('--color2', color2);
+      htmlElement.style.setProperty('--color3', color3);
+      htmlElement.style.setProperty('--color4', color4);
+      htmlElement.style.setProperty('--color5', color5);
+      htmlElement.style.setProperty('--color6', color6);
+    });
+  }
+
   private startClock(): void {
     this.updateTime();
     this.timeInterval = window.setInterval(() => this.updateTime(), 1000);
@@ -3063,15 +3101,15 @@ export class WeatherPulseCard extends LitElement {
       /* CSS Fireworks */
       @keyframes firework {
         0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
-        50% { transform: translate(var(--x), var(--y)); width: 0.5vmin; opacity: 1; }
-        100% { transform: translate(var(--x), var(--y)); width: var(--finalSize); opacity: 0; }
+        50% { width: 0.5vmin; opacity: 1; }
+        100% { width: var(--finalSize); opacity: 0; }
       }
 
       .firework,
       .firework::before,
       .firework::after {
         --initialSize: 0.5vmin;
-        --finalSize: 45%;
+        --finalSize: 45vmin;
         --particleSize: 0.2vmin;
         --color1: yellow;
         --color2: khaki;
@@ -3079,14 +3117,16 @@ export class WeatherPulseCard extends LitElement {
         --color4: lime;
         --color5: gold;
         --color6: mediumseagreen;
-        --y: -30%;
+        --y: -30vmin;
         --x: -50%;
-        --initialY: 40%;
+        --initialY: 60vmin;
         content: "";
         animation: firework 2s infinite;
         position: absolute;
         top: 50%;
         left: 50%;
+        transform: translate(-50%, var(--y));
+        width: var(--initialSize);
         transform: translate(-50%, var(--y));
         width: var(--initialSize);
         aspect-ratio: 1;
@@ -3151,7 +3191,7 @@ export class WeatherPulseCard extends LitElement {
       }
 
       .firework:nth-child(2) {
-        --x: 30%;
+        --x: 30vmin;
       }
 
       .firework:nth-child(2),
@@ -3163,14 +3203,15 @@ export class WeatherPulseCard extends LitElement {
         --color4: orchid;
         --color5: plum;
         --color6: lavender;  
-        --finalSize: 40%;
+        --finalSize: 40vmin;
         left: 30%;
+        top: 60%;
         animation-delay: -0.25s;
       }
 
       .firework:nth-child(3) {
-        --x: -30%;
-        --y: -50%;
+        --x: -30vmin;
+        --y: -50vmin;
       }
 
       .firework:nth-child(3),
@@ -3182,7 +3223,10 @@ export class WeatherPulseCard extends LitElement {
         --color4: PaleTurquoise;
         --color5: SkyBlue;
         --color6: lavender;
-        --finalSize: 35%;
+        --finalSize: 35vmin;
+        left: 70%;
+        top: 60%;
+        animation-delay: -0.4s;
         left: 70%;
         animation-delay: -0.4s;
       }
