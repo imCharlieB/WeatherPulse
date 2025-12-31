@@ -178,37 +178,64 @@ export class WeatherPulseCard extends LitElement {
     
     const holiday = this.getCurrentHoliday();
     if (holiday === 'newyear') {
-      this.setRandomFireworkColors();
+      window.requestAnimationFrame(() => this.configureFireworks());
     }
   }
 
-  private setRandomFireworkColors(): void {
-    const fireworks = this.shadowRoot?.querySelectorAll('.firework');
-    if (!fireworks) return;
+  private configureFireworks(): void {
+    const container = this.shadowRoot?.querySelector('.fireworks-container') as HTMLElement | null;
+    if (!container) return;
 
-    const getRandomColor = () => {
-      const r = Math.floor(Math.random() * 256);
-      const g = Math.floor(Math.random() * 256);
-      const b = Math.floor(Math.random() * 256);
-      return `rgb(${r}, ${g}, ${b})`;
-    };
-    
-    fireworks.forEach((firework: Element) => {
-      const htmlElement = firework as HTMLElement;
-      const color1 = getRandomColor();
-      const color2 = getRandomColor();
-      const color3 = getRandomColor();
-      const color4 = getRandomColor();
-      const color5 = getRandomColor();
-      const color6 = getRandomColor();
-      
-      htmlElement.style.setProperty('--color1', color1);
-      htmlElement.style.setProperty('--color2', color2);
-      htmlElement.style.setProperty('--color3', color3);
-      htmlElement.style.setProperty('--color4', color4);
-      htmlElement.style.setProperty('--color5', color5);
-      htmlElement.style.setProperty('--color6', color6);
+    const fireworks = Array.from(container.querySelectorAll<HTMLElement>('.firework'));
+    if (fireworks.length === 0) return;
+
+    const card = this.shadowRoot?.querySelector('ha-card') as HTMLElement | null;
+    const containerRect = container.getBoundingClientRect();
+    const containerHeight = containerRect.height || card?.offsetHeight || 320;
+    const containerWidth = containerRect.width || card?.offsetWidth || 320;
+    const minDimension = Math.max(Math.min(containerWidth, containerHeight), 200);
+
+    container.classList.remove('active');
+
+    const horizontalOffsets = [-(containerWidth * 0.25), 0, containerWidth * 0.25];
+    const peakHeightMultipliers = [0.65, 0.7, 0.75];
+    const baseLaunchOffset = Math.max(containerHeight * 0.18, 40);
+    const baseFallOffset = -Math.max(containerHeight * 0.28, 70);
+
+    fireworks.forEach((firework, index) => {
+      const offsetX = horizontalOffsets[index % horizontalOffsets.length];
+      const peakMultiplier = peakHeightMultipliers[index % peakHeightMultipliers.length];
+      const peakOffset = -Math.max(containerHeight * peakMultiplier, 140);
+      const fallOffset = Math.min(baseFallOffset, peakOffset / 2);
+      const finalSize = Math.max(minDimension * (0.38 - index * 0.07), minDimension * 0.22);
+
+      firework.style.setProperty('--x', `calc(-50% + ${offsetX.toFixed(2)}px)`);
+      firework.style.setProperty('--initialY', `${baseLaunchOffset.toFixed(2)}px`);
+      firework.style.setProperty('--peakY', `${peakOffset.toFixed(2)}px`);
+      firework.style.setProperty('--fallY', `${fallOffset.toFixed(2)}px`);
+      firework.style.setProperty('--finalSize', `${finalSize.toFixed(2)}px`);
+      firework.style.setProperty('--fw-delay', `${(index * 0.8).toFixed(2)}s`);
+
+      this.applyRandomFireworkColors(firework);
     });
+
+    // Force a reflow so animations restart with new configuration
+    void container.offsetHeight;
+    container.classList.add('active');
+  }
+
+  private applyRandomFireworkColors(firework: HTMLElement): void {
+    const colors = Array.from({ length: 6 }, () => this.getRandomFireworkColor());
+    colors.forEach((color, index) => {
+      firework.style.setProperty(`--color${index + 1}`, color);
+    });
+  }
+
+  private getRandomFireworkColor(): string {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
   }
 
   private startClock(): void {
@@ -3100,9 +3127,39 @@ export class WeatherPulseCard extends LitElement {
 
       /* CSS Fireworks */
       @keyframes firework {
-        0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
-        50% { width: 0.5vmin; opacity: 1; }
-        100% { width: var(--finalSize); opacity: 0; }
+        0% {
+          transform: translate(var(--x), var(--initialY));
+          width: var(--initialSize);
+          opacity: 0.85;
+        }
+        45% {
+          transform: translate(var(--x), var(--peakY));
+          width: 0.5vmin;
+          opacity: 1;
+        }
+        60% {
+          transform: translate(var(--x), var(--peakY));
+          width: var(--finalSize);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--x), var(--fallY));
+          width: var(--finalSize);
+          opacity: 0;
+        }
+      }
+
+      .fireworks-container:not(.active) .firework,
+      .fireworks-container:not(.active) .firework::before,
+      .fireworks-container:not(.active) .firework::after {
+        animation-play-state: paused;
+        opacity: 0;
+      }
+
+      .fireworks-container.active .firework,
+      .fireworks-container.active .firework::before,
+      .fireworks-container.active .firework::after {
+        animation-play-state: running;
       }
 
       .firework,
@@ -3117,17 +3174,17 @@ export class WeatherPulseCard extends LitElement {
         --color4: lime;
         --color5: gold;
         --color6: mediumseagreen;
-        --y: -30vmin;
         --x: -50%;
-        --initialY: 60vmin;
+        --initialY: 40vmin;
+        --peakY: -30vmin;
+        --fallY: -15vmin;
         content: "";
-        animation: firework 2s infinite;
+        animation: firework 3s ease-out infinite;
+        animation-delay: var(--fw-delay, 0s);
         position: absolute;
-        top: 50%;
+        bottom: 0;
         left: 50%;
-        transform: translate(-50%, var(--y));
-        width: var(--initialSize);
-        transform: translate(-50%, var(--y));
+        transform: translate(var(--x), var(--initialY));
         width: var(--initialSize);
         aspect-ratio: 1;
         background: 
@@ -3188,47 +3245,6 @@ export class WeatherPulseCard extends LitElement {
         --y: -50%;
         --initialY: -50%;
         transform: translate(-50%, -50%) rotate(170deg) scale(1.15) rotateY(-30deg);
-      }
-
-      .firework:nth-child(2) {
-        --x: 30vmin;
-      }
-
-      .firework:nth-child(2),
-      .firework:nth-child(2)::before,
-      .firework:nth-child(2)::after {
-        --color1: pink;
-        --color2: violet;
-        --color3: fuchsia;
-        --color4: orchid;
-        --color5: plum;
-        --color6: lavender;  
-        --finalSize: 40vmin;
-        left: 30%;
-        top: 60%;
-        animation-delay: -0.25s;
-      }
-
-      .firework:nth-child(3) {
-        --x: -30vmin;
-        --y: -50vmin;
-      }
-
-      .firework:nth-child(3),
-      .firework:nth-child(3)::before,
-      .firework:nth-child(3)::after {
-        --color1: cyan;
-        --color2: lightcyan;
-        --color3: lightblue;
-        --color4: PaleTurquoise;
-        --color5: SkyBlue;
-        --color6: lavender;
-        --finalSize: 35vmin;
-        left: 70%;
-        top: 60%;
-        animation-delay: -0.4s;
-        left: 70%;
-        animation-delay: -0.4s;
       }
 
       /* Background holiday icons (floating/animated) */
