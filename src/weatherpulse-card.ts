@@ -101,6 +101,7 @@ export class WeatherPulseCard extends LitElement {
   private lastAlertFetch: number = 0;
   private forecastDebounceTimer?: number;
   private lastForecastFetch: number = 0;
+  private readonly fireworkColorHandlers = new WeakMap<HTMLElement, () => void>();
 
   // Memoization for expensive calculations
   private cachedWeatherData?: WeatherData;
@@ -224,12 +225,14 @@ export class WeatherPulseCard extends LitElement {
 
       this.applyRandomFireworkColors(firework);
 
-      if (!firework.dataset.colorListenerAttached) {
-        firework.addEventListener('animationiteration', () => {
-          this.applyRandomFireworkColors(firework);
-        });
-        firework.dataset.colorListenerAttached = 'true';
+      const existingHandler = this.fireworkColorHandlers.get(firework);
+      if (existingHandler) {
+        firework.removeEventListener('animationiteration', existingHandler);
       }
+
+      const handler = () => this.applyRandomFireworkColors(firework);
+      this.fireworkColorHandlers.set(firework, handler);
+      firework.addEventListener('animationiteration', handler);
     });
 
     // Force a reflow so animations restart with new configuration
@@ -238,17 +241,20 @@ export class WeatherPulseCard extends LitElement {
   }
 
   private applyRandomFireworkColors(firework: HTMLElement): void {
-    const colors = Array.from({ length: 6 }, () => this.getRandomFireworkColor());
+    const baseHue = Math.random() * 360;
+    const colors = Array.from({ length: 6 }, (_, index) =>
+      this.createFireworkColor(baseHue + index * (35 + Math.random() * 10))
+    );
     colors.forEach((color, index) => {
       firework.style.setProperty(`--color${index + 1}`, color);
     });
   }
 
-  private getRandomFireworkColor(): string {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgb(${r}, ${g}, ${b})`;
+  private createFireworkColor(hue: number): string {
+    const normalizedHue = (Math.round(hue) % 360 + 360) % 360;
+    const saturation = Math.round(60 + Math.random() * 30); // 60% - 90%
+    const lightness = Math.round(45 + Math.random() * 20); // 45% - 65%
+    return `hsl(${normalizedHue}deg, ${saturation}%, ${lightness}%)`;
   }
 
   private startClock(): void {
