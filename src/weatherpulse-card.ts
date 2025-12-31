@@ -173,40 +173,6 @@ export class WeatherPulseCard extends LitElement {
     }
   }
 
-  protected updated(changedProperties: Map<string, any>): void {
-    super.updated(changedProperties);
-    
-    // Set random firework colors when New Year's is active
-    const holiday = this.getCurrentHoliday();
-    if (holiday === 'newyear') {
-      this.setRandomFireworkColors();
-    }
-  }
-
-  private setRandomFireworkColors(): void {
-    const fireworks = this.shadowRoot?.querySelectorAll('.firework');
-    if (!fireworks) return;
-
-    const getRandomColor = () => {
-      const r = Math.floor(Math.random() * 256);
-      const g = Math.floor(Math.random() * 256);
-      const b = Math.floor(Math.random() * 256);
-      return `rgb(${r}, ${g}, ${b})`;
-    };
-    
-    fireworks.forEach((firework: Element) => {
-      const htmlElement = firework as HTMLElement;
-      // Generate completely random colors
-      const color1 = getRandomColor();
-      const color2 = getRandomColor();
-      const color3 = getRandomColor();
-      
-      htmlElement.style.setProperty('--fw-color1', color1);
-      htmlElement.style.setProperty('--fw-color2', color2);
-      htmlElement.style.setProperty('--fw-color3', color3);
-    });
-  }
-
   private startClock(): void {
     this.updateTime();
     this.timeInterval = window.setInterval(() => this.updateTime(), 1000);
@@ -1742,9 +1708,9 @@ export class WeatherPulseCard extends LitElement {
       <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
         ${this.getCurrentHoliday() === 'newyear' ? html`
-          <div class="firework firework-1"></div>
-          <div class="firework firework-2"></div>
-          <div class="firework firework-3"></div>
+          <div class="firework"></div>
+          <div class="firework"></div>
+          <div class="firework"></div>
         ` : ''}
         ${this.renderHeader()}
         ${this.renderRainTiming()}
@@ -3081,101 +3047,132 @@ export class WeatherPulseCard extends LitElement {
       }
 
       /* CSS Fireworks */
-      .firework {
+      @keyframes firework {
+        0% { transform: translate(var(--x), var(--initialY)); width: var(--initialSize); opacity: 1; }
+        50% { width: 0.5vmin; opacity: 1; }
+        100% { width: var(--finalSize); opacity: 0; }
+      }
+
+      .firework,
+      .firework::before,
+      .firework::after {
+        --initialSize: 0.5vmin;
+        --finalSize: 45vmin;
+        --particleSize: 0.2vmin;
+        --color1: yellow;
+        --color2: khaki;
+        --color3: white;
+        --color4: lime;
+        --color5: gold;
+        --color6: mediumseagreen;
+        --y: -30vmin;
+        --x: -50%;
+        --initialY: 60vmin;
+        content: "";
+        animation: firework 2s infinite;
         position: absolute;
-        width: 0.5vmin;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, var(--y));
+        width: var(--initialSize);
         aspect-ratio: 1;
-        --fw-color1: #FFD700;
-        --fw-color2: #C0C0C0;
-        --fw-color3: #FFFFFF;
-        background:
-          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 50% 00%,
-          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 00% 50%,
-          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 50% 99%,
-          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 99% 50%,
-          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 80% 90%,
-          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 95% 90%,
-          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 10% 60%,
-          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 31% 80%,
-          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 80% 10%,
-          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 20% 20%,
-          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 90% 23%,
-          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 70% 30%,
-          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 25% 70%,
-          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 15% 80%,
-          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 60% 80%,
-          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 70% 75%,
-          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 45% 45%,
-          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 55% 45%,
-          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 45% 55%,
-          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 55% 55%;
-        background-size: 0.5vmin 0.5vmin;
+        background: 
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
+          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 50%,
+          radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 50% 100%,
+          radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 0% 50%,
+          
+          /* bottom right */
+          radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 80% 90%,
+          radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 95% 90%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 90% 70%,
+          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 100% 60%,
+          radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 55% 80%,
+          radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 70% 77%,
+          
+          /* bottom left */
+          radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 22% 90%,
+          radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 45% 90%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 70%,
+          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 10% 60%,
+          radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 31% 80%,
+          radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 28% 77%,
+          radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 13% 72%,
+          
+          /* top left */
+          radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 80% 10%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 95% 14%,
+          radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 90% 23%,
+          radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 100% 43%,
+          radial-gradient(circle, var(--color4) var(--particleSize), #0000 0) 85% 27%,
+          radial-gradient(circle, var(--color5) var(--particleSize), #0000 0) 77% 37%,
+          radial-gradient(circle, var(--color6) var(--particleSize), #0000 0) 60% 7%,
+          
+          /* top right */
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 22% 14%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 45% 20%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 33% 34%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 10% 29%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 31% 37%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 28% 7%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
+        background-size: var(--initialSize) var(--initialSize);
         background-repeat: no-repeat;
-        animation: firework 3s ease-out infinite;
         pointer-events: none;
         z-index: 10;
       }
 
-      .firework-1 {
-        bottom: 0;
-        left: 30%;
-        animation-delay: 0s;
-      }
-
-      .firework-2 {
-        bottom: 0;
-        left: 50%;
-        animation-delay: 1s;
-      }
-
-      .firework-3 {
-        bottom: 0;
-        left: 70%;
-        animation-delay: 2s;
-      }
-
-      .firework::before,
-      .firework::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: inherit;
-        background-size: inherit;
-        background-repeat: inherit;
-      }
-
       .firework::before {
-        transform: rotate(120deg);
+        --x: -50%;
+        --y: -50%;
+        --initialY: -50%;
+        transform: translate(-50%, -50%) rotate(40deg) scale(1.3) rotateY(40deg);
       }
 
       .firework::after {
-        transform: rotate(240deg);
+        --x: -50%;
+        --y: -50%;
+        --initialY: -50%;
+        transform: translate(-50%, -50%) rotate(170deg) scale(1.15) rotateY(-30deg);
       }
 
-      @keyframes firework {
-        0% {
-          transform: translate(-50%, 0);
-          width: 0.5vmin;
-          opacity: 1;
-        }
-        45% {
-          transform: translate(-50%, -250px);
-          width: 0.5vmin;
-          opacity: 1;
-        }
-        55% {
-          transform: translate(-50%, -250px);
-          width: 35vmin;
-          opacity: 1;
-        }
-        100% {
-          transform: translate(-50%, -100px);
-          width: 35vmin;
-          opacity: 0;
-        }
+      .firework:nth-child(2) {
+        --x: 30vmin;
+      }
+
+      .firework:nth-child(2),
+      .firework:nth-child(2)::before,
+      .firework:nth-child(2)::after {
+        --color1: pink;
+        --color2: violet;
+        --color3: fuchsia;
+        --color4: orchid;
+        --color5: plum;
+        --color6: lavender;  
+        --finalSize: 40vmin;
+        left: 30%;
+        top: 60%;
+        animation-delay: -0.25s;
+      }
+
+      .firework:nth-child(3) {
+        --x: -30vmin;
+        --y: -50vmin;
+      }
+
+      .firework:nth-child(3),
+      .firework:nth-child(3)::before,
+      .firework:nth-child(3)::after {
+        --color1: cyan;
+        --color2: lightcyan;
+        --color3: lightblue;
+        --color4: PaleTurquoise;
+        --color5: SkyBlue;
+        --color6: lavender;
+        --finalSize: 35vmin;
+        left: 70%;
+        top: 60%;
+        animation-delay: -0.4s;
       }
 
       /* Background holiday icons (floating/animated) */
