@@ -175,6 +175,31 @@ export class WeatherPulseCard extends LitElement {
 
   protected updated(changedProperties: Map<string, any>): void {
     super.updated(changedProperties);
+    
+    // Set random firework colors when New Year's is active
+    const holiday = this.getCurrentHoliday();
+    if (holiday === 'newyear') {
+      this.setRandomFireworkColors();
+    }
+  }
+
+  private setRandomFireworkColors(): void {
+    const fireworks = this.shadowRoot?.querySelectorAll('.firework');
+    if (!fireworks) return;
+
+    const colors = ['#FFD700', '#C0C0C0', '#4169E1', '#FF6B6B', '#FFFFFF', '#FF1493', '#00FF00', '#FF8C00', '#9370DB', '#00CED1'];
+    
+    fireworks.forEach((firework: Element) => {
+      const htmlElement = firework as HTMLElement;
+      // Pick 3-4 random colors for this firework
+      const color1 = colors[Math.floor(Math.random() * colors.length)];
+      const color2 = colors[Math.floor(Math.random() * colors.length)];
+      const color3 = colors[Math.floor(Math.random() * colors.length)];
+      
+      htmlElement.style.setProperty('--fw-color1', color1);
+      htmlElement.style.setProperty('--fw-color2', color2);
+      htmlElement.style.setProperty('--fw-color3', color3);
+    });
   }
 
   private startClock(): void {
@@ -3054,32 +3079,53 @@ export class WeatherPulseCard extends LitElement {
         position: absolute;
         width: 0.5vmin;
         aspect-ratio: 1;
+        --fw-color1: #FFD700;
+        --fw-color2: #C0C0C0;
+        --fw-color3: #FFFFFF;
         background:
-          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 50% 00%,
-          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 00% 50%,
-          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 50% 99%,
-          radial-gradient(circle, #FFD700 0.5vmin, #0000 0) 99% 50%,
-          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 80% 90%,
-          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 95% 90%,
-          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 10% 60%,
-          radial-gradient(circle, #C0C0C0 0.5vmin, #0000 0) 31% 80%,
-          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 80% 10%,
-          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 20% 20%,
-          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 90% 23%,
-          radial-gradient(circle, #4169E1 0.5vmin, #0000 0) 70% 30%,
-          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 25% 70%,
-          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 15% 80%,
-          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 60% 80%,
-          radial-gradient(circle, #FFFFFF 0.5vmin, #0000 0) 70% 75%,
-          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 45% 45%,
-          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 55% 45%,
-          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 45% 55%,
-          radial-gradient(circle, #FF6B6B 0.5vmin, #0000 0) 55% 55%;
+          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 50% 00%,
+          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 00% 50%,
+          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 50% 99%,
+          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 99% 50%,
+          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 80% 90%,
+          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 95% 90%,
+          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 10% 60%,
+          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 31% 80%,
+          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 80% 10%,
+          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 20% 20%,
+          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 90% 23%,
+          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 70% 30%,
+          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 25% 70%,
+          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 15% 80%,
+          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 60% 80%,
+          radial-gradient(circle, var(--fw-color2) 0.5vmin, #0000 0) 70% 75%,
+          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 45% 45%,
+          radial-gradient(circle, var(--fw-color3) 0.5vmin, #0000 0) 55% 45%,
+          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 45% 55%,
+          radial-gradient(circle, var(--fw-color1) 0.5vmin, #0000 0) 55% 55%;
         background-size: 0.5vmin 0.5vmin;
         background-repeat: no-repeat;
         animation: firework 3s ease-out infinite;
         pointer-events: none;
-        z-index: 10; /* Above everything like floating icons */
+        z-index: 10;
+      }
+
+      .firework-1 {
+        bottom: 0;
+        left: 30%;
+        animation-delay: 0s;
+      }
+
+      .firework-2 {
+        bottom: 0;
+        left: 50%;
+        animation-delay: 1s;
+      }
+
+      .firework-3 {
+        bottom: 0;
+        left: 70%;
+        animation-delay: 2s;
       }
 
       .firework::before,
@@ -3103,42 +3149,24 @@ export class WeatherPulseCard extends LitElement {
         transform: rotate(240deg);
       }
 
-      .firework-1 {
-        bottom: 0;
-        left: 30%;
-        animation-delay: 0s;
-      }
-
-      .firework-2 {
-        bottom: 0;
-        left: 50%;
-        animation-delay: 1s;
-      }
-
-      .firework-3 {
-        bottom: 0;
-        left: 70%;
-        animation-delay: 2s;
-      }
-
       @keyframes firework {
         0% {
           transform: translate(-50%, 0);
           width: 0.5vmin;
           opacity: 1;
         }
-        50% {
+        45% {
           transform: translate(-50%, -250px);
           width: 0.5vmin;
           opacity: 1;
         }
-        60% {
+        55% {
           transform: translate(-50%, -250px);
           width: 35vmin;
           opacity: 1;
         }
         100% {
-          transform: translate(-50%, -300px);
+          transform: translate(-50%, -100px);
           width: 35vmin;
           opacity: 0;
         }
