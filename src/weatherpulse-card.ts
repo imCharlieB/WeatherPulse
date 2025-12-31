@@ -3288,7 +3288,8 @@ export class WeatherPulseCard extends LitElement {
         pointer-events: none;
         z-index: 10;
         background:
-          radial-gradient(circle, var(--trailColor) var(--particleSize), #0000 0) 50% 0%,
+          radial-gradient(circle, var(--trailColor) calc(var(--particleSize) * 2.5), #0000 0) 50% 100%,
+          radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 50% 0%,
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 100% 50%,
           radial-gradient(circle, var(--color2) var(--particleSize), #0000 0) 50% 100%,
           radial-gradient(circle, var(--color3) var(--particleSize), #0000 0) 0% 50%,
@@ -3329,7 +3330,6 @@ export class WeatherPulseCard extends LitElement {
           radial-gradient(circle, var(--color1) var(--particleSize), #0000 0) 13% 42%;
         background-size: var(--initialSize) var(--initialSize);
         background-repeat: no-repeat;
-        background-color: var(--trailColor);
       }
 
       .firework::before {
