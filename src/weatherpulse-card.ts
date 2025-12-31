@@ -613,7 +613,6 @@ export class WeatherPulseCard extends LitElement {
 
     // Animation loop
     const animate = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0)';
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Update and draw particles
@@ -765,17 +764,8 @@ export class WeatherPulseCard extends LitElement {
       `;
     });
 
-    // Add canvas fireworks for New Year's
-    const fireworksCanvas = holiday === 'newyear' ? html`
-      <canvas 
-        id="newyear-fireworks" 
-        class="holiday-fireworks-canvas"
-      ></canvas>
-    ` : '';
-
     return html`
       <div class="holiday-overlay">
-        ${fireworksCanvas}
         ${backgroundIcons}
       </div>
     `;
@@ -3145,7 +3135,8 @@ export class WeatherPulseCard extends LitElement {
         width: 100%;
         height: 100%;
         pointer-events: none;
-        z-index: 5;
+        z-index: -2;
+        opacity: 0.6;
       }
 
       /* Year text styling for New Year's foreground cluster */
