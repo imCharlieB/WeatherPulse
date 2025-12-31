@@ -103,6 +103,16 @@ export class WeatherPulseCard extends LitElement {
   private lastForecastFetch: number = 0;
   private readonly fireworkColorHandlers = new WeakMap<HTMLElement, () => void>();
   private readonly fireworkColorIntervals = new WeakMap<HTMLElement, number>();
+  private static readonly FIREWORK_PALETTES: ReadonlyArray<ReadonlyArray<string>> = [
+    ['#FF1744', '#FF9100', '#FFD600', '#00E676', '#2979FF', '#D500F9'],
+    ['#FF3D00', '#FFEA00', '#76FF03', '#00B0FF', '#651FFF', '#F50057'],
+    ['#FF5722', '#FFC400', '#64DD17', '#18FFFF', '#304FFE', '#AA00FF'],
+    ['#FF2D55', '#FF3F81', '#FF9500', '#34C759', '#32ADE6', '#AF52DE'],
+    ['#FF1744', '#FF6D00', '#FFEA00', '#00C853', '#0091EA', '#AA00FF'],
+    ['#FF5252', '#FFAB00', '#00E5FF', '#00C853', '#6200EA', '#FF4081'],
+    ['#FF1744', '#FF6D00', '#FFEA00', '#00C853', '#00B0FF', '#AA00FF'],
+    ['#FF3D00', '#F9A825', '#76FF03', '#00B8D4', '#651FFF', '#F50057']
+  ];
 
   // Memoization for expensive calculations
   private cachedWeatherData?: WeatherData;
@@ -274,18 +284,61 @@ export class WeatherPulseCard extends LitElement {
   }
 
   private generateFireworkPalette(): string[] {
-    const baseHue = Math.random() * 360;
-    const hueOffsets = [0, 60, 150, 210, 300, 30].map((offset) => baseHue + offset + Math.random() * 15);
-    return hueOffsets.map((hue, index) => this.createFireworkColor(hue, index));
+    const paletteIndex = Math.floor(Math.random() * WeatherPulseCard.FIREWORK_PALETTES.length);
+    const palette = [...WeatherPulseCard.FIREWORK_PALETTES[paletteIndex]];
+    this.shuffleArray(palette);
+    return palette.map((hex, index) => this.tweakPaletteColor(hex, index));
   }
 
-  private createFireworkColor(hue: number, index: number): string {
-    const normalizedHue = (Math.round(hue) % 360 + 360) % 360;
-    const rawSaturation = 70 + Math.sin((index + 1) * Math.PI / 6) * 20 + Math.random() * 10;
-    const rawLightness = 50 + Math.cos((index + 1) * Math.PI / 6) * 10 + Math.random() * 5;
-    const saturation = Math.max(55, Math.min(95, Math.round(rawSaturation)));
-    const lightness = Math.max(40, Math.min(65, Math.round(rawLightness)));
-    return `hsl(${normalizedHue}deg, ${saturation}%, ${lightness}%)`;
+  private tweakPaletteColor(hex: string, index: number): string {
+    const { h, s, l } = this.hexToHsl(hex);
+    const hue = (h + (Math.random() - 0.5) * 24 + index * 3 + 360) % 360;
+    const saturation = this.clamp(s + (Math.random() - 0.5) * 10, 70, 100);
+    const lightness = this.clamp(l + (Math.random() - 0.5) * 10, 38, 58);
+    return `hsl(${Math.round(hue)}deg, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`;
+  }
+
+  private shuffleArray<T>(array: T[]): void {
+    for (let i = array.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  private hexToHsl(hex: string): { h: number; s: number; l: number } {
+    let normalized = hex.replace('#', '');
+    if (normalized.length === 3) {
+      normalized = normalized.split('').map((char) => char + char).join('');
+    }
+    const r = parseInt(normalized.slice(0, 2), 16) / 255;
+    const g = parseInt(normalized.slice(2, 4), 16) / 255;
+    const b = parseInt(normalized.slice(4, 6), 16) / 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const delta = max - min;
+    let h = 0;
+    if (delta !== 0) {
+      if (max === r) {
+        h = ((g - b) / delta) % 6;
+      } else if (max === g) {
+        h = (b - r) / delta + 2;
+      } else {
+        h = (r - g) / delta + 4;
+      }
+    }
+    h = (h * 60 + 360) % 360;
+    const l = (max + min) / 2;
+    const s = delta === 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
+    return {
+      h,
+      s: s * 100,
+      l: l * 100
+    };
+  }
+
+  private clamp(value: number, min: number, max: number): number {
+    return Math.min(max, Math.max(min, value));
   }
 
   private startClock(): void {
@@ -1818,11 +1871,13 @@ export class WeatherPulseCard extends LitElement {
 
     const viewMode = this.config.view_mode || 'standard';
     const cardContentClass = viewMode === 'compact' ? 'card-content card-content-compact' : 'card-content';
+    const currentHoliday = this.getCurrentHoliday();
+    const holidayClass = currentHoliday ? `holiday-${currentHoliday}` : '';
 
     return html`
-      <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass}" style="${customStyles}">
+  <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass} ${holidayClass}" style="${customStyles}">
         ${this.renderHolidayDecorations()}
-        ${this.getCurrentHoliday() === 'newyear' ? html`
+        ${currentHoliday === 'newyear' ? html`
           <div class="fireworks-container">
             <div class="firework"></div>
             <div class="firework"></div>
@@ -3361,6 +3416,10 @@ export class WeatherPulseCard extends LitElement {
         padding: 0;
         pointer-events: none;
         z-index: 2;
+      }
+
+      ha-card.holiday-newyear .holiday-lights {
+        display: none !important;
       }
 
       /* Ensure lights stretch properly in night mode */
