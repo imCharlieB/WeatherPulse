@@ -3392,7 +3392,7 @@ export class WeatherPulseCard extends LitElement {
         font-size: 2.2em; /* Main/center icon - YEAR text */
         order: 2; /* Center position */
         line-height: 1;
-        z-index: 2; /* Above other icons */
+        z-index: 0; /* Behind other icons for Easter egg */
       }
       .holiday-foreground-2 {
         font-size: 2em; /* Right side icon */
