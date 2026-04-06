@@ -679,8 +679,8 @@ export class WeatherPulseCard extends LitElement {
     }
 
     // Easter - week before (approximation - typically late March/April)
-    // Using a simple range for now
-    if ((month === 3 && day >= 25) || (month === 4 && day <= 10)) {
+    // Using a simple range for now - adjusted for 2026 (Easter April 5)
+    if ((month === 3 && day >= 25) || (month === 4 && day <= 5)) {
       return 'easter';
     }
 
