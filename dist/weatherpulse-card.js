@@ -40,66 +40,60 @@ function e(e,t,a,r){var i,o=arguments.length,n=o<3?t:null===r?r=Object.getOwnPro
           </h4>
 
           ${this._expandedSections.has("theme")?j`
-          <ha-select
-            label="Visual Theme"
-            .configValue=${"theme"}
-            .value=${this._config.theme||"default"}
-            @value-changed=${this._valueChanged}
-            @closed=${e=>e.stopPropagation()}
-          >
-            <mwc-list-item value="default">Default</mwc-list-item>
-            <mwc-list-item value="retro">Retro/Neubrutalism (Bold & Boxy)</mwc-list-item>
-            <mwc-list-item value="midnight">Midnight (Sleek Dark Theme)</mwc-list-item>
-            <mwc-list-item value="minimal">Minimal (Clean & Simple)</mwc-list-item>
-            <mwc-list-item value="vibrant">Vibrant (Bright & Colorful)</mwc-list-item>
-            <mwc-list-item value="custom">Custom (Use Custom Colors)</mwc-list-item>
-          </ha-select>
-          <p class="helper-text">
-            Choose a pre-built visual theme or create your own custom theme.
-          </p>
+  <ha-selector
+    .hass=${this.hass}
+    .selector=${{select:{options:[{value:"default",label:"Default"},{value:"retro",label:"Retro/Neubrutalism (Bold & Boxy)"},{value:"midnight",label:"Midnight (Sleek Dark Theme)"},{value:"minimal",label:"Minimal (Clean & Simple)"},{value:"vibrant",label:"Vibrant (Bright & Colorful)"},{value:"custom",label:"Custom (Use Custom Colors)"}]}}}
+    .value=${this._config.theme||"default"}
+    .label=${"Visual Theme"}
+    .configValue=${"theme"}
+    @value-changed=${this._valueChanged}
+  ></ha-selector>
+  <p class="helper-text">
+    Choose a pre-built visual theme or create your own custom theme.
+  </p>
 
-          ${"custom"===this._config.theme?j`
-            <p class="helper-text" style="margin-top: 16px; font-weight: 600;">
-              Custom Theme Colors (use CSS color values like #667eea or rgb(102, 126, 234)):
-            </p>
-            <ha-textfield
-              label="Primary Color"
-              .value=${this._config.custom_theme_colors?.primary||""}
-              @input=${e=>this._customColorChanged(e,"primary")}
-              placeholder="#667eea"
-            ></ha-textfield>
-            <ha-textfield
-              label="Secondary Color"
-              .value=${this._config.custom_theme_colors?.secondary||""}
-              @input=${e=>this._customColorChanged(e,"secondary")}
-              placeholder="#764ba2"
-            ></ha-textfield>
-            <ha-textfield
-              label="Background Color"
-              .value=${this._config.custom_theme_colors?.background||""}
-              @input=${e=>this._customColorChanged(e,"background")}
-              placeholder="#ffffff"
-            ></ha-textfield>
-            <ha-textfield
-              label="Text Color"
-              .value=${this._config.custom_theme_colors?.text||""}
-              @input=${e=>this._customColorChanged(e,"text")}
-              placeholder="#333333"
-            ></ha-textfield>
-            <ha-textfield
-              label="Border Color"
-              .value=${this._config.custom_theme_colors?.border||""}
-              @input=${e=>this._customColorChanged(e,"border")}
-              placeholder="#e0e0e0"
-            ></ha-textfield>
-            <ha-textfield
-              label="Accent Color"
-              .value=${this._config.custom_theme_colors?.accent||""}
-              @input=${e=>this._customColorChanged(e,"accent")}
-              placeholder="#f093fb"
-            ></ha-textfield>
-          `:""}
-          `:""}
+  ${"custom"===this._config.theme?j`
+    <p class="helper-text" style="margin-top: 16px; font-weight: 600;">
+      Custom Theme Colors (use CSS color values like #667eea or rgb(102, 126, 234)):
+    </p>
+    <ha-textfield
+      label="Primary Color"
+      .value=${this._config.custom_theme_colors?.primary||""}
+      @input=${e=>this._customColorChanged(e,"primary")}
+      placeholder="#667eea"
+    ></ha-textfield>
+    <ha-textfield
+      label="Secondary Color"
+      .value=${this._config.custom_theme_colors?.secondary||""}
+      @input=${e=>this._customColorChanged(e,"secondary")}
+      placeholder="#764ba2"
+    ></ha-textfield>
+    <ha-textfield
+      label="Background Color"
+      .value=${this._config.custom_theme_colors?.background||""}
+      @input=${e=>this._customColorChanged(e,"background")}
+      placeholder="#ffffff"
+    ></ha-textfield>
+    <ha-textfield
+      label="Text Color"
+      .value=${this._config.custom_theme_colors?.text||""}
+      @input=${e=>this._customColorChanged(e,"text")}
+      placeholder="#333333"
+    ></ha-textfield>
+    <ha-textfield
+      label="Border Color"
+      .value=${this._config.custom_theme_colors?.border||""}
+      @input=${e=>this._customColorChanged(e,"border")}
+      placeholder="#e0e0e0"
+    ></ha-textfield>
+    <ha-textfield
+      label="Accent Color"
+      .value=${this._config.custom_theme_colors?.accent||""}
+      @input=${e=>this._customColorChanged(e,"accent")}
+      placeholder="#f093fb"
+    ></ha-textfield>
+  `:""}
+`:""}
         </div>
 
         <!-- Temperature Settings -->
@@ -112,7 +106,7 @@ function e(e,t,a,r){var i,o=arguments.length,n=o<3?t:null===r?r=Object.getOwnPro
           ${this._expandedSections.has("temperature")?j`
   <ha-selector
     .hass=${this.hass}
-    .selector=${{entity:{domain:"sensor"}}}
+    .selector=${{entity:{domain:"sensor",device_class:"temperature"}}}
     .value=${this._config.outdoor_temp_sensor||""}
     .label=${"Outdoor Temperature Sensor (Optional)"}
     .configValue=${"outdoor_temp_sensor"}
@@ -454,8 +448,7 @@ function e(e,t,a,r){var i,o=arguments.length,n=o<3?t:null===r?r=Object.getOwnPro
               .configValue=${"holiday_themes"}
               .checked=${!0===this._config.holiday_themes}
               @change=${this._toggleChanged}
-            ></ha-switch>
-          </ha-formfield>
+            ></ha-formfield>
           <p class="helper-text">
             Automatically add festive decorative icons during holidays (Halloween, Christmas, New Year, Valentine's Day, St. Patrick's Day, Easter, 4th of July, Cinco de Mayo). Icons appear as subtle animated overlays.
           </p>
@@ -465,8 +458,7 @@ function e(e,t,a,r){var i,o=arguments.length,n=o<3?t:null===r?r=Object.getOwnPro
               .configValue=${"show_nws_alerts"}
               .checked=${!0===this._config.show_nws_alerts}
               @change=${this._toggleChanged}
-            ></ha-switch>
-          </ha-formfield>
+            ></ha-formfield>
           <p class="helper-text">
             Display National Weather Service alerts for your location. Uses your Home Assistant location coordinates.
           </p>

@@ -193,66 +193,71 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           </h4>
 
           ${this._expandedSections.has('theme') ? html`
-          <ha-select
-            label="Visual Theme"
-            .configValue=${'theme'}
-            .value=${this._config.theme || 'default'}
-            @value-changed=${this._valueChanged}
-            @closed=${(ev: Event) => ev.stopPropagation()}
-          >
-            <mwc-list-item value="default">Default</mwc-list-item>
-            <mwc-list-item value="retro">Retro/Neubrutalism (Bold & Boxy)</mwc-list-item>
-            <mwc-list-item value="midnight">Midnight (Sleek Dark Theme)</mwc-list-item>
-            <mwc-list-item value="minimal">Minimal (Clean & Simple)</mwc-list-item>
-            <mwc-list-item value="vibrant">Vibrant (Bright & Colorful)</mwc-list-item>
-            <mwc-list-item value="custom">Custom (Use Custom Colors)</mwc-list-item>
-          </ha-select>
-          <p class="helper-text">
-            Choose a pre-built visual theme or create your own custom theme.
-          </p>
+  <ha-selector
+    .hass=${this.hass}
+    .selector=${{
+      select: {
+        options: [
+          { value: 'default', label: 'Default' },
+          { value: 'retro', label: 'Retro/Neubrutalism (Bold & Boxy)' },
+          { value: 'midnight', label: 'Midnight (Sleek Dark Theme)' },
+          { value: 'minimal', label: 'Minimal (Clean & Simple)' },
+          { value: 'vibrant', label: 'Vibrant (Bright & Colorful)' },
+          { value: 'custom', label: 'Custom (Use Custom Colors)' }
+        ]
+      }
+    }}
+    .value=${this._config.theme || 'default'}
+    .label=${'Visual Theme'}
+    .configValue=${'theme'}
+    @value-changed=${this._valueChanged}
+  ></ha-selector>
+  <p class="helper-text">
+    Choose a pre-built visual theme or create your own custom theme.
+  </p>
 
-          ${this._config.theme === 'custom' ? html`
-            <p class="helper-text" style="margin-top: 16px; font-weight: 600;">
-              Custom Theme Colors (use CSS color values like #667eea or rgb(102, 126, 234)):
-            </p>
-            <ha-textfield
-              label="Primary Color"
-              .value=${this._config.custom_theme_colors?.primary || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'primary')}
-              placeholder="#667eea"
-            ></ha-textfield>
-            <ha-textfield
-              label="Secondary Color"
-              .value=${this._config.custom_theme_colors?.secondary || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'secondary')}
-              placeholder="#764ba2"
-            ></ha-textfield>
-            <ha-textfield
-              label="Background Color"
-              .value=${this._config.custom_theme_colors?.background || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'background')}
-              placeholder="#ffffff"
-            ></ha-textfield>
-            <ha-textfield
-              label="Text Color"
-              .value=${this._config.custom_theme_colors?.text || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'text')}
-              placeholder="#333333"
-            ></ha-textfield>
-            <ha-textfield
-              label="Border Color"
-              .value=${this._config.custom_theme_colors?.border || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'border')}
-              placeholder="#e0e0e0"
-            ></ha-textfield>
-            <ha-textfield
-              label="Accent Color"
-              .value=${this._config.custom_theme_colors?.accent || ''}
-              @input=${(ev: Event) => this._customColorChanged(ev, 'accent')}
-              placeholder="#f093fb"
-            ></ha-textfield>
-          ` : ''}
-          ` : ''}
+  ${this._config.theme === 'custom' ? html`
+    <p class="helper-text" style="margin-top: 16px; font-weight: 600;">
+      Custom Theme Colors (use CSS color values like #667eea or rgb(102, 126, 234)):
+    </p>
+    <ha-textfield
+      label="Primary Color"
+      .value=${this._config.custom_theme_colors?.primary || ''}
+      @input=${(ev: Event) => this._customColorChanged(ev, 'primary')}
+      placeholder="#667eea"
+    ></ha-textfield>
+    <ha-textfield
+      label="Secondary Color"
+      .value=${this._config.custom_theme_colors?.secondary || ''}
+      @input=${(ev: Event) => this._customColorChanged(ev, 'secondary')}
+      placeholder="#764ba2"
+    ></ha-textfield>
+    <ha-textfield
+      label="Background Color"
+      .value=${this._config.custom_theme_colors?.background || ''}
+      @input=${(ev: Event) => this._customColorChanged(ev, 'background')}
+      placeholder="#ffffff"
+    ></ha-textfield>
+    <ha-textfield
+      label="Text Color"
+      .value=${this._config.custom_theme_colors?.text || ''}
+      @input=${(ev: Event) => this._customColorChanged(ev, 'text')}
+      placeholder="#333333"
+    ></ha-textfield>
+    <ha-textfield
+      label="Border Color"
+      .value=${this._config.custom_theme_colors?.border || ''}
+      @input=${(ev: Event) => this._customColorChanged(ev, 'border')}
+      placeholder="#e0e0e0"
+    ></ha-textfield>
+    <ha-textfield
+      label="Accent Color"
+      .value=${this._config.custom_theme_colors?.accent || ''}
+      @input=${(ev: Event) => this._customColorChanged(ev, 'accent')}
+      placeholder="#f093fb"
+    ></ha-textfield>
+  ` : ''}
+` : ''}
         </div>
 
         <!-- Temperature Settings -->
@@ -265,7 +270,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           ${this._expandedSections.has('temperature') ? html`
   <ha-selector
     .hass=${this.hass}
-    .selector=${{ entity: { domain: 'sensor' } }}
+    .selector=${{ entity: { domain: 'sensor', device_class: 'temperature' } }}
     .value=${this._config.outdoor_temp_sensor || ''}
     .label=${'Outdoor Temperature Sensor (Optional)'}
     .configValue=${'outdoor_temp_sensor'}
@@ -607,8 +612,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               .configValue=${'holiday_themes'}
               .checked=${this._config.holiday_themes === true}
               @change=${this._toggleChanged}
-            ></ha-switch>
-          </ha-formfield>
+            ></ha-formfield>
           <p class="helper-text">
             Automatically add festive decorative icons during holidays (Halloween, Christmas, New Year, Valentine's Day, St. Patrick's Day, Easter, 4th of July, Cinco de Mayo). Icons appear as subtle animated overlays.
           </p>
@@ -618,8 +622,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               .configValue=${'show_nws_alerts'}
               .checked=${this._config.show_nws_alerts === true}
               @change=${this._toggleChanged}
-            ></ha-switch>
-          </ha-formfield>
+            ></ha-formfield>
           <p class="helper-text">
             Display National Weather Service alerts for your location. Uses your Home Assistant location coordinates.
           </p>
