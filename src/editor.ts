@@ -168,41 +168,26 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           </h4>
 
           ${this._expandedSections.has('required') ? html`
-          <ha-select
-            label="Weather Entity (Required)"
-            .configValue=${'entity'}
-            .value=${this._config.entity || ''}
-            @value-changed=${this._valueChanged}
-            @closed=${(ev: Event) => ev.stopPropagation()}
-          >
-            ${weatherEntities.map(
-              (entity) => html`
-                <mwc-list-item value="${entity}">
-                  ${entity}
-                </mwc-list-item>
-              `
-            )}
-          </ha-select>
-
-          <ha-select
-          label="Forecast Sensor (Recommended for Hourly)"
-          .configValue=${'forecast_sensor'}
-          .value=${this._config.forecast_sensor || ''}
-          @value-changed=${this._valueChanged}
-          @closed=${(ev: Event) => ev.stopPropagation()}
-        >
-          ${forecastSensors.map(
-            (sensor) => html`
-              <mwc-list-item value="${sensor}">
-                ${sensor}
-              </mwc-list-item>
-            `
-          )}
-        </ha-select>
-        <p class="helper-text">
-          Select a sensor that provides forecast data for hourly. This enables hourly alerts
-        </p>
-          ` : ''}
+  <ha-selector
+    .hass=${this.hass}
+    .selector=${{ entity: { domain: 'weather' } }}
+    .value=${this._config.entity || ''}
+    .label=${'Weather Entity (Required)'}
+    .configValue=${'entity'}
+    @value-changed=${this._valueChanged}
+  ></ha-selector>
+  <ha-selector
+    .hass=${this.hass}
+    .selector=${{ entity: { domain: 'sensor' } }}
+    .value=${this._config.forecast_sensor || ''}
+    .label=${'Forecast Sensor (Recommended for Hourly)'}
+    .configValue=${'forecast_sensor'}
+    @value-changed=${this._valueChanged}
+  ></ha-selector>
+  <p class="helper-text">
+    Select a sensor that provides forecast data for hourly. This enables hourly alerts
+  </p>
+` : ''}
         </div>
 
         <!-- Theme Settings -->
@@ -283,41 +268,32 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           </h4>
 
           ${this._expandedSections.has('temperature') ? html`
-          <ha-select
-            label="Outdoor Temperature Sensor (Optional)"
-            .configValue=${'outdoor_temp_sensor'}
-            .value=${this._config.outdoor_temp_sensor || ''}
-            @value-changed=${this._valueChanged}
-            @closed=${(ev: Event) => ev.stopPropagation()}
-          >
-            <mwc-list-item value="">None</mwc-list-item>
-            ${tempSensors.map(
-              (entity) => html`
-                <mwc-list-item value="${entity}">
-                  ${entity}
-                </mwc-list-item>
-              `
-            )}
-          </ha-select>
-          <p class="helper-text">
-            This sensor will be used for the header gradient and can be displayed in the forecast.
-          </p>
-
-          <ha-select
-            label="Temperature Display Mode"
-            .configValue=${'temp_display_mode'}
-            .value=${this._config.temp_display_mode || 'forecast'}
-            @value-changed=${this._valueChanged}
-            @closed=${(ev: Event) => ev.stopPropagation()}
-          >
-            <mwc-list-item value="forecast">Forecast Only (High/Low)</mwc-list-item>
-            <mwc-list-item value="actual">Actual Only (From Sensor)</mwc-list-item>
-            <mwc-list-item value="both">Both (Forecast + Actual)</mwc-list-item>
-          </ha-select>
-          <p class="helper-text">
-            Choose what temperature to display in forecast rows. "Actual" requires an outdoor temperature sensor.
-          </p>
-          ` : ''}
+  <ha-selector
+    .hass=${this.hass}
+    .selector=${{ entity: { domain: 'sensor' } }}
+    .value=${this._config.outdoor_temp_sensor || ''}
+    .label=${'Outdoor Temperature Sensor (Optional)'}
+    .configValue=${'outdoor_temp_sensor'}
+    @value-changed=${this._valueChanged}
+  ></ha-selector>
+  <p class="helper-text">
+    This sensor will be used for the header gradient and can be displayed in the forecast.
+  </p>
+  <ha-select
+    label="Temperature Display Mode"
+    .configValue=${'temp_display_mode'}
+    .value=${this._config.temp_display_mode || 'forecast'}
+    @value-changed=${this._valueChanged}
+    @closed=${(ev: Event) => ev.stopPropagation()}
+  >
+    <mwc-list-item value="forecast">Forecast Only (High/Low)</mwc-list-item>
+    <mwc-list-item value="actual">Actual Only (From Sensor)</mwc-list-item>
+    <mwc-list-item value="both">Both (Forecast + Actual)</mwc-list-item>
+  </ha-select>
+  <p class="helper-text">
+    Choose what temperature to display in forecast rows. "Actual" requires an outdoor temperature sensor.
+  </p>
+` : ''}
         </div>
 
         <!-- Header Settings -->
