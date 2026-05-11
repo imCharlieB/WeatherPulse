@@ -279,17 +279,22 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
   <p class="helper-text">
     This sensor will be used for the header gradient and can be displayed in the forecast.
   </p>
-  <ha-select
-    label="Temperature Display Mode"
-    .configValue=${'temp_display_mode'}
+  <ha-selector
+    .hass=${this.hass}
+    .selector=${{
+      select: {
+        options: [
+          { value: 'forecast', label: 'Forecast Only (High/Low)' },
+          { value: 'actual', label: 'Actual Only (From Sensor)' },
+          { value: 'both', label: 'Both (Forecast + Actual)' }
+        ]
+      }
+    }}
     .value=${this._config.temp_display_mode || 'forecast'}
+    .label=${'Temperature Display Mode'}
+    .configValue=${'temp_display_mode'}
     @value-changed=${this._valueChanged}
-    @closed=${(ev: Event) => ev.stopPropagation()}
-  >
-    <mwc-list-item value="forecast">Forecast Only (High/Low)</mwc-list-item>
-    <mwc-list-item value="actual">Actual Only (From Sensor)</mwc-list-item>
-    <mwc-list-item value="both">Both (Forecast + Actual)</mwc-list-item>
-  </ha-select>
+  ></ha-selector>
   <p class="helper-text">
     Choose what temperature to display in forecast rows. "Actual" requires an outdoor temperature sensor.
   </p>
@@ -304,20 +309,25 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           </h4>
 
           ${this._expandedSections.has('header') ? html`
-          <ha-select
-            label="Header Mode"
-            .configValue=${'header_mode'}
+          <ha-selector
+            .hass=${this.hass}
+            .selector=${{
+              select: {
+                options: [
+                  { value: 'time-focused', label: 'Time Focused (Large Clock)' },
+                  { value: 'date-focused', label: 'Date Focused (Large Date)' },
+                  { value: 'balanced', label: 'Balanced (Equal Time & Date)' },
+                  { value: 'minimal', label: 'Minimal (Icon & Temp Only)' },
+                  { value: 'greeting', label: 'Greeting (Personalized Message)' },
+                  { value: 'graphical', label: 'Graphical (Seasonal Background)' }
+                ]
+              }
+            }}
             .value=${this._config.header_mode || 'time-focused'}
+            .label=${'Header Mode'}
+            .configValue=${'header_mode'}
             @value-changed=${this._valueChanged}
-            @closed=${(ev: Event) => ev.stopPropagation()}
-          >
-            <mwc-list-item value="time-focused">Time Focused (Large Clock)</mwc-list-item>
-            <mwc-list-item value="date-focused">Date Focused (Large Date)</mwc-list-item>
-            <mwc-list-item value="balanced">Balanced (Equal Time & Date)</mwc-list-item>
-            <mwc-list-item value="minimal">Minimal (Icon & Temp Only)</mwc-list-item>
-            <mwc-list-item value="greeting">Greeting (Personalized Message)</mwc-list-item>
-            <mwc-list-item value="graphical">Graphical (Seasonal Background)</mwc-list-item>
-          </ha-select>
+          ></ha-selector>
 
           ${this._config.header_mode === 'greeting' ? html`
             <ha-textfield
@@ -337,47 +347,63 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
                 Select bundled seasonal images or leave as default. Upload custom images to <code>/config/www/</code> to see them here.
               </p>
 
-              <ha-select
-                label="Spring Image (Mar-May)"
+              <ha-selector
+                .hass=${this.hass}
+                .selector=${{
+                  select: {
+                    options: [
+                      { value: 'default', label: 'Default - Cherry Blossoms & Tulips' },
+                      { value: '/local/community/WeatherPulse/images/spring-alt1.jpg', label: 'Alt 1 - More Tulips & Flowers' },
+                      { value: '/local/community/WeatherPulse/images/spring-alt2.jpg', label: 'Alt 2 - Vibrant Spring Garden' }
+                    ]
+                  }
+                }}
                 .value=${this._config.seasonal_images?.spring || 'default'}
+                .label=${'Spring Image (Mar-May)'}
                 @value-changed=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'spring')}
-                @closed=${(ev: Event) => ev.stopPropagation()}
-              >
-                <mwc-list-item value="default">Default - Cherry Blossoms & Tulips</mwc-list-item>
-                <mwc-list-item value="/local/community/WeatherPulse/images/spring-alt1.jpg">Alt 1 - More Tulips & Flowers</mwc-list-item>
-                <mwc-list-item value="/local/community/WeatherPulse/images/spring-alt2.jpg">Alt 2 - Vibrant Spring Garden</mwc-list-item>
-              </ha-select>
-
-              <ha-select
-                label="Summer Image (Jun-Aug)"
+              />
+              <ha-selector
+                .hass=${this.hass}
+                .selector=${{
+                  select: {
+                    options: [
+                      { value: 'default', label: 'Default - Tropical Beach Sunset' },
+                      { value: '/local/community/WeatherPulse/images/summer-alt1.jpg', label: 'Alt 1 - Sunset Beach Painting' }
+                    ]
+                  }
+                }}
                 .value=${this._config.seasonal_images?.summer || 'default'}
+                .label=${'Summer Image (Jun-Aug)'}
                 @value-changed=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'summer')}
-                @closed=${(ev: Event) => ev.stopPropagation()}
-              >
-                <mwc-list-item value="default">Default - Tropical Beach Sunset</mwc-list-item>
-                <mwc-list-item value="/local/community/WeatherPulse/images/summer-alt1.jpg">Alt 1 - Sunset Beach Painting</mwc-list-item>
-              </ha-select>
-
-              <ha-select
-                label="Fall Image (Sep-Nov)"
+              />
+              <ha-selector
+                .hass=${this.hass}
+                .selector=${{
+                  select: {
+                    options: [
+                      { value: 'default', label: 'Default - Pumpkin & Maple Leaves' },
+                      { value: '/local/community/WeatherPulse/images/fall-alt1.jpg', label: 'Alt 1 - Autumn Forest Scene' }
+                    ]
+                  }
+                }}
                 .value=${this._config.seasonal_images?.fall || 'default'}
+                .label=${'Fall Image (Sep-Nov)'}
                 @value-changed=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'fall')}
-                @closed=${(ev: Event) => ev.stopPropagation()}
-              >
-                <mwc-list-item value="default">Default - Pumpkin & Maple Leaves</mwc-list-item>
-                <mwc-list-item value="/local/community/WeatherPulse/images/fall-alt1.jpg">Alt 1 - Autumn Forest Scene</mwc-list-item>
-              </ha-select>
-
-              <ha-select
-                label="Winter Image (Dec-Feb)"
+              />
+              <ha-selector
+                .hass=${this.hass}
+                .selector=${{
+                  select: {
+                    options: [
+                      { value: 'default', label: 'Default - Snowy Winter Beach' },
+                      { value: '/local/community/WeatherPulse/images/winter-alt1.jpg', label: 'Alt 1 - Snowy Palm Tree Beach' }
+                    ]
+                  }
+                }}
                 .value=${this._config.seasonal_images?.winter || 'default'}
+                .label=${'Winter Image (Dec-Feb)'}
                 @value-changed=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'winter')}
-                @closed=${(ev: Event) => ev.stopPropagation()}
-              >
-                <mwc-list-item value="default">Default - Snowy Winter Beach</mwc-list-item>
-                <mwc-list-item value="/local/community/WeatherPulse/images/winter-alt1.jpg">Alt 1 - Snowy Palm Tree Beach</mwc-list-item>
-              </ha-select>
-
+              />
               <p class="helper-text">
                 Using "Default" will load the bundled images automatically. Select alternates to use different bundled images.
               </p>
@@ -400,16 +426,21 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             ></ha-formfield>
 
           ${this._config.show_time ? html`
-            <ha-select
-              label="Time Format"
-              .configValue=${'time_format'}
+            <ha-selector
+              .hass=${this.hass}
+              .selector=${{
+                select: {
+                  options: [
+                    { value: '12h', label: '12 Hour (AM/PM)' },
+                    { value: '24h', label: '24 Hour (Military Time)' }
+                  ]
+                }
+              }}
               .value=${this._config.time_format || '24h'}
+              .label=${'Time Format'}
+              .configValue=${'time_format'}
               @value-changed=${this._valueChanged}
-              @closed=${(ev: Event) => ev.stopPropagation()}
-            >
-              <mwc-list-item value="12h">12 Hour (AM/PM)</mwc-list-item>
-              <mwc-list-item value="24h">24 Hour (Military Time)</mwc-list-item>
-            </ha-select>
+            />
           ` : ''}
           ` : ''}
         </div>
@@ -433,16 +464,22 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             Toggle to show or hide the forecast section. Will hide automatically if no forecast data is available.
           </p>
 
-          <ha-select
-            label="Forecast Type"
-            .configValue=${'forecast_type'}
+          <ha-selector
+            .hass=${this.hass}
+            .selector=${{
+              select: {
+                options: [
+                  { value: 'daily', label: 'Daily' },
+                  { value: 'hourly', label: 'Hourly' }
+                ]
+              }
+            }}
             .value=${this._config.forecast_type || 'daily'}
+            .label=${'Forecast Type'}
+            .configValue=${'forecast_type'}
             @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
-          >
-            <mwc-list-item value="daily">Daily</mwc-list-item>
-            <mwc-list-item value="hourly">Hourly</mwc-list-item>
-          </ha-select>
+          ></ha-selector>
 
           ${this._config.forecast_type === 'hourly' ? html`
             <ha-textfield
@@ -458,30 +495,42 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               Show 1-48 hours of forecast data
             </p>
           ` : html`
-            <ha-select
-              label="Forecast Days"
-              .configValue=${'forecast_days'}
+            <ha-selector
+              .hass=${this.hass}
+              .selector=${{
+                select: {
+                  options: [
+                    { value: '5', label: '5 Days' },
+                    { value: '7', label: '7 Days' }
+                  ]
+                }
+              }}
               .value=${String(this._config.forecast_days || 5)}
+              .label=${'Forecast Days'}
+              .configValue=${'forecast_days'}
               @value-changed=${this._valueChanged}
               @closed=${(ev: Event) => ev.stopPropagation()}
-            >
-              <mwc-list-item value="5">5 Days</mwc-list-item>
-              <mwc-list-item value="7">7 Days</mwc-list-item>
-            </ha-select>
+            ></ha-selector>
           `}
 
-          <ha-select
-            label="View Mode"
-            .configValue=${'view_mode'}
+          <ha-selector
+            .hass=${this.hass}
+            .selector=${{
+              select: {
+                options: [
+                  { value: 'compact', label: 'Compact' },
+                  { value: 'standard', label: 'Standard' },
+                  { value: 'detailed', label: 'Detailed' },
+                  { value: 'chart', label: 'Chart (Temperature Trend Line)' }
+                ]
+              }
+            }}
             .value=${this._config.view_mode || 'standard'}
+            .label=${'View Mode'}
+            .configValue=${'view_mode'}
             @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
-          >
-            <mwc-list-item value="compact">Compact</mwc-list-item>
-            <mwc-list-item value="standard">Standard</mwc-list-item>
-            <mwc-list-item value="detailed">Detailed</mwc-list-item>
-            <mwc-list-item value="chart">Chart (Temperature Trend Line)</mwc-list-item>
-          </ha-select>
+          ></ha-selector>
           <p class="helper-text">
             Chart view displays a temperature trend line with weather icons, similar to TV weather graphics.
           </p>
@@ -500,17 +549,23 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             Select which weather details to display below the header (when available from your weather provider).
           </p>
 
-          <ha-select
-            label="Weather Info Layout"
-            .configValue=${'weather_info_layout'}
+          <ha-selector
+            .hass=${this.hass}
+            .selector=${{
+              select: {
+                options: [
+                  { value: 'compact', label: 'Compact (displayed in header)' },
+                  { value: 'standard', label: 'Standard (separate cards)' },
+                  { value: 'detailed', label: 'Detailed (large cards)' }
+                ]
+              }
+            }}
             .value=${this._config.weather_info_layout || 'standard'}
+            .label=${'Weather Info Layout'}
+            .configValue=${'weather_info_layout'}
             @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
-          >
-            <mwc-list-item value="compact">Compact (displayed in header)</mwc-list-item>
-            <mwc-list-item value="standard">Standard (separate cards)</mwc-list-item>
-            <mwc-list-item value="detailed">Detailed (large cards)</mwc-list-item>
-          </ha-select>
+          ></ha-selector>
 
           <ha-formfield label="UV Index">
             <ha-switch
