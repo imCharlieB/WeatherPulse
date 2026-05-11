@@ -30,7 +30,8 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
     }
     const target = ev.target as any;
     const configValue = target.configValue;
-    let value = target.value;
+    // Use ev.detail.value for ha-select (dropdowns)
+    let value = ev.detail && 'value' in ev.detail ? ev.detail.value : target.value;
 
     // Convert numeric strings to numbers for certain fields
     if ((configValue === 'forecast_days' || configValue === 'hourly_count') && value) {
@@ -421,6 +422,19 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               .checked=${this._config.show_time !== false}
               @change=${this._toggleChanged}
             ></ha-formfield>
+
+          ${this._config.show_time ? html`
+            <ha-select
+              label="Time Format"
+              .configValue=${'time_format'}
+              .value=${this._config.time_format || '24h'}
+              @value-changed=${this._valueChanged}
+              @closed=${(ev: Event) => ev.stopPropagation()}
+            >
+              <mwc-list-item value="12h">12 Hour (AM/PM)</mwc-list-item>
+              <mwc-list-item value="24h">24 Hour (Military Time)</mwc-list-item>
+            </ha-select>
+          ` : ''}
           ` : ''}
         </div>
 
@@ -734,12 +748,17 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
         display: flex;
         align-items: center;
         gap: 16px;
-        padding: 8px;
-        padding-left: 12px;
-        padding-right: 12px;
+        padding: 8px 16px 8px 12px;
         margin: -8px;
         border-radius: 4px;
         transition: background-color 0.2s;
+        min-width: 0;
+      }
+
+      .section-header .toggle {
+        margin-left: auto;
+        margin-right: 8px;
+        pointer-events: auto;
       }
 
       .section-header:hover {
@@ -767,9 +786,13 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
         border-bottom: none;
       }
 
-      ha-select {
+      ha-select,
+      ha-textfield {
         width: 100%;
         margin-bottom: 12px;
+      }
+
+      ha-select {
         --mdc-select-fill-color: var(--card-background-color, #fff);
         --mdc-select-ink-color: var(--primary-text-color, #222);
         --mdc-select-label-ink-color: var(--secondary-text-color, #888);
@@ -781,11 +804,6 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
 
       mwc-list-item {
         font-size: 1em;
-      }
-
-      ha-textfield {
-        width: 100%;
-        margin-bottom: 12px;
       }
 
       ha-formfield {
