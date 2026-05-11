@@ -140,11 +140,16 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
       (eid) => eid.startsWith('weather.')
     );
 
-    // Get list of temperature sensor entities
-    const tempSensors = Object.keys(this.hass.states).filter(
-      (eid) => eid.startsWith('sensor.') &&
-      (eid.includes('temp') || eid.includes('temperature'))
-    );
+    // Get list of temperature sensor entities (filtered for real temperature sensors)
+    const tempSensors = Object.keys(this.hass.states).filter((eid) => {
+      if (!eid.startsWith('sensor.')) return false;
+      if (!(eid.includes('temp') || eid.includes('temperature'))) return false;
+  const stateObj = this.hass.states[eid];
+  const unit = stateObj.attributes.unit_of_measurement;
+  const validUnits = ['°C', '°F', 'K'];
+  const isNumeric = !isNaN(parseFloat(stateObj.state));
+  return typeof unit === 'string' && validUnits.includes(unit) && isNumeric;
+    });
 
     // Get list of forecast-capable sensor entities
     const forecastSensors = Object.keys(this.hass.states)
