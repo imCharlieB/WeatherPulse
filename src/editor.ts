@@ -176,7 +176,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           >
             ${weatherEntities.map(
               (entity) => html`
-                <mwc-list-item .value=${entity}>
+                <mwc-list-item value="${entity}">
                   ${entity}
                 </mwc-list-item>
               `
@@ -192,7 +192,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
         >
           ${forecastSensors.map(
             (sensor) => html`
-              <mwc-list-item .value=${sensor}>
+              <mwc-list-item value="${sensor}">
                 ${sensor}
               </mwc-list-item>
             `
@@ -292,7 +292,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             <mwc-list-item value="">None</mwc-list-item>
             ${tempSensors.map(
               (entity) => html`
-                <mwc-list-item .value=${entity}>
+                <mwc-list-item value="${entity}">
                   ${entity}
                 </mwc-list-item>
               `
@@ -420,8 +420,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               .configValue=${'show_time'}
               .checked=${this._config.show_time !== false}
               @change=${this._toggleChanged}
-            ></ha-switch>
-          </ha-formfield>
+            ></ha-formfield>
           ` : ''}
         </div>
 
@@ -734,8 +733,10 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
         user-select: none;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 16px;
         padding: 8px;
+        padding-left: 12px;
+        padding-right: 12px;
         margin: -8px;
         border-radius: 4px;
         transition: background-color 0.2s;
@@ -766,7 +767,22 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
         border-bottom: none;
       }
 
-      ha-select,
+      ha-select {
+        width: 100%;
+        margin-bottom: 12px;
+        --mdc-select-fill-color: var(--card-background-color, #fff);
+        --mdc-select-ink-color: var(--primary-text-color, #222);
+        --mdc-select-label-ink-color: var(--secondary-text-color, #888);
+        --mdc-select-dropdown-icon-color: var(--primary-color, #03a9f4);
+        --mdc-theme-primary: var(--primary-color, #03a9f4);
+        --mdc-select-idle-line-color: var(--divider-color, #e0e0e0);
+        --mdc-select-hover-line-color: var(--primary-color, #03a9f4);
+      }
+
+      mwc-list-item {
+        font-size: 1em;
+      }
+
       ha-textfield {
         width: 100%;
         margin-bottom: 12px;
