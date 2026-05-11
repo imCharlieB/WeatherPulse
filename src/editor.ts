@@ -166,7 +166,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             label="Weather Entity (Required)"
             .configValue=${'entity'}
             .value=${this._config.entity || ''}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
             ${weatherEntities.map(
@@ -182,7 +182,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
           label="Forecast Sensor (Recommended for Hourly)"
           .configValue=${'forecast_sensor'}
           .value=${this._config.forecast_sensor || ''}
-          @selected=${this._valueChanged}
+          @value-changed=${this._valueChanged}
           @closed=${(ev: Event) => ev.stopPropagation()}
         >
           ${forecastSensors.map(
@@ -211,7 +211,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             label="Visual Theme"
             .configValue=${'theme'}
             .value=${this._config.theme || 'default'}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
             <mwc-list-item value="default">Default</mwc-list-item>
@@ -281,7 +281,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             label="Outdoor Temperature Sensor (Optional)"
             .configValue=${'outdoor_temp_sensor'}
             .value=${this._config.outdoor_temp_sensor || ''}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
             <mwc-list-item value="">None</mwc-list-item>
@@ -301,7 +301,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             label="Temperature Display Mode"
             .configValue=${'temp_display_mode'}
             .value=${this._config.temp_display_mode || 'forecast'}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
             <mwc-list-item value="forecast">Forecast Only (High/Low)</mwc-list-item>
@@ -326,7 +326,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             label="Header Mode"
             .configValue=${'header_mode'}
             .value=${this._config.header_mode || 'time-focused'}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
             <mwc-list-item value="time-focused">Time Focused (Large Clock)</mwc-list-item>
@@ -358,7 +358,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               <ha-select
                 label="Spring Image (Mar-May)"
                 .value=${this._config.seasonal_images?.spring || 'default'}
-                @selected=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'spring')}
+                @value-changed=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'spring')}
                 @closed=${(ev: Event) => ev.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Cherry Blossoms & Tulips</mwc-list-item>
@@ -369,7 +369,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               <ha-select
                 label="Summer Image (Jun-Aug)"
                 .value=${this._config.seasonal_images?.summer || 'default'}
-                @selected=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'summer')}
+                @value-changed=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'summer')}
                 @closed=${(ev: Event) => ev.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Tropical Beach Sunset</mwc-list-item>
@@ -379,7 +379,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               <ha-select
                 label="Fall Image (Sep-Nov)"
                 .value=${this._config.seasonal_images?.fall || 'default'}
-                @selected=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'fall')}
+                @value-changed=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'fall')}
                 @closed=${(ev: Event) => ev.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Pumpkin & Maple Leaves</mwc-list-item>
@@ -389,7 +389,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               <ha-select
                 label="Winter Image (Dec-Feb)"
                 .value=${this._config.seasonal_images?.winter || 'default'}
-                @selected=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'winter')}
+                @value-changed=${(ev: CustomEvent) => this._seasonalImageChanged(ev, 'winter')}
                 @closed=${(ev: Event) => ev.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Snowy Winter Beach</mwc-list-item>
@@ -443,7 +443,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             label="Forecast Type"
             .configValue=${'forecast_type'}
             .value=${this._config.forecast_type || 'daily'}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
             <mwc-list-item value="daily">Daily</mwc-list-item>
@@ -468,7 +468,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
               label="Forecast Days"
               .configValue=${'forecast_days'}
               .value=${String(this._config.forecast_days || 5)}
-              @selected=${this._valueChanged}
+              @value-changed=${this._valueChanged}
               @closed=${(ev: Event) => ev.stopPropagation()}
             >
               <mwc-list-item value="5">5 Days</mwc-list-item>
@@ -480,7 +480,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             label="View Mode"
             .configValue=${'view_mode'}
             .value=${this._config.view_mode || 'standard'}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
             <mwc-list-item value="compact">Compact</mwc-list-item>
@@ -510,7 +510,7 @@ export class WeatherPulseCardEditor extends LitElement implements LovelaceCardEd
             label="Weather Info Layout"
             .configValue=${'weather_info_layout'}
             .value=${this._config.weather_info_layout || 'standard'}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${(ev: Event) => ev.stopPropagation()}
           >
             <mwc-list-item value="compact">Compact (displayed in header)</mwc-list-item>

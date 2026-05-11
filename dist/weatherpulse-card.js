@@ -14,7 +14,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             label="Weather Entity (Required)"
             .configValue=${"entity"}
             .value=${this._config.entity||""}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
             ${e.map(e=>j`
@@ -28,7 +28,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
           label="Forecast Sensor (Recommended for Hourly)"
           .configValue=${"forecast_sensor"}
           .value=${this._config.forecast_sensor||""}
-          @selected=${this._valueChanged}
+          @value-changed=${this._valueChanged}
           @closed=${e=>e.stopPropagation()}
         >
           ${a.map(e=>j`
@@ -55,7 +55,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             label="Visual Theme"
             .configValue=${"theme"}
             .value=${this._config.theme||"default"}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
             <mwc-list-item value="default">Default</mwc-list-item>
@@ -125,7 +125,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             label="Outdoor Temperature Sensor (Optional)"
             .configValue=${"outdoor_temp_sensor"}
             .value=${this._config.outdoor_temp_sensor||""}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
             <mwc-list-item value="">None</mwc-list-item>
@@ -143,7 +143,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             label="Temperature Display Mode"
             .configValue=${"temp_display_mode"}
             .value=${this._config.temp_display_mode||"forecast"}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
             <mwc-list-item value="forecast">Forecast Only (High/Low)</mwc-list-item>
@@ -168,7 +168,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             label="Header Mode"
             .configValue=${"header_mode"}
             .value=${this._config.header_mode||"time-focused"}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
             <mwc-list-item value="time-focused">Time Focused (Large Clock)</mwc-list-item>
@@ -200,7 +200,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               <ha-select
                 label="Spring Image (Mar-May)"
                 .value=${this._config.seasonal_images?.spring||"default"}
-                @selected=${e=>this._seasonalImageChanged(e,"spring")}
+                @value-changed=${e=>this._seasonalImageChanged(e,"spring")}
                 @closed=${e=>e.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Cherry Blossoms & Tulips</mwc-list-item>
@@ -211,7 +211,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               <ha-select
                 label="Summer Image (Jun-Aug)"
                 .value=${this._config.seasonal_images?.summer||"default"}
-                @selected=${e=>this._seasonalImageChanged(e,"summer")}
+                @value-changed=${e=>this._seasonalImageChanged(e,"summer")}
                 @closed=${e=>e.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Tropical Beach Sunset</mwc-list-item>
@@ -221,7 +221,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               <ha-select
                 label="Fall Image (Sep-Nov)"
                 .value=${this._config.seasonal_images?.fall||"default"}
-                @selected=${e=>this._seasonalImageChanged(e,"fall")}
+                @value-changed=${e=>this._seasonalImageChanged(e,"fall")}
                 @closed=${e=>e.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Pumpkin & Maple Leaves</mwc-list-item>
@@ -231,7 +231,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               <ha-select
                 label="Winter Image (Dec-Feb)"
                 .value=${this._config.seasonal_images?.winter||"default"}
-                @selected=${e=>this._seasonalImageChanged(e,"winter")}
+                @value-changed=${e=>this._seasonalImageChanged(e,"winter")}
                 @closed=${e=>e.stopPropagation()}
               >
                 <mwc-list-item value="default">Default - Snowy Winter Beach</mwc-list-item>
@@ -285,7 +285,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             label="Forecast Type"
             .configValue=${"forecast_type"}
             .value=${this._config.forecast_type||"daily"}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
             <mwc-list-item value="daily">Daily</mwc-list-item>
@@ -310,7 +310,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
               label="Forecast Days"
               .configValue=${"forecast_days"}
               .value=${String(this._config.forecast_days||5)}
-              @selected=${this._valueChanged}
+              @value-changed=${this._valueChanged}
               @closed=${e=>e.stopPropagation()}
             >
               <mwc-list-item value="5">5 Days</mwc-list-item>
@@ -322,7 +322,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             label="View Mode"
             .configValue=${"view_mode"}
             .value=${this._config.view_mode||"standard"}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
             <mwc-list-item value="compact">Compact</mwc-list-item>
@@ -352,7 +352,7 @@ function e(e,t,a,i){var r,o=arguments.length,n=o<3?t:null===i?i=Object.getOwnPro
             label="Weather Info Layout"
             .configValue=${"weather_info_layout"}
             .value=${this._config.weather_info_layout||"standard"}
-            @selected=${this._valueChanged}
+            @value-changed=${this._valueChanged}
             @closed=${e=>e.stopPropagation()}
           >
             <mwc-list-item value="compact">Compact (displayed in header)</mwc-list-item>
