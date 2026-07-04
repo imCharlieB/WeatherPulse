@@ -63,7 +63,7 @@ const decorations: {
     background: ['🌈', '💚', '🎩', '🪙']
   },
   july4th: {
-    foreground: ['🇺🇸', '🗽', '🎆'],
+    foreground: ['🇺🇸', '🗽', '🎉'],
     background: ['🎇', '⭐', '🎉', '🎊'],
     lights: {
       colors: ['#ff0000', '#ffffff', '#0000ff', '#ff0000', '#ffffff', '#0000ff'],
@@ -211,7 +211,7 @@ export class WeatherPulseCard extends LitElement {
     super.updated(changedProperties);
     
     const holiday = this.getCurrentHoliday();
-    if (holiday === 'newyear' && !this.isNightModeActive()) {
+    if ((holiday === 'newyear' || holiday === 'july4th') && !this.isNightModeActive()) {
       window.requestAnimationFrame(() => this.configureFireworks());
     }
   }
