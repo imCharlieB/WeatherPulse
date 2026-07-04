@@ -63,7 +63,7 @@ const decorations: {
     background: ['🌈', '💚', '🎩', '🪙']
   },
   july4th: {
-    foreground: ['🇺🇸', '🗽', '🎉'],
+    foreground: ['🎉', '🇺🇸', '🗽'],
     background: ['🎇', '⭐', '🎉', '🎊'],
     lights: {
       colors: ['#ff0000', '#ffffff', '#0000ff', '#ff0000', '#ffffff', '#0000ff'],
