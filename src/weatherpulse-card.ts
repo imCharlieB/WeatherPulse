@@ -114,6 +114,13 @@ export class WeatherPulseCard extends LitElement {
     ['#FF3D00', '#F9A825', '#76FF03', '#00B8D4', '#651FFF', '#F50057']
   ];
 
+  private static readonly JULY4TH_PALETTES: ReadonlyArray<ReadonlyArray<string>> = [
+    ['#FF0000', '#FF3333', '#0033CC', '#1565C0', '#FF0000', '#0033CC'],
+    ['#CC0000', '#FF1744', '#003087', '#1976D2', '#CC0000', '#003087'],
+    ['#E53935', '#FF5252', '#0D47A1', '#1E88E5', '#E53935', '#0D47A1'],
+    ['#FF0000', '#B71C1C', '#1A237E', '#283593', '#FF0000', '#1A237E'],
+  ];
+
   // Memoization for expensive calculations
   private cachedWeatherData?: WeatherData;
   private lastWeatherEntityState?: string;
@@ -277,7 +284,10 @@ export class WeatherPulseCard extends LitElement {
   }
 
   private applyRandomFireworkColors(firework: HTMLElement): void {
-    const colors = this.generateFireworkPalette();
+    const holiday = this.getCurrentHoliday();
+    const colors = holiday === 'july4th'
+      ? this.generateJuly4thPalette()
+      : this.generateFireworkPalette();
     colors.forEach((color, index) => {
       firework.style.setProperty(`--color${index + 1}`, color);
     });
@@ -288,6 +298,13 @@ export class WeatherPulseCard extends LitElement {
     const palette = [...WeatherPulseCard.FIREWORK_PALETTES[paletteIndex]];
     this.shuffleArray(palette);
     return palette.map((hex, index) => this.tweakPaletteColor(hex, index));
+  }
+
+  private generateJuly4thPalette(): string[] {
+    const paletteIndex = Math.floor(Math.random() * WeatherPulseCard.JULY4TH_PALETTES.length);
+    const palette = [...WeatherPulseCard.JULY4TH_PALETTES[paletteIndex]];
+    this.shuffleArray(palette);
+    return palette;
   }
 
   private tweakPaletteColor(hex: string, index: number): string {
@@ -747,12 +764,11 @@ export class WeatherPulseCard extends LitElement {
       ];
     } else if (holiday === 'july4th') {
       iconPlacements = [
-        { icon: '🎇', top: 8, left: 10, size: 2.8 },        // Firework #1 top-left
-        { icon: '🎇', top: 10, left: 88, size: 2.6 },       // Firework #2 top-right
-        { icon: '⭐', top: 40, left: 50, size: 2.4 },       // Star #1 center
-        { icon: '⭐', top: 72, left: 88, size: 2.2 },       // Star #2 bottom-right
-        { icon: '🎉', top: 72, left: 10, size: 2.2 },       // Party popper bottom-left
-        { icon: '🎊', top: 55, left: 48, size: 2 }          // Confetti ball center-lower
+        { icon: '🇺🇸', top: 8, left: 10, size: 2.6 },      // Flag top-left
+        { icon: '🇺🇸', top: 10, left: 88, size: 2.4 },     // Flag top-right
+        { icon: '✨', top: 40, left: 50, size: 2.4 },       // Sparkles center
+        { icon: '✨', top: 72, left: 88, size: 2.2 },       // Sparkles bottom-right
+        { icon: '✨', top: 72, left: 10, size: 2.2 },       // Sparkles bottom-left
       ];
     } else if (holiday === 'stpatrick') {
       iconPlacements = [
@@ -1874,7 +1890,7 @@ export class WeatherPulseCard extends LitElement {
     const cardContentClass = viewMode === 'compact' ? 'card-content card-content-compact' : 'card-content';
     const currentHoliday = this.getCurrentHoliday();
     const holidayClass = currentHoliday ? `holiday-${currentHoliday}` : '';
-    const showFireworks = currentHoliday === 'newyear' && !isNightModeActive;
+    const showFireworks = (currentHoliday === 'newyear' || currentHoliday === 'july4th') && !isNightModeActive;
 
     return html`
   <ha-card class="${nightModeClass} ${alertGlowClass} ${tempGlowClass} ${themeClass} ${holidayClass}" style="${customStyles}">
